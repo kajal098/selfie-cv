@@ -1,0 +1,4 @@
+<p> Hello <%= @user.username %> , </p>
+<p> We received a request to reset the password associated with this e-mail address.  You can use the following code to reset the password. </p>
+<p> Code: <%= @user.reset_code %> </p>
+<p> If you did not request to have your password reset you can safely ignore this email.. </p>

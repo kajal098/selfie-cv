@@ -85,7 +85,7 @@ class SelfiecvAndroid < Grape::API
       requires :username
       requires :password
     end
-    post :login , jbuilder: 'all' do
+    get :login , jbuilder: 'all' do
       @user = User.find_by username: params[:username]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
@@ -120,7 +120,7 @@ class SelfiecvAndroid < Grape::API
       requires :password, type: String
       requires :password_confirmation, type: String
     end
-    post :reset_password do
+    get :reset_password do
       @user = User.find_by_reset_code(params[:code])
       error! "Wrong reset code.", 422 unless @user
       error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
