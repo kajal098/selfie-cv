@@ -35,6 +35,9 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
+  config.asset_host = 'https://selfie-cv-development.herokuapp.com/'
+  config.action_controller.default_url_options = { host: 'selfie-cv-development.herokuapp.com' }
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.
@@ -70,6 +73,16 @@ Rails.application.configure do
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
+  config.action_mailer.default_url_options = { host: 'selfie-cv-development.herokuapp.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.sendgrid.net",
+    port: 25,
+    domain: ENV["DOMAIN_NAME"],
+    authentication: "plain",
+    user_name: ENV["SENDGRID_USERNAME"],
+    password: ENV["SENDGRID_PASSWORD"]
+  }
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
