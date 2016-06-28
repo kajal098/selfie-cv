@@ -7,10 +7,10 @@ class User < ActiveRecord::Base
         enum role: { user: 0, admin: 10 }
 
         devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable
 
         validates :username,presence: true, uniqueness: { case_sensitive: false }
 
         has_many :devices
-        
+
 end
