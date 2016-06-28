@@ -1,10 +1,7 @@
 <%= simple_form_for [:admin, @user], html: { class: 'form-horizontal' } do |f| %>
   
-  <%= f.input :username, label: "Username" %>
   <%= f.input :email, label: "E-mail" %>
-  <%= f.input :password, label: "Password" %>
-  <%= f.input :password_confirmation, label: "Confirmation Password" %>
-
+  
   <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <button type="submit" class="btn btn-primary btn-sm">Save</button> <%= link_to "Back", admin_users_path, class: "btn btn-default btn-sm" %>

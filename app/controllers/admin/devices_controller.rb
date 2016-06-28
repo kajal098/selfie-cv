@@ -1,5 +1,7 @@
 class Admin::DevicesController < Admin::ApplicationController
 
+  before_action :find_device, only: [:edit, :update, :destroy]
+
   def index
     @devices = Device.all
   end
@@ -11,7 +13,7 @@ class Admin::DevicesController < Admin::ApplicationController
   def create
     @device = Device.new device_params
     if @device.save
-      redirect_to admin_cities_path, notice: "Device saved successfully."
+      redirect_to admin_devices_path, notice: "Device saved successfully."
     else
       render action: :new
     end
@@ -23,7 +25,7 @@ class Admin::DevicesController < Admin::ApplicationController
 
   def update    
     if @device.update device_params
-      redirect_to admin_cities_path, notice: "Device saved successfully."
+      redirect_to admin_devices_path, notice: "Device saved successfully."
     else
       render action: :new
     end
@@ -32,9 +34,9 @@ class Admin::DevicesController < Admin::ApplicationController
   def destroy
     begin
       @device.destroy
-      redirect_to admin_cities_path, notice: "Device deleted successfully."
+      redirect_to admin_devices_path, notice: "Device deleted successfully."
     rescue Exception => e
-      redirect_to admin_cities_path, alert: e.message
+      redirect_to admin_devices_path, alert: e.message
     end
   end
 
