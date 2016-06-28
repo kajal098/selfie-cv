@@ -127,7 +127,7 @@ class SelfiecvAndroid < Grape::API
       requires :password, type: String
       requires :password_confirmation, type: String
     end
-    post :change_password do
+    post :change_password  , jbuilder: 'all' do
       authenticate!
       @user = current_user
       error! "Current password is wrong.", 422 unless @user.valid_password? params[:current_password]

@@ -118,6 +118,25 @@ class SelfiecvIos < Grape::API
       {}
     end
 
+    # for change password
+
+    desc "Change Password"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :current_password, type: String
+      requires :password, type: String
+      requires :password_confirmation, type: String
+    end
+    post :change_password , jbuilder: 'all' do
+      authenticate!
+      @user = current_user
+      error! "Current password is wrong.", 422 unless @user.valid_password? params[:current_password]
+      error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
+      @user.attributes = clean_params(params).permit(:password, :password_confirmation)
+      error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      @user
+    end
+
   end
 
  
