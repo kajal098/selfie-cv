@@ -104,7 +104,7 @@ class SelfiecvAndroid < Grape::API
       if
       @user = User.find_by_email(params[:email])
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
-      UserMailer.send_reset_code(@user).deliver_now
+      #UserMailer.send_reset_code(@user).deliver_now
       @user.reset_code
     else
       error! "User does not exist.", 422
