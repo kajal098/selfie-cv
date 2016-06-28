@@ -84,9 +84,8 @@ class SelfiecvIos < Grape::API
       requires :token, type: String, regexp: UUID_REGEX
       requires :username
       requires :password
-      requires :role
     end
-    post :login do
+    post :login , jbuilder: 'all' do
       @user = User.find_by username: params[:username]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
