@@ -73,13 +73,11 @@ class SelfiecvAndroid < Grape::API
         requires :password_confirmation
       end
       get :register, jbuilder: 'all' do
-        @admin_user = AdminUser.new clean_params(params).permit(:name, :email, :password, :password_confirmation, :phone, :role)
-        @admin_user.role = 10
-        @admin_user.profilepic = params[:profilepic] if params[:profilepic]
+        @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
+        @user.role = 10
+        @user.profilepic = params[:profilepic] if params[:profilepic]
         error! 'Device not registered',422 unless current_device
-        error! @admin_user.errors.full_messages.join(', '), 422 unless @admin_user.save
-        @restaurant = Restaurant.new admin_user_id: @admin_user.id, name: params[:res_name]
-        error! @restaurant.errors.full_messages.join(', '), 422 unless @restaurant.save       
+        error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
 
     desc 'User login with email and password'
