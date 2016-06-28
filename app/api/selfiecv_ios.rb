@@ -137,6 +137,42 @@ class SelfiecvIos < Grape::API
       @user
     end
 
+    # for send reset password token to reset password
+
+    desc "Send reset password token"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :email
+    end
+    post :reset_code do
+      if
+      @user = User.find_by_email(params[:email])
+      @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
+      UserMailer.send_reset_code(@user).deliver_now
+      @user.reset_code
+    else
+      error! "User does not exist.", 422
+    end
+    end
+
+    # for reset password
+
+    desc "Reset Password"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :code, type: String
+      requires :password, type: String
+      requires :password_confirmation, type: String
+    end
+    post :reset_password do
+      @user = User.find_by_reset_code(params[:code])
+      error! "Wrong reset code.", 422 unless @user
+      error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
+      @user.attributes = clean_params(params).permit(:password, :password_confirmation)
+      error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      {}
+    end
+
   end
 
  
