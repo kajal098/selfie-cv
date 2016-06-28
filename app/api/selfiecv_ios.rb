@@ -62,6 +62,63 @@ class SelfiecvIos < Grape::API
 
   end
 
+  resources :member do 
+
+    desc 'Register User with primary details'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :username
+        requires :email
+        requires :password
+        requires :password_confirmation
+      end
+      get :register, jbuilder: 'all' do
+        @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
+        error! 'Device not registered',422 unless current_device
+        error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      end
+
+    desc 'User login with email and password'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :username
+      requires :password
+    end
+    get :login do
+      @user = User.find_by username: params[:username]
+      error! 'Device not registered',422 unless current_device
+      error! 'User not found',422 unless @user
+      error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
+      current_device.update_column :user_id, @user.id
+    end
+
+    desc "Send reset password token"
+    get :reset_code do
+      authenticate!
+      @user = current_user
+      @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
+      UserMailer.send_reset_code(@user).deliver_now
+      {}
+    end
+
+
+    desc "Reset Password"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :code, type: String
+      requires :password, type: String
+      requires :password_confirmation, type: String
+    end
+    get :reset_password do
+      @user = current_user
+      error! "Wrong reset code.", 422 unless @user.reset_code == params[:code]
+      @user.attributes = clean_params(params).permit(:password, :password_confirmation)
+      error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      {}
+    end
+
+  end
+
  
 
 end

@@ -81,22 +81,15 @@ class SelfiecvAndroid < Grape::API
     desc 'User login with email and password'
     params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :email
+      requires :username
       requires :password
     end
     get :login do
-      @user = User.find_by email: params[:email]
+      @user = User.find_by username: params[:username]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
       error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
       current_device.update_column :user_id, @user.id
-      @user.memberships.each do |user| @member = user end 
-      {
-        id: @user.id, name: @user.name, email: @user.email,
-        group_id: @member ? @member.group_id : "",
-        leader: @member ? @member.leader : 0,
-        status: @member ? @member.status : ""
-      }
     end
 
     desc "Send reset password token"
