@@ -5,7 +5,7 @@ class SelfiecvAndroid < Grape::API
   use ApiLogger
   
   version 'android', using: :path
-  format :json
+  format :json 
   formatter :json, Grape::Formatter::Jbuilder
 
   helpers do
@@ -32,6 +32,8 @@ class SelfiecvAndroid < Grape::API
     end
 
   end
+
+# devices start
 
   resources :devices do
 
@@ -62,7 +64,13 @@ class SelfiecvAndroid < Grape::API
 
   end
 
+  # devices end
+
+  # member start
+
   resources :member do 
+
+    # for user registration
 
     desc 'Register User with primary details'
       params do
@@ -78,6 +86,8 @@ class SelfiecvAndroid < Grape::API
         error! 'Device not registered',422 unless current_device
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
+
+    # for user login
 
     desc 'User login with email and password'
     params do
@@ -150,7 +160,7 @@ class SelfiecvAndroid < Grape::API
 
   end
 
- 
+ # member end
 
 
  

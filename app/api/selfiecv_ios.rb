@@ -33,6 +33,8 @@ class SelfiecvIos < Grape::API
 
   end
 
+# devices start
+
   resources :devices do
 
     desc 'Register device after notification service subscription'
@@ -62,7 +64,13 @@ class SelfiecvIos < Grape::API
 
   end
 
+  # devices end
+
+  # member start
+
   resources :member do 
+
+    # for user registration
 
     desc 'Register User with primary details'
       params do
@@ -79,6 +87,8 @@ class SelfiecvIos < Grape::API
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
 
+    # for user login
+
     desc 'User login with email and password'
     params do
       requires :token, type: String, regexp: UUID_REGEX
@@ -91,50 +101,6 @@ class SelfiecvIos < Grape::API
       error! 'User not found',422 unless @user
       error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
       current_device.update_column :user_id, @user.id
-    end
-
-    desc "Send reset password token"
-    post :reset_code do
-      authenticate!
-      @user = current_user
-      @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
-      UserMailer.send_reset_code(@user).deliver_now
-      {}
-    end
-
-
-    desc "Reset Password"
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :code, type: String
-      requires :password, type: String
-      requires :password_confirmation, type: String
-    end
-    post :reset_password do
-      @user = current_user
-      error! "Wrong reset code.", 422 unless @user.reset_code == params[:code]
-      @user.attributes = clean_params(params).permit(:password, :password_confirmation)
-      error! @user.errors.full_messages.join(', '), 422 unless @user.save
-      {}
-    end
-
-    # for change password
-
-    desc "Change Password"
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :current_password, type: String
-      requires :password, type: String
-      requires :password_confirmation, type: String
-    end
-    post :change_password , jbuilder: 'all' do
-      authenticate!
-      @user = current_user
-      error! "Current password is wrong.", 422 unless @user.valid_password? params[:current_password]
-      error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
-      @user.attributes = clean_params(params).permit(:password, :password_confirmation)
-      error! @user.errors.full_messages.join(', '), 422 unless @user.save
-      @user
     end
 
     # for send reset password token to reset password
@@ -173,8 +139,30 @@ class SelfiecvIos < Grape::API
       {}
     end
 
+    # for change password
+
+    desc "Change Password"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :current_password, type: String
+      requires :password, type: String
+      requires :password_confirmation, type: String
+    end
+    post :change_password , jbuilder: 'all' do
+      authenticate!
+      @user = current_user
+      error! "Current password is wrong.", 422 unless @user.valid_password? params[:current_password]
+      error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
+      @user.attributes = clean_params(params).permit(:password, :password_confirmation)
+      error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      @user
+    end
+
+    
+
   end
 
+  # member end
  
 
 end

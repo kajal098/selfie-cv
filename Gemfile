@@ -6,21 +6,30 @@ gem 'rails', '4.2.4'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 
+# for device
 gem 'devise'
 gem 'cancan'
 
+# for form
 gem 'simple_form', '~> 3.1.0'
 
+# to format data in table format
 gem 'datagrid', '~> 1.2.3'
 
 gem 'jquery-rails'
+
+# for bootstrap
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '3.3.2'
 end
 
+# for enum
 gem 'enumerize'
 
+# for grape api
 gem 'grape'
+
+# for display data in proper format
 gem 'grape-jbuilder'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
