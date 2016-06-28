@@ -49,6 +49,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
+      t.string   :reset_code, limit: 6
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
 

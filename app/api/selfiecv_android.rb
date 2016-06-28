@@ -100,7 +100,7 @@ class SelfiecvAndroid < Grape::API
       requires :token, type: String, regexp: UUID_REGEX
       requires :email
     end
-    post :reset_code do
+    get :reset_code do
       if
       @user = User.find_by_email(params[:email])
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
