@@ -71,6 +71,7 @@ class SelfiecvAndroid < Grape::API
         requires :email
         requires :password
         requires :password_confirmation
+        requires :role
       end
       post :register, jbuilder: 'all' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
