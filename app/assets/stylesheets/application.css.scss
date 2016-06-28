@@ -1,0 +1,126 @@
+//= require bootstrap
+//= require jquery.ui.min
+//= require date_time_picker
+//= require fontello
+
+.page-info { line-height: 34px; }
+nav.pagination {
+  margin: 0px 0px 5px;
+  li.gap {
+    position: relative;
+    float: left;    
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    text-decoration: none;    
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-left: -1px;
+  }  
+}
+
+.table {  
+  th {
+    .order { float: right; }
+  }
+  th.ordered, td.ordered { background-color: #d9edf7 }
+  th.ordered.asc a.asc, th.ordered.desc a.desc { visibility: hidden }
+  td.actions {
+    .btn { margin-right: 3px; }
+  }
+  th.id .order { float: left; } 
+  th.id, td.id { text-align: right; }
+}
+
+table.table-condensed {
+  th, td { padding: 3px !important; }
+}
+
+table.float {
+  thead {
+    position: fixed;
+    top: 0px;
+    background-color: #f9f9f9;    
+  }  
+}
+
+#feed_list { overflow: auto; max-height: 300px; }
+
+.client_interests, .user_groups {
+  span.checkbox { display: inline-block; margin-right: 10px; }
+}
+
+#fileupload { position: absolute; opacity: 0; }
+#attachments {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  li { 
+    float: left; margin-right: 5px; margin-bottom: 5px;    
+    img { cursor: move; }
+    width: 220px;
+  }
+  li.checked .img-thumbnail { border-color: #444; }
+  li.img-thumbnail { width: 220px; height: 140px; }
+}
+
+table {
+  border-width: 0;
+  border-style: none;
+  border-color: #0000ff;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 0; 
+  margin: 0; 
+  width: 0px; 
+  height: 10px; 
+}
+
+td.black { border-color: #000; }
+td.white { border-color: #fff; }
+
+body.login { margin-top:100px;background-color:#f1f1f1}
+body.login .col-lg-5 { margin:0 auto;display:table;float:none}
+
+.navbar{
+background-color:#fff;
+color:#000;
+}
+.panel-default>.panel-heading{
+color:#fff;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e9343b+0,f35961+100 */
+background: #e9343b; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U5MzQzYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMzU5NjEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top, #e9343b 0%, #f35961 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e9343b), color-stop(100%,#f35961)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #e9343b 0%,#f35961 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #e9343b 0%,#f35961 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #e9343b 0%,#f35961 100%); /* IE10+ */
+background: linear-gradient(to bottom, #e9343b 0%,#f35961 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9343b', endColorstr='#f35961',GradientType=0 ); /* IE6-8 */
+}
+.navbar-default .navbar-brand{
+  color:#000;
+}
+.navbar-default .navbar-nav>li>a{
+  color:#000;
+}
+.navbar-default .navbar-nav>li>a:hover{
+  color:#000;
+}
+a.logo {
+    display: block;
+    padding: 8px 0;
+    vertical-align: middle;
+    float: left;
+    width: 60px;
+}
+.logo img {
+    width: 50px;
+}
+span.help-block{
+  color:#a94442;
+}

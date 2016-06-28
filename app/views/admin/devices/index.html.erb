@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-lg-10 col-lg-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+      <h3 class="panel-title">Apparaten</h3>
+      </div>
+      <div class="panel-body">
+         <table class="table table-condensed table-striped" id="grid">
+            <thead>
+              <tr>
+                <th>Uuid</th>
+                <th>Blijk</th>            
+                <th>Registratie</th>
+                <th>Actie</th>
+              </tr>
+            </thead>
+            <tbody>
+               <% @devices.each do |device| %>
+              <tr>
+                <td><%= device.uuid %></td>
+                <td><%= device.token %></td>          
+                <td><%= device.registration_id %></td>        
+                <td align="center">
+                <%#= link_to "Delete", admin_device_path(device), class: :badge, method: :delete, 'data-confirm'=>"Are you sure?" %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>

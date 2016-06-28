@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BCA</title>
+  <link rel="icon" href="<%= image_url('fav.ico') %>" type="image/vnd.microsoft.icon" />
+  <link rel="shortcut icon" href="<%= image_url('fav.ico') %>" /> 
+  <%= stylesheet_link_tag    'admin', media: 'all' %>
+  <%= javascript_include_tag 'admin' %>  
+  <%= csrf_meta_tags %>
+  <%= yield :head %>
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to image_tag('logo.png'), admin_root_path, class: 'logo' %>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><%= link_to "Dashboard", admin_root_path %></li>
+          <li><%= link_to "Apparaten", admin_devices_path %></li>
+          <li><%= link_to "Inspecteur", admin_users_path %></li>
+        </ul>        
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Uitloggen", destroy_user_session_path, method: :delete, 'data-confirm' => 'Weet je het zeker?' %></li>
+        </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div id="flash_messages" class="container-fluid">
+    <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= notice %>
+    </div>
+    <% end %>
+    <% if flash[:alert] %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= alert %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="container-fluid">
+    <%= yield %>
+  </div>
+  <%= yield :scripts %>
+</body>
+</html>
