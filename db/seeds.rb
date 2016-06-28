@@ -5,4 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create!(username: 'nicolecross1579@gmail.com', password: '12345678', email:'nicolecross1579@gmail.com' , role: 'admin')
+user = User.create(email: 'admin@example.com', password: '12345678' , username: 'admin' , role: 'user' )
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+user = User.create!(email: 'nicolecross1579@gmail.com', password:'12345678' , username: 'nicole' , role: 'user' ) 
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+user = User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'user' )
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+user = User.create!(email: 'sam@gmail.com', password: '12345678' , username: 'sam' , role: 'user' )
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+user = User.create!(email: 'parnel@gmail.com', password: '12345678' , username: 'parnel' , role: 'user' )
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+

@@ -74,8 +74,6 @@ class SelfiecvAndroid < Grape::API
       end
       get :register, jbuilder: 'all' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
-        @user.role = 10
-        @user.profilepic = params[:profilepic] if params[:profilepic]
         error! 'Device not registered',422 unless current_device
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
