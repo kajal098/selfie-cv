@@ -21,7 +21,7 @@
                 <td><%= device.token %></td>          
                 <td><%= device.registration_id %></td>        
                 <td align="center">
-                <%= link_to "Delete", admin_device_path(device), class: :badge, method: :delete, 'data-confirm'=>"Are you sure?" %>
+                <%= link_to "", admin_device_path(device), class: "btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, 'data-confirm'=>"Are you sure?" %>
                 </td>
               </tr>
               <% end %>
