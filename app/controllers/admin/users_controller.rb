@@ -15,7 +15,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.new user_params
     if @user.save
       UserMailer.welcome(@user,params[:user][:password]).deliver_now
-      redirect_to admin_users_path, notice: "De inspecteur is succesvol gecreëerd."
+      redirect_to admin_users_path, notice: "The user has been created successfully."
     else
       render action: :new
     end
@@ -30,7 +30,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def update    
     if @user.update user_params
-      redirect_to admin_users_path, notice: "De inspecteur is succesvol bijgewerkt."
+      redirect_to admin_users_path, notice: "The user has been updated successfully."
     else
       render action: :edit
     end
@@ -39,7 +39,7 @@ class Admin::UsersController < Admin::ApplicationController
   def destroy
     begin
       @user.destroy
-      redirect_to admin_users_path, notice: "De inspecteur is succesvol verwijderd."
+      redirect_to admin_users_path, notice: "The user has been deleted successfully."
     rescue Exception => e      
       redirect_to admin_users_path, alert: e.message
     end
