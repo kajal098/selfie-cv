@@ -40,7 +40,7 @@ class SelfiecvIos < Grape::API
       requires :uuid, type: String, regexp: UUID_REGEX
       optional :registration_id, type: String
     end
-    get :register do
+    post :register do
       @device = Device.find_or_initialize_by uuid: params[:uuid]
       @device.registration_id = params[:registration_id]
       @device.renew_token
@@ -53,7 +53,7 @@ class SelfiecvIos < Grape::API
     params do
       requires :token, type: String, regexp: UUID_REGEX
     end
-    get :unsubscribe do
+    post :unsubscribe do
       @device = Device.find_by token: params[:token]
       @device.registration_id = nil
       @device.save
@@ -72,7 +72,7 @@ class SelfiecvIos < Grape::API
         requires :password
         requires :password_confirmation
       end
-      get :register, jbuilder: 'all' do
+      post :register, jbuilder: 'all' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
         error! 'Device not registered',422 unless current_device
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
@@ -84,7 +84,7 @@ class SelfiecvIos < Grape::API
       requires :username
       requires :password
     end
-    get :login do
+    post :login do
       @user = User.find_by username: params[:username]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
@@ -93,7 +93,7 @@ class SelfiecvIos < Grape::API
     end
 
     desc "Send reset password token"
-    get :reset_code do
+    post :reset_code do
       authenticate!
       @user = current_user
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
@@ -109,7 +109,7 @@ class SelfiecvIos < Grape::API
       requires :password, type: String
       requires :password_confirmation, type: String
     end
-    get :reset_password do
+    post :reset_password do
       @user = current_user
       error! "Wrong reset code.", 422 unless @user.reset_code == params[:code]
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
