@@ -53,7 +53,7 @@ class SelfiecvAndroid < Grape::API
     params do
       requires :token, type: String, regexp: UUID_REGEX
     end
-    post :unsubscribe do
+    get :unsubscribe do
       @device = Device.find_by token: params[:token]
       @device.registration_id = nil
       @device.save
@@ -67,15 +67,12 @@ class SelfiecvAndroid < Grape::API
     desc 'Register User with primary details'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :name
+        requires :username
         requires :email
         requires :password
         requires :password_confirmation
-        requires :phone
-        requires :res_name
-        optional :profilepic
       end
-      post :register, jbuilder: 'all' do
+      get :register, jbuilder: 'all' do
         @admin_user = AdminUser.new clean_params(params).permit(:name, :email, :password, :password_confirmation, :phone, :role)
         @admin_user.role = 10
         @admin_user.profilepic = params[:profilepic] if params[:profilepic]
@@ -91,7 +88,7 @@ class SelfiecvAndroid < Grape::API
       requires :email
       requires :password
     end
-    post :login do
+    get :login do
       @user = User.find_by email: params[:email]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
@@ -107,7 +104,7 @@ class SelfiecvAndroid < Grape::API
     end
 
     desc "Send reset password token"
-    post :reset_code do
+    get :reset_code do
       authenticate!
       @user = current_user
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
@@ -123,7 +120,7 @@ class SelfiecvAndroid < Grape::API
       requires :password, type: String
       requires :password_confirmation, type: String
     end
-    post :reset_password do
+    get :reset_password do
       @user = current_user
       error! "Wrong reset code.", 422 unless @user.reset_code == params[:code]
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)

@@ -40,7 +40,7 @@ class SelfiecvIos < Grape::API
       requires :uuid, type: String, regexp: UUID_REGEX
       optional :registration_id, type: String
     end
-    post :register do
+    get :register do
       @device = Device.find_or_initialize_by uuid: params[:uuid]
       @device.registration_id = params[:registration_id]
       @device.renew_token
@@ -53,7 +53,7 @@ class SelfiecvIos < Grape::API
     params do
       requires :token, type: String, regexp: UUID_REGEX
     end
-    post :unsubscribe do
+    get :unsubscribe do
       @device = Device.find_by token: params[:token]
       @device.registration_id = nil
       @device.save
