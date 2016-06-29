@@ -47,7 +47,7 @@ class SelfiecvAndroid < Grape::API
       @device.registration_id = params[:registration_id]
       @device.renew_token
       #error! @device.errors.full_messages.join(', '), 422 unless @device.save
-      render status: 200, json: @device.errors.full_messages.to_json
+      render nothing: true, status: 200, json: @device.errors.full_messages.to_json
       @device.ensure_duplicate_registrations
       { token: @device.token }
     end
