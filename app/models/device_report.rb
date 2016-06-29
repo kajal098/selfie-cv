@@ -13,7 +13,7 @@ class DeviceReport
   column(:created_at, header: "Created At", :order => "devices.created_at")  
   column(:updated_at, header: "Updated At", :order => "devices.updated_at")  
   column(:actions, header: "Actions", html: true , class: "padding_class" ) do |user|
-    html = link_to "", admin_devices_path(user), class: "btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'
+    html = link_to "", admin_device_path(user), class: "btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'
     html
   end
 
