@@ -1,33 +1,29 @@
+
+
+
+
 <div class="row">
-  <div class="col-lg-10 col-lg-offset-1">
+  <div class="col-lg-9">
     <div class="panel panel-default">
-      <div class="panel-heading">
+      <div class="panel-heading">        
       <h3 class="panel-title">Devices</h3>
       </div>
       <div class="panel-body">
-         <table class="table table-condensed table-striped" id="grid">
-            <thead>
-              <tr>
-                <th>Uuid</th>
-                <th>Token</th>            
-                <th>Registration id</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-               <% @devices.each do |device| %>
-              <tr>
-                <td><%= device.uuid %></td>
-                <td><%= device.token %></td>          
-                <td><%= device.registration_id %></td>        
-                <td align="center">
-                <%= link_to "", admin_device_path(device), class: "btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, 'data-confirm'=>"Are you sure?" %>
-                </td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+        <% if @assets.count > 0 %>
+          <div class="pull-left page-info">Total <%= @assets.size %> Devices</div>  </br> </br>        
+          <%= datagrid_table(@report, @assets) %>              
+        <% else %>
+          <p class="alert">There are no results to display . </p>
+        <% end %>
       </div>
+    </div>    
+  </div>  
+  <div class="col-lg-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">        
+        <h3 class="panel-title">Filter</h3>
+      </div>
+      <div class="panel-body"><%= render "admin/shared/filters" %></div>
     </div>
   </div>
 </div>

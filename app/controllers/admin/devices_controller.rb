@@ -3,7 +3,8 @@ class Admin::DevicesController < Admin::ApplicationController
   before_action :find_device, only: [:edit, :update, :destroy]
 
   def index
-    @devices = Device.all
+    @report = DeviceReport.new params[:device_report]
+    @assets = @report.assets
   end
 
   def new
