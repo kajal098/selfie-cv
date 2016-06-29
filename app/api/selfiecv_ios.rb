@@ -189,7 +189,7 @@ class SelfiecvIos < Grape::API
         optional :file
       end
       post :resume, jbuilder: 'all' do
-        @user = User.new clean_params(params).permit(:title, :email, :username,  :first_name,  :second_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
+        @user = User.new clean_params(params).permit(:title, :first_name,  :second_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         error! 'Device not registered',422 unless current_device
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
