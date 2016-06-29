@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160627125157) do
 
   create_table "users", force: :cascade do |t|
     t.integer  "role",                                  default: 0,            null: false
+    t.string   "title",                                 default: "",           null: false
     t.string   "email",                                 default: "",           null: false
     t.string   "username",                              default: "",           null: false
     t.string   "first_name",                            default: "",           null: false
@@ -36,7 +37,7 @@ ActiveRecord::Schema.define(version: 20160627125157) do
     t.string   "last_name",                             default: "",           null: false
     t.string   "profile_pic",                           default: ""
     t.string   "gender",                                default: "",           null: false
-    t.string   "date_of_birth",                         default: "2016-06-28"
+    t.string   "date_of_birth",                         default: "2016-06-29"
     t.string   "nationality",                           default: "",           null: false
     t.string   "address",                               default: "",           null: false
     t.string   "city",                                  default: "",           null: false
@@ -48,10 +49,10 @@ ActiveRecord::Schema.define(version: 20160627125157) do
     t.string   "faculty_uni_name",                      default: "",           null: false
     t.string   "faculty_subject",                       default: "",           null: false
     t.string   "faculty_designation",                   default: "",           null: false
-    t.string   "faculty_join_from",                     default: "2016-06-28"
+    t.string   "faculty_join_from",                     default: "2016-06-29"
     t.string   "faculty_file",                          default: ""
     t.string   "company_name",                          default: "",           null: false
-    t.string   "establish_from",                        default: "2016-06-28"
+    t.string   "establish_from",                        default: "2016-06-29"
     t.string   "industry_type",                         default: "",           null: false
     t.string   "functional_area",                       default: "",           null: false
     t.string   "company_address",                       default: "",           null: false
