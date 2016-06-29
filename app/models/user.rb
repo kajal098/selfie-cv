@@ -13,4 +13,12 @@ class User < ActiveRecord::Base
 
         has_many :devices
 
+
+TITLES = 
+  [
+    ['Mr', 'Mr'] ,
+    ['Miss' , 'Miss' ],
+    ['Mrs' , 'Mrs' ] 
+    ]
+
 end
