@@ -175,18 +175,18 @@ class SelfiecvIos < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :title
         requires :first_name
-        requires :second_name
-        requires :last_name
-        requires :gender
-        requires :date_of_birth 
-        requires :nationality 
-        requires :address 
-        requires :city  
-        requires :contact_number  
-        requires :education_in  
-        requires :school_name 
-        requires :year
-        requires :file
+        optional :second_name
+        optional :last_name
+        optional :gender
+        optional :date_of_birth 
+        optional :nationality 
+        optional :address 
+        optional :city  
+        optional :contact_number  
+        optional :education_in  
+        optional :school_name 
+        optional :year
+        optional :file
       end
       post :resume, jbuilder: 'all' do
         @user = User.new clean_params(params).permit(:title, :email, :username,  :first_name,  :second_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
