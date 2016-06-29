@@ -4,12 +4,12 @@
   <div class="col-lg-6 col-lg-offset-3">
     <div class="panel panel-default">
       <div class="panel-heading">        
-        <h3 class="panel-title"><%= @user.username %></h3>
+        <h3 class="panel-title" style="color: #000000"><b><%= @user.username.capitalize %></b></h3>
       </div>
       <div class="panel-body">
 
 
-<h3> Personal Details </h3>
+<h4 class="text_decoration"><b> Personal Details </b></h4>
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
@@ -47,7 +47,7 @@
   <%= @user.nationality %>
 </p>
 
-<h3> Educational Details </h3>
+<h4 class="text_decoration"><b> Educational Details </b></h4>
 
 <p>
   <strong>Education In:</strong>
