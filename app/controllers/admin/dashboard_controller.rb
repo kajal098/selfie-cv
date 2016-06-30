@@ -2,7 +2,7 @@ class Admin::DashboardController < Admin::ApplicationController
 
   def index
 	
-	@user = User.order("created_at desc").limit(4)
+	@user = User.order("created_at desc").limit(5)
   
 	end
 
