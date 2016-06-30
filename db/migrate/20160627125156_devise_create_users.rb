@@ -7,7 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :email,              null: false, default: ""
       t.string :username,              null: false, default: ""
       t.string :first_name,              null: false, default: ""
-      t.string :second_name,              null: false, default: ""
+      t.string :middle_name,              null: false, default: ""
       t.string :last_name,              null: false, default: ""
       t.string :profile_pic,              default: ''
       t.string :gender,              null: false, default: ""
@@ -19,12 +19,12 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :education_in,              null: false, default: ""
       t.string :school_name,              null: false, default: ""
       t.string :year
+      t.string :file,              default: ''
       t.string :faculty_work_with_type,              null: false, default: ""
       t.string :faculty_uni_name,              null: false, default: ""
       t.string :faculty_subject,              null: false, default: ""
       t.string :faculty_designation,              null: false, default: ""
-      t.string :faculty_join_from,              :default => Date.today 
-      t.string :faculty_file,              default: ''
+      t.string :faculty_join_from,              :default => Date.today      
       t.string :company_name,              null: false, default: ""
       t.string :establish_from,              :default => Date.today 
       t.string :industry_type,              null: false, default: ""

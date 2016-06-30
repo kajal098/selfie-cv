@@ -31,6 +31,18 @@ gem 'grape'
 
 # for display data in proper format
 gem 'grape-jbuilder'
+
+# for multi media file upload 
+gem 'carrierwave'
+
+
+
+
+
+
+
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

@@ -168,7 +168,7 @@ class SelfiecvIos < Grape::API
 
   resources :member_profile do 
 
-    # for user registration
+    # for fill user resume
 
     desc 'User Resume'
       params do
@@ -176,7 +176,7 @@ class SelfiecvIos < Grape::API
         requires :user_id
         requires :title
         requires :first_name
-        optional :second_name
+        optional :middle_name
         optional :last_name
         optional :gender
         optional :date_of_birth 
@@ -191,11 +191,13 @@ class SelfiecvIos < Grape::API
       end
       post :resume, jbuilder: 'all' do
         @user = User.find params[:user_id]
-        @user.attributes = clean_params(params).permit(:title, :first_name,  :second_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
+        @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         #@user.user_pic = params[:user_pic] if params[:user_pic]
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
         @user
       end
+
+      
 
   end
 

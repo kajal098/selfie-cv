@@ -162,7 +162,44 @@ class SelfiecvAndroid < Grape::API
 
  # member end
 
+  # member profile start
 
+  resources :member_profile do 
+
+    # for fill user resume
+
+    desc 'User Resume'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        requires :title
+        requires :first_name
+        optional :second_name
+        optional :last_name
+        optional :gender
+        optional :date_of_birth 
+        optional :nationality 
+        optional :address 
+        optional :city  
+        optional :contact_number  
+        optional :education_in  
+        optional :school_name 
+        optional :year
+        optional :file
+      end
+      post :resume, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        @user.attributes = clean_params(params).permit(:title, :first_name,  :second_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
+        #@user.user_pic = params[:user_pic] if params[:user_pic]
+        error! @user.errors.full_messages.join(', '), 422 unless @user.save
+        @user
+      end
+
+      
+
+  end
+
+  # member profile end
  
 
 end

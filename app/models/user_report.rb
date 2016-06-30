@@ -11,11 +11,12 @@ class UserReport
   filter(:email, :string, header: "E-mail") {|value| where("email ilike ?", "%#{value}%")}
 
   column(:id, header: "Id", :order => "users.id")
+  column(:role, header: "Role", order: false, :order => "users.role", class: "padding_class")
   column(:username, header: "Username", :order => "users.username", class: "padding_class")
   column(:email, header: "E-mail", order: false, :order => "users.email", class: "padding_class")
-  column(:role, header: "Role", order: false, :order => "users.role", class: "padding_class")
-  column(:created_at, header: "Created At", :order => "users.created_at")  
-  column(:updated_at, header: "Updated At", :order => "users.updated_at")  
+  column(:updated_at) do |model|
+    model.created_at.to_date
+  end
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |user| content_tag :span, time_ago_in_words(user.last_sign_in_at), title: user.last_sign_in_at.to_formatted_s(:long) if user.last_sign_in_at }
   column(:actions, header: "Actions", html: true , class: "padding_class" ) do |user|
     html = link_to "", admin_user_path(user), class: "btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View User"

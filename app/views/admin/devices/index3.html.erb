@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-lg-9">
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-table">
       <div class="panel-heading">        
       <h3 class="panel-title">Devices</h3>
       </div>
       <div class="panel-body">
         <% if @assets.count > 0 %>
-          <div class="pull-left page-info">Total <%= @assets.size %> Devices</div>  </br> </br>        
+          <div class="pull-left page-info">Total <%= @assets.size %> Devices</div>        
           <%= datagrid_table(@report, @assets) %>              
         <% else %>
           <p class="alert">There are no results to display . </p>
