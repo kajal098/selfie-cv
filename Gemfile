@@ -34,7 +34,9 @@ gem 'grape-jbuilder'
 
 # for multi media file upload 
 gem 'carrierwave'
-
+gem 'mini_magick'
+gem 'carrierwave-aws', '~> 0.5.0'
+gem 'carrierwave-video-thumbnailer'
 
 
 
