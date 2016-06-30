@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
 
         has_many :devices
 
+mount_uploader :file, FileUploader
+  def thumb_url; file.url(:thumb); end
+  def photo_url; file.url; end
 
 TITLES = 
   [
