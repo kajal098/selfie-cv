@@ -209,14 +209,14 @@ class SelfiecvAndroid < Grape::API
         optional :year
         optional :description
       end
-      post :awards, jbuilder: 'all' do
+      get :awards, jbuilder: 'all' do
         @user = User.find params[:user_id]
         if params[:type] == 'awards'
-          @user_award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
+          @user_award = UserAward.new name: params[:name], description: params[:description]
           @user_award.file = params[:file] if params[:file]
           error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
         elsif params[:type] == 'certi'
-          @user_award = UserAward.new user_id: @user.id, name: params[:name], year: params[:year], type: params[:certi_type]
+          @user_award = UserCertificate.new name: params[:name], year: params[:year], type: params[:certi_type]
           @user_award.file = params[:file] if params[:file]
           error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
         end
