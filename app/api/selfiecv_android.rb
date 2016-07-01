@@ -156,7 +156,7 @@ class SelfiecvAndroid < Grape::API
       @user
     end
 
-  end
+  
 
     # for fill user resume
 
@@ -199,7 +199,7 @@ class SelfiecvAndroid < Grape::API
           requires :school
           requires :skill
         end
-        post :education, jbuilder: 'all' do
+        get :education, jbuilder: 'all' do
           @user = User.find params[:user_id]
           @user_education = UserEducation.new user_id: current_user.id, cource: params[:cource], specialization: params[:specialization], year: params[:year], school: params[:school], skill: params[:skill]
           error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
@@ -208,7 +208,7 @@ class SelfiecvAndroid < Grape::API
         end
 
       
-
+  end
   
 
   # member end
