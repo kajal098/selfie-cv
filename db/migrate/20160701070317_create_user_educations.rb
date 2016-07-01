@@ -2,8 +2,8 @@ class CreateUserEducations < ActiveRecord::Migration
   def change
     create_table :user_educations do |t|
       t.integer :user_id
-      t.integer :cource
-      t.integer :specialization
+      t.integer :cource_id
+      t.integer :specialization_id
       t.string :year
       t.string :school
       t.string :skill

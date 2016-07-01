@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701070317) do
+ActiveRecord::Schema.define(version: 20160701084823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cources", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "devices", force: :cascade do |t|
     t.integer  "user_id"
@@ -27,15 +33,21 @@ ActiveRecord::Schema.define(version: 20160701070317) do
 
   add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
 
+  create_table "specializations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_educations", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "cource"
-    t.integer  "specialization"
+    t.integer  "cource_id"
+    t.integer  "specialization_id"
     t.string   "year"
     t.string   "school"
     t.string   "skill"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   add_index "user_educations", ["user_id"], name: "index_user_educations_on_user_id", using: :btree

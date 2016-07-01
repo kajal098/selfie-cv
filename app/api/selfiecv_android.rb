@@ -194,15 +194,15 @@ class SelfiecvAndroid < Grape::API
         params do
           requires :token, type: String, regexp: UUID_REGEX
           requires :user_id
-          requires :cource
-          requires :specialization
+          requires :cource_id
+          requires :specialization_id
           requires :year
           requires :school
           requires :skill
         end
         get :education, jbuilder: 'all' do
           @user = User.find params[:user_id]
-          @user_education = UserEducation.new user_id: current_user.id, cource: params[:cource], specialization: params[:specialization], year: params[:year], school: params[:school], skill: params[:skill]
+          @user_education = UserEducation.new user_id: current_user.id, cource: params[:cource_id], specialization: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
           error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
       
           @user
