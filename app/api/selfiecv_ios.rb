@@ -94,6 +94,7 @@ class SelfiecvIos < Grape::API
       requires :token, type: String, regexp: UUID_REGEX
       requires :username
       requires :password
+      requires :role
     end
     post :login , jbuilder: 'all' do
       @user = User.find_by username: params[:username]
