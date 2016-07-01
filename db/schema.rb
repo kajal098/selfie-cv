@@ -41,12 +41,18 @@ ActiveRecord::Schema.define(version: 20160701130105) do
 
   create_table "user_awards", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "type"
+    t.string   "description"
+    t.string   "file"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "user_certificates", force: :cascade do |t|
+    t.string   "type"
     t.string   "name"
+    t.string   "year"
+    t.string   "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

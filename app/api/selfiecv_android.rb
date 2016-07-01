@@ -114,7 +114,7 @@ class SelfiecvAndroid < Grape::API
       if
       @user = User.find_by_email(params[:email])
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
-      UserMailer.send_reset_code(@user).deliver_now
+      #UserMailer.send_reset_code(@user).deliver_now
       @user.reset_code
     else
       error! "User does not exist.", 422
@@ -196,23 +196,28 @@ class SelfiecvAndroid < Grape::API
         @user_education
       end
 
-      # for fill user awards and certificates
+    # for fill user awards and certificates
 
     desc 'User Awards And Certificates'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        requires :title
+        requires :type
+        requires :name
+        optional :certi_type
         optional :file
+        optional :year
+        optional :description
       end
-      post :resume, jbuilder: 'all' do
+      post :awards, jbuilder: 'all' do
         @user = User.find params[:user_id]
-        @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
-        @user.file = params[:file] if params[:file]
-        error! @user.errors.full_messages.join(', '), 422 unless @user.save
-        @user_education = UserEducation.new user_id: @user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
-        error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
-        @user_education
+        if params[:type] == 'awards'
+        @user_award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
+        @user_award.file = params[:file] if params[:file]
+        error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
+        @user_award = UserAward.new user_id: @user.id, name: params[:name], year: params[:year], , type: params[:certi_type]
+        @user_award.file = params[:file] if params[:file]
+        error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
       end
 
       
