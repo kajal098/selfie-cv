@@ -3,7 +3,7 @@ class UserReport
   include Datagrid
 
   scope { User.order(:id) }
-  scope { User.where(role: 0) }
+  scope { User.all }
 
   # filter(:id, header: "Id") {|value| where("id ilike ?", "%#{value}%")}
   #filter(:id, header: "Personeelsnummer")
