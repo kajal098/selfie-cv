@@ -100,6 +100,7 @@ class SelfiecvIos < Grape::API
       @user = User.find_by username: params[:username]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
+      error! 'authentication failed',422 unless @user.role == params[:role]
       error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
       current_device.update_column :user_id, @user.id
     end
