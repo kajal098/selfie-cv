@@ -194,7 +194,7 @@ class SelfiecvIos < Grape::API
       post :resume, jbuilder: 'all' do
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
-        #@user.user_pic = params[:user_pic] if params[:user_pic]
+        @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
         @user
       end
