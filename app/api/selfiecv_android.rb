@@ -41,7 +41,7 @@ class SelfiecvAndroid < Grape::API
     post :register do
       #render status: 200
       #render :nothing => true, :status => 200
-      @device = Device.find_or_initialize_by uuid: params[:uuid]
+      @device = Device.find_or_initialize_by registration_id: params[:registration_id]
       @device.registration_id = params[:registration_id]
       @device.renew_token
       render status: 200, json: @device.to_json
