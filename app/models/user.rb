@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   
 		extend Enumerize
         
-        enum role: { admin: 0, student: 1, faculty: 2, jobseeker:3, company:10 }
+        enum role: { Admin: 0, Student: 1, Faculty: 2, Jobseeker:3, Company:10 }
 
         devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable
