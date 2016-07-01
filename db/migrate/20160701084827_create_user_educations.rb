@@ -14,5 +14,7 @@ class CreateUserEducations < ActiveRecord::Migration
     add_foreign_key :user_educations, :users, on_delete: :cascade
     add_index :user_educations, [:course_id]
     add_foreign_key :user_educations, :courses, on_delete: :cascade
+    add_index :user_educations, [:specialization_id]
+    add_foreign_key :user_educations, :specializations, on_delete: :cascade
   end
 end
