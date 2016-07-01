@@ -215,7 +215,7 @@ class SelfiecvAndroid < Grape::API
         @user_award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
         @user_award.file = params[:file] if params[:file]
         error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
-        @user_award = UserAward.new user_id: @user.id, name: params[:name], year: params[:year], , type: params[:certi_type]
+        @user_award = UserAward.new user_id: @user.id, name: params[:name], year: params[:year], type: params[:certi_type]
         @user_award.file = params[:file] if params[:file]
         error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
       end
