@@ -179,6 +179,11 @@ class SelfiecvAndroid < Grape::API
         optional :education_in  
         optional :school_name 
         optional :year
+        requires :course_id
+        requires :specialization_id
+        requires :year
+        requires :school
+        requires :skill
         optional :file
       end
       post :resume, jbuilder: 'all' do
@@ -186,27 +191,12 @@ class SelfiecvAndroid < Grape::API
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
-        @user
+        @user_education = UserEducation.new user_id: @user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
+        error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
+        @user_education
       end
 
-      # for fill user education
-
-      desc 'User Education'
-        params do
-          requires :token, type: String, regexp: UUID_REGEX
-          requires :user_id
-          requires :course_id
-          requires :specialization_id
-          requires :year
-          requires :school
-          requires :skill
-        end
-        get :education, jbuilder: 'all' do
-          @user = User.find params[:user_id]
-          @user_education = UserEducation.new user_id: current_user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
-          error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save      
-          @user_education
-        end
+      
 
       
   end
