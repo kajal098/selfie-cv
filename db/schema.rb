@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701084823) do
+ActiveRecord::Schema.define(version: 20160701084827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "cources", force: :cascade do |t|
+  create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20160701084823) do
 
   create_table "user_educations", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "cource_id"
+    t.integer  "course_id"
     t.integer  "specialization_id"
     t.string   "year"
     t.string   "school"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160701084823) do
     t.datetime "updated_at",        null: false
   end
 
+  add_index "user_educations", ["course_id"], name: "index_user_educations_on_course_id", using: :btree
   add_index "user_educations", ["user_id"], name: "index_user_educations_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -116,5 +117,6 @@ ActiveRecord::Schema.define(version: 20160701084823) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "devices", "users", on_delete: :cascade
+  add_foreign_key "user_educations", "courses", on_delete: :cascade
   add_foreign_key "user_educations", "users", on_delete: :cascade
 end
