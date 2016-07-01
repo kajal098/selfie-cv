@@ -116,7 +116,7 @@ class SelfiecvIos < Grape::API
       if
       @user = User.find_by_email(params[:email])
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
-      UserMailer.send_reset_code(@user).deliver_now
+      #UserMailer.send_reset_code(@user).deliver_now
       @user.reset_code
     else
       error! "User does not exist.", 422
@@ -198,6 +198,25 @@ class SelfiecvIos < Grape::API
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
         @user
       end
+
+      # for fill user education
+
+      desc 'User Education'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :user_id
+          requires :course_id
+          requires :specialization_id
+          requires :year
+          requires :school
+          requires :skill
+        end
+        get :education, jbuilder: 'all' do
+          @user = User.find params[:user_id]
+          @user_education = UserEducation.new user_id: current_user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
+          error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save      
+          user_education
+        end
 
       
 
