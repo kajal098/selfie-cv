@@ -16,3 +16,15 @@ user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: Secur
 user = User.create!(email: 'parnel@gmail.com', password: '12345678' , username: 'parnel' , role: 'Company' )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 
+Course.create(name: "BE")
+Course.create(name: "ME")
+Course.create(name: "MBA")
+Course.create(name: "PHD")
+Course.create(name: "BTECH")
+
+Specialization.create(name: "Computer")
+Specialization.create(name: "Electrical")
+Specialization.create(name: "Information Technology")
+Specialization.create(name: "Civil")
+Specialization.create(name: "Power and Electronics")
+
