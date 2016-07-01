@@ -6,6 +6,8 @@ class Device < ActiveRecord::Base
 
   #scope :active, -> {where.not(registration_id: nil, user_id: nil)}
 
+  validates :registration_id,presence: true, uniqueness: { case_sensitive: false }
+
   before_validation :renew_token, if: -> { token.blank? }
 
   def renew_token

@@ -10,6 +10,5 @@ class CreateDevices < ActiveRecord::Migration
     end
     add_index :devices, [:user_id]
     add_foreign_key :devices, :users, on_delete: :cascade
-    add_index :devices, :registration_id,                unique: true
   end
 end

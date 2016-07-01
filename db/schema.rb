@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160701095907) do
     t.datetime "updated_at",      null: false
   end
 
+  add_index "devices", ["registration_id"], name: "index_devices_on_registration_id", unique: true, using: :btree
   add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
 
   create_table "specializations", force: :cascade do |t|
