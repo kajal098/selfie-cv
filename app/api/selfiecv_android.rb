@@ -158,12 +158,6 @@ class SelfiecvAndroid < Grape::API
 
   end
 
- # member end
-
-  # member profile start
-
-  resources :member_profile do 
-
     # for fill user resume
 
     desc 'User Resume'
@@ -193,11 +187,31 @@ class SelfiecvAndroid < Grape::API
         @user
       end
 
+      # for fill user resume
+
+      desc 'User Education'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :user_id
+          requires :cource
+          requires :specialization
+          requires :year
+          requires :school
+          requires :skill
+        end
+        post :resume, jbuilder: 'all' do
+          @user = User.find params[:user_id]
+          @user_education = UserEducation.new user_id: current_user.id, cource: params[:cource], specialization: params[:specialization], year: params[:year], school: params[:school], skill: params[:skill]
+          error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
+      
+          @user
+        end
+
       
 
-  end
+  
 
-  # member profile end
+  # member end
  
 
 end

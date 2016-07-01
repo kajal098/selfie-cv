@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
         validates :username,presence: true, uniqueness: { case_sensitive: false }
 
         has_many :devices
-
+        has_many :user_educations
 mount_uploader :file, FileUploader
   def thumb_url; file.url(:thumb); end
   def photo_url; file.url; end
