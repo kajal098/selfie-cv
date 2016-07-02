@@ -209,7 +209,7 @@ class SelfiecvAndroid < Grape::API
         optional :description
         optional :file
       end
-      get :achievement, jbuilder: 'all' do
+      post :achievement, jbuilder: 'all' do
         @user = User.find params[:user_id]
         if params[:type] == 'awards'
           @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
@@ -235,7 +235,7 @@ class SelfiecvAndroid < Grape::API
           optional :date
           optional :file
         end
-        get :curriculars, jbuilder: 'all' do
+        post :curriculars, jbuilder: 'all' do
           @user = User.find params[:user_id]
           @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
           @curricular.file = params[:file] if params[:file]
