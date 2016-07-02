@@ -194,7 +194,6 @@ class SelfiecvAndroid < Grape::API
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
         @user_education = UserEducation.new user_id: @user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
-        @user_education
       end
 
     # for fill user awards and certificates

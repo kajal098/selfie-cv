@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
 
         has_many :devices
         has_many :user_educations
+        has_many :awards
+        has_many :certificates
+        has_many :user_curriculars
 
 mount_uploader :file, FileUploader
   def thumb_url; file.url(:thumb); end
