@@ -21,7 +21,7 @@ end
 
 
 if @award
-	json.awards @user.awards do |award|
+	json.awards @user.user_awards do |award|
 		json.extract! award, :id, :user_id, :name, :description
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
@@ -30,8 +30,10 @@ end
 
 
 if @certificate
-	json.certificates @user.certificates do |certificate|
-		json.extract! certificate, :id, :user_id, :name, :description
+	json.certificates @user.user_certificates do |certificate|
+		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
+
+		json.file certificate.thumb_url
 
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
