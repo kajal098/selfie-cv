@@ -206,8 +206,7 @@ class SelfiecvIos < Grape::API
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
       end
 
-
-      # for fill user awards and certificates
+    # for fill user awards and certificates
 
     desc 'User Achievement'
       params do
