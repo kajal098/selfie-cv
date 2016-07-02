@@ -21,8 +21,11 @@ mount_uploader :file, FileUploader
   def resume_thumb_url; file.url(:thumb); end
   def resume_photo_url; file.url; end
 
+mount_uploader :profile_pic, FileUploader
   def profile_thumb_url; profile_pic.url(:thumb); end
   def profile_photo_url; profile_pic.url; end
+
+  
 
 TITLES = 
   [

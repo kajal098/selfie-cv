@@ -187,7 +187,7 @@ class SelfiecvAndroid < Grape::API
         optional :skill
         optional :file
       end
-      post :resume, jbuilder: 'all' do
+      get :resume, jbuilder: 'all' do
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
@@ -235,7 +235,7 @@ class SelfiecvAndroid < Grape::API
           optional :date
           optional :file
         end
-        post :curriculars, jbuilder: 'all' do
+        get :curriculars, jbuilder: 'all' do
           @user = User.find params[:user_id]
           @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
           @curricular.file = params[:file] if params[:file]
