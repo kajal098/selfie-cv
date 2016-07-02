@@ -199,16 +199,16 @@ class SelfiecvAndroid < Grape::API
 
     # for fill user awards and certificates
 
-    desc 'User Awards And Certificates'
+    desc 'User Achievement'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
         optional :type
         optional :name
-        optional :certi_type
-        optional :file
+        optional :certi_type        
         optional :year
         optional :description
+        optional :file
       end
       get :achievement, jbuilder: 'all' do
         @user = User.find params[:user_id]
@@ -222,6 +222,26 @@ class SelfiecvAndroid < Grape::API
           error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
         end
       end
+
+      # for fill curriculars
+
+      desc 'User Curriculars'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :user_id
+          optional :type
+          optional :title
+          optional :team_type        
+          optional :location
+          optional :date
+          optional :file
+        end
+        get :curriculars, jbuilder: 'all' do
+          @user = User.find params[:user_id]
+            @curricular = UserCurricular.new type: params[:type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
+            @curricular.file = params[:file] if params[:file]
+            error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save          
+        end
 
       
 

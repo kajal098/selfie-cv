@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CurricularTest < ActiveSupport::TestCase
+class UserCurricularTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

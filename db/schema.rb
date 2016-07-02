@@ -11,24 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702054112) do
+ActiveRecord::Schema.define(version: 20160702055341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "curriculars", force: :cascade do |t|
-    t.string   "type"
-    t.string   "title"
-    t.string   "team_type"
-    t.string   "location"
-    t.string   "date"
-    t.string   "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160702054112) do
   end
 
   create_table "user_awards", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "name"
     t.string   "type"
     t.string   "description"
@@ -59,7 +49,10 @@ ActiveRecord::Schema.define(version: 20160702054112) do
     t.datetime "updated_at",  null: false
   end
 
+  add_index "user_awards", ["user_id"], name: "index_user_awards_on_user_id", using: :btree
+
   create_table "user_certificates", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "type"
     t.string   "name"
     t.string   "year"
@@ -67,6 +60,22 @@ ActiveRecord::Schema.define(version: 20160702054112) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "user_certificates", ["user_id"], name: "index_user_certificates_on_user_id", using: :btree
+
+  create_table "user_curriculars", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.string   "title"
+    t.string   "team_type"
+    t.string   "location"
+    t.string   "date"
+    t.string   "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_curriculars", ["user_id"], name: "index_user_curriculars_on_user_id", using: :btree
 
   create_table "user_educations", force: :cascade do |t|
     t.integer  "user_id"
@@ -147,6 +156,9 @@ ActiveRecord::Schema.define(version: 20160702054112) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "devices", "users", on_delete: :cascade
+  add_foreign_key "user_awards", "users", on_delete: :cascade
+  add_foreign_key "user_certificates", "users", on_delete: :cascade
+  add_foreign_key "user_curriculars", "users", on_delete: :cascade
   add_foreign_key "user_educations", "courses", on_delete: :cascade
   add_foreign_key "user_educations", "specializations", on_delete: :cascade
   add_foreign_key "user_educations", "users", on_delete: :cascade
