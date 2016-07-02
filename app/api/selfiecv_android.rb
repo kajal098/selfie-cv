@@ -253,7 +253,7 @@ class SelfiecvAndroid < Grape::API
             optional :term_type        
             optional :file
           end
-          get :future_goal, jbuilder: 'all' do
+          post :future_goal, jbuilder: 'all' do
             @user = User.find params[:user_id]
             @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
             @future_goal.file = params[:file] if params[:file]
@@ -270,7 +270,7 @@ class SelfiecvAndroid < Grape::API
               optional :title
               optional :file
             end
-            get :working_environment, jbuilder: 'all' do
+            post :working_environment, jbuilder: 'all' do
               @user = User.find params[:user_id]
               @environment = UserEnvironment.new user_id: @user.id, env_type: params[:env_type], title: params[:title]
               @environment.file = params[:file] if params[:file]
@@ -292,7 +292,7 @@ class SelfiecvAndroid < Grape::API
               optional :location
               optional :file
             end
-            get :references, jbuilder: 'all' do
+            post :references, jbuilder: 'all' do
               @user = User.find params[:user_id]
               @reference = UserReference.new user_id: @user.id, title: params[:title], ref_type: params[:ref_type], from: params[:from],email: params[:email], contact: params[:contact], date: params[:date], location: params[:location]
               @reference.file = params[:file] if params[:file]
