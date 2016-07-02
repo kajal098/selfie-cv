@@ -1,8 +1,10 @@
 if @user
 
-		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :address, :city, :school_name, :education_in
+		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :education_in, :school_name, :year
 
-		json.file @user.thumb_url
+		json.profile_pic @user.profile_thumb_url
+
+		json.resume @user.resume_thumb_url
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
@@ -36,7 +38,7 @@ end
 if @curricular
 	json.curriculars @user.user_curriculars do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
-		
+
 		json.file curricular.thumb_url
 	end
 		json.curricular_created_at @curricular.created_at.to_i
