@@ -3,7 +3,7 @@ class CreateUserAwards < ActiveRecord::Migration
     create_table :user_awards do |t|
       t.integer :user_id
       t.string :name
-      t.string :type
+      t.string :award_type
       t.string :description
       t.string :file
 

@@ -217,7 +217,7 @@ class SelfiecvAndroid < Grape::API
           @award.file = params[:file] if params[:file]
           error! @award.errors.full_messages.join(', '), 422 unless @award.save
         elsif params[:type] == 'certificate'
-          @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], type: params[:certi_type]
+          @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], certificate_type: params[:certi_type]
           @certificate.file = params[:file] if params[:file]
           error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
         end
@@ -229,7 +229,7 @@ class SelfiecvAndroid < Grape::API
         params do
           requires :token, type: String, regexp: UUID_REGEX
           requires :user_id
-          optional :type
+          optional :curricular_type
           optional :title
           optional :team_type        
           optional :location
@@ -238,9 +238,9 @@ class SelfiecvAndroid < Grape::API
         end
         get :curriculars, jbuilder: 'all' do
           @user = User.find params[:user_id]
-            @curricular = UserCurricular.new user_id: @user.id, type: params[:type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
-            @curricular.file = params[:file] if params[:file]
-            error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save          
+          @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
+          @curricular.file = params[:file] if params[:file]
+          error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save          
         end
 
       

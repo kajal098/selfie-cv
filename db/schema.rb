@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20160702055341) do
   create_table "user_awards", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.string   "type"
+    t.string   "award_type"
     t.string   "description"
     t.string   "file"
     t.datetime "created_at",  null: false
@@ -53,26 +53,26 @@ ActiveRecord::Schema.define(version: 20160702055341) do
 
   create_table "user_certificates", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "type"
+    t.string   "certificate_type"
     t.string   "name"
     t.string   "year"
     t.string   "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "user_certificates", ["user_id"], name: "index_user_certificates_on_user_id", using: :btree
 
   create_table "user_curriculars", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "type"
+    t.string   "curricular_type"
     t.string   "title"
     t.string   "team_type"
     t.string   "location"
-    t.string   "date"
+    t.date     "date"
     t.string   "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "user_curriculars", ["user_id"], name: "index_user_curriculars_on_user_id", using: :btree

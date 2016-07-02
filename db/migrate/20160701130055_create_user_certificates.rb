@@ -2,7 +2,7 @@ class CreateUserCertificates < ActiveRecord::Migration
   def change
     create_table :user_certificates do |t|
       t.integer :user_id
-      t.string :type
+      t.string :certificate_type
       t.string :name
       t.string :year
       t.string :file
