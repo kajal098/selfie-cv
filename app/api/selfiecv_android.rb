@@ -174,11 +174,12 @@ class SelfiecvAndroid < Grape::API
         requires :date_of_birth 
         requires :nationality 
         requires :address 
-        requires :city  
-        requires :contact_number  
-        optional :education_in  
-        optional :school_name 
-        optional :year
+        requires :city
+        requires :zipcode
+        requires :contact_number
+        requires :education_in  
+        requires :school_name 
+        requires :year
         optional :course_id
         optional :specialization_id
         optional :year
@@ -202,8 +203,8 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        requires :type
-        requires :name
+        optional :type
+        optional :name
         optional :certi_type
         optional :file
         optional :year
