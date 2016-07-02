@@ -180,15 +180,16 @@ class SelfiecvIos < Grape::API
         requires :first_name
         optional :middle_name
         optional :last_name
-        optional :gender
-        optional :date_of_birth 
-        optional :nationality 
-        optional :address 
-        optional :city  
-        optional :contact_number  
-        optional :education_in  
-        optional :school_name 
-        optional :year
+        requires :gender
+        requires :date_of_birth 
+        requires :nationality 
+        requires :address 
+        requires :city
+        requires :zipcode
+        requires :contact_number
+        requires :education_in  
+        requires :school_name 
+        requires :year
         optional :course_id
         optional :specialization_id
         optional :year
@@ -203,8 +204,54 @@ class SelfiecvIos < Grape::API
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
         @user_education = UserEducation.new user_id: @user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
-        @user_education
       end
+
+
+      # for fill user awards and certificates
+
+    desc 'User Achievement'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :type
+        optional :name
+        optional :certi_type        
+        optional :year
+        optional :description
+        optional :file
+      end
+      post :achievement, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        if params[:type] == 'awards'
+          @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
+          @award.file = params[:file] if params[:file]
+          error! @award.errors.full_messages.join(', '), 422 unless @award.save
+        elsif params[:type] == 'certificate'
+          @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], certificate_type: params[:certi_type]
+          @certificate.file = params[:file] if params[:file]
+          error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+        end
+      end
+
+      # for fill curriculars
+
+      desc 'User Curriculars'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :user_id
+          optional :curricular_type
+          optional :title
+          optional :team_type        
+          optional :location
+          optional :date
+          optional :file
+        end
+        post :curriculars, jbuilder: 'all' do
+          @user = User.find params[:user_id]
+          @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
+          @curricular.file = params[:file] if params[:file]
+          error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save          
+        end
 
       
 
