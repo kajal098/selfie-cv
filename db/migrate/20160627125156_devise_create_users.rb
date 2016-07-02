@@ -15,6 +15,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :nationality,              null: false, default: ""
       t.string :address,              null: false, default: ""
       t.string :city,              null: false, default: ""
+      t.string :zipcode,              null: false, default: ""
       t.string :contact_number,              null: false, default: ""
       t.string :education_in,              null: false, default: ""
       t.string :school_name,              null: false, default: ""
@@ -29,8 +30,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :establish_from,              :default => Date.today 
       t.string :industry_type,              null: false, default: ""
       t.string :functional_area,              null: false, default: ""
-      t.string :company_address,              null: false, default: ""
-      t.string :company_zipcode,              null: false, default: ""
+      t.string :company_address,              null: false, default: ""      
       t.string :company_city,              null: false, default: ""
       t.string :company_contact,              null: false, default: ""
       t.string :company_skype_id,              null: false, default: ""

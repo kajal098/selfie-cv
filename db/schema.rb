@@ -82,10 +82,11 @@ ActiveRecord::Schema.define(version: 20160701130105) do
     t.string   "last_name",                             default: "",           null: false
     t.string   "profile_pic",                           default: ""
     t.string   "gender",                                default: "",           null: false
-    t.string   "date_of_birth",                         default: "2016-07-01"
+    t.string   "date_of_birth",                         default: "2016-07-02"
     t.string   "nationality",                           default: "",           null: false
     t.string   "address",                               default: "",           null: false
     t.string   "city",                                  default: "",           null: false
+    t.string   "zipcode",                               default: "",           null: false
     t.string   "contact_number",                        default: "",           null: false
     t.string   "education_in",                          default: "",           null: false
     t.string   "school_name",                           default: "",           null: false
@@ -95,13 +96,12 @@ ActiveRecord::Schema.define(version: 20160701130105) do
     t.string   "faculty_uni_name",                      default: "",           null: false
     t.string   "faculty_subject",                       default: "",           null: false
     t.string   "faculty_designation",                   default: "",           null: false
-    t.string   "faculty_join_from",                     default: "2016-07-01"
+    t.string   "faculty_join_from",                     default: "2016-07-02"
     t.string   "company_name",                          default: "",           null: false
-    t.string   "establish_from",                        default: "2016-07-01"
+    t.string   "establish_from",                        default: "2016-07-02"
     t.string   "industry_type",                         default: "",           null: false
     t.string   "functional_area",                       default: "",           null: false
     t.string   "company_address",                       default: "",           null: false
-    t.string   "company_zipcode",                       default: "",           null: false
     t.string   "company_city",                          default: "",           null: false
     t.string   "company_contact",                       default: "",           null: false
     t.string   "company_skype_id",                      default: "",           null: false

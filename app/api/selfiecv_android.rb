@@ -170,12 +170,12 @@ class SelfiecvAndroid < Grape::API
         requires :first_name
         optional :middle_name
         optional :last_name
-        optional :gender
-        optional :date_of_birth 
-        optional :nationality 
-        optional :address 
-        optional :city  
-        optional :contact_number  
+        requires :gender
+        requires :date_of_birth 
+        requires :nationality 
+        requires :address 
+        requires :city  
+        requires :contact_number  
         optional :education_in  
         optional :school_name 
         optional :year
@@ -209,16 +209,16 @@ class SelfiecvAndroid < Grape::API
         optional :year
         optional :description
       end
-      get :awards, jbuilder: 'all' do
+      get :achievement, jbuilder: 'all' do
         @user = User.find params[:user_id]
         if params[:type] == 'awards'
-          @user_award = UserAward.new name: params[:name], description: params[:description]
-          @user_award.file = params[:file] if params[:file]
-          error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
-        elsif params[:type] == 'certi'
-          @user_award = UserCertificate.new name: params[:name], year: params[:year], type: params[:certi_type]
-          @user_award.file = params[:file] if params[:file]
-          error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
+          @award = UserAward.new name: params[:name], description: params[:description]
+          @award.file = params[:file] if params[:file]
+          error! @award.errors.full_messages.join(', '), 422 unless @award.save
+        elsif params[:type] == 'certificate'
+          @certificate = UserCertificate.new name: params[:name], year: params[:year], type: params[:certi_type]
+          @certificate.file = params[:file] if params[:file]
+          error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
         end
       end
 
