@@ -51,3 +51,37 @@ if @curricular
 		json.curricular_updated_at curricular.updated_at.to_i
 	end
 end
+
+if @future_goal
+	json.future_goals @user.user_future_goals do |future_goal|
+		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
+
+		json.file future_goal.thumb_url
+
+		json.future_goal_created_at future_goal.created_at.to_i
+		json.future_goal_updated_at future_goal.updated_at.to_i
+	end
+end
+
+if @environment
+	json.environments @user.user_environments do |environment|
+		json.extract! environment, :id, :user_id, :env_type, :title
+
+		json.file environment.thumb_url
+
+		json.environment_created_at environment.created_at.to_i
+		json.environment_updated_at environment.updated_at.to_i
+	end
+end
+
+
+if @reference
+	json.environments @user.user_references do |env|
+		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
+
+		json.file env.thumb_url
+
+		json.env_created_at env.created_at.to_i
+		json.env_updated_at env.updated_at.to_i
+	end
+end

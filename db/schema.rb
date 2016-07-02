@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702055341) do
+ActiveRecord::Schema.define(version: 20160702094312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,45 @@ ActiveRecord::Schema.define(version: 20160702055341) do
   add_index "user_educations", ["specialization_id"], name: "index_user_educations_on_specialization_id", using: :btree
   add_index "user_educations", ["user_id"], name: "index_user_educations_on_user_id", using: :btree
 
+  create_table "user_environments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "env_type"
+    t.string   "title"
+    t.string   "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_environments", ["user_id"], name: "index_user_environments_on_user_id", using: :btree
+
+  create_table "user_future_goals", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "goal_type"
+    t.string   "title"
+    t.string   "term_type"
+    t.string   "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
+
+  create_table "user_references", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "ref_type"
+    t.string   "from"
+    t.string   "email"
+    t.string   "contact"
+    t.date     "date"
+    t.string   "location"
+    t.string   "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_references", ["user_id"], name: "index_user_references_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.integer  "role",                                  default: 0,            null: false
     t.string   "title",                                 default: "",           null: false
@@ -162,4 +201,7 @@ ActiveRecord::Schema.define(version: 20160702055341) do
   add_foreign_key "user_educations", "courses", on_delete: :cascade
   add_foreign_key "user_educations", "specializations", on_delete: :cascade
   add_foreign_key "user_educations", "users", on_delete: :cascade
+  add_foreign_key "user_environments", "users", on_delete: :cascade
+  add_foreign_key "user_future_goals", "users", on_delete: :cascade
+  add_foreign_key "user_references", "users", on_delete: :cascade
 end

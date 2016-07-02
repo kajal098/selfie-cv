@@ -242,6 +242,63 @@ class SelfiecvAndroid < Grape::API
           error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save          
         end
 
+        # for fill future goal
+
+        desc 'User Future Goal'
+          params do
+            requires :token, type: String, regexp: UUID_REGEX
+            requires :user_id
+            optional :goal_type
+            optional :title
+            optional :term_type        
+            optional :file
+          end
+          get :future_goal, jbuilder: 'all' do
+            @user = User.find params[:user_id]
+            @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
+            @future_goal.file = params[:file] if params[:file]
+            error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save          
+          end
+
+          # for fill working environment
+
+          desc 'User Working Environment'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+              optional :env_type
+              optional :title
+              optional :file
+            end
+            get :working_environment, jbuilder: 'all' do
+              @user = User.find params[:user_id]
+              @environment = UserEnvironment.new user_id: @user.id, env_type: params[:env_type], title: params[:title]
+              @environment.file = params[:file] if params[:file]
+              error! @environment.errors.full_messages.join(', '), 422 unless @environment.save          
+            end
+
+            # for fill references
+
+          desc 'User References'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+              optional :title
+              optional :ref_type
+              optional :from        
+              optional :email
+              optional :contact
+              optional :date
+              optional :location
+              optional :file
+            end
+            get :references, jbuilder: 'all' do
+              @user = User.find params[:user_id]
+              @reference = UserReference.new user_id: @user.id, title: params[:title], ref_type: params[:ref_type], from: params[:from],email: params[:email], contact: params[:contact], date: params[:date], location: params[:location]
+              @reference.file = params[:file] if params[:file]
+              error! @reference.errors.full_messages.join(', '), 422 unless @reference.save          
+            end
+
       
 
       
