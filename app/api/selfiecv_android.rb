@@ -306,6 +306,41 @@ class SelfiecvAndroid < Grape::API
   
 
   # member end
- 
+
+  # company start
+  
+  resources :company do 
+
+  # for fill company information
+
+          desc 'Company Information'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+              requires :company_name
+              optional :company_establish_from
+              requires :company_industry        
+              requires :company_functional_area
+              requires :company_address
+              requires :company_zipcode
+              requires :company_city
+              requires :company_contact
+              optional :company_skype_id
+              requires :company_id
+            end
+            get :company_info, jbuilder: 'all' do
+              @user = User.find params[:user_id]
+              if @user.role == 'Company'
+                @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
+                error! @user.errors.full_messages.join(', '), 422 unless @user.save
+                
+              else
+                error! "Record not found.", 422
+              end
+            end
+  
+   end
+
+   # company end
 
 end
