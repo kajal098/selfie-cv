@@ -400,6 +400,25 @@ class SelfiecvIos < Grape::API
    end
 
    # company end
+
+   # data start
+  
+  resources :data do 
+
+    # for dropdown data
+
+    desc 'Company Information'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+            end
+            post :course_and_spe, jbuilder: 'all' do
+              @courses = Course.all
+              @specializations = Specialization.all
+            end
+
+  end
+
+  # data end
  
 
 end

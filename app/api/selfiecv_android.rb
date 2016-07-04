@@ -372,9 +372,9 @@ class SelfiecvAndroid < Grape::API
   
    end
 
-   # company end
+  # company end
 
-   # data start
+  # data start
   
   resources :data do 
 
