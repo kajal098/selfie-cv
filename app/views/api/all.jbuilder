@@ -21,6 +21,7 @@ if @user
 		json.updated_at @user.updated_at.to_i
 	end
 	end
+	json.status "success"
 end
 
 
@@ -118,4 +119,4 @@ if @specializations
 	end
 end
 
-json.status "success"
+
