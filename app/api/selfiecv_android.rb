@@ -61,8 +61,7 @@ class SelfiecvAndroid < Grape::API
       @device.renew_token
       error! @device.errors.full_messages.join(', '), 200 unless @device.save
       @device.ensure_duplicate_registrations
-      { token: @device.token }
-      status 200
+      render message: "success", token: @device.token, :status => 200
     end
 
     desc 'Deactivate device for notifications'
