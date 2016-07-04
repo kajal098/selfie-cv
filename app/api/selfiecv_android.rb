@@ -9,12 +9,12 @@ class SelfiecvAndroid < Grape::API
   formatter :json, Grape::Formatter::Jbuilder
 
   # Send Validation Error with 200 status code
-  # rescue_from :all do |e|
-  #   error!(e.message, 200)
-  # end
+  rescue_from :all do |e|
+    error!(e.message, 200)
+  end
 
-  # # Default status on 500 Error
-  # default_error_status 200
+  # Default status on 500 Error
+  default_error_status 200
 
   helpers do
     
@@ -89,7 +89,6 @@ class SelfiecvAndroid < Grape::API
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
         error! 'Device not registered',422 unless current_device
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
-        { token: @user, :status => "success" }
       end
 
     # for user login
@@ -108,7 +107,6 @@ class SelfiecvAndroid < Grape::API
       error! 'authentication failed',422 unless @user.role == params[:role]
       error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
       current_device.update_column :user_id, @user.id
-      { token: @user, :status => "success" }
     end
 
     # for send reset password token to reset password
