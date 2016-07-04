@@ -9,12 +9,12 @@ class SelfiecvAndroid < Grape::API
   formatter :json, Grape::Formatter::Jbuilder
 
   # Send Validation Error with 200 status code
-  rescue_from :all do |e|
-    error!(e.message, 200)
-  end
+  # rescue_from :all do |e|
+  #   error!(e.message, 200)
+  # end
 
-  # Default status on 500 Error
-  default_error_status 200
+  # # Default status on 500 Error
+  # default_error_status 200
 
   helpers do
     
