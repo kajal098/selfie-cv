@@ -65,6 +65,7 @@ class SelfiecvAndroid < Grape::API
       @device.save
       { token: @device.token, :status => "success" }
     end
+    
 
   end
 
