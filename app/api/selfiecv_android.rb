@@ -384,7 +384,7 @@ class SelfiecvAndroid < Grape::API
             params do
               requires :token, type: String, regexp: UUID_REGEX
             end
-            get :company_and_spe, jbuilder: 'all' do
+            post :company_and_spe, jbuilder: 'all' do
               @courses = Course.all
               @specializations = Specialization.all
             end
