@@ -8,7 +8,7 @@ class SelfiecvAndroid < Grape::API
   format :json 
   formatter :json, Grape::Formatter::Jbuilder
   rescue_from Grape::Exceptions::ValidationErrors do |e|
-    error!(e, 400)
+    error!(e, 200)
   end
   default_error_status 200
 
