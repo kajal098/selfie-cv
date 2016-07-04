@@ -8,9 +8,6 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
-
-		json.status "success"
-
 	else if @user.role == 'Company'
 		json.User @user, :id, :company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :companu_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
@@ -22,9 +19,6 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
-
-		json.status "success"
-		
 	end
 	end
 end
