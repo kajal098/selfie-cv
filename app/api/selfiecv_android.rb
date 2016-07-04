@@ -65,7 +65,6 @@ class SelfiecvAndroid < Grape::API
       @device.save
       { token: @device.token, :status => "success" }
     end
-    
 
   end
 
@@ -385,7 +384,7 @@ class SelfiecvAndroid < Grape::API
             params do
               requires :token, type: String, regexp: UUID_REGEX
             end
-            post :company_and_spe, jbuilder: 'all' do
+            post :course_and_spe, jbuilder: 'all' do
               @courses = Course.all
               @specializations = Specialization.all
             end
