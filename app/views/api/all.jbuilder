@@ -21,7 +21,6 @@ if @user
 		json.updated_at @user.updated_at.to_i
 	end
 	end
-	
 end
 
 
@@ -118,5 +117,3 @@ if @specializations
 		json.specialization_updated_at specialization.updated_at.to_i
 	end
 end
-
-
