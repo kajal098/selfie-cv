@@ -27,6 +27,21 @@ class SelfiecvAndroid < Grape::API
       error! 'Unauthorized', 401 unless current_user
     end
 
+    def api_response response
+      case response
+      when Integer
+        status response
+      when String
+        response
+      when Hash
+        response
+      when Net::HTTPResponse
+        "#{response.code}: #{response.message}"
+      else
+        status 200 # Bad request
+      end
+    end
+
   end
 
 # devices start
@@ -44,9 +59,10 @@ class SelfiecvAndroid < Grape::API
       @device = Device.find_or_initialize_by uuid: params[:uuid]
       @device.registration_id = params[:registration_id]
       @device.renew_token
-      error! @device.errors.full_messages.join(', '), 422 unless @device.save
+      error! @device.errors.full_messages.join(', '), 200 unless @device.save
       @device.ensure_duplicate_registrations
       { token: @device.token }
+      status 200
     end
 
     desc 'Deactivate device for notifications'
