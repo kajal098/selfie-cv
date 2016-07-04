@@ -1,4 +1,3 @@
-json.status "success"
 if @user
 	if @user.role == 'Jobseeker'
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :education_in, :school_name, :year
@@ -118,3 +117,5 @@ if @specializations
 		json.specialization_updated_at specialization.updated_at.to_i
 	end
 end
+
+json.status "success"
