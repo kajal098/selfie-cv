@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SpecializationTest < ActiveSupport::TestCase
+class Admin::CoursesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end

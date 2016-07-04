@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: redirect('/admin')
   namespace :admin do
     root 'dashboard#index'
-    resources :devices, :users
+    resources :devices, :users, :user_educations, :courses, :specializations, :user_awards
   end
   mount SelfiecvAndroid => '/'
   mount SelfiecvIos => '/'

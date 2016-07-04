@@ -30,6 +30,9 @@
           <li><%= link_to "Dashboard", admin_root_path %></li>
           <li><%= link_to "Devices", admin_devices_path %></li>
           <li><%= link_to "Users", admin_users_path %></li>
+          <li><%= link_to "Courses", admin_courses_path %></li>
+          <li><%= link_to "User Educations", admin_user_educations_path %></li>
+          <li><%= link_to "Specializations", admin_specializations_path %></li>
         </ul>        
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, 'data-confirm' => 'Are you sure?' %></li>
