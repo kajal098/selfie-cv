@@ -63,7 +63,7 @@ class SelfiecvAndroid < Grape::API
       @device = Device.find_by token: params[:token]
       @device.registration_id = nil
       @device.save
-      { token: @device.token }
+      { token: @device.token, :status => "success" }
     end
 
   end
