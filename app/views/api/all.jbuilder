@@ -9,11 +9,13 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 	else if @user.role == 'Company'
-		json.User @user, :id, :company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id
+		json.User @user, :id, :company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link
 
-		json.profile @user.profile_thumb_url
+		json.logo @user.logo_thumb_url
 
-		json.resume @user.resume_thumb_url
+		json.profile @user.company_profile_thumb_url
+
+		json.brochure @user.brochure_thumb_url
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i

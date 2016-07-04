@@ -28,6 +28,17 @@ mount_uploader :profile_pic, FileUploader
   def profile_thumb_url; profile_pic.url(:thumb); end
   def profile_photo_url; profile_pic.url; end
 
+mount_uploader :company_logo, FileUploader
+  def logo_thumb_url; company_logo.url(:thumb); end
+  def logo_photo_url; company_logo.url; end
+
+mount_uploader :company_profile, FileUploader
+  def company_profile_thumb_url; company_profile.url(:thumb); end
+  def company_profile_photo_url; company_profile.url; end
+
+mount_uploader :company_brochure, FileUploader
+  def brochure_thumb_url; company_brochure.url(:thumb); end
+  def brochure_photo_url; company_brochure.url; end
   
 
 TITLES = 
