@@ -193,7 +193,7 @@ class SelfiecvAndroid < Grape::API
         optional :skill
         optional :file
       end
-      post :resume, jbuilder: 'all' do
+      post :resume, jbuilder: 'user' do
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
