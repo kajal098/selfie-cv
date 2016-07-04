@@ -345,7 +345,7 @@ class SelfiecvAndroid < Grape::API
               end
             end
 
-           # for company introduction
+          # for company introduction
 
           desc 'Company Introduction'
             params do
@@ -373,5 +373,24 @@ class SelfiecvAndroid < Grape::API
    end
 
    # company end
+
+   # data start
+  
+  resources :data do 
+
+    # for dropdown data
+
+    desc 'Company Information'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+            end
+            post :company_and_spe, jbuilder: 'all' do
+              @companies = Company.all
+              @specializations = Specialization.all
+            end
+
+  end
+
+  # data end
 
 end

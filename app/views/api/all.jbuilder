@@ -99,3 +99,21 @@ if @reference
 		json.env_updated_at env.updated_at.to_i
 	end
 end
+
+if @companies
+	json.compnies @companies do |company|
+		json.extract! env, :id, :name
+
+		json.env_created_at env.created_at.to_i
+		json.env_updated_at env.updated_at.to_i
+	end
+end
+
+if @specializations
+	json.specializations @specializations do |specialization|
+		json.extract! env, :id, :name
+
+		json.env_created_at env.created_at.to_i
+		json.env_updated_at env.updated_at.to_i
+	end
+end
