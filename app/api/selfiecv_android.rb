@@ -328,7 +328,7 @@ class SelfiecvAndroid < Grape::API
               optional :company_skype_id
               requires :company_id
             end
-            get :company_info, jbuilder: 'all' do
+            post :company_info, jbuilder: 'all' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
@@ -351,7 +351,7 @@ class SelfiecvAndroid < Grape::API
               requires :company_website
               requires :company_facebook_link
             end
-            get :company_intro, jbuilder: 'all' do
+            post :company_intro, jbuilder: 'all' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link)
