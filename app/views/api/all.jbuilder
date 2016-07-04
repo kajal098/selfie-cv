@@ -100,20 +100,20 @@ if @reference
 	end
 end
 
-if @companies
-	json.compnies @companies do |company|
-		json.extract! env, :id, :name
+if @courses
+	json.courses @courses do |course|
+		json.extract! course, :id, :name
 
-		json.env_created_at env.created_at.to_i
-		json.env_updated_at env.updated_at.to_i
+		json.course_created_at course.created_at.to_i
+		json.course_updated_at course.updated_at.to_i
 	end
 end
 
 if @specializations
 	json.specializations @specializations do |specialization|
-		json.extract! env, :id, :name
+		json.extract! specialization, :id, :name
 
-		json.env_created_at env.created_at.to_i
-		json.env_updated_at env.updated_at.to_i
+		json.specialization_created_at specialization.created_at.to_i
+		json.specialization_updated_at specialization.updated_at.to_i
 	end
 end
