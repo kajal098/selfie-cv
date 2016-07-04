@@ -357,8 +357,8 @@ class SelfiecvIos < Grape::API
               optional :company_logo
               optional :company_profile
               optional :company_brochure        
-              requires :company_website
-              requires :company_facebook_link
+              optional :company_website
+              optional :company_facebook_link
             end
             post :corporate_identity, jbuilder: 'all' do
               @user = User.find params[:user_id]
