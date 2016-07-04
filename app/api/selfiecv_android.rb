@@ -7,6 +7,9 @@ class SelfiecvAndroid < Grape::API
   version 'android', using: :path
   format :json 
   formatter :json, Grape::Formatter::Jbuilder
+  rescue_from Grape::Exceptions::ValidationErrors do |e|
+    error!(e, 400)
+  end
   default_error_status 200
 
   helpers do
