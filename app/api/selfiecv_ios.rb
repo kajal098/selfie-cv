@@ -348,9 +348,9 @@ class SelfiecvIos < Grape::API
             end
 
 
-            # for company introduction
+          # for corporate identity
 
-          desc 'Company Introduction'
+          desc 'Corporate Identity'
             params do
               requires :token, type: String, regexp: UUID_REGEX
               requires :user_id
@@ -360,7 +360,7 @@ class SelfiecvIos < Grape::API
               requires :company_website
               requires :company_facebook_link
             end
-            post :company_intro, jbuilder: 'all' do
+            post :corporate_identity, jbuilder: 'all' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link)
@@ -368,6 +368,30 @@ class SelfiecvIos < Grape::API
                 @user.company_logo = params[:company_logo] if params[:company_logo]
                 @user.company_profile = params[:company_profile] if params[:company_profile]
                 @user.company_brochure = params[:company_brochure] if params[:company_brochure]
+              else
+                error! "Record not found.", 422
+              end
+            end
+
+          # for corporate identity
+
+          desc 'Growth And Goal'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+              optional :company_turnover
+              requires :company_no_of_emp
+              optional :company_growth_ratio        
+              optional :companu_new_ventures
+              optional :company_future_turnover
+              optional :company_future_new_venture_location
+              optional :company_future_outlet
+            end
+            get :growth_and_goal, jbuilder: 'all' do
+              @user = User.find params[:user_id]
+              if @user.role == 'Company'
+                @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :companu_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+                error! @user.errors.full_messages.join(', '), 422 unless @user.save
               else
                 error! "Record not found.", 422
               end
