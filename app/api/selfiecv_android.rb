@@ -8,6 +8,14 @@ class SelfiecvAndroid < Grape::API
   format :json 
   formatter :json, Grape::Formatter::Jbuilder
 
+  # Send Validation Error with 200 status code
+  rescue_from :all do |e|
+    error!(e.message, 200)
+  end
+
+  # Default status on 500 Error
+  default_error_status 200
+
   helpers do
     
     def clean_params(params)
@@ -27,21 +35,6 @@ class SelfiecvAndroid < Grape::API
       error! 'Unauthorized', 401 unless current_user
     end
 
-    def api_response response
-      case response
-      when Integer
-        status response
-      when String
-        response
-      when Hash
-        response
-      when Net::HTTPResponse
-        "#{response.code}: #{response.message}"
-      else
-        status 200 # Bad request
-      end
-    end
-
   end
 
 # devices start
@@ -54,13 +47,12 @@ class SelfiecvAndroid < Grape::API
       optional :registration_id, type: String
     end
     post :register do
-      status 200
-      @device = Device.find_by uuid: params[:uuid]
+      @device = Device.find_or_initialize_by uuid: params[:uuid]
       @device.registration_id = params[:registration_id]
       @device.renew_token
       error! @device.errors.full_messages.join(', '), 200 unless @device.save
       @device.ensure_duplicate_registrations
-      { message: "success", token: @device.token, :status => 200 }
+      { token: @device.token, :status => "success" }
     end
 
     desc 'Deactivate device for notifications'
