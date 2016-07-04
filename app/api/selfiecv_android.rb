@@ -7,6 +7,7 @@ class SelfiecvAndroid < Grape::API
   version 'android', using: :path
   format :json 
   formatter :json, Grape::Formatter::Jbuilder
+  default_error_status 200
 
   helpers do
     
@@ -60,7 +61,7 @@ class SelfiecvAndroid < Grape::API
       @device.renew_token
       error! @device.errors.full_messages.join(', '), 200 unless @device.save
       @device.ensure_duplicate_registrations
-      { message: "success", token: @device.token, :status => 200 }
+      { token: @device.token, :status => "success" }
     end
 
     desc 'Deactivate device for notifications'
