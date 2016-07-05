@@ -402,12 +402,21 @@ class SelfiecvAndroid < Grape::API
             params do
               requires :token, type: String, regexp: UUID_REGEX
               requires :user_id
-              optional :file
+              requires :files, type: Array, default: []
             end
             post :company_galery, jbuilder: 'galery' do
               @user = User.find params[:user_id]
               @galery = CompanyGalery.new
               @galery.file = params[:file] if params[:file]
+
+              @user = User.find params[:user_id]
+                params[:files].each do |file|
+                  @galleries = CompanyGalery.new user_id: params[:user_id]
+                  @galleries.file = file
+                  error! @galleries.errors.full_messages.join(', '), 422 unless @galleries.save
+                end
+                {}
+
             end
 
 
