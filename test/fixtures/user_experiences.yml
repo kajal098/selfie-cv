@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  type: 
+  start_from: MyString
+  working_till: MyString
+  designation: MyString
+  file: MyString
+
+two:
+  name: MyString
+  type: 
+  start_from: MyString
+  working_till: MyString
+  designation: MyString
+  file: MyString

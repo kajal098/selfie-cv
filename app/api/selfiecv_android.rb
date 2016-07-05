@@ -227,7 +227,29 @@ class SelfiecvAndroid < Grape::API
         @user = User.find params[:user_id]
         @user_education = UserEducation.new user_id: @user.id
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
+        @user.file = params[:file] if params[:file]
         error! @user_education.errors.full_messages.join(', '), 200 unless @user_education.save
+      end
+
+    # for fill user's experience
+
+    desc 'User Experience'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :name
+        optional :start_from
+        optional :working_till
+        optional :designation
+        optional :file
+      end
+      get :experience, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
+          @user_experience = UserExperience.new user_id: @user.id
+          @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
+          error! @user_experience.errors.full_messages.join(', '), 200 unless @user_experience.save
+        end
       end
 
     # for fill user's preferred work details
@@ -245,9 +267,11 @@ class SelfiecvAndroid < Grape::API
       end
       get :preferred_work, jbuilder: 'all' do
         @user = User.find params[:user_id]
+        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
         @user_preferred_work = UserPreferredWork.new user_id: @user.id
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
         error! @user_preferred_work.errors.full_messages.join(', '), 200 unless @user_preferred_work.save
+        end
       end
 
     # for fill user awards and certificates

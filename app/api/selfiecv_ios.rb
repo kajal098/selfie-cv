@@ -177,9 +177,9 @@ class SelfiecvIos < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
         requires :title
-        requires :first_name
+        optional :first_name
         optional :middle_name
-        optional :last_name
+        requires :last_name
         requires :gender
         requires :date_of_birth 
         requires :nationality 
@@ -190,20 +190,13 @@ class SelfiecvIos < Grape::API
         requires :education_in  
         requires :school_name 
         requires :year
-        optional :course_id
-        optional :specialization_id
-        optional :year
-        optional :school
-        optional :skill
         optional :file
       end
-      post :resume, jbuilder: 'all' do
+      get :resume, jbuilder: 'all' do
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
-        @user_education = UserEducation.new user_id: @user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
-        error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
       end
 
     # for fill user awards and certificates
