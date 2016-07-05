@@ -44,7 +44,7 @@ class SelfiecvAndroid < Grape::API
     desc 'Register device after notification service subscription'
     params do
       requires :uuid, type: String, regexp: UUID_REGEX
-      requires :registration_id, type: String
+      requires :registration_id, type: String, regexp: UUID_REGEX
     end
     post :register do
       @device = Device.find_or_initialize_by uuid: params[:uuid]
