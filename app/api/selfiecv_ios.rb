@@ -219,6 +219,49 @@ class SelfiecvIos < Grape::API
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
       end
 
+      # for fill user's experience
+
+    desc 'User Experience'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :name
+        optional :start_from
+        optional :working_till
+        optional :designation
+        optional :file
+      end
+      post :experience, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
+          @user_experience = UserExperience.new user_id: @user.id
+          @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
+          error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
+        end
+      end
+
+    # for fill user's preferred work details
+
+    desc 'User Preferred Work'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :ind_name
+        optional :functional_name
+        optional :preferred_designation
+        optional :preferred_location
+        optional :current_salary
+        optional :expected_salary
+      end
+      post :preferred_work, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
+        @user_preferred_work = UserPreferredWork.new user_id: @user.id
+        @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+        error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
+        end
+      end
+
     # for fill user awards and certificates
 
     desc 'User Achievement'
@@ -239,11 +282,11 @@ class SelfiecvIos < Grape::API
           @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
           @award.award_type = params[:award_type] if params[:award_type]
           @award.file = params[:file] if params[:file]
-          error! @award.errors.full_messages.join(', '), 200 unless @award.save
+          error! @award.errors.full_messages.join(', '), 422 unless @award.save
         elsif params[:type] == 'certificate'
           @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], certificate_type: params[:certi_type]
           @certificate.file = params[:file] if params[:file]
-          error! @certificate.errors.full_messages.join(', '), 200 unless @certificate.save
+          error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
         end
       end
 
