@@ -231,7 +231,7 @@ class SelfiecvIos < Grape::API
         optional :designation
         optional :file
       end
-      post :experience, jbuilder: 'all' do
+      get :experience, jbuilder: 'all' do
         @user = User.find params[:user_id]
         if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
           @user_experience = UserExperience.new user_id: @user.id
