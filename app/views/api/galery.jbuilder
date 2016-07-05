@@ -1,4 +1,4 @@
-json.galeries @user.user_galeries do |galery|
+json.galeries @user.company_galeries do |galery|
 		json.extract! galery, :id, :user_id
 
 		json.file galery.thumb_url
