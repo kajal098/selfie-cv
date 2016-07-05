@@ -44,7 +44,7 @@ if @award
 end
 
 if @user_experience
-	json.certificates @user.user_certificates do |experience|
+	json.experiences @user.user_experiences do |experience|
 		json.extract! experience, :id, :user_id, :name, :start_from, :working_till, :designation
 
 		json.experience_created_at experience.created_at.to_i
