@@ -199,6 +199,26 @@ class SelfiecvIos < Grape::API
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
 
+      # for fill user's education
+
+    desc 'User Education'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :course_id
+        optional :specialization_id
+        optional :year
+        optional :school
+        optional :skill
+      end
+      post :education, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        @user_education = UserEducation.new user_id: @user.id
+        @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
+        @user.file = params[:file] if params[:file]
+        error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
+      end
+
     # for fill user awards and certificates
 
     desc 'User Achievement'
