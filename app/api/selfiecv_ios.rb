@@ -409,7 +409,8 @@ class SelfiecvIos < Grape::API
             end
             post :company_galery, jbuilder: 'galery' do
               @user = User.find params[:user_id]
-              @user.file = params[:file] if params[:file]
+              @galery = CompanyGalery.new
+              @galery.file = params[:file] if params[:file]
             end
   
    end

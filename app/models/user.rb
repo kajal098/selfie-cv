@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
         has_many :user_future_goals
         has_many :user_environments
         has_many :user_references
+        has_many :company_galeries
 
 mount_uploader :file, FileUploader
   def resume_thumb_url; file.url(:thumb); end
