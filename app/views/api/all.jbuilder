@@ -35,7 +35,7 @@ end
 
 if @award
 	json.awards @user.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description
+		json.extract! award, :id, :user_id, :name, :description, :award_type
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 	end
