@@ -2,11 +2,10 @@ class CreateUserAwards < ActiveRecord::Migration
   def change
     create_table :user_awards do |t|
       t.integer :user_id
-      t.string :name
-      t.string :award_type
-      t.string :description
-      t.string :file
-
+      t.string :name,              null: false, default: ""
+      t.string :award_type,              null: false, default: ""
+      t.string :description,              null: false, default: ""
+      t.string :file,              default: ''
       t.timestamps null: false
     end
     add_index :user_awards, [:user_id]

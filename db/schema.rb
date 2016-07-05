@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(version: 20160702094312) do
 
   create_table "user_awards", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "name"
-    t.string   "award_type"
-    t.string   "description"
-    t.string   "file"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "name",        default: "", null: false
+    t.string   "award_type",  default: "", null: false
+    t.string   "description", default: "", null: false
+    t.string   "file",        default: ""
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "user_awards", ["user_id"], name: "index_user_awards_on_user_id", using: :btree
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 20160702094312) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-07-04"
+    t.string   "date_of_birth",                                 default: "2016-07-05"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20160702094312) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-07-04"
+    t.string   "faculty_join_from",                             default: "2016-07-05"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.string   "company_industry",                              default: "",           null: false
