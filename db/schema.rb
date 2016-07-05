@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705060146) do
+ActiveRecord::Schema.define(version: 20160705090913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,21 @@ ActiveRecord::Schema.define(version: 20160705060146) do
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
 
+  create_table "user_preferred_works", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "ind_name",              default: "", null: false
+    t.string   "functional_name",       default: "", null: false
+    t.string   "preferred_designation", default: "", null: false
+    t.string   "preferred_location",    default: "", null: false
+    t.string   "current_salary",        default: "", null: false
+    t.string   "expected_salary",       default: "", null: false
+    t.string   "time_type",             default: "", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "user_preferred_works", ["user_id"], name: "index_user_preferred_works_on_user_id", using: :btree
+
   create_table "user_references", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title",      default: "",           null: false
@@ -214,5 +229,6 @@ ActiveRecord::Schema.define(version: 20160705060146) do
   add_foreign_key "user_educations", "users", on_delete: :cascade
   add_foreign_key "user_environments", "users", on_delete: :cascade
   add_foreign_key "user_future_goals", "users", on_delete: :cascade
+  add_foreign_key "user_preferred_works", "users", on_delete: :cascade
   add_foreign_key "user_references", "users", on_delete: :cascade
 end

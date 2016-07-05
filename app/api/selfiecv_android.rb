@@ -164,6 +164,22 @@ class SelfiecvAndroid < Grape::API
       @user
     end
 
+    # for listing users
+
+    desc "Listing Users"
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :role
+      end
+      get :listing , jbuilder: 'listing' do
+          if params[:role]
+            @users = User.where(role: params[:role]).all
+          else
+            'No Records Found !'
+          end
+          @users
+      end
+
   
 
     # for fill user resume
@@ -173,9 +189,9 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
         requires :title
-        requires :first_name
+        optional :first_name
         optional :middle_name
-        optional :last_name
+        requires :last_name
         requires :gender
         requires :date_of_birth 
         requires :nationality 
@@ -186,11 +202,6 @@ class SelfiecvAndroid < Grape::API
         requires :education_in  
         requires :school_name 
         requires :year
-        optional :course_id
-        optional :specialization_id
-        optional :year
-        optional :school
-        optional :skill
         optional :file
       end
       post :resume, jbuilder: 'all' do
@@ -198,8 +209,45 @@ class SelfiecvAndroid < Grape::API
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 200 unless @user.save
-        @user_education = UserEducation.new user_id: @user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
+      end
+
+    # for fill user's education
+
+    desc 'User Education'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :course_id
+        optional :specialization_id
+        optional :year
+        optional :school
+        optional :skill
+      end
+      post :education, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        @user_education = UserEducation.new user_id: @user.id
+        @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
         error! @user_education.errors.full_messages.join(', '), 200 unless @user_education.save
+      end
+
+    # for fill user's preferred work details
+
+    desc 'User Preferred Work'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :ind_name
+        optional :functional_name
+        optional :preferred_designation
+        optional :preferred_location
+        optional :current_salary
+        optional :expected_salary
+      end
+      get :preferred_work, jbuilder: 'all' do
+        @user = User.find params[:user_id]
+        @user_preferred_work = UserPreferredWork.new user_id: @user.id
+        @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+        error! @user_preferred_work.errors.full_messages.join(', '), 200 unless @user_preferred_work.save
       end
 
     # for fill user awards and certificates
@@ -219,12 +267,14 @@ class SelfiecvAndroid < Grape::API
       post :achievement, jbuilder: 'all' do
         @user = User.find params[:user_id]
         if params[:type] == 'awards'
-          @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
+          @award = UserAward.new user_id: @user.id
+          @award.attributes = clean_params(params).permit(:name, :description)
           @award.award_type = params[:award_type] if params[:award_type]
           @award.file = params[:file] if params[:file]
           error! @award.errors.full_messages.join(', '), 200 unless @award.save
         elsif params[:type] == 'certificate'
-          @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], certificate_type: params[:certi_type]
+          @certificate = UserCertificate.new user_id: @user.id
+          @certificate.attributes = clean_params(params).permit(:name, :year,  :certificate_type)
           @certificate.file = params[:file] if params[:file]
           error! @certificate.errors.full_messages.join(', '), 200 unless @certificate.save
         end
@@ -245,7 +295,8 @@ class SelfiecvAndroid < Grape::API
         end
         post :curriculars, jbuilder: 'all' do
           @user = User.find params[:user_id]
-          @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
+          @curricular = UserCurricular.new user_id: @user.id
+          @curricular.attributes = clean_params(params).permit(:curricular_type, :title, :team_type, :location, :date)
           @curricular.file = params[:file] if params[:file]
           error! @curricular.errors.full_messages.join(', '), 200 unless @curricular.save          
         end
@@ -263,7 +314,8 @@ class SelfiecvAndroid < Grape::API
           end
           post :future_goal, jbuilder: 'all' do
             @user = User.find params[:user_id]
-            @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
+            @future_goal = UserFutureGoal.new user_id: @user.id
+            @future_goal.attributes = clean_params(params).permit(:goal_type, :title, :term_type)
             @future_goal.file = params[:file] if params[:file]
             error! @future_goal.errors.full_messages.join(', '), 200 unless @future_goal.save          
           end
@@ -280,7 +332,8 @@ class SelfiecvAndroid < Grape::API
             end
             post :working_environment, jbuilder: 'all' do
               @user = User.find params[:user_id]
-              @environment = UserEnvironment.new user_id: @user.id, env_type: params[:env_type], title: params[:title]
+              @environment = UserEnvironment.new user_id: @user.id
+              @environment.attributes = clean_params(params).permit(:env_type, :title)
               @environment.file = params[:file] if params[:file]
               error! @environment.errors.full_messages.join(', '), 200 unless @environment.save          
             end
@@ -302,7 +355,8 @@ class SelfiecvAndroid < Grape::API
             end
             post :references, jbuilder: 'all' do
               @user = User.find params[:user_id]
-              @reference = UserReference.new user_id: @user.id, title: params[:title], ref_type: params[:ref_type], from: params[:from],email: params[:email], contact: params[:contact], date: params[:date], location: params[:location]
+              @reference = UserReference.new user_id: @user.id
+              @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
               @reference.file = params[:file] if params[:file]
               error! @reference.errors.full_messages.join(', '), 200 unless @reference.save          
             end
