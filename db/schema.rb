@@ -11,15 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702094312) do
+ActiveRecord::Schema.define(version: 20160705060146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "company_galeries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "file",       default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "company_galeries", ["user_id"], name: "index_company_galeries_on_user_id", using: :btree
+
   create_table "courses", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "devices", force: :cascade do |t|
@@ -34,9 +43,9 @@ ActiveRecord::Schema.define(version: 20160702094312) do
   add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
 
   create_table "specializations", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "user_awards", force: :cascade do |t|
@@ -53,26 +62,26 @@ ActiveRecord::Schema.define(version: 20160702094312) do
 
   create_table "user_certificates", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "certificate_type"
-    t.string   "name"
-    t.string   "year"
-    t.string   "file"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string   "certificate_type", default: "", null: false
+    t.string   "name",             default: "", null: false
+    t.string   "year",             default: "", null: false
+    t.string   "file",             default: ""
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "user_certificates", ["user_id"], name: "index_user_certificates_on_user_id", using: :btree
 
   create_table "user_curriculars", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "curricular_type"
-    t.string   "title"
-    t.string   "team_type"
-    t.string   "location"
-    t.date     "date"
-    t.string   "file"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "curricular_type", default: "",           null: false
+    t.string   "title",           default: "",           null: false
+    t.string   "team_type",       default: "",           null: false
+    t.string   "location",        default: "",           null: false
+    t.date     "date",            default: '2016-07-05'
+    t.string   "file",            default: ""
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "user_curriculars", ["user_id"], name: "index_user_curriculars_on_user_id", using: :btree
@@ -81,11 +90,11 @@ ActiveRecord::Schema.define(version: 20160702094312) do
     t.integer  "user_id"
     t.integer  "course_id"
     t.integer  "specialization_id"
-    t.string   "year"
-    t.string   "school"
-    t.string   "skill"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.string   "year",              default: "", null: false
+    t.string   "school",            default: "", null: false
+    t.string   "skill",             default: "", null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "user_educations", ["course_id"], name: "index_user_educations_on_course_id", using: :btree
@@ -94,39 +103,39 @@ ActiveRecord::Schema.define(version: 20160702094312) do
 
   create_table "user_environments", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "env_type"
-    t.string   "title"
-    t.string   "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "env_type",   default: "", null: false
+    t.string   "title",      default: "", null: false
+    t.string   "file",       default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "user_environments", ["user_id"], name: "index_user_environments_on_user_id", using: :btree
 
   create_table "user_future_goals", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "goal_type"
-    t.string   "title"
-    t.string   "term_type"
-    t.string   "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "goal_type",  default: "", null: false
+    t.string   "title",      default: "", null: false
+    t.string   "term_type",  default: "", null: false
+    t.string   "file",       default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
 
   create_table "user_references", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title"
-    t.string   "ref_type"
-    t.string   "from"
-    t.string   "email"
-    t.string   "contact"
-    t.date     "date"
-    t.string   "location"
-    t.string   "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "title",      default: "",           null: false
+    t.string   "ref_type",   default: "",           null: false
+    t.string   "from",       default: "",           null: false
+    t.string   "email",      default: "",           null: false
+    t.string   "contact",    default: "",           null: false
+    t.date     "date",       default: '2016-07-05'
+    t.string   "location",   default: "",           null: false
+    t.string   "file",       default: ""
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "user_references", ["user_id"], name: "index_user_references_on_user_id", using: :btree
@@ -149,7 +158,7 @@ ActiveRecord::Schema.define(version: 20160702094312) do
     t.string   "contact_number",                                default: "",           null: false
     t.string   "education_in",                                  default: "",           null: false
     t.string   "school_name",                                   default: "",           null: false
-    t.string   "year"
+    t.string   "year",                                          default: "",           null: false
     t.string   "file",                                          default: ""
     t.string   "faculty_work_with_type",                        default: "",           null: false
     t.string   "faculty_uni_name",                              default: "",           null: false
@@ -195,6 +204,7 @@ ActiveRecord::Schema.define(version: 20160702094312) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "company_galeries", "users", on_delete: :cascade
   add_foreign_key "devices", "users", on_delete: :cascade
   add_foreign_key "user_awards", "users", on_delete: :cascade
   add_foreign_key "user_certificates", "users", on_delete: :cascade

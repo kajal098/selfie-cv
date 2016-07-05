@@ -4,9 +4,9 @@ class CreateUserEducations < ActiveRecord::Migration
       t.integer :user_id
       t.integer :course_id
       t.integer :specialization_id
-      t.string :year
-      t.string :school
-      t.string :skill
+      t.string :year,              null: false, default: ""
+      t.string :school,              null: false, default: ""
+      t.string :skill,              null: false, default: ""
 
       t.timestamps null: false
     end

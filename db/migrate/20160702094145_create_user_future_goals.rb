@@ -2,10 +2,10 @@ class CreateUserFutureGoals < ActiveRecord::Migration
   def change
     create_table :user_future_goals do |t|
       t.integer :user_id
-      t.string :goal_type
-      t.string :title
-      t.string :term_type
-      t.string :file
+      t.string :goal_type,              null: false, default: ""
+      t.string :title,              null: false, default: ""
+      t.string :term_type,              null: false, default: ""
+      t.string :file,              default: ''
 
       t.timestamps null: false
     end

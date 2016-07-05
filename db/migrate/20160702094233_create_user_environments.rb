@@ -2,9 +2,9 @@ class CreateUserEnvironments < ActiveRecord::Migration
   def change
     create_table :user_environments do |t|
       t.integer :user_id
-      t.string :env_type
-      t.string :title
-      t.string :file
+      t.string :env_type,              null: false, default: ""
+      t.string :title,              null: false, default: ""
+      t.string :file,              default: ''
 
       t.timestamps null: false
     end

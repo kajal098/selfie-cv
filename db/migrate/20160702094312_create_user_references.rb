@@ -2,14 +2,14 @@ class CreateUserReferences < ActiveRecord::Migration
   def change
     create_table :user_references do |t|
       t.integer :user_id
-      t.string :title
-      t.string :ref_type
-      t.string :from
-      t.string :email
-      t.string :contact
-      t.date   :date
-      t.string :location
-      t.string :file
+      t.string :title,              null: false, default: ""
+      t.string :ref_type,              null: false, default: ""
+      t.string :from,              null: false, default: ""
+      t.string :email,              null: false, default: ""
+      t.string :contact,              null: false, default: ""
+      t.date   :date,                  :default=>Date.today
+      t.string :location,              null: false, default: ""
+      t.string :file,              default: ''
 
       t.timestamps null: false
     end

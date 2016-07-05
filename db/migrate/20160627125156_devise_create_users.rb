@@ -19,7 +19,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :contact_number,              null: false, default: ""
       t.string :education_in,              null: false, default: ""
       t.string :school_name,              null: false, default: ""
-      t.string :year
+      t.string :year,              null: false, default: ""
       t.string :file,              default: ''
       t.string :faculty_work_with_type,              null: false, default: ""
       t.string :faculty_uni_name,              null: false, default: ""
