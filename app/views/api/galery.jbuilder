@@ -1,0 +1,1 @@
+json.file @user.thumb_url

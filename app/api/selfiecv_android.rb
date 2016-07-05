@@ -396,6 +396,19 @@ class SelfiecvAndroid < Grape::API
               end
             end
 
+          # for company galery
+
+          desc 'Company Galery'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+              optional :file
+            end
+            post :company_galery, jbuilder: 'galery' do
+              @user = User.find params[:user_id]
+              @user.file = params[:file] if params[:file]
+            end
+
 
   
    end

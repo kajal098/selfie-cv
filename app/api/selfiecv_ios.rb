@@ -217,18 +217,20 @@ class SelfiecvIos < Grape::API
         optional :certi_type        
         optional :year
         optional :description
+        optional :award_type
         optional :file
       end
-      post :achievement, jbuilder: 'all' do
+      get :achievement, jbuilder: 'all' do
         @user = User.find params[:user_id]
         if params[:type] == 'awards'
           @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
+          @award.award_type = params[:award_type] if params[:award_type]
           @award.file = params[:file] if params[:file]
-          error! @award.errors.full_messages.join(', '), 422 unless @award.save
+          error! @award.errors.full_messages.join(', '), 200 unless @award.save
         elsif params[:type] == 'certificate'
           @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], certificate_type: params[:certi_type]
           @certificate.file = params[:file] if params[:file]
-          error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+          error! @certificate.errors.full_messages.join(', '), 200 unless @certificate.save
         end
       end
 
@@ -395,6 +397,19 @@ class SelfiecvIos < Grape::API
               else
                 error! "Record not found.", 422
               end
+            end
+
+          # for company galery
+
+          desc 'Company Galery'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+              optional :file
+            end
+            post :company_galery, jbuilder: 'galery' do
+              @user = User.find params[:user_id]
+              @user.file = params[:file] if params[:file]
             end
   
    end
