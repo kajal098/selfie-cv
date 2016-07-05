@@ -87,8 +87,8 @@ class SelfiecvAndroid < Grape::API
       end
       post :register, jbuilder: 'all' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
-        error! 'Device not registered',422 unless current_device
-        error! @user.errors.full_messages.join(', '), 422 unless @user.save
+        error! 'Device not registered',200 unless current_device
+        error! @user.errors.full_messages.join(', '), 200 unless @user.save
       end
 
     # for user login
@@ -102,10 +102,10 @@ class SelfiecvAndroid < Grape::API
     end
     post :login , jbuilder: 'all' do
       @user = User.find_by username: params[:username]
-      error! 'Device not registered',422 unless current_device
-      error! 'User not found',422 unless @user
-      error! 'authentication failed',422 unless @user.role == params[:role]
-      error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
+      error! 'Device not registered',200 unless current_device
+      error! 'User not found',200 unless @user
+      error! 'authentication failed',200 unless @user.role == params[:role]
+      error! 'Wrong username or password',200 unless @user.valid_password? params[:password]
       current_device.update_column :user_id, @user.id
     end
 
@@ -123,7 +123,7 @@ class SelfiecvAndroid < Grape::API
       #UserMailer.send_reset_code(@user).deliver_now
       @user.reset_code
     else
-      error! "User does not exist.", 422
+      error! "User does not exist.", 200
     end
     end
 
@@ -138,10 +138,10 @@ class SelfiecvAndroid < Grape::API
     end
     post :reset_password do
       @user = User.find_by_reset_code(params[:code])
-      error! "Wrong reset code.", 422 unless @user
-      error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
+      error! "Wrong reset code.", 200 unless @user
+      error! "Password not same as previous password", 200 if @user.valid_password?(params[:password])
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
-      error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      error! @user.errors.full_messages.join(', '), 200 unless @user.save
       {}
     end
 
@@ -157,10 +157,10 @@ class SelfiecvAndroid < Grape::API
     post :change_password  , jbuilder: 'all' do
       authenticate!
       @user = current_user
-      error! "Current password is wrong.", 422 unless @user.valid_password? params[:current_password]
-      error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
+      error! "Current password is wrong.", 200 unless @user.valid_password? params[:current_password]
+      error! "Password not same as previous password", 200 if @user.valid_password?(params[:password])
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
-      error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      error! @user.errors.full_messages.join(', '), 200 unless @user.save
       @user
     end
 
@@ -197,9 +197,9 @@ class SelfiecvAndroid < Grape::API
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
-        error! @user.errors.full_messages.join(', '), 422 unless @user.save
+        error! @user.errors.full_messages.join(', '), 200 unless @user.save
         @user_education = UserEducation.new user_id: @user.id, course_id: params[:course_id], specialization_id: params[:specialization_id], year: params[:year], school: params[:school], skill: params[:skill]
-        error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
+        error! @user_education.errors.full_messages.join(', '), 200 unless @user_education.save
       end
 
     # for fill user awards and certificates
@@ -220,11 +220,11 @@ class SelfiecvAndroid < Grape::API
         if params[:type] == 'awards'
           @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
           @award.file = params[:file] if params[:file]
-          error! @award.errors.full_messages.join(', '), 422 unless @award.save
+          error! @award.errors.full_messages.join(', '), 200 unless @award.save
         elsif params[:type] == 'certificate'
           @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], certificate_type: params[:certi_type]
           @certificate.file = params[:file] if params[:file]
-          error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+          error! @certificate.errors.full_messages.join(', '), 200 unless @certificate.save
         end
       end
 
@@ -245,7 +245,7 @@ class SelfiecvAndroid < Grape::API
           @user = User.find params[:user_id]
           @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
           @curricular.file = params[:file] if params[:file]
-          error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save          
+          error! @curricular.errors.full_messages.join(', '), 200 unless @curricular.save          
         end
 
         # for fill future goal
@@ -263,7 +263,7 @@ class SelfiecvAndroid < Grape::API
             @user = User.find params[:user_id]
             @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
             @future_goal.file = params[:file] if params[:file]
-            error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save          
+            error! @future_goal.errors.full_messages.join(', '), 200 unless @future_goal.save          
           end
 
           # for fill working environment
@@ -280,7 +280,7 @@ class SelfiecvAndroid < Grape::API
               @user = User.find params[:user_id]
               @environment = UserEnvironment.new user_id: @user.id, env_type: params[:env_type], title: params[:title]
               @environment.file = params[:file] if params[:file]
-              error! @environment.errors.full_messages.join(', '), 422 unless @environment.save          
+              error! @environment.errors.full_messages.join(', '), 200 unless @environment.save          
             end
 
             # for fill references
@@ -302,7 +302,7 @@ class SelfiecvAndroid < Grape::API
               @user = User.find params[:user_id]
               @reference = UserReference.new user_id: @user.id, title: params[:title], ref_type: params[:ref_type], from: params[:from],email: params[:email], contact: params[:contact], date: params[:date], location: params[:location]
               @reference.file = params[:file] if params[:file]
-              error! @reference.errors.full_messages.join(', '), 422 unless @reference.save          
+              error! @reference.errors.full_messages.join(', '), 200 unless @reference.save          
             end
 
       
@@ -338,10 +338,10 @@ class SelfiecvAndroid < Grape::API
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
-                error! @user.errors.full_messages.join(', '), 422 unless @user.save
+                error! @user.errors.full_messages.join(', '), 200 unless @user.save
                 
               else
-                error! "Record not found.", 422
+                error! "Record not found.", 200
               end
             end
 
@@ -357,18 +357,44 @@ class SelfiecvAndroid < Grape::API
               requires :company_website
               requires :company_facebook_link
             end
-            post :company_intro, jbuilder: 'all' do
+            post :corporate_identity, jbuilder: 'all' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link)
-                error! @user.errors.full_messages.join(', '), 422 unless @user.save
+                error! @user.errors.full_messages.join(', '), 200 unless @user.save
                 @user.company_logo = params[:company_logo] if params[:company_logo]
                 @user.company_profile = params[:company_profile] if params[:company_profile]
                 @user.company_brochure = params[:company_brochure] if params[:company_brochure]
               else
-                error! "Record not found.", 422
+                error! "Record not found.", 200
               end
             end
+
+          # for corporate identity
+
+          desc 'Growth And Goal'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+              optional :company_turnover
+              requires :company_no_of_emp
+              optional :company_growth_ratio        
+              optional :companu_new_ventures
+              optional :company_future_turnover
+              optional :company_future_new_venture_location
+              optional :company_future_outlet
+            end
+            post :growth_and_goal, jbuilder: 'all' do
+              @user = User.find params[:user_id]
+              if @user.role == 'Company'
+                @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :companu_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+                error! @user.errors.full_messages.join(', '), 200 unless @user.save
+              else
+                error! "Record not found.", 200
+              end
+            end
+
+
   
    end
 
