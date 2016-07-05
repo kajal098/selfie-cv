@@ -216,7 +216,7 @@ class SelfiecvAndroid < Grape::API
         optional :award_type
         optional :file
       end
-      post :achievement, jbuilder: 'all' do
+      get :achievement, jbuilder: 'all' do
         @user = User.find params[:user_id]
         if params[:type] == 'awards'
           @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]

@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(version: 20160702094312) do
 
   create_table "user_awards", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "name",        default: "", null: false
-    t.string   "award_type",  default: "", null: false
-    t.string   "description", default: "", null: false
+    t.string   "name",        default: "",      null: false
+    t.string   "award_type",  default: "award", null: false
+    t.string   "description", default: "",      null: false
     t.string   "file",        default: ""
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "user_awards", ["user_id"], name: "index_user_awards_on_user_id", using: :btree
