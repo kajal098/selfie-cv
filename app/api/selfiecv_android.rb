@@ -10,7 +10,7 @@ class SelfiecvAndroid < Grape::API
 
   # Send Validation Error with 200 status code
   rescue_from :all do |e|
-    error!(e.message, 200)
+    error!({error: e.message, status: 'Fail'}, 200)
   end
 
   # Default status on 500 Error
@@ -52,7 +52,7 @@ class SelfiecvAndroid < Grape::API
       @device.renew_token
       error! @device.errors.full_messages.join(', '), 200 unless @device.save
       @device.ensure_duplicate_registrations
-      error!({error: e.message, status: 'Fail'}, 200)
+      { token: @device.token, :status => "success" }
     end
 
     desc 'Deactivate device for notifications'
