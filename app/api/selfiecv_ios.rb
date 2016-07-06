@@ -351,7 +351,7 @@ class SelfiecvIos < Grape::API
               optional :title
               optional :file
             end
-            post :working_environment, jbuilder: 'all' do
+            post :working_environment, jbuilder: 'ios' do
               @user = User.find params[:user_id]
               if (params[:env_type] || params[:title] )
                 @environment = UserEnvironment.new user_id: @user.id
@@ -376,7 +376,7 @@ class SelfiecvIos < Grape::API
               optional :location
               optional :file
             end
-            post :references, jbuilder: 'all' do
+            post :references, jbuilder: 'ios' do
               @user = User.find params[:user_id]
               @reference = UserReference.new user_id: @user.id
               if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
