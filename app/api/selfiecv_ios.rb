@@ -314,7 +314,7 @@ class SelfiecvIos < Grape::API
           @user = User.find params[:user_id]
           if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
             @curricular = UserCurricular.new user_id: @user.id
-            @award.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+            @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
             @curricular.file = params[:file] if params[:file]
             error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save 
           end         
