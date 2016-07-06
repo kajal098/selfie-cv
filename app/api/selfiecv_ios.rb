@@ -277,19 +277,25 @@ class SelfiecvIos < Grape::API
         optional :award_type
         optional :file
       end
-      get :achievement, jbuilder: 'ios' do
+        post :achievement, jbuilder: 'ios' do
         @user = User.find params[:user_id]
-        if params[:type] == 'awards'
-          @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
-          @award.award_type = params[:award_type] if params[:award_type]
-          @award.file = params[:file] if params[:file]
-          error! @award.errors.full_messages.join(', '), 422 unless @award.save
-        elsif params[:type] == 'certificate'
-          @certificate = UserCertificate.new user_id: @user.id, name: params[:name], year: params[:year], certificate_type: params[:certi_type]
-          @certificate.file = params[:file] if params[:file]
-          error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+            if params[:type] == 'awards'
+                if (params[:name] || params[:description] || params[:award_type] )
+                @award = UserAward.new user_id: @user.id
+                @award.attributes = clean_params(params).permit(:name, :description)
+                @award.award_type = params[:award_type] if params[:award_type]
+                @award.file = params[:file] if params[:file]
+                error! @award.errors.full_messages.join(', '), 422 unless @award.save
+                end
+            elsif params[:type] == 'certificate'
+                if (params[:name] || params[:year] || params[:certificate_type] )
+                @certificate = UserCertificate.new user_id: @user.id
+                @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+                @certificate.file = params[:file] if params[:file]
+                error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+                end
+            end
         end
-      end
 
       # for fill curriculars
 
