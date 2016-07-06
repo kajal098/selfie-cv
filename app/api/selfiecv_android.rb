@@ -169,10 +169,11 @@ class SelfiecvAndroid < Grape::API
     desc "Listing Users"
       params do
         requires :token, type: String, regexp: UUID_REGEX
+        requires :role
       end
-      post :listing , jbuilder: 'listing' do
+      post :listing , jbuilder: 'all' do
           if params[:role]
-            @users = User.all
+            @users = User.where(role: params[:role]).all
           else
             'No Records Found !'
           end
