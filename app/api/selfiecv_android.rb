@@ -345,7 +345,7 @@ class SelfiecvAndroid < Grape::API
           post :future_goal, jbuilder: 'ios' do
             @user = User.find params[:user_id]
             if (params[:goal_type] || params[:title] || params[:term_type] )
-              @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
+              @future_goal = UserFutureGoal.new user_id: @user.id
               @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
               @future_goal.file = params[:file] if params[:file]
               error! @future_goal.errors.full_messages.join(', '), 200 unless @future_goal.save
@@ -364,10 +364,12 @@ class SelfiecvAndroid < Grape::API
             end
             post :working_environment, jbuilder: 'all' do
               @user = User.find params[:user_id]
-              @environment = UserEnvironment.new user_id: @user.id
-              @environment.attributes = clean_params(params).permit(:env_type, :title)
-              @environment.file = params[:file] if params[:file]
-              error! @environment.errors.full_messages.join(', '), 200 unless @environment.save          
+              if (params[:env_type] || params[:title] )
+                @environment = UserEnvironment.new user_id: @user.id
+                @environment.attributes = clean_params(params).permit(:env_type, :title)
+                @environment.file = params[:file] if params[:file]
+                error! @environment.errors.full_messages.join(', '), 200 unless @environment.save
+              end          
             end
 
             # for fill references
@@ -388,9 +390,11 @@ class SelfiecvAndroid < Grape::API
             post :references, jbuilder: 'all' do
               @user = User.find params[:user_id]
               @reference = UserReference.new user_id: @user.id
-              @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
-              @reference.file = params[:file] if params[:file]
-              error! @reference.errors.full_messages.join(', '), 200 unless @reference.save          
+              if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
+                @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
+                @reference.file = params[:file] if params[:file]
+                error! @reference.errors.full_messages.join(', '), 200 unless @reference.save
+              end          
             end
 
       
