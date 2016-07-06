@@ -52,6 +52,15 @@ if @user_experience
 	end
 end
 
+if @user_preferred_work
+	json.user_preferred_works @user.user_preferred_works do |user_preferred_work|
+		json.extract! user_preferred_work, :id, :user_id, :ind_name, :functional_name, :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type
+
+		json.created_at user_preferred_work.created_at.to_i
+		json.updated_at user_preferred_work.updated_at.to_i
+	end
+end
+
 if @certificate
 	json.certificates @user.user_certificates do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year

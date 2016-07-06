@@ -171,9 +171,9 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :role
       end
-      get :listing , jbuilder: 'listing' do
+      post :listing , jbuilder: 'listing' do
           if params[:role]
-            @users = User.where(role: params[:role]).all
+            @users = User.all
           else
             'No Records Found !'
           end
@@ -496,17 +496,12 @@ class SelfiecvAndroid < Grape::API
             end
             post :company_galery, jbuilder: 'galery' do
               @user = User.find params[:user_id]
-              @galery = CompanyGalery.new
-              @galery.file = params[:file] if params[:file]
-
-              @user = User.find params[:user_id]
                 params[:files].each do |file|
                   @galleries = CompanyGalery.new user_id: params[:user_id]
                   @galleries.file = file
                   error! @galleries.errors.full_messages.join(', '), 200 unless @galleries.save
                 end
                 {}
-
             end
 
 
