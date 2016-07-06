@@ -169,7 +169,7 @@ class SelfiecvIos < Grape::API
       end
       post :listing , jbuilder: 'ios' do
           if params[:role]
-            @users = User.where(role: params[:role]).all
+            @users = User.where(role: params[:role])
           else
             'No Records Found !'
           end

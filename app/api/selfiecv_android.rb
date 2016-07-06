@@ -171,13 +171,10 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :role
       end
-      get :listing , jbuilder: 'all' do
-          if params[:role]
-            @users = User.where(role: params[:role]).all
-          else
-            'No Records Found !'
-          end
-          @users
+      post :listing , jbuilder: 'all' do
+          @users = User.where(role: params[:role])
+        @users
+         
       end
 
   
