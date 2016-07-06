@@ -32,6 +32,19 @@ if @user_education
 end
 end
 
+if @users
+	json.users @users do |user|
+	json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :education_in, :school_name, :year
+
+	json.profile @user.profile_thumb_url
+
+	json.resume @user.resume_thumb_url
+
+	json.created_at user.created_at.to_i
+	json.updated_at user.updated_at.to_i
+end
+end
+
 
 if @award
 	json.awards @user.user_awards do |award|
