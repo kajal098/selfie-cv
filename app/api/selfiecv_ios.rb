@@ -333,9 +333,12 @@ class SelfiecvIos < Grape::API
           end
           post :future_goal, jbuilder: 'ios' do
             @user = User.find params[:user_id]
-            @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
-            @future_goal.file = params[:file] if params[:file]
-            error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save          
+            if (params[:goal_type] || params[:title] || params[:term_type] )
+              @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
+              @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
+              @future_goal.file = params[:file] if params[:file]
+              error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
+            end          
           end
 
           # for fill working environment
