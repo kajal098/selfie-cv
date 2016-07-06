@@ -85,10 +85,12 @@ class SelfiecvAndroid < Grape::API
         requires :password_confirmation
         requires :role
       end
-      post :register, jbuilder: 'all' do
+      get :register, jbuilder: 'all' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
         error! 'Device not registered',200 unless current_device
         error! @user.errors.full_messages.join(', '), 200 unless @user.save
+        @user_meter = UserMeter.new user_id: @user.id
+        error! @user_meter.errors.full_messages.join(', '), 200 unless @user_meter.save
       end
 
     # for user login
@@ -318,7 +320,7 @@ class SelfiecvAndroid < Grape::API
           optional :date
           optional :file
         end
-        post :curriculars, jbuilder: 'ios' do
+        get :curriculars, jbuilder: 'ios' do
           @user = User.find params[:user_id]
           if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
             @curricular = UserCurricular.new user_id: @user.id

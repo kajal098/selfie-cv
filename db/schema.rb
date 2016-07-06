@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705104708) do
+ActiveRecord::Schema.define(version: 20160706095729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
   create_table "company_galeries", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "file",       default: ""
+    t.string   "file_type",  default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -54,6 +55,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.string   "award_type",  default: "award", null: false
     t.string   "description", default: "",      null: false
     t.string   "file",        default: ""
+    t.string   "file_type",   default: "",      null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
   end
@@ -66,6 +68,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.string   "name",             default: "", null: false
     t.string   "year",             default: "", null: false
     t.string   "file",             default: ""
+    t.string   "file_type",        default: "", null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
   end
@@ -80,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.string   "location",        default: "",           null: false
     t.date     "date",            default: '2016-07-06'
     t.string   "file",            default: ""
+    t.string   "file_type",       default: "",           null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end
@@ -106,6 +110,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.string   "env_type",   default: "", null: false
     t.string   "title",      default: "", null: false
     t.string   "file",       default: ""
+    t.string   "file_type",  default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -120,6 +125,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.string   "working_till", default: "",           null: false
     t.string   "designation",  default: "",           null: false
     t.string   "file",         default: ""
+    t.string   "file_type",    default: "",           null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -132,11 +138,26 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.string   "title",      default: "", null: false
     t.string   "term_type",  default: "", null: false
     t.string   "file",       default: ""
+    t.string   "file_type",  default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
+
+  create_table "user_meters", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "resume_per",     default: 0, null: false
+    t.integer  "acievement_per", default: 0, null: false
+    t.integer  "curri_per",      default: 0, null: false
+    t.integer  "lifegoal_per",   default: 0, null: false
+    t.integer  "working_per",    default: 0, null: false
+    t.integer  "ref_per",        default: 0, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "user_meters", ["user_id"], name: "index_user_meters_on_user_id", using: :btree
 
   create_table "user_preferred_works", force: :cascade do |t|
     t.integer  "user_id"
@@ -163,6 +184,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.date     "date",       default: '2016-07-06'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
+    t.string   "file_type",  default: "",           null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
@@ -189,6 +211,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
     t.string   "school_name",                                   default: "",           null: false
     t.string   "year",                                          default: "",           null: false
     t.string   "file",                                          default: ""
+    t.string   "file_type",                                     default: "",           null: false
     t.string   "faculty_work_with_type",                        default: "",           null: false
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
@@ -244,6 +267,7 @@ ActiveRecord::Schema.define(version: 20160705104708) do
   add_foreign_key "user_environments", "users", on_delete: :cascade
   add_foreign_key "user_experiences", "users", on_delete: :cascade
   add_foreign_key "user_future_goals", "users", on_delete: :cascade
+  add_foreign_key "user_meters", "users", on_delete: :cascade
   add_foreign_key "user_preferred_works", "users", on_delete: :cascade
   add_foreign_key "user_references", "users", on_delete: :cascade
 end

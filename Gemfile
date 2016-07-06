@@ -38,7 +38,8 @@ gem 'mini_magick'
 gem 'carrierwave-aws', '~> 0.5.0'
 gem 'carrierwave-video-thumbnailer'
 
-
+# for validate date
+gem 'validates_date_time'
 
 
 

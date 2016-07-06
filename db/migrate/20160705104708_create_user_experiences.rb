@@ -8,7 +8,7 @@ class CreateUserExperiences < ActiveRecord::Migration
       t.string :working_till,              null:false, default: ""
       t.string :designation,              null:false, default: ""
       t.string :file,              default: ''
-
+      t.string :file_type,              null: false, default: ""
       t.timestamps null: false
     end
     add_index :user_experiences, [:user_id]

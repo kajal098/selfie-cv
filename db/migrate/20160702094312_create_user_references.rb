@@ -10,7 +10,7 @@ class CreateUserReferences < ActiveRecord::Migration
       t.date   :date,                  :default=>Date.today
       t.string :location,              null: false, default: ""
       t.string :file,              default: ''
-
+      t.string :file_type,              null: false, default: ""
       t.timestamps null: false
     end
     add_index :user_references, [:user_id]

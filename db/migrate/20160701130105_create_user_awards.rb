@@ -6,6 +6,7 @@ class CreateUserAwards < ActiveRecord::Migration
       t.string :award_type,              null: false, default: "award"
       t.string :description,              null: false, default: ""
       t.string :file,              default: ''
+      t.string :file_type,              null: false, default: ""
       t.timestamps null: false
     end
     add_index :user_awards, [:user_id]

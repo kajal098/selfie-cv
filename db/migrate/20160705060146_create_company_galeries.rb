@@ -3,7 +3,7 @@ class CreateCompanyGaleries < ActiveRecord::Migration
     create_table :company_galeries do |t|
       t.integer :user_id
       t.string :file,              default: ''
-
+      t.string :file_type,              null: false, default: ""
       t.timestamps null: false
     end
     add_index :company_galeries, [:user_id]

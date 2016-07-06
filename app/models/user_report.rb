@@ -26,3 +26,4 @@ class UserReport
   end
 
 end
+

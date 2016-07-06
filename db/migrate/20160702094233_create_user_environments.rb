@@ -5,7 +5,7 @@ class CreateUserEnvironments < ActiveRecord::Migration
       t.string :env_type,              null: false, default: ""
       t.string :title,              null: false, default: ""
       t.string :file,              default: ''
-
+      t.string :file_type,              null: false, default: ""
       t.timestamps null: false
     end
     add_index :user_environments, [:user_id]

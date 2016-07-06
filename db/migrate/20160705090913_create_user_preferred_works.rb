@@ -9,7 +9,6 @@ class CreateUserPreferredWorks < ActiveRecord::Migration
       t.string :current_salary,              null:false, default: ""
       t.string :expected_salary,              null:false, default: ""
       t.string :time_type,              null:false, default: ""
-
       t.timestamps null: false
     end
     add_index :user_preferred_works, [:user_id]

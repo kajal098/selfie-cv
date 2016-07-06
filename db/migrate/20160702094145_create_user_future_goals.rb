@@ -6,7 +6,7 @@ class CreateUserFutureGoals < ActiveRecord::Migration
       t.string :title,              null: false, default: ""
       t.string :term_type,              null: false, default: ""
       t.string :file,              default: ''
-
+      t.string :file_type,              null: false, default: ""
       t.timestamps null: false
     end
     add_index :user_future_goals, [:user_id]
