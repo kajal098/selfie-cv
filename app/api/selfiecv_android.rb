@@ -169,7 +169,6 @@ class SelfiecvAndroid < Grape::API
     desc "Listing Users"
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :role
       end
       post :listing , jbuilder: 'listing' do
           if params[:role]
