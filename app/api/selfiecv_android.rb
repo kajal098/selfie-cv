@@ -288,21 +288,25 @@ class SelfiecvAndroid < Grape::API
         optional :award_type
         optional :file
       end
-      post :achievement, jbuilder: 'all' do
+      post :achievement, jbuilder: 'ios' do
         @user = User.find params[:user_id]
-        if params[:type] == 'awards'
-          @award = UserAward.new user_id: @user.id
-          @award.attributes = clean_params(params).permit(:name, :description)
-          @award.award_type = params[:award_type] if params[:award_type]
-          @award.file = params[:file] if params[:file]
-          error! @award.errors.full_messages.join(', '), 200 unless @award.save
-        elsif params[:type] == 'certificate'
-          @certificate = UserCertificate.new user_id: @user.id
-          @certificate.attributes = clean_params(params).permit(:name, :year,  :certificate_type)
-          @certificate.file = params[:file] if params[:file]
-          error! @certificate.errors.full_messages.join(', '), 200 unless @certificate.save
+            if params[:type] == 'awards'
+                if (params[:name] || params[:description] || params[:award_type] )
+                @award = UserAward.new user_id: @user.id
+                @award.attributes = clean_params(params).permit(:name, :description)
+                @award.award_type = params[:award_type] if params[:award_type]
+                @award.file = params[:file] if params[:file]
+                error! @award.errors.full_messages.join(', '), 200 unless @award.save
+                end
+            elsif params[:type] == 'certificate'
+                if (params[:name] || params[:year] || params[:certificate_type] )
+                @certificate = UserCertificate.new user_id: @user.id
+                @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+                @certificate.file = params[:file] if params[:file]
+                error! @certificate.errors.full_messages.join(', '), 200 unless @certificate.save
+                end
+            end
         end
-      end
 
       # for fill curriculars
 
@@ -491,7 +495,7 @@ class SelfiecvAndroid < Grape::API
                 params[:files].each do |file|
                   @galleries = CompanyGalery.new user_id: params[:user_id]
                   @galleries.file = file
-                  error! @galleries.errors.full_messages.join(', '), 422 unless @galleries.save
+                  error! @galleries.errors.full_messages.join(', '), 200 unless @galleries.save
                 end
                 {}
 
