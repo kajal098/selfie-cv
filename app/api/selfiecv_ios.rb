@@ -255,7 +255,7 @@ class SelfiecvIos < Grape::API
       end
       post :preferred_work, jbuilder: 'all' do
         @user = User.find params[:user_id]
-        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
+        if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location || params[:current_salary] || params[:expected_salary])
         @user_preferred_work = UserPreferredWork.new user_id: @user.id
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
         error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
