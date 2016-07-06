@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
         has_many :user_references
         has_many :company_galeries
         has_many :user_experiences
+        has_many :user_preferred_works
 
 mount_uploader :file, FileUploader
   def resume_thumb_url; file.url(:thumb); end
