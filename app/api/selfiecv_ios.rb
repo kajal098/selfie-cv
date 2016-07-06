@@ -271,7 +271,7 @@ class SelfiecvIos < Grape::API
         requires :user_id
         optional :type
         optional :name
-        optional :certi_type        
+        optional :certificate_type        
         optional :year
         optional :description
         optional :award_type
