@@ -321,12 +321,14 @@ class SelfiecvAndroid < Grape::API
           optional :date
           optional :file
         end
-        post :curriculars, jbuilder: 'all' do
+        post :curriculars, jbuilder: 'ios' do
           @user = User.find params[:user_id]
-          @curricular = UserCurricular.new user_id: @user.id
-          @curricular.attributes = clean_params(params).permit(:curricular_type, :title, :team_type, :location, :date)
-          @curricular.file = params[:file] if params[:file]
-          error! @curricular.errors.full_messages.join(', '), 200 unless @curricular.save          
+          if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
+            @curricular = UserCurricular.new user_id: @user.id
+            @award.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+            @curricular.file = params[:file] if params[:file]
+            error! @curricular.errors.full_messages.join(', '), 200 unless @curricular.save 
+          end         
         end
 
         # for fill future goal

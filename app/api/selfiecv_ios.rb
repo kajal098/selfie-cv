@@ -281,18 +281,18 @@ class SelfiecvIos < Grape::API
         @user = User.find params[:user_id]
             if params[:type] == 'awards'
                 if (params[:name] || params[:description] || params[:award_type] )
-                @award = UserAward.new user_id: @user.id
-                @award.attributes = clean_params(params).permit(:name, :description)
-                @award.award_type = params[:award_type] if params[:award_type]
-                @award.file = params[:file] if params[:file]
-                error! @award.errors.full_messages.join(', '), 422 unless @award.save
+                    @award = UserAward.new user_id: @user.id
+                    @award.attributes = clean_params(params).permit(:name, :description)
+                    @award.award_type = params[:award_type] if params[:award_type]
+                    @award.file = params[:file] if params[:file]
+                    error! @award.errors.full_messages.join(', '), 422 unless @award.save
                 end
             elsif params[:type] == 'certificate'
                 if (params[:name] || params[:year] || params[:certificate_type] )
-                @certificate = UserCertificate.new user_id: @user.id
-                @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
-                @certificate.file = params[:file] if params[:file]
-                error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+                    @certificate = UserCertificate.new user_id: @user.id
+                    @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+                    @certificate.file = params[:file] if params[:file]
+                    error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
                 end
             end
         end
@@ -312,9 +312,12 @@ class SelfiecvIos < Grape::API
         end
         post :curriculars, jbuilder: 'ios' do
           @user = User.find params[:user_id]
-          @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
-          @curricular.file = params[:file] if params[:file]
-          error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save          
+          if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
+            @curricular = UserCurricular.new user_id: @user.id
+            @award.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+            @curricular.file = params[:file] if params[:file]
+            error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save 
+          end         
         end
 
         # for fill future goal
