@@ -81,7 +81,7 @@ class SelfiecvIos < Grape::API
         requires :password_confirmation
         requires :role
       end
-      post :register, jbuilder: 'all' do
+      post :register, jbuilder: 'ios_all' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
         error! 'Device not registered',422 unless current_device
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
@@ -96,7 +96,7 @@ class SelfiecvIos < Grape::API
       requires :password
       requires :role
     end
-    post :login , jbuilder: 'all' do
+    post :login , jbuilder: 'ios_all' do
       @user = User.find_by username: params[:username]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
@@ -150,7 +150,7 @@ class SelfiecvIos < Grape::API
       requires :password, type: String
       requires :password_confirmation, type: String
     end
-    post :change_password , jbuilder: 'all' do
+    post :change_password , jbuilder: 'ios_all' do
       authenticate!
       @user = current_user
       error! "Current password is wrong.", 422 unless @user.valid_password? params[:current_password]
@@ -192,7 +192,7 @@ class SelfiecvIos < Grape::API
         requires :year
         optional :file
       end
-      post :resume, jbuilder: 'all' do
+      post :resume, jbuilder: 'ios_all' do
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
@@ -211,7 +211,7 @@ class SelfiecvIos < Grape::API
         optional :school
         optional :skill
       end
-      post :education, jbuilder: 'all' do
+      post :education, jbuilder: 'ios_all' do
         @user = User.find params[:user_id]
         @user_education = UserEducation.new user_id: @user.id
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
@@ -231,7 +231,7 @@ class SelfiecvIos < Grape::API
         optional :designation
         optional :file
       end
-      get :experience, jbuilder: 'all' do
+      post :experience, jbuilder: 'ios_all' do
         @user = User.find params[:user_id]
         if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
           @user_experience = UserExperience.new user_id: @user.id
@@ -253,9 +253,9 @@ class SelfiecvIos < Grape::API
         optional :current_salary
         optional :expected_salary
       end
-      post :preferred_work, jbuilder: 'all' do
+      post :preferred_work, jbuilder: 'ios_all' do
         @user = User.find params[:user_id]
-        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
+        if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location || params[:current_salary] || params[:expected_salary])
         @user_preferred_work = UserPreferredWork.new user_id: @user.id
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
         error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
@@ -276,7 +276,7 @@ class SelfiecvIos < Grape::API
         optional :award_type
         optional :file
       end
-      get :achievement, jbuilder: 'all' do
+      get :achievement, jbuilder: 'ios_all' do
         @user = User.find params[:user_id]
         if params[:type] == 'awards'
           @award = UserAward.new user_id: @user.id, name: params[:name], description: params[:description]
@@ -303,7 +303,7 @@ class SelfiecvIos < Grape::API
           optional :date
           optional :file
         end
-        post :curriculars, jbuilder: 'all' do
+        post :curriculars, jbuilder: 'ios_all' do
           @user = User.find params[:user_id]
           @curricular = UserCurricular.new user_id: @user.id, curricular_type: params[:curricular_type], title: params[:title],team_type: params[:team_type],location: params[:location],date: params[:date]
           @curricular.file = params[:file] if params[:file]
@@ -321,7 +321,7 @@ class SelfiecvIos < Grape::API
             optional :term_type        
             optional :file
           end
-          post :future_goal, jbuilder: 'all' do
+          post :future_goal, jbuilder: 'ios_all' do
             @user = User.find params[:user_id]
             @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
             @future_goal.file = params[:file] if params[:file]
@@ -338,7 +338,7 @@ class SelfiecvIos < Grape::API
               optional :title
               optional :file
             end
-            post :working_environment, jbuilder: 'all' do
+            post :working_environment, jbuilder: 'ios_all' do
               @user = User.find params[:user_id]
               @environment = UserEnvironment.new user_id: @user.id, env_type: params[:env_type], title: params[:title]
               @environment.file = params[:file] if params[:file]
@@ -360,7 +360,7 @@ class SelfiecvIos < Grape::API
               optional :location
               optional :file
             end
-            post :references, jbuilder: 'all' do
+            post :references, jbuilder: 'ios_all' do
               @user = User.find params[:user_id]
               @reference = UserReference.new user_id: @user.id, title: params[:title], ref_type: params[:ref_type], from: params[:from],email: params[:email], contact: params[:contact], date: params[:date], location: params[:location]
               @reference.file = params[:file] if params[:file]
@@ -394,7 +394,7 @@ class SelfiecvIos < Grape::API
               optional :company_skype_id
               requires :company_id
             end
-            post :company_info, jbuilder: 'all' do
+            post :company_info, jbuilder: 'ios_all' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
@@ -418,7 +418,7 @@ class SelfiecvIos < Grape::API
               optional :company_website
               optional :company_facebook_link
             end
-            post :corporate_identity, jbuilder: 'all' do
+            post :corporate_identity, jbuilder: 'ios_all' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link)
@@ -445,7 +445,7 @@ class SelfiecvIos < Grape::API
               optional :company_future_new_venture_location
               optional :company_future_outlet
             end
-            post :growth_and_goal, jbuilder: 'all' do
+            post :growth_and_goal, jbuilder: 'ios_all' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :companu_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
@@ -492,7 +492,7 @@ class SelfiecvIos < Grape::API
             params do
               requires :token, type: String, regexp: UUID_REGEX
             end
-            post :course_and_spe, jbuilder: 'all' do
+            post :course_and_spe, jbuilder: 'ios_all' do
               @courses = Course.all
               @specializations = Specialization.all
             end
