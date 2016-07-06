@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  
+  after_create :one_method
 		extend Enumerize
         
         enum role: { Admin: 0, Student: 1, Faculty: 2, Jobseeker:3, Company:4 }
@@ -42,6 +42,9 @@ mount_uploader :company_profile, FileUploader
 mount_uploader :company_brochure, FileUploader
   def brochure_thumb_url; company_brochure.url(:thumb); end
   def brochure_photo_url; company_brochure.url; end
+
+  def one_method
+  end
   
 
 TITLES = 

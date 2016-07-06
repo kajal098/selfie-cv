@@ -190,24 +190,27 @@ class SelfiecvAndroid < Grape::API
         requires :title
         optional :first_name
         optional :middle_name
-        requires :last_name
-        requires :gender
-        requires :date_of_birth 
-        requires :nationality 
-        requires :address 
-        requires :city
-        requires :zipcode
-        requires :contact_number
-        requires :education_in  
-        requires :school_name 
-        requires :year
+        optional :last_name
+        optional :gender
+        optional :date_of_birth 
+        optional :nationality 
+        optional :address 
+        optional :city
+        optional :zipcode
+        optional :contact_number
+        optional :education_in  
+        optional :school_name 
+        optional :year
         optional :file
       end
-      post :resume, jbuilder: 'all' do
+      get :resume, jbuilder: 'all' do
+        @a = 100
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 200 unless @user.save
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, @a
       end
 
     # for fill user's education
