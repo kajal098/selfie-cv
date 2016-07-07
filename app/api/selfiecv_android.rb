@@ -160,10 +160,10 @@ class SelfiecvAndroid < Grape::API
       authenticate!
       @user = current_user
       error! ({ error: 'Current password is wrong.' ,status: 'Fail' }, 200 ) unless @user.valid_password? params[:current_password]
-      error! ({ error: 'Password not same as previous password',status: 'Fail' }, 200 if @user.valid_password?(params[:password])
+      error! ({ error: 'Password not same as previous password',status: 'Fail' }, 200 ) if @user.valid_password?(params[:password])
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 200 unless @user.save
-      @user
+      { @user , :status => "Success" }
     end
 
     # for listing users
