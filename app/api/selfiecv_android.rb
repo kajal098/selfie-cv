@@ -142,6 +142,7 @@ class SelfiecvAndroid < Grape::API
       @user = User.find_by_reset_code(params[:code])
       error!({error: 'Wrong reset code.', status: 'Fail'}, 200) unless @user
       error!({error: 'Password not same as previous password.', status: 'Fail'}, 200) if @user.valid_password?(params[:password])
+      error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 200 unless @user.save
       { msg: 'Your password has been changed ..!!', :status => "Success" }
@@ -357,6 +358,18 @@ class SelfiecvAndroid < Grape::API
                 end
             end
         end
+
+      # for post user's education detail
+
+      desc 'Get Users Education Detail'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      post :get_achievements, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_awards = @user.user_awards
+      end
 
       # for fill curriculars
 
