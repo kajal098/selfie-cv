@@ -141,7 +141,7 @@ class SelfiecvAndroid < Grape::API
     post :reset_password do
       @user = User.find_by_reset_code(params[:code])
       error!({error: 'Wrong reset code.', status: 'Fail'}, 200) unless @user
-      error! "Password not same as previous password", 200 if @user.valid_password?(params[:password])
+      error!({error: 'Password not same as previous password.', status: 'Fail'}, 200) if @user.valid_password?(params[:password])
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 200 unless @user.save
       { msg: 'Your password has been changed ..!!', :status => "Success" }
@@ -159,8 +159,8 @@ class SelfiecvAndroid < Grape::API
     post :change_password  , jbuilder: 'all' do
       authenticate!
       @user = current_user
-      error! "Current password is wrong.", 200 unless @user.valid_password? params[:current_password]
-      error! "Password not same as previous password", 200 if @user.valid_password?(params[:password])
+      error!({error: 'Current password is wrong.', status: 'Fail'}, 200) unless @user
+      error!({error: 'Password not same as previous password.', status: 'Fail'}, 200) if @user.valid_password?(params[:password])
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 200 unless @user.save
       @user
