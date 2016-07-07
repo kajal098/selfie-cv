@@ -123,7 +123,6 @@ class SelfiecvAndroid < Grape::API
       @user = User.find_by_email(params[:email])
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
       #UserMailer.send_reset_code(@user).deliver_now
-      @user.reset_code
       { code: @user.reset_code, :status => "Success" }
     else
       error!({error: 'user does not exist', status: 'Fail'}, 200)
@@ -145,7 +144,7 @@ class SelfiecvAndroid < Grape::API
       error! "Password not same as previous password", 200 if @user.valid_password?(params[:password])
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 200 unless @user.save
-      {}
+      { :status => "Success" }
     end
 
     # for change password
