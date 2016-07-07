@@ -121,13 +121,12 @@ class SelfiecvAndroid < Grape::API
     post :reset_code do
       if
       @user = User.find_by_email(params[:email])
-      error! 'User not found',200 unless @user
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
       #UserMailer.send_reset_code(@user).deliver_now
       @user.reset_code
       { code: @user.reset_code, :status => "Success" }
     else
-      error! "User does not exist.", 200
+      error!({error: e.message, status: 'Fail'}, 200)
     end
     end
 
