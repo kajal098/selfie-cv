@@ -81,7 +81,7 @@ class SelfiecvIos < Grape::API
         requires :password_confirmation
         requires :role
       end
-      get :register, jbuilder: 'ios' do
+      post :register, jbuilder: 'ios' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
         error! 'Device not registered',422 unless current_device
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
