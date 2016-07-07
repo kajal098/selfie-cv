@@ -8,7 +8,6 @@ class CreateUserMeters < ActiveRecord::Migration
       t.integer :lifegoal_per,              null:false, default: 0
       t.integer :working_per,              null:false, default: 0
       t.integer :ref_per,              null:false, default: 0
-
       t.timestamps null: false
     end
     add_index :user_meters, [:user_id]

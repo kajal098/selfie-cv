@@ -85,7 +85,7 @@ class SelfiecvAndroid < Grape::API
         requires :password_confirmation
         requires :role
       end
-      get :register, jbuilder: 'all' do
+      post :register, jbuilder: 'all' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
         error! 'Device not registered',200 unless current_device
         error! @user.errors.full_messages.join(', '), 200 unless @user.save
@@ -202,15 +202,26 @@ class SelfiecvAndroid < Grape::API
         optional :school_name 
         optional :year
         optional :file
+        optional :file_type
       end
       get :resume, jbuilder: 'all' do
-        @a = 100
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 200 unless @user.save
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, @a
+        if(params[:file_type] == 'video')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 100
+        elsif(params[:file_type] == 'audio')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 70
+        elsif(params[:file_type] == 'file')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 50
+        elsif(params[:file_type] == 'text')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 30
+        end
       end
 
     # for fill user's education
