@@ -332,7 +332,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :type
+        optional :achievement_type
         optional :name
         optional :certificate_type        
         optional :year
@@ -342,7 +342,7 @@ class SelfiecvAndroid < Grape::API
       end
       get :achievement, jbuilder: 'ios' do
         @user = User.find params[:user_id]
-            if params[:type] == 'award'
+            if params[:achievement_type] == 'award'
                 if (params[:name] || params[:description] || params[:award_type] )
                 @award = UserAward.new user_id: @user.id
                 @award.attributes = clean_params(params).permit(:name, :description)
@@ -350,7 +350,7 @@ class SelfiecvAndroid < Grape::API
                 @award.file = params[:file] if params[:file]
                 error! @award.errors.full_messages.join(', '), 200 unless @award.save
                 end
-            elsif params[:type] == 'certificate'
+            elsif params[:achievement_type] == 'certificate'
                 if (params[:name] || params[:year] || params[:certificate_type] )
                 @certificate = UserCertificate.new user_id: @user.id
                 @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
@@ -370,6 +370,7 @@ class SelfiecvAndroid < Grape::API
       post :get_achievements, jbuilder: 'listing' do
         @user = User.find params[:user_id]
         @user_awards = @user.user_awards
+        @user_certificates = @user.user_certificates
       end
 
       # for fill curriculars
