@@ -45,7 +45,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :company_turnover,              null: false, default: ""
       t.string :company_no_of_emp,              null: false, default: ""
       t.string :company_growth_ratio,              null: false, default: ""
-      t.string :companu_new_ventures,              null: false, default: ""
+      t.string :company_new_ventures,              null: false, default: ""
       t.string :company_future_turnover,              null: false, default: ""
       t.string :company_future_new_venture_location,              null: false, default: ""
       t.string :company_future_outlet,              null: false, default: ""

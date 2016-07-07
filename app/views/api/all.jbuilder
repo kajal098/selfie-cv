@@ -10,6 +10,13 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
+
+	elsif @user.role == 'Student'
+		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :education_in, :school_name, :year
+
+		json.created_at @user.created_at.to_i
+		json.updated_at @user.updated_at.to_i
+
 	elsif @user.role == 'Company'
 		json.User @user, :id, :company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
@@ -18,6 +25,12 @@ if @user
 		json.profile @user.company_profile_thumb_url
 
 		json.brochure @user.brochure_thumb_url
+
+		json.created_at @user.created_at.to_i
+		json.updated_at @user.updated_at.to_i
+		
+	elsif @user.role == 'Faculty'
+		json.User @user, :id, :username, :email, :role, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i

@@ -25,6 +25,7 @@ has_many :user_preferred_works
 has_many :user_meters
 
 
+
 mount_uploader :file, FileUploader
 def resume_thumb_url; file.url(:thumb); end
 def resume_photo_url; file.url; end

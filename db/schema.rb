@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-07-06'
+    t.date     "date",            default: '2016-07-07'
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
     t.datetime "created_at",                             null: false
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.integer  "user_id"
     t.string   "name",         default: "",           null: false
     t.string   "type",         default: "",           null: false
-    t.date     "start_from",   default: '2016-07-06'
+    t.date     "start_from",   default: '2016-07-07'
     t.string   "working_till", default: "",           null: false
     t.string   "designation",  default: "",           null: false
     t.string   "file",         default: ""
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-07-06'
+    t.date     "date",       default: '2016-07-07'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "file_type",  default: "",           null: false
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-07-06"
+    t.string   "date_of_birth",                                 default: "2016-07-07"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-07-06"
+    t.string   "faculty_join_from",                             default: "2016-07-07"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.string   "company_industry",                              default: "",           null: false
@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.string   "company_turnover",                              default: "",           null: false
     t.string   "company_no_of_emp",                             default: "",           null: false
     t.string   "company_growth_ratio",                          default: "",           null: false
-    t.string   "companu_new_ventures",                          default: "",           null: false
+    t.string   "company_new_ventures",                          default: "",           null: false
     t.string   "company_future_turnover",                       default: "",           null: false
     t.string   "company_future_new_venture_location",           default: "",           null: false
     t.string   "company_future_outlet",                         default: "",           null: false
