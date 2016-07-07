@@ -242,7 +242,7 @@ class SelfiecvIos < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      get :get_educations, jbuilder: 'listing' do
+      post :get_educations, jbuilder: 'listing' do
         @user = User.find params[:user_id]
         @user_educations = @user.user_educations
       end
@@ -275,7 +275,7 @@ class SelfiecvIos < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      get :get_experiences, jbuilder: 'listing' do
+      post :get_experiences, jbuilder: 'listing' do
         @user = User.find params[:user_id]
         @user_experiences = @user.user_experiences
       end
@@ -310,7 +310,7 @@ class SelfiecvIos < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      get :get_preferred_works, jbuilder: 'listing' do
+      post :get_preferred_works, jbuilder: 'listing' do
         @user = User.find params[:user_id]
         @user_preferred_works = @user.user_preferred_works
       end
