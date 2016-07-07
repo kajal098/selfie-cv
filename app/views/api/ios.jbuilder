@@ -1,3 +1,5 @@
+json.status "Success"
+
 if @user
 	if @user.role == 'Jobseeker'
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :education_in, :school_name, :year
@@ -5,12 +7,6 @@ if @user
 		json.profile @user.profile_thumb_url
 
 		json.resume @user.resume_thumb_url
-
-		json.created_at @user.created_at.to_i
-		json.updated_at @user.updated_at.to_i
-
-	elsif @user.role == 'Student'
-		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :education_in, :school_name, :year
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
@@ -27,11 +23,6 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 		
-	elsif @user.role == 'Faculty'
-		json.User @user, :id, :username, :email, :role, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from
-
-		json.created_at @user.created_at.to_i
-		json.updated_at @user.updated_at.to_i
 	end
 end
 

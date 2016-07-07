@@ -235,6 +235,18 @@ class SelfiecvIos < Grape::API
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
       end
 
+    # for post user's education detail
+
+    desc 'Get Users Education Detail'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      get :get_educations, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_educations = @user.user_educations
+      end
+
       # for fill user's experience
 
     desc 'User Experience'
@@ -254,6 +266,18 @@ class SelfiecvIos < Grape::API
           @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
           error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
         end
+      end
+
+    # for post user's experience detail
+
+    desc 'Get Users Experience Detail'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      get :get_experiences, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_experiences = @user.user_experiences
       end
 
     # for fill user's preferred work details
@@ -277,6 +301,18 @@ class SelfiecvIos < Grape::API
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
         error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
         end
+      end
+
+    # for post user's experience detail
+
+    desc 'Get Users Preferred Work'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      get :get_preferred_works, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_preferred_works = @user.user_preferred_works
       end
 
     # for fill user awards and certificates

@@ -253,7 +253,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      post :get_educations, jbuilder: 'listing' do
+      get :get_educations, jbuilder: 'listing' do
         @user = User.find params[:user_id]
         @user_educations = @user.user_educations
       end
