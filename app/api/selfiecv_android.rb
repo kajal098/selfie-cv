@@ -124,6 +124,7 @@ class SelfiecvAndroid < Grape::API
       @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
       #UserMailer.send_reset_code(@user).deliver_now
       @user.reset_code
+      { code: @user.reset_code, :status => "Success" }
     else
       error! "User does not exist.", 200
     end
@@ -173,7 +174,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :role
       end
-      get :listing , jbuilder: 'all' do
+      post :listing , jbuilder: 'all' do
           @users = User.where(role: params[:role])
         @users
          
@@ -244,6 +245,18 @@ class SelfiecvAndroid < Grape::API
         error! @user_education.errors.full_messages.join(', '), 200 unless @user_education.save
       end
 
+    # for post user's education detail
+
+    desc 'Get Users Education Detail'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      post :get_educations, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_educations = @user.user_educations
+      end
+
     # for fill user's experience
 
     desc 'User Experience'
@@ -265,6 +278,18 @@ class SelfiecvAndroid < Grape::API
         end
       end
 
+    # for post user's experience detail
+
+    desc 'Get Users Experience Detail'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      get :get_experiences, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_experiences = @user.user_experiences
+      end
+
     # for fill user's preferred work details
 
     desc 'User Preferred Work'
@@ -277,14 +302,27 @@ class SelfiecvAndroid < Grape::API
         optional :preferred_location
         optional :current_salary
         optional :expected_salary
+        optional :time_type
       end
       get :preferred_work, jbuilder: 'all' do
         @user = User.find params[:user_id]
-        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
-        @user_preferred_work = UserPreferredWork.new user_id: @user.id
-        @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
-        error! @user_preferred_work.errors.full_messages.join(', '), 200 unless @user_preferred_work.save
+        if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location] || params[:current_salary] || params[:expected_salary] || params[:time_type] )
+          @user_preferred_work = UserPreferredWork.new user_id: @user.id
+          @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+          error! @user_preferred_work.errors.full_messages.join(', '), 200 unless @user_preferred_work.save
         end
+      end
+
+    # for post user's experience detail
+
+    desc 'Get Users Preferred Work'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      get :get_preferred_works, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_preferred_works = @user.user_preferred_works
       end
 
     # for fill user awards and certificates
@@ -301,9 +339,9 @@ class SelfiecvAndroid < Grape::API
         optional :award_type
         optional :file
       end
-      post :achievement, jbuilder: 'ios' do
+      get :achievement, jbuilder: 'ios' do
         @user = User.find params[:user_id]
-            if params[:type] == 'awards'
+            if params[:type] == 'award'
                 if (params[:name] || params[:description] || params[:award_type] )
                 @award = UserAward.new user_id: @user.id
                 @award.attributes = clean_params(params).permit(:name, :description)
@@ -334,7 +372,7 @@ class SelfiecvAndroid < Grape::API
           optional :date
           optional :file
         end
-        get :curriculars, jbuilder: 'ios' do
+        post :curriculars, jbuilder: 'ios' do
           @user = User.find params[:user_id]
           if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
             @curricular = UserCurricular.new user_id: @user.id
