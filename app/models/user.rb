@@ -24,15 +24,6 @@ has_many :user_experiences
 has_many :user_preferred_works
 has_many :user_meters
 
-after_create :add_user_meters
-
-  def add_user_meters
-    @user = User.find_by id: params[:id]
-    user_meters.each do |user_meter|
-      user_meter = UserMeter.create(:user_id=>[user.id],:resume_per=>[self.resume_per],:acievement_per=>[self.acievement_per],
-                            :curri_per=>[self.curri_per],:lifegoal_per=>[self.lifegoal_per],:working_per=>[self.working_per],:ref_per=>[self.ref_per])
-    end   
-  end
 
 mount_uploader :file, FileUploader
 def resume_thumb_url; file.url(:thumb); end
