@@ -144,7 +144,7 @@ class SelfiecvAndroid < Grape::API
       error! "Password not same as previous password", 200 if @user.valid_password?(params[:password])
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 200 unless @user.save
-      { msg: 'Tharo code Generate hoi gva..and amo bheji didho emailvama', :status => "Success" }
+      { msg: 'Your password has been changed ..!!', :status => "Success" }
     end
 
     # for change password
