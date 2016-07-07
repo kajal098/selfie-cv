@@ -126,7 +126,7 @@ class SelfiecvAndroid < Grape::API
       @user.reset_code
       { code: @user.reset_code, :status => "Success" }
     else
-      error!({error: e.message, status: 'Fail'}, 200)
+      error!({error: 'user does not exist', status: 'Fail'}, 200)
     end
     end
 
