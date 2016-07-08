@@ -171,6 +171,7 @@ class SelfiecvIos < Grape::API
         requires :role
       end
       post :listing , jbuilder: 'ios' do
+        authenticate!
           if params[:role]
             @users = User.where(role: params[:role])
           else
@@ -188,6 +189,8 @@ class SelfiecvIos < Grape::API
   # member profile start
 
   resources :member_profile do 
+
+    before { authenticate! }
 
     # for fill user resume
 
@@ -510,6 +513,8 @@ class SelfiecvIos < Grape::API
   # company start
   
   resources :company do 
+
+    before { authenticate! }
 
   # for fill company information
 
