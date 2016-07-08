@@ -31,8 +31,8 @@ class SelfiecvAndroid < Grape::API
     end
 
     def authenticate!
-      error! 'Unauthorized', 401 unless params[:token] =~ UUID_REGEX
-      error! 'Unauthorized', 401 unless current_user
+      error!({error: 'Unauthorized', status: 'Fail'}, 401) unless params[:token] =~ UUID_REGEX
+      error!({error: 'Unauthorized', status: 'Fail'}, 401) unless current_user
     end
 
   end
