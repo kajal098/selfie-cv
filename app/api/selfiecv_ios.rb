@@ -218,7 +218,7 @@ class SelfiecvIos < Grape::API
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
 
-      # for fill user's education
+    # for fill user's education
 
     desc 'User Education'
       params do
@@ -236,6 +236,26 @@ class SelfiecvIos < Grape::API
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
         @user.file = params[:file] if params[:file]
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
+      end
+
+    # for update user's education
+
+    desc 'Update User Education'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :education_id
+        optional :course_id
+        optional :specialization_id
+        optional :year
+        optional :school
+        optional :skill
+      end
+      get :update_education, jbuilder: 'update' do
+        @user_education = UserEducation.find params[:education_id]
+        @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
+          :school, :skill)
+        error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
+        @user_education
       end
 
     # for get user's education detail
@@ -267,8 +287,30 @@ class SelfiecvIos < Grape::API
         if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
           @user_experience = UserExperience.new user_id: @user.id
           @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
+          @user_experience.file = params[:file] if params[:file]
           error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
         end
+      end
+
+    # for update user's experience
+
+    desc 'Update User Experience'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :experience_id
+        optional :name
+        optional :start_from
+        optional :working_till
+        optional :designation
+        optional :file
+      end
+      get :update_experience, jbuilder: 'update' do
+        @user_experience = UserExperience.find params[:experience_id]
+        @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
+          :designation)
+        @user_experience.file = params[:file] if params[:file]
+        error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
+        @user_experience
       end
 
     # for get user's experience detail
@@ -306,6 +348,28 @@ class SelfiecvIos < Grape::API
         end
       end
 
+
+    # for update user's preferred work
+
+    desc 'Update User Preferred Work'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :preferred_work_id
+        optional :ind_name
+        optional :functional_name
+        optional :preferred_designation
+        optional :preferred_location
+        optional :current_salary
+        optional :expected_salary
+        optional :time_type
+      end
+      get :update_preferred_work, jbuilder: 'update' do
+        @user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
+        @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+        error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
+        @user_preferred_work
+      end
+
     # for get user's preferred works detail
 
     desc 'Get Users Preferred Work'
@@ -318,50 +382,108 @@ class SelfiecvIos < Grape::API
         @user_preferred_works = @user.user_preferred_works
       end
 
-    # for fill user awards and certificates
+    # for fill user awards
 
-    desc 'User Achievement'
+    desc 'User Award'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :type
-        optional :name
-        optional :certificate_type        
-        optional :year
-        optional :description
         optional :award_type
+        optional :name        
+        optional :description        
         optional :file
       end
-        post :achievement, jbuilder: 'ios' do
+        get :award, jbuilder: 'ios' do
         @user = User.find params[:user_id]
-            if params[:type] == 'awards'
-                if (params[:name] || params[:description] || params[:award_type] )
+            if (params[:award_type] || params[:name] || params[:descrption] )
                     @award = UserAward.new user_id: @user.id
                     @award.attributes = clean_params(params).permit(:name, :description)
                     @award.award_type = params[:award_type] if params[:award_type]
                     @award.file = params[:file] if params[:file]
                     error! @award.errors.full_messages.join(', '), 422 unless @award.save
-                end
-            elsif params[:type] == 'certificate'
-                if (params[:name] || params[:year] || params[:certificate_type] )
-                    @certificate = UserCertificate.new user_id: @user.id
-                    @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
-                    @certificate.file = params[:file] if params[:file]
-                    error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
-                end
             end
         end
 
-      # for get user's achievement detail
+    # for update user's award
 
-      desc 'Get Users Achievement Detail'
+    desc 'Update User Award'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :award_id
+        optional :award_type
+        optional :name        
+        optional :description        
+        optional :file
+      end
+      get :update_award, jbuilder: 'update' do
+        @user_award = UserAward.find params[:award_id]
+        @user_award.attributes = clean_params(params).permit(:name, :description)
+        @user_award.file = params[:file] if params[:file]
+        error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
+        @user_award
+      end
+
+      # for get user's awards
+
+      desc 'Get Users Award'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      post :get_achievements, jbuilder: 'listing' do
+      post :get_award, jbuilder: 'listing' do
         @user = User.find params[:user_id]
         @user_awards = @user.user_awards
+      end
+
+      # for fill user certificates
+
+    desc 'User Certificate'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        optional :name
+        optional :year
+        optional :certificate_type        
+        optional :file
+      end
+        get :certificate, jbuilder: 'ios' do
+        @user = User.find params[:user_id]
+            if (params[:name] || params[:year] || params[:certificate_type] )
+                    @certificate = UserCertificate.new user_id: @user.id
+                    @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+                    @certificate.file = params[:file] if params[:file]
+                    error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+            end
+        end
+
+    # for update user's certificates
+
+    desc 'Update User Certificate'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :certificate_id
+        optional :name
+        optional :year
+        optional :certificate_type        
+        optional :file
+      end
+      get :update_certificate, jbuilder: 'update' do
+        @user_certificate = UserCertificate.find params[:certificate_id]
+        @user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+        @certificate.file = params[:file] if params[:file]
+        error! @user_certificate.errors.full_messages.join(', '), 422 unless @user_certificate.save
+        @user_certificate
+      end
+
+      # for get user's certificate
+
+      desc 'Get Users Certificate Detail'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      post :get_certificates, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
         @user_certificates = @user.user_certificates
       end
 
@@ -386,6 +508,27 @@ class SelfiecvIos < Grape::API
             @curricular.file = params[:file] if params[:file]
             error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save 
           end         
+        end
+
+      # for update user's curriculars
+
+      desc 'Update User Curriculars'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :curricular_id
+          optional :curricular_type
+          optional :title
+          optional :team_type        
+          optional :location
+          optional :date
+          optional :file
+        end
+        get :update_curricular, jbuilder: 'update' do
+          @user_curricular = UserCurricular.find params[:curricular_id]
+          @user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+          @user_curricular.file = params[:file] if params[:file]
+          error! @user_curricular.errors.full_messages.join(', '), 422 unless @user_curricular.save
+          @user_curricular
         end
 
         # for get user's curriculars detail
@@ -421,6 +564,25 @@ class SelfiecvIos < Grape::API
             end          
           end
 
+      # for update user's future goal
+
+      desc 'Update User Future Goal'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :future_goal_id
+          optional :goal_type
+          optional :title
+          optional :term_type        
+          optional :file
+        end
+        get :update_future_goal, jbuilder: 'update' do
+          @future_goal = UserFutureGoal.find params[:future_goal_id]
+          @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
+          @future_goal.file = params[:file] if params[:file]
+          error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
+          @future_goal
+        end
+
           # for get user's future goals detail
 
         desc 'Get Users Future Goals Detail'
@@ -452,6 +614,24 @@ class SelfiecvIos < Grape::API
                 error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
               end          
             end
+
+      # for update user's working environment
+
+      desc 'Update User Working Environment'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :environment_id
+          optional :env_type
+          optional :title
+          optional :file
+        end
+        get :update_working_environment, jbuilder: 'update' do
+          @environment = UserEnvironment.find params[:environment_id]
+          @environment.attributes = clean_params(params).permit(:env_type, :title)
+          @environment.file = params[:file] if params[:file]
+          error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
+          @environment
+        end
 
             # for get user's working environments detail
 
@@ -489,6 +669,29 @@ class SelfiecvIos < Grape::API
                 error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
               end          
             end
+
+            # for update user's references
+
+            desc 'Update User References'
+              params do
+                requires :token, type: String, regexp: UUID_REGEX
+                requires :reference_id
+                optional :title
+                optional :ref_type
+                optional :from        
+                optional :email
+                optional :contact
+                optional :date
+                optional :location
+                optional :file
+              end
+              get :update_references, jbuilder: 'update' do
+                @reference = UserReference.find params[:reference_id]
+                @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
+                @reference.file = params[:file] if params[:file]
+                error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
+                @reference
+              end
 
             # for get user's references detail
 

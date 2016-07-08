@@ -7,4 +7,5 @@ class UserEducation < ActiveRecord::Base
 	validates :year, :numericality => true, :allow_nil => true
 
 	
+	
 end

@@ -29,8 +29,8 @@ if @user_education
 	json.educations @user.user_educations do |education|
 	json.extract! education, :id, :user_id, :course_id, :specialization_id, :year, :school, :skill
 
-	json.edu_created_at education.created_at.to_i
-	json.edu_updated_at education.updated_at.to_i
+	json.education.created_at.to_i
+	json.education.updated_at.to_i
 end
 end
 
@@ -48,20 +48,16 @@ end
 end
 
 
-if @award
-	json.awards @user.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description, :award_type
-		json.award_created_at award.created_at.to_i
-		json.award_updated_at award.updated_at.to_i
-	end
-end
+
 
 if @user_experience
 	json.experiences @user.user_experiences do |experience|
 		json.extract! experience, :id, :user_id, :name, :start_from, :working_till, :designation
 
-		json.experience_created_at experience.created_at.to_i
-		json.experience_updated_at experience.updated_at.to_i
+		json.file experience.thumb_url
+
+		json.created_at experience.created_at.to_i
+		json.updated_at experience.updated_at.to_i
 	end
 end
 
@@ -74,14 +70,22 @@ if @user_preferred_work
 	end
 end
 
+if @award
+	json.awards @user.user_awards do |award|
+		json.extract! award, :id, :user_id, :name, :description, :award_type
+		json.created_at award.created_at.to_i
+		json.updated_at award.updated_at.to_i
+	end
+end
+
 if @certificate
 	json.certificates @user.user_certificates do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
 
 		json.file certificate.thumb_url
 
-		json.certificate_created_at certificate.created_at.to_i
-		json.certificate_updated_at certificate.updated_at.to_i
+		json.created_at certificate.created_at.to_i
+		json.updated_at certificate.updated_at.to_i
 	end
 end
 
@@ -92,8 +96,8 @@ if @curricular
 
 		json.file curricular.thumb_url
 
-		json.curricular_created_at curricular.created_at.to_i
-		json.curricular_updated_at curricular.updated_at.to_i
+		json.created_at curricular.created_at.to_i
+		json.updated_at curricular.updated_at.to_i
 	end
 end
 
@@ -103,8 +107,8 @@ if @future_goal
 
 		json.file future_goal.thumb_url
 
-		json.future_goal_created_at future_goal.created_at.to_i
-		json.future_goal_updated_at future_goal.updated_at.to_i
+		json.created_at future_goal.created_at.to_i
+		json.updated_at future_goal.updated_at.to_i
 	end
 end
 
@@ -114,20 +118,20 @@ if @environment
 
 		json.file environment.thumb_url
 
-		json.environment_created_at environment.created_at.to_i
-		json.environment_updated_at environment.updated_at.to_i
+		json.created_at environment.created_at.to_i
+		json.updated_at environment.updated_at.to_i
 	end
 end
 
 
 if @reference
-	json.environments @user.user_references do |env|
-		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
+	json.references @user.user_references do |ref|
+		json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
 
-		json.file env.thumb_url
+		json.file ref.thumb_url
 
-		json.env_created_at env.created_at.to_i
-		json.env_updated_at env.updated_at.to_i
+		json.created_at ref.created_at.to_i
+		json.updated_at ref.updated_at.to_i
 	end
 end
 
@@ -135,8 +139,8 @@ if @courses
 	json.courses @courses do |course|
 		json.extract! course, :id, :name
 
-		json.course_created_at course.created_at.to_i
-		json.course_updated_at course.updated_at.to_i
+		json.created_at course.created_at.to_i
+		json.updated_at course.updated_at.to_i
 	end
 end
 
@@ -144,7 +148,7 @@ if @specializations
 	json.specializations @specializations do |specialization|
 		json.extract! specialization, :id, :name
 
-		json.specialization_created_at specialization.created_at.to_i
-		json.specialization_updated_at specialization.updated_at.to_i
+		json.created_at specialization.created_at.to_i
+		json.updated_at specialization.updated_at.to_i
 	end
 end
