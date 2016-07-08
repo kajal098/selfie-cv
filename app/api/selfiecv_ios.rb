@@ -84,6 +84,7 @@ class SelfiecvIos < Grape::API
       post :register, jbuilder: 'ios' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
         error! 'Device not registered',422 unless current_device
+        error! 'password not matched', 200 if params[:password] != params[:password_confirmation]
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       end
 
@@ -136,6 +137,7 @@ class SelfiecvIos < Grape::API
       @user = User.find_by_reset_code(params[:code])
       error! "Wrong reset code.", 422 unless @user
       error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
+      error! 'password not matched', 200 if params[:password] != params[:password_confirmation]
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
       {}
@@ -155,6 +157,7 @@ class SelfiecvIos < Grape::API
       @user = current_user
       error! "Current password is wrong.", 422 unless @user.valid_password? params[:current_password]
       error! "Password not same as previous password", 422 if @user.valid_password?(params[:password])
+      error! 'password not matched', 200 if params[:password] != params[:password_confirmation]
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
       @user
