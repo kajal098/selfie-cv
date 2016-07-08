@@ -210,7 +210,7 @@ class SelfiecvAndroid < Grape::API
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
-        error! @user.errors.full_messages.join(', '), 200 unless @user.save
+        error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
         if(params[:file_type] == 'video')
           @user_meter = UserMeter.find_by user_id: params[:user_id]
           @user_meter.update_column :resume_per, 100
@@ -276,7 +276,7 @@ class SelfiecvAndroid < Grape::API
         if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
           @user_experience = UserExperience.new user_id: @user.id
           @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
-          error! @user_experience.errors.full_messages.join(', '), 200 unless @user_experience.save
+          error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
         end
       end
 
@@ -312,6 +312,7 @@ class SelfiecvAndroid < Grape::API
           @user_preferred_work = UserPreferredWork.new user_id: @user.id
           @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
           error! @user_preferred_work.errors.full_messages.join(', '), 200 unless @user_preferred_work.save
+          error!({error: @user_preferred_work.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_preferred_work.save
         end
       end
 
@@ -349,14 +350,14 @@ class SelfiecvAndroid < Grape::API
                 @award.attributes = clean_params(params).permit(:name, :description, :award_type)
                 @award.award_type = params[:award_type] if params[:award_type]
                 @award.file = params[:file] if params[:file]
-                error! @award.errors.full_messages.join(', '), 200 unless @award.save
+                error!({error: @award.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @award.save
                 end
             elsif params[:achievement_type] == 'certificate'
                 if (params[:name] || params[:year] || params[:certificate_type] )
                 @certificate = UserCertificate.new user_id: @user.id
                 @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
                 @certificate.file = params[:file] if params[:file]
-                error! @certificate.errors.full_messages.join(', '), 200 unless @certificate.save
+                error!({error: @certificate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @certificate.save
                 end
             end
         end
@@ -393,7 +394,7 @@ class SelfiecvAndroid < Grape::API
             @curricular = UserCurricular.new user_id: @user.id
             @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
             @curricular.file = params[:file] if params[:file]
-            error! @curricular.errors.full_messages.join(', '), 200 unless @curricular.save 
+            error!({error: @curricular.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @curricular.save
           end         
         end
 
@@ -426,7 +427,7 @@ class SelfiecvAndroid < Grape::API
               @future_goal = UserFutureGoal.new user_id: @user.id
               @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
               @future_goal.file = params[:file] if params[:file]
-              error! @future_goal.errors.full_messages.join(', '), 200 unless @future_goal.save
+              error!({error: @future_goal.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @future_goal.save
             end          
           end
 
@@ -458,7 +459,7 @@ class SelfiecvAndroid < Grape::API
                 @environment = UserEnvironment.new user_id: @user.id
                 @environment.attributes = clean_params(params).permit(:env_type, :title)
                 @environment.file = params[:file] if params[:file]
-                error! @environment.errors.full_messages.join(', '), 200 unless @environment.save
+                error!({error: @environment.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @environment.save
               end          
             end
 
@@ -495,7 +496,7 @@ class SelfiecvAndroid < Grape::API
               if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
                 @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
                 @reference.file = params[:file] if params[:file]
-                error! @reference.errors.full_messages.join(', '), 200 unless @reference.save
+                error!({error: @reference.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @reference.save
               end          
             end
 
@@ -544,8 +545,7 @@ class SelfiecvAndroid < Grape::API
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
-                error! @user.errors.full_messages.join(', '), 200 unless @user.save
-                
+                error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
               else
                 error! "Record not found.", 200
               end
@@ -567,7 +567,7 @@ class SelfiecvAndroid < Grape::API
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link)
-                error! @user.errors.full_messages.join(', '), 200 unless @user.save
+                error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
                 @user.company_logo = params[:company_logo] if params[:company_logo]
                 @user.company_profile = params[:company_profile] if params[:company_profile]
                 @user.company_brochure = params[:company_brochure] if params[:company_brochure]
@@ -594,7 +594,7 @@ class SelfiecvAndroid < Grape::API
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :companu_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
-                error! @user.errors.full_messages.join(', '), 200 unless @user.save
+                error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
               else
                 error! "Record not found.", 200
               end
@@ -613,7 +613,7 @@ class SelfiecvAndroid < Grape::API
                 params[:files].each do |file|
                   @galleries = CompanyGalery.new user_id: params[:user_id]
                   @galleries.file = file
-                  error! @galleries.errors.full_messages.join(', '), 200 unless @galleries.save
+                  error!({error: @galleries.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @galleries.save
                 end
                 {}
             end
