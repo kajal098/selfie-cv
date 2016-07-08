@@ -455,6 +455,7 @@ class SelfiecvAndroid < Grape::API
               optional :file
             end
             post :working_environment, jbuilder: 'android' do
+              authenticate!
               @user = User.find params[:user_id]
               if (params[:env_type] || params[:title] )
                 @environment = UserEnvironment.new user_id: @user.id
