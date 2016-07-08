@@ -244,7 +244,7 @@ class SelfiecvAndroid < Grape::API
         @user_education = UserEducation.new user_id: @user.id
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
         @user.file = params[:file] if params[:file]
-        error! @user_education.errors.full_messages.join(', '), 200 unless @user_education.save
+        error!({error: @user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_education.save
       end
 
     # for get user's education detail
