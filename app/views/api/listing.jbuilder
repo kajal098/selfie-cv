@@ -16,14 +16,6 @@ if @user_experiences
 end
 end
 
-if @awards
-	json.awards @user.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description, :award_type
-		json.award_created_at award.created_at.to_i
-		json.award_updated_at award.updated_at.to_i
-	end
-end
-
 if @user_preferred_works
 	json.user_preferred_works @user.user_preferred_works do |user_preferred_work|
 		json.extract! user_preferred_work, :id, :user_id, :ind_name, :functional_name, :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type
@@ -33,7 +25,15 @@ if @user_preferred_works
 	end
 end
 
-if @certificates
+if @user_awards
+	json.awards @user.user_awards do |award|
+		json.extract! award, :id, :user_id, :name, :description, :award_type
+		json.award_created_at award.created_at.to_i
+		json.award_updated_at award.updated_at.to_i
+	end
+end
+
+if @user_certificates
 	json.certificates @user.user_certificates do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
 

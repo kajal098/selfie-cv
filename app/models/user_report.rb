@@ -14,6 +14,9 @@ class UserReport
   column(:role, header: "Role", order: false, :order => "users.role", class: "padding_class")
   column(:username, header: "Username", :order => "users.username", class: "padding_class")
   column(:email, header: "E-mail", order: false, :order => "users.email", class: "padding_class")
+  column(:first_name, header: "First Name", :order => "users.first_name", class: "padding_class")
+  column(:middle_name, header: "Middle Name", :order => "users.middle_name", class: "padding_class")
+  column(:last_name, header: "Last Name", :order => "users.last_name", class: "padding_class")  
   column(:updated_at) do |model|
     model.created_at.to_date
   end

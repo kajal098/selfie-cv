@@ -206,7 +206,7 @@ class SelfiecvAndroid < Grape::API
         optional :file
         optional :file_type
       end
-      post :resume, jbuilder: 'all' do
+      get :resume, jbuilder: 'all' do
         @user = User.find params[:user_id]
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
         @user.file = params[:file] if params[:file]
@@ -224,6 +224,7 @@ class SelfiecvAndroid < Grape::API
           @user_meter = UserMeter.find_by user_id: params[:user_id]
           @user_meter.update_column :resume_per, 30
         end
+        @user
       end
 
     # for fill user's education
@@ -334,10 +335,10 @@ class SelfiecvAndroid < Grape::API
         requires :user_id
         optional :achievement_type
         optional :name
-        optional :certificate_type        
-        optional :year
         optional :description
         optional :award_type
+        optional :year
+        optional :certificate_type        
         optional :file
       end
       get :achievement, jbuilder: 'ios' do

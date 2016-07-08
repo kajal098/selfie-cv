@@ -349,6 +349,19 @@ class SelfiecvIos < Grape::API
             end
         end
 
+      # for post user's education detail
+
+      desc 'Get Users Education Detail'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+      end
+      post :get_achievements, jbuilder: 'listing' do
+        @user = User.find params[:user_id]
+        @user_awards = @user.user_awards
+        @user_certificates = @user.user_certificates
+      end
+
       # for fill curriculars
 
       desc 'User Curriculars'
