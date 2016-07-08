@@ -346,7 +346,7 @@ class SelfiecvAndroid < Grape::API
             if params[:achievement_type] == 'award'
                 if (params[:name] || params[:description] || params[:award_type] )
                 @award = UserAward.new user_id: @user.id
-                @award.attributes = clean_params(params).permit(:name, :description)
+                @award.attributes = clean_params(params).permit(:name, :description, :award_type)
                 @award.award_type = params[:award_type] if params[:award_type]
                 @award.file = params[:file] if params[:file]
                 error! @award.errors.full_messages.join(', '), 200 unless @award.save
