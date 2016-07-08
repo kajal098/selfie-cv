@@ -87,10 +87,11 @@ class SelfiecvAndroid < Grape::API
       end
       post :register, jbuilder: 'android' do
         @user = User.new clean_params(params).permit(:username, :email, :password, :password_confirmation, :role)
-        error! 'Device not registered',200 unless current_device
-        error! @user.errors.full_messages.join(', '), 200 unless @user.save
+        error!({error: 'Device not registered', status: 'Fail'}, 200) unless current_device
+        error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
+        error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
         @user_meter = UserMeter.new user_id: @user.id
-        error! @user_meter.errors.full_messages.join(', '), 200 unless @user_meter.save
+        error!({error: @user_meter.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_meter.save
       end
 
     # for user login
@@ -104,10 +105,10 @@ class SelfiecvAndroid < Grape::API
     end
     post :login , jbuilder: 'android' do
       @user = User.find_by username: params[:username]
-      error! 'Device not registered',200 unless current_device
-      error! 'User not found',200 unless @user
-      error! 'authentication failed',200 unless @user.role == params[:role]
-      error! 'Wrong username or password',200 unless @user.valid_password? params[:password]
+      error!({error: 'Device not registered', status: 'Fail'}, 200) unless current_device
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      error!({error: 'Authentication failed', status: 'Fail'}, 200) unless @user.role == params[:role]
+      error!({error: 'Wrong username or password', status: 'Fail'}, 200) unless @user.valid_password? params[:password]
       current_device.update_column :user_id, @user.id
     end
 
