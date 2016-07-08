@@ -45,8 +45,8 @@ if @user_certificates
 end
 
 
-if @curriculars
-	json.curriculars @user.user_curriculars do |curricular|
+if @user_curriculars
+	json.user_curriculars @user.user_curriculars do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
 
 		json.file curricular.thumb_url
@@ -56,8 +56,8 @@ if @curriculars
 	end
 end
 
-if @future_goals
-	json.future_goals @user.user_future_goals do |future_goal|
+if @user_future_goals
+	json.user_future_goals @user.user_future_goals do |future_goal|
 		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
 
 		json.file future_goal.thumb_url
@@ -67,8 +67,8 @@ if @future_goals
 	end
 end
 
-if @environments
-	json.environments @user.user_environments do |environment|
+if @user_working_environments
+	json.user_working_environments @user.user_environments do |environment|
 		json.extract! environment, :id, :user_id, :env_type, :title
 
 		json.file environment.thumb_url
@@ -79,8 +79,8 @@ if @environments
 end
 
 
-if @references
-	json.environments @user.user_references do |env|
+if @user_references
+	json.user_references @user.user_references do |env|
 		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
 
 		json.file env.thumb_url

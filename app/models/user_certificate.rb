@@ -1,7 +1,7 @@
 class UserCertificate < ActiveRecord::Base
 	belongs_to :user
 
-	validates :name,:certificate_type, presence: true
+	validates :name, :certificate_type, :year, presence: true
 	validates :year, :numericality => true, :allow_nil => true
 	#validates :year, length: { minimum: 2 }
   	#validates :year, length: { maximum: 500 }

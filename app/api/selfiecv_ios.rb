@@ -235,7 +235,7 @@ class SelfiecvIos < Grape::API
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
       end
 
-    # for post user's education detail
+    # for get user's education detail
 
     desc 'Get Users Education Detail'
       params do
@@ -268,7 +268,7 @@ class SelfiecvIos < Grape::API
         end
       end
 
-    # for post user's experience detail
+    # for get user's experience detail
 
     desc 'Get Users Experience Detail'
       params do
@@ -303,7 +303,7 @@ class SelfiecvIos < Grape::API
         end
       end
 
-    # for post user's experience detail
+    # for get user's preferred works detail
 
     desc 'Get Users Preferred Work'
       params do
@@ -349,9 +349,9 @@ class SelfiecvIos < Grape::API
             end
         end
 
-      # for post user's education detail
+      # for get user's achievement detail
 
-      desc 'Get Users Education Detail'
+      desc 'Get Users Achievement Detail'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
@@ -385,6 +385,18 @@ class SelfiecvIos < Grape::API
           end         
         end
 
+        # for get user's curriculars detail
+
+        desc 'Get Users Curriculars Detail'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :user_id
+        end
+        post :get_curriculars, jbuilder: 'listing' do
+          @user = User.find params[:user_id]
+          @user_curriculars = @user.user_curriculars
+        end
+
         # for fill future goal
 
         desc 'User Future Goal'
@@ -406,6 +418,18 @@ class SelfiecvIos < Grape::API
             end          
           end
 
+          # for get user's future goals detail
+
+        desc 'Get Users Future Goals Detail'
+        params do
+          requires :token, type: String, regexp: UUID_REGEX
+          requires :user_id
+        end
+        post :get_future_goals, jbuilder: 'listing' do
+          @user = User.find params[:user_id]
+          @user_future_goals = @user.user_future_goals
+        end
+
           # for fill working environment
 
           desc 'User Working Environment'
@@ -425,6 +449,18 @@ class SelfiecvIos < Grape::API
                 error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
               end          
             end
+
+            # for get user's working environments detail
+
+          desc 'Get Users Working Environments Detail'
+          params do
+            requires :token, type: String, regexp: UUID_REGEX
+            requires :user_id
+          end
+          post :get_working_environments, jbuilder: 'listing' do
+            @user = User.find params[:user_id]
+            @user_working_environments = @user.user_environments
+          end
 
             # for fill references
 
@@ -449,6 +485,18 @@ class SelfiecvIos < Grape::API
                 @reference.file = params[:file] if params[:file]
                 error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
               end          
+            end
+
+            # for get user's references detail
+
+            desc 'Get Users References Detail'
+            params do
+              requires :token, type: String, regexp: UUID_REGEX
+              requires :user_id
+            end
+            post :get_references, jbuilder: 'listing' do
+              @user = User.find params[:user_id]
+              @user_references = @user.user_references
             end
       
 
