@@ -211,6 +211,7 @@ class SelfiecvIos < Grape::API
       end
       post :resume, jbuilder: 'ios' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number)
         @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
@@ -244,6 +245,7 @@ class SelfiecvIos < Grape::API
       end
       post :education, jbuilder: 'ios' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user_education = UserEducation.new user_id: @user.id
         if (params[:course_id] || params[:specialization_id] || params[:year] || params[:school] || params[:skill] )
           @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
@@ -265,6 +267,7 @@ class SelfiecvIos < Grape::API
       end
       post :update_education, jbuilder: 'update' do
         @user_education = UserEducation.find params[:education_id]
+        error! 'User Education not found',422 unless @user_education
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
           :school, :skill)
         error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
@@ -280,6 +283,7 @@ class SelfiecvIos < Grape::API
       end
       post :get_educations, jbuilder: 'listing' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user_educations = @user.user_educations
       end
 
@@ -298,6 +302,7 @@ class SelfiecvIos < Grape::API
       end
       post :experience, jbuilder: 'ios' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user_experience = UserExperience.new user_id: @user.id
         @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
         @user_experience.file = params[:file] if params[:file]
@@ -318,6 +323,7 @@ class SelfiecvIos < Grape::API
       end
       post :update_experience, jbuilder: 'update' do
         @user_experience = UserExperience.find params[:experience_id]
+        error! 'User Experience not found',422 unless @user_experience
         @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
           :designation)
         @user_experience.file = params[:file] if params[:file]
@@ -334,6 +340,7 @@ class SelfiecvIos < Grape::API
       end
       post :get_experiences, jbuilder: 'listing' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user_experiences = @user.user_experiences
       end
 
@@ -353,6 +360,7 @@ class SelfiecvIos < Grape::API
       end
       post :preferred_work, jbuilder: 'ios' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location] || params[:current_salary] || params[:expected_salary] || params[:time_type] )
         @user_preferred_work = UserPreferredWork.new user_id: @user.id
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
@@ -377,6 +385,7 @@ class SelfiecvIos < Grape::API
       end
       post :update_preferred_work, jbuilder: 'update' do
         @user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
+        error! 'User not found',422 unless @user_preferred_work
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
         error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
         @user_preferred_work
@@ -391,6 +400,7 @@ class SelfiecvIos < Grape::API
       end
       post :get_preferred_works, jbuilder: 'listing' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user_preferred_works = @user.user_preferred_works
       end
 
@@ -407,6 +417,7 @@ class SelfiecvIos < Grape::API
       end
         post :award, jbuilder: 'ios' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
             if (params[:award_type] || params[:name] || params[:descrption] )
                     @award = UserAward.new user_id: @user.id
                     @award.attributes = clean_params(params).permit(:name, :description)
@@ -429,6 +440,7 @@ class SelfiecvIos < Grape::API
       end
       post :update_award, jbuilder: 'update' do
         @user_award = UserAward.find params[:award_id]
+        error! 'User not found',422 unless @user_award
         @user_award.attributes = clean_params(params).permit(:name, :description)
         @user_award.file = params[:file] if params[:file]
         error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
@@ -444,6 +456,7 @@ class SelfiecvIos < Grape::API
       end
       post :get_award, jbuilder: 'listing' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user_awards = @user.user_awards
       end
 
@@ -460,6 +473,7 @@ class SelfiecvIos < Grape::API
       end
         post :certificate, jbuilder: 'ios' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
             if (params[:name] || params[:year] || params[:certificate_type] )
                     @certificate = UserCertificate.new user_id: @user.id
                     @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
@@ -481,6 +495,7 @@ class SelfiecvIos < Grape::API
       end
       post :update_certificate, jbuilder: 'update' do
         @user_certificate = UserCertificate.find params[:certificate_id]
+        error! 'User Certificate not found',422 unless @user_certificate
         @user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
         @certificate.file = params[:file] if params[:file]
         error! @user_certificate.errors.full_messages.join(', '), 422 unless @user_certificate.save
@@ -496,6 +511,7 @@ class SelfiecvIos < Grape::API
       end
       post :get_certificates, jbuilder: 'listing' do
         @user = User.find params[:user_id]
+        error! 'User not found',422 unless @user
         @user_certificates = @user.user_certificates
       end
 
@@ -514,6 +530,7 @@ class SelfiecvIos < Grape::API
         end
         post :curriculars, jbuilder: 'ios' do
           @user = User.find params[:user_id]
+          error! 'User not found',422 unless @user
           if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
             @curricular = UserCurricular.new user_id: @user.id
             @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
@@ -537,6 +554,7 @@ class SelfiecvIos < Grape::API
         end
         post :update_curricular, jbuilder: 'update' do
           @user_curricular = UserCurricular.find params[:curricular_id]
+          error! 'User Curricular not found',422 unless @user_curricular
           @user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
           @user_curricular.file = params[:file] if params[:file]
           error! @user_curricular.errors.full_messages.join(', '), 422 unless @user_curricular.save
@@ -552,6 +570,7 @@ class SelfiecvIos < Grape::API
         end
         post :get_curriculars, jbuilder: 'listing' do
           @user = User.find params[:user_id]
+          error! 'User not found',422 unless @user
           @user_curriculars = @user.user_curriculars
         end
 
@@ -568,6 +587,7 @@ class SelfiecvIos < Grape::API
           end
           post :future_goal, jbuilder: 'ios' do
             @user = User.find params[:user_id]
+            error! 'User not found',422 unless @user
             if (params[:goal_type] || params[:title] || params[:term_type] )
               @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
               @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
@@ -589,6 +609,7 @@ class SelfiecvIos < Grape::API
         end
         post :update_future_goal, jbuilder: 'update' do
           @future_goal = UserFutureGoal.find params[:future_goal_id]
+          error! 'User Future Goal not found',422 unless @future_goal
           @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
           @future_goal.file = params[:file] if params[:file]
           error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
@@ -604,6 +625,7 @@ class SelfiecvIos < Grape::API
         end
         post :get_future_goals, jbuilder: 'listing' do
           @user = User.find params[:user_id]
+          error! 'User not found',422 unless @user
           @user_future_goals = @user.user_future_goals
         end
 
@@ -619,6 +641,7 @@ class SelfiecvIos < Grape::API
             end
             post :working_environment, jbuilder: 'ios' do
               @user = User.find params[:user_id]
+              error! 'User not found',422 unless @user
               if (params[:env_type] || params[:title] )
                 @environment = UserEnvironment.new user_id: @user.id
                 @environment.attributes = clean_params(params).permit(:env_type, :title)
@@ -639,6 +662,7 @@ class SelfiecvIos < Grape::API
         end
         post :update_working_environment, jbuilder: 'update' do
           @environment = UserEnvironment.find params[:environment_id]
+          error! 'User Environment not found',422 unless @environment
           @environment.attributes = clean_params(params).permit(:env_type, :title)
           @environment.file = params[:file] if params[:file]
           error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
@@ -654,6 +678,7 @@ class SelfiecvIos < Grape::API
           end
           post :get_working_environments, jbuilder: 'listing' do
             @user = User.find params[:user_id]
+            error! 'User not found',422 unless @user
             @user_working_environments = @user.user_environments
           end
 
@@ -674,6 +699,7 @@ class SelfiecvIos < Grape::API
             end
             post :references, jbuilder: 'ios' do
               @user = User.find params[:user_id]
+              error! 'User not found',422 unless @user
               @reference = UserReference.new user_id: @user.id
               if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
                 @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
@@ -699,6 +725,7 @@ class SelfiecvIos < Grape::API
               end
               post :update_references, jbuilder: 'update' do
                 @reference = UserReference.find params[:reference_id]
+                error! 'User not found',422 unless @reference
                 @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
                 @reference.file = params[:file] if params[:file]
                 error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
@@ -714,6 +741,7 @@ class SelfiecvIos < Grape::API
             end
             post :get_references, jbuilder: 'listing' do
               @user = User.find params[:user_id]
+              error! 'User not found',422 unless @user
               @user_references = @user.user_references
             end
       
@@ -745,6 +773,7 @@ class SelfiecvIos < Grape::API
             end
             post :company_info, jbuilder: 'ios' do
               @user = User.find params[:user_id]
+              error! 'User not found',422 unless @user
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
                 error! @user.errors.full_messages.join(', '), 422 unless @user.save
@@ -769,6 +798,7 @@ class SelfiecvIos < Grape::API
             end
             post :corporate_identity, jbuilder: 'ios' do
               @user = User.find params[:user_id]
+              error! 'User not found',422 unless @user
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link)
                 error! @user.errors.full_messages.join(', '), 422 unless @user.save
@@ -796,6 +826,7 @@ class SelfiecvIos < Grape::API
             end
             post :growth_and_goal, jbuilder: 'ios' do
               @user = User.find params[:user_id]
+              error! 'User not found',422 unless @user
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
                 error! @user.errors.full_messages.join(', '), 422 unless @user.save
@@ -814,6 +845,7 @@ class SelfiecvIos < Grape::API
             end
             post :company_galery, jbuilder: 'galery' do
               @user = User.find params[:user_id]
+              error! 'User not found',422 unless @user
                 params[:files].each do |file|
                   @galleries = CompanyGalery.new user_id: params[:user_id]
                   @galleries.file = file
