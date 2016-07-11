@@ -537,7 +537,7 @@ class SelfiecvAndroid < Grape::API
           @user_curricular = UserCurricular.find params[:curricular_id]
           @user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
           @user_curricular.file = params[:file] if params[:file]
-          error!({error: @curricular.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @curricular.save
+          error! @user_curricular.errors.full_messages.join(', '), 422 unless @user_curricular.save
           @user_curricular
         end
 
