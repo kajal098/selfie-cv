@@ -207,12 +207,27 @@ class SelfiecvIos < Grape::API
         requires :zipcode
         requires :contact_number
         optional :file
+        optional :file_type
       end
       post :resume, jbuilder: 'ios' do
         @user = User.find params[:user_id]
-        @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
+        @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number)
         @user.file = params[:file] if params[:file]
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
+        if(params[:file_type] == 'video')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 100
+        elsif(params[:file_type] == 'audio')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 70
+        elsif(params[:file_type] == 'file')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 50
+        elsif(params[:file_type] == 'text')
+          @user_meter = UserMeter.find_by user_id: params[:user_id]
+          @user_meter.update_column :resume_per, 30
+        end
+        @user
       end
 
     # for fill user's education

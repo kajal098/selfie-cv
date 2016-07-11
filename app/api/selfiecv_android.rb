@@ -201,15 +201,12 @@ class SelfiecvAndroid < Grape::API
         optional :city
         optional :zipcode
         optional :contact_number
-        optional :education_in  
-        optional :school_name 
-        optional :year
         optional :file
         optional :file_type
       end
       post :resume, jbuilder: 'android' do
         @user = User.find params[:user_id]
-        @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number,  :education_in,  :school_name, :year)
+        @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number)
         @user.file = params[:file] if params[:file]
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
         if(params[:file_type] == 'video')

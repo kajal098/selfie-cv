@@ -8,57 +8,49 @@
       </div>
       <div class="panel-body">
 
+<% if @user.role == 'Jobseeker' %>
 
 <h4 class="text_decoration"><b> Personal Details </b></h4>
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-<p>
-  <strong>Role:</strong>
-  <%= @user.role %>
-</p>
-<p>
-  <strong>First Name:</strong>
-  <%= @user.first_name %>
-</p>
-<p>
-  <strong>Second Name:</strong>
-  <%= @user.middle_name %>
-</p>
-<p>
-  <strong>Last Name:</strong>
-  <%= @user.last_name %>
-</p>
-<p>
-  <strong>City:</strong>
-  <%= @user.city %>
-</p>
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
-<p>
-  <strong>Contact Number:</strong>
-  <%= @user.contact_number	%>
-</p>
-<p>
-  <strong>Nationality:</strong>
-  <%= @user.nationality %>
-</p>
+<p><strong>Email:</strong><%= @user.email %></p>
+<p><strong>Role:</strong><%= @user.role %></p>
+<p><strong>First Name:</strong><%= @user.first_name %></p>
+<p><strong>Second Name:</strong><%= @user.middle_name %></p>
+<p><strong>Last Name:</strong><%= @user.last_name %></p>
+<p><strong>City:</strong><%= @user.city %></p>
+<p><strong>Address:</strong><%= @user.address %></p>
+<p><strong>Contact Number:</strong><%= @user.contact_number  %></p>
+<p><strong>Nationality:</strong><%= @user.nationality %></p>
 
-<h4 class="text_decoration"><b> Educational Details </b></h4>
+<% elsif @user.role == 'Company' %>
 
-<p>
-  <strong>Education In:</strong>
-  <%= @user.education_in %>
-</p>
+<p><strong>Company Name:</strong><%= @user.company_name %></p>
+<p><strong>Company Establish From:</strong><%= @user.company_establish_from %></p>
+<p><strong>Company Industry:</strong><%= @user.company_industry %></p>
+<p><strong>Company Functional Area:</strong><%= @user.company_functional_area %></p>
+<p><strong>Company Address:</strong><%= @user.company_address %></p>
+<p><strong>Company Zipcode:</strong><%= @user.company_zipcode %></p>        
+<p><strong>Company City:</strong><%= @user.company_city %></p>
+<p><strong>Company Contact:</strong><%= @user.company_contact %></p>
+<p><strong>Company Skype Id:</strong><%= @user.company_skype_id %></p>
+<p><strong>Company:</strong><%= @user.company_id %></p>
+<p><strong>Company Logo:</strong><%= @user.company_logo %></p>
+<p><strong>Company Profile:</strong><%= @user.company_profile %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_brochure %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_website %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_facebook_link %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_turnover %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_no_of_emp %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_growth_ratio %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_new_ventures %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_future_turnover %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_future_new_venture_location %></p>
+<p><strong>Company Brochure:</strong><%= @user.company_future_outlet %></p>
 
-<p>
-  <strong>School:</strong>
-  <%= @user.school_name %>
-</p>
+<% else %>
 
+<p><strong>First Name:</strong><%= @user.first_name %></p>
+
+<% end %>
 <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <%= link_to 'Edit', edit_admin_user_path(@user), class: "btn btn-primary btn-sm" %> <%= link_to "Back", admin_users_path, class: "btn btn-default btn-sm" %>
