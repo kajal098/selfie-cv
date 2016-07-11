@@ -297,13 +297,11 @@ class SelfiecvIos < Grape::API
       end
       post :experience, jbuilder: 'ios' do
         @user = User.find params[:user_id]
-        if (params[:name] || params[:start_from] || params[:working_till] || params[:designation])
           @user_experience = UserExperience.new user_id: @user.id
           @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
           @user_experience.file = params[:file] if params[:file]
           error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
         end
-      end
 
     # for update user's experience
 
