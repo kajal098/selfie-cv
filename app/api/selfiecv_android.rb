@@ -286,7 +286,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
         optional :name
-        optional :exp_type
+        requires :exp_type
         optional :start_from
         optional :working_till
         optional :designation
@@ -296,6 +296,7 @@ class SelfiecvAndroid < Grape::API
         @user = User.find params[:user_id]
         @user_experience = UserExperience.new user_id: @user.id
         @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
+        @user_experience.file = params[:file] if params[:file]
         error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
       end
 

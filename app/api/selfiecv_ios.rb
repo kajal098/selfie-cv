@@ -290,6 +290,7 @@ class SelfiecvIos < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
         optional :name
+        requires :exp_type
         optional :start_from
         optional :working_till
         optional :designation
