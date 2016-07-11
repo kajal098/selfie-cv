@@ -243,9 +243,11 @@ class SelfiecvAndroid < Grape::API
       post :education, jbuilder: 'android' do
         @user = User.find params[:user_id]
         @user_education = UserEducation.new user_id: @user.id
-        @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
-        @user.file = params[:file] if params[:file]
-        error!({error: @user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_education.save
+        if (params[:course_id] || params[:specialization_id] || params[:year] || params[:school] || params[:skill] )
+          @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
+          @user.file = params[:file] if params[:file]
+          error!({error: @user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_education.save
+        end
       end
 
       # for update user's education
