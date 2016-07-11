@@ -7,17 +7,11 @@ class UserReport
 
   filter(:username, :string, header: "Username") {|value| where("username ilike ?", "%#{value}%")}
   filter(:email, :string, header: "E-mail") {|value| where("email ilike ?", "%#{value}%")}
-  filter(:first_name, :string, header: "First Name") {|value| where("first_name ilike ?", "%#{value}%")}
-  filter(:middle_name, :string, header: "Middle Name") {|value| where("email ilike ?", "%#{value}%")}
-  filter(:last_name, :string, header: "Last Name") {|value| where("last_name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "users.id")
   column(:role, header: "Role", order: false, :order => "users.role", class: "padding_class")
   column(:username, header: "Username", :order => "users.username", class: "padding_class")
   column(:email, header: "E-mail", order: false, :order => "users.email", class: "padding_class")
-  column(:first_name, header: "First Name", :order => "users.first_name", class: "padding_class")
-  column(:middle_name, header: "Middle Name", :order => "users.middle_name", class: "padding_class")
-  column(:last_name, header: "Last Name", :order => "users.last_name", class: "padding_class")  
   column(:updated_at) do |model|
     model.created_at.to_date
   end

@@ -1,6 +1,10 @@
 <%= simple_form_for [:admin, @user_experience], html: { class: 'form-horizontal' } do |f| %>
   
   <%= f.input :name, label: "Name" %>
+  <%= f.radio_button :exp_type, 'experience', :checked => true %> 
+  <%= label :exp_type_experience, 'Experience' %>
+  <%= f.radio_button :exp_type, 'fresher' %>
+  <%= label :exp_type_fresher, 'Fresher' %>
   <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <button type="submit" class="btn btn-primary btn-sm">Save</button> <%= link_to "Back", admin_user_experiences_path, class: "btn btn-default btn-sm" %>
