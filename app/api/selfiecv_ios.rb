@@ -251,7 +251,7 @@ class SelfiecvIos < Grape::API
         optional :school
         optional :skill
       end
-      get :update_education, jbuilder: 'update' do
+      post :update_education, jbuilder: 'update' do
         @user_education = UserEducation.find params[:education_id]
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
           :school, :skill)
@@ -305,7 +305,7 @@ class SelfiecvIos < Grape::API
         optional :designation
         optional :file
       end
-      get :update_experience, jbuilder: 'update' do
+      post :update_experience, jbuilder: 'update' do
         @user_experience = UserExperience.find params[:experience_id]
         @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
           :designation)
@@ -364,7 +364,7 @@ class SelfiecvIos < Grape::API
         optional :expected_salary
         optional :time_type
       end
-      get :update_preferred_work, jbuilder: 'update' do
+      post :update_preferred_work, jbuilder: 'update' do
         @user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
         error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
@@ -394,7 +394,7 @@ class SelfiecvIos < Grape::API
         optional :description        
         optional :file
       end
-        get :award, jbuilder: 'ios' do
+        post :award, jbuilder: 'ios' do
         @user = User.find params[:user_id]
             if (params[:award_type] || params[:name] || params[:descrption] )
                     @award = UserAward.new user_id: @user.id
@@ -416,7 +416,7 @@ class SelfiecvIos < Grape::API
         optional :description        
         optional :file
       end
-      get :update_award, jbuilder: 'update' do
+      post :update_award, jbuilder: 'update' do
         @user_award = UserAward.find params[:award_id]
         @user_award.attributes = clean_params(params).permit(:name, :description)
         @user_award.file = params[:file] if params[:file]
@@ -447,7 +447,7 @@ class SelfiecvIos < Grape::API
         optional :certificate_type        
         optional :file
       end
-        get :certificate, jbuilder: 'ios' do
+        post :certificate, jbuilder: 'ios' do
         @user = User.find params[:user_id]
             if (params[:name] || params[:year] || params[:certificate_type] )
                     @certificate = UserCertificate.new user_id: @user.id
@@ -468,7 +468,7 @@ class SelfiecvIos < Grape::API
         optional :certificate_type        
         optional :file
       end
-      get :update_certificate, jbuilder: 'update' do
+      post :update_certificate, jbuilder: 'update' do
         @user_certificate = UserCertificate.find params[:certificate_id]
         @user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
         @certificate.file = params[:file] if params[:file]
@@ -524,7 +524,7 @@ class SelfiecvIos < Grape::API
           optional :date
           optional :file
         end
-        get :update_curricular, jbuilder: 'update' do
+        post :update_curricular, jbuilder: 'update' do
           @user_curricular = UserCurricular.find params[:curricular_id]
           @user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
           @user_curricular.file = params[:file] if params[:file]
@@ -576,7 +576,7 @@ class SelfiecvIos < Grape::API
           optional :term_type        
           optional :file
         end
-        get :update_future_goal, jbuilder: 'update' do
+        post :update_future_goal, jbuilder: 'update' do
           @future_goal = UserFutureGoal.find params[:future_goal_id]
           @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
           @future_goal.file = params[:file] if params[:file]
@@ -626,7 +626,7 @@ class SelfiecvIos < Grape::API
           optional :title
           optional :file
         end
-        get :update_working_environment, jbuilder: 'update' do
+        post :update_working_environment, jbuilder: 'update' do
           @environment = UserEnvironment.find params[:environment_id]
           @environment.attributes = clean_params(params).permit(:env_type, :title)
           @environment.file = params[:file] if params[:file]
@@ -686,7 +686,7 @@ class SelfiecvIos < Grape::API
                 optional :location
                 optional :file
               end
-              get :update_references, jbuilder: 'update' do
+              post :update_references, jbuilder: 'update' do
                 @reference = UserReference.find params[:reference_id]
                 @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
                 @reference.file = params[:file] if params[:file]
