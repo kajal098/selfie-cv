@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20160706095729) do
   create_table "user_experiences", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name",         default: "",           null: false
+    t.string   "exp_type",     default: "",           null: false
     t.string   "type",         default: "",           null: false
     t.date     "start_from",   default: '2016-07-11'
     t.string   "working_till", default: "",           null: false
@@ -207,9 +208,6 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.string   "city",                                          default: "",           null: false
     t.string   "zipcode",                                       default: "",           null: false
     t.string   "contact_number",                                default: "",           null: false
-    t.string   "education_in",                                  default: "",           null: false
-    t.string   "school_name",                                   default: "",           null: false
-    t.string   "year",                                          default: "",           null: false
     t.string   "file",                                          default: ""
     t.string   "file_type",                                     default: "",           null: false
     t.string   "faculty_work_with_type",                        default: "",           null: false

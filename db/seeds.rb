@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 user = User.create(email: 'admin@example.com', password: '12345678' , username: 'admin' , role: 'Admin' )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
-user = User.create!(email: 'nicolecross1579@gmail.com', password:'12345678' , username: 'nicole' , role: 'Student' ) 
+user = User.create!(email: 'abc@gmail.com', password:'12345678' , username: 'abc' , role: 'Student' ) 
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 user = User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'Faculty' )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
@@ -25,7 +25,7 @@ user = User.create!(email: 'sam11111@gmail.com', password: '12345678' , username
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 user = User.create!(email: 'parnel11111@gmail.com', password: '12345678' , username: 'parnel11111' , role: 'Company' )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
-user = User.create!(email: 'abc@gmail.com', password: '12345678' , username: 'abc' , role: 'Company' )
+user = User.create!(email: 'nicolecross1579@gmail.com', password: '12345678' , username: 'nicole' , role: 'Company' )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 
 Course.create(name: "be")

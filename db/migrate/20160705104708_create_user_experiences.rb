@@ -3,6 +3,7 @@ class CreateUserExperiences < ActiveRecord::Migration
     create_table :user_experiences do |t|
       t.integer :user_id
       t.string :name,              null:false, default: ""
+      t.string :exp_type,           null:false, default: ""
       t.string :type,              null:false, default: ""
       t.date :start_from,              :default=>Date.today
       t.string :working_till,              null:false, default: ""
