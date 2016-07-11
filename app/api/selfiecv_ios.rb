@@ -230,7 +230,7 @@ class SelfiecvIos < Grape::API
         optional :school
         optional :skill
       end
-      get :education, jbuilder: 'ios' do
+      post :education, jbuilder: 'ios' do
         @user = User.find params[:user_id]
         @user_education = UserEducation.new user_id: @user.id
         if (params[:course_id] || params[:specialization_id] || params[:year] || params[:school] || params[:skill] )
