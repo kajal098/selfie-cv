@@ -206,9 +206,6 @@ class SelfiecvIos < Grape::API
         requires :city
         requires :zipcode
         requires :contact_number
-        requires :education_in  
-        requires :school_name 
-        requires :year
         optional :file
       end
       post :resume, jbuilder: 'ios' do
