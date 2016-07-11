@@ -350,7 +350,7 @@ class SelfiecvAndroid < Grape::API
         optional :expected_salary
         optional :time_type
       end
-      post :preferred_works, jbuilder: 'android' do
+      post :preferred_work, jbuilder: 'android' do
         @user = User.find params[:user_id]
         if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location] || params[:current_salary] || params[:expected_salary] || params[:time_type] )
           @user_preferred_work = UserPreferredWork.new user_id: @user.id
