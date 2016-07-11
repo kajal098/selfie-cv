@@ -29,8 +29,8 @@ if @user_education
 	json.educations @user.user_educations do |education|
 	json.extract! education, :id, :user_id, :course_id, :specialization_id, :year, :school, :skill
 
-	json.education.created_at.to_i
-	json.education.updated_at.to_i
+	json.created_at education.created_at.to_i
+	json.updated_at education.updated_at.to_i
 end
 end
 
