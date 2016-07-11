@@ -10,8 +10,6 @@ devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
-validates :email, presence: true, email: true
-
 #validates :username, length: { minimum: 6 }
 #validates :username, length: { maximum: 20 }
 #validates :username, length: { in: 6..20 }
