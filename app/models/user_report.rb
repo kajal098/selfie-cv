@@ -5,11 +5,12 @@ class UserReport
   scope { User.order(:id) }
   scope { User.all }
 
-  # filter(:id, header: "Id") {|value| where("id ilike ?", "%#{value}%")}
-  #filter(:id, header: "Personeelsnummer")
   filter(:username, :string, header: "Username") {|value| where("username ilike ?", "%#{value}%")}
   filter(:email, :string, header: "E-mail") {|value| where("email ilike ?", "%#{value}%")}
-
+  filter(:first_name, :string, header: "First Name") {|value| where("first_name ilike ?", "%#{value}%")}
+  filter(:middle_name, :string, header: "Middle Name") {|value| where("email ilike ?", "%#{value}%")}
+  filter(:last_name, :string, header: "Last Name") {|value| where("last_name ilike ?", "%#{value}%")}
+  
   column(:id, header: "Id", :order => "users.id")
   column(:role, header: "Role", order: false, :order => "users.role", class: "padding_class")
   column(:username, header: "Username", :order => "users.username", class: "padding_class")
