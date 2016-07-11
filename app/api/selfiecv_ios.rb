@@ -869,17 +869,8 @@ class SelfiecvIos < Grape::API
               requires :token, type: String, regexp: UUID_REGEX
             end
             post :course_and_spe, jbuilder: 'ios' do
-              if @courses
-                @courses = Course.all
-              else
-                'No Course Found !'
-              end
-              
-              if @specializations
-                @specializations = Specialization.all
-              else
-                'No Specialization Found !'
-              end
+              @courses = Course.all
+              @specializations = Specialization.all
             end
 
   end
