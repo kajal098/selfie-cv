@@ -121,7 +121,6 @@ ActiveRecord::Schema.define(version: 20160706095729) do
     t.integer  "user_id"
     t.string   "name",         default: "",           null: false
     t.string   "exp_type",     default: "",           null: false
-    t.string   "type",         default: "",           null: false
     t.date     "start_from",   default: '2016-07-11'
     t.string   "working_till", default: "",           null: false
     t.string   "designation",  default: "",           null: false

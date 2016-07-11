@@ -1,0 +1,1 @@
+json.extract! @user_experience, :year, :created_at, :updated_at
