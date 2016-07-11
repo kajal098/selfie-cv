@@ -796,7 +796,7 @@ class SelfiecvAndroid < Grape::API
             post :growth_and_goal, jbuilder: 'android' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
-                @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :companu_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+                @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
                 error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
               else
                 error! "Record not found.", 200
