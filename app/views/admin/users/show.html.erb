@@ -23,6 +23,7 @@
 
 <% elsif @user.role == 'Company' %>
 
+<h4 class="text_decoration"><b> Company Information </b></h4>
 <p><strong>Company Name:</strong><%= @user.company_name %></p>
 <p><strong>Company Establish From:</strong><%= @user.company_establish_from %></p>
 <p><strong>Company Industry:</strong><%= @user.company_industry %></p>
@@ -33,18 +34,29 @@
 <p><strong>Company Contact:</strong><%= @user.company_contact %></p>
 <p><strong>Company Skype Id:</strong><%= @user.company_skype_id %></p>
 <p><strong>Company:</strong><%= @user.company_id %></p>
+<h4 class="text_decoration"><b> Corporate Identity </b></h4>
 <p><strong>Company Logo:</strong><%= @user.company_logo %></p>
 <p><strong>Company Profile:</strong><%= @user.company_profile %></p>
 <p><strong>Company Brochure:</strong><%= @user.company_brochure %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_website %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_facebook_link %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_turnover %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_no_of_emp %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_growth_ratio %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_new_ventures %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_future_turnover %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_future_new_venture_location %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_future_outlet %></p>
+<p><strong>Company Website:</strong><%= @user.company_website %></p>
+<p><strong>Company Facebook Link:</strong><%= @user.company_facebook_link %></p>
+<p><strong>Company Turnover:</strong><%= @user.company_turnover %></p>
+<p><strong>No Of Employees:</strong><%= @user.company_no_of_emp %></p>
+<p><strong>Company Growth Ratio:</strong><%= @user.company_growth_ratio %></p>
+<p><strong>Company New Ventures:</strong><%= @user.company_new_ventures %></p>
+<p><strong>Company Future Turnover:</strong><%= @user.company_future_turnover %></p>
+<p><strong>Company Future New Venture Location:</strong><%= @user.company_future_new_venture_location %></p>
+<p><strong>Company Future Outlet:</strong><%= @user.company_future_outlet %></p>
+
+<% elsif @user.role == 'Faculty' %>
+
+<h4 class="text_decoration"><b> Faculty Information </b></h4>
+<p><strong>First Name:</strong><%= @user.first_name %></p>
+<p><strong>Work Type:</strong><%= @user.faculty_work_with_type %></p>
+<p><strong>University Name:</strong><%= @user.faculty_uni_name %></p>
+<p><strong>Subject:</strong><%= @user.faculty_subject %></p>
+<p><strong>Designation:</strong><%= @user.faculty_designation %></p>
+<p><strong>Join From:</strong><%= @user.faculty_join_from %></p>
 
 <% else %>
 
