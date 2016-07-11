@@ -783,7 +783,7 @@ class SelfiecvIos < Grape::API
               optional :company_future_new_venture_location
               optional :company_future_outlet
             end
-            get :growth_and_goal, jbuilder: 'ios' do
+            post :growth_and_goal, jbuilder: 'ios' do
               @user = User.find params[:user_id]
               if @user.role == 'Company'
                 @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
