@@ -178,8 +178,7 @@ class SelfiecvAndroid < Grape::API
       end
       post :listing , jbuilder: 'android' do
           @users = User.where(role: params[:role])
-        @users
-         
+        @users         
       end
 
   
@@ -194,7 +193,7 @@ class SelfiecvAndroid < Grape::API
         optional :first_name
         optional :middle_name
         optional :last_name
-        optional :gender
+        optional :gender  
         optional :date_of_birth 
         optional :nationality 
         optional :address 

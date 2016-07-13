@@ -11,6 +11,7 @@ class CreateUserReferences < ActiveRecord::Migration
       t.string :location,              null: false, default: ""
       t.string :file,              default: ''
       t.string :file_type,              null: false, default: ""
+      t.boolean :active,            default: false
       t.timestamps null: false
     end
     add_index :user_references, [:user_id]

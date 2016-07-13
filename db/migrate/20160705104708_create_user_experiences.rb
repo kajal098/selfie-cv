@@ -9,6 +9,7 @@ class CreateUserExperiences < ActiveRecord::Migration
       t.string :designation,              null:false, default: ""
       t.string :file,              default: ''
       t.string :file_type,              null: false, default: ""
+      t.boolean :active,            default: false
       t.timestamps null: false
     end
     add_index :user_experiences, [:user_id]

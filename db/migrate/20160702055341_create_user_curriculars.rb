@@ -9,6 +9,7 @@ class CreateUserCurriculars < ActiveRecord::Migration
       t.date :date,                   :default=> Date.today
       t.string :file,                 default: ''
       t.string :file_type,              null: false, default: ""
+      t.boolean :active,            default: false
       t.timestamps null: false
     end
     add_index :user_curriculars, [:user_id]

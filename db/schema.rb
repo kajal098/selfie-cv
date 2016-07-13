@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20160713065724) do
     t.string   "description", default: "",      null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "",      null: false
+    t.boolean  "active",      default: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
   end
@@ -71,13 +72,14 @@ ActiveRecord::Schema.define(version: 20160713065724) do
 
   create_table "user_certificates", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "certificate_type", default: "", null: false
-    t.string   "name",             default: "", null: false
-    t.string   "year",             default: "", null: false
+    t.string   "certificate_type", default: "",    null: false
+    t.string   "name",             default: "",    null: false
+    t.string   "year",             default: "",    null: false
     t.string   "file",             default: ""
-    t.string   "file_type",        default: "", null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "file_type",        default: "",    null: false
+    t.boolean  "active",           default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "user_certificates", ["user_id"], name: "index_user_certificates_on_user_id", using: :btree
@@ -91,6 +93,7 @@ ActiveRecord::Schema.define(version: 20160713065724) do
     t.date     "date",            default: '2016-07-13'
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
+    t.boolean  "active",          default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end
@@ -101,11 +104,12 @@ ActiveRecord::Schema.define(version: 20160713065724) do
     t.integer  "user_id"
     t.integer  "course_id"
     t.integer  "specialization_id"
-    t.string   "year",              default: "", null: false
-    t.string   "school",            default: "", null: false
-    t.string   "skill",             default: "", null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.string   "year",              default: "",    null: false
+    t.string   "school",            default: "",    null: false
+    t.string   "skill",             default: "",    null: false
+    t.boolean  "active",            default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "user_educations", ["course_id"], name: "index_user_educations_on_course_id", using: :btree
@@ -114,12 +118,13 @@ ActiveRecord::Schema.define(version: 20160713065724) do
 
   create_table "user_environments", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "env_type",   default: "", null: false
-    t.string   "title",      default: "", null: false
+    t.string   "env_type",   default: "",    null: false
+    t.string   "title",      default: "",    null: false
     t.string   "file",       default: ""
-    t.string   "file_type",  default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "file_type",  default: "",    null: false
+    t.boolean  "active",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "user_environments", ["user_id"], name: "index_user_environments_on_user_id", using: :btree
@@ -133,6 +138,7 @@ ActiveRecord::Schema.define(version: 20160713065724) do
     t.string   "designation",  default: "",           null: false
     t.string   "file",         default: ""
     t.string   "file_type",    default: "",           null: false
+    t.boolean  "active",       default: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -141,13 +147,14 @@ ActiveRecord::Schema.define(version: 20160713065724) do
 
   create_table "user_future_goals", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "goal_type",  default: "", null: false
-    t.string   "title",      default: "", null: false
-    t.string   "term_type",  default: "", null: false
+    t.string   "goal_type",  default: "",    null: false
+    t.string   "title",      default: "",    null: false
+    t.string   "term_type",  default: "",    null: false
     t.string   "file",       default: ""
-    t.string   "file_type",  default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "file_type",  default: "",    null: false
+    t.boolean  "active",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
@@ -168,15 +175,16 @@ ActiveRecord::Schema.define(version: 20160713065724) do
 
   create_table "user_preferred_works", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "ind_name",              default: "", null: false
-    t.string   "functional_name",       default: "", null: false
-    t.string   "preferred_designation", default: "", null: false
-    t.string   "preferred_location",    default: "", null: false
-    t.string   "current_salary",        default: "", null: false
-    t.string   "expected_salary",       default: "", null: false
-    t.string   "time_type",             default: "", null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.string   "ind_name",              default: "",    null: false
+    t.string   "functional_name",       default: "",    null: false
+    t.string   "preferred_designation", default: "",    null: false
+    t.string   "preferred_location",    default: "",    null: false
+    t.string   "current_salary",        default: "",    null: false
+    t.string   "expected_salary",       default: "",    null: false
+    t.string   "time_type",             default: "",    null: false
+    t.boolean  "active",                default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "user_preferred_works", ["user_id"], name: "index_user_preferred_works_on_user_id", using: :btree
@@ -192,6 +200,7 @@ ActiveRecord::Schema.define(version: 20160713065724) do
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "file_type",  default: "",           null: false
+    t.boolean  "active",     default: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
