@@ -4,7 +4,9 @@ class Admin::UsersController < Admin::ApplicationController
 
   def index
     @report = UserReport.new params[:user_report]
+
     @assets = @report.assets
+    
   end
 
   def new
