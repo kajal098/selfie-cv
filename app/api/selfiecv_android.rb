@@ -410,7 +410,7 @@ class SelfiecvAndroid < Grape::API
         optional :description        
         optional :file
       end
-        post :award, jbuilder: 'ios' do
+        post :award, jbuilder: 'android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
             if (params[:award_type] || params[:name] || params[:descrption] )
@@ -466,7 +466,7 @@ class SelfiecvAndroid < Grape::API
         optional :certificate_type        
         optional :file
       end
-        post :certificate, jbuilder: 'ios' do
+        post :certificate, jbuilder: 'android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
             if (params[:name] || params[:year] || params[:certificate_type] )
