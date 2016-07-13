@@ -7,6 +7,7 @@ class CreateUserEducations < ActiveRecord::Migration
       t.string :year,              null: false, default: ""
       t.string :school,              null: false, default: ""
       t.string :skill,              null: false, default: ""
+      t.boolean :active,            default: 0
 
       t.timestamps null: false
     end

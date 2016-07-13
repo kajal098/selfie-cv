@@ -14,7 +14,7 @@ class Admin::UserMetersController < Admin::ApplicationController
   def create
     @user_meter = UserMeter.new user_meter_params
     if @user_meter.save
-      redirect_to admin_user_meters_path, notice: "The user_meter has been created successfully."
+      redirect_to admin_user_meters_path, notice: "The user meter has been created successfully."
     else
       render action: :new
     end
@@ -29,7 +29,7 @@ class Admin::UserMetersController < Admin::ApplicationController
 
   def update    
     if @user_meter.update user_meter_params
-      redirect_to admin_user_meters_path, notice: "The user_meter has been updated successfully."
+      redirect_to admin_user_meters_path, notice: "The user meter has been updated successfully."
     else
       render action: :edit
     end
@@ -38,7 +38,7 @@ class Admin::UserMetersController < Admin::ApplicationController
   def destroy
     begin
       @user_meter.destroy
-      redirect_to admin_user_meters_path, notice: "The user_meter has been deleted successfully."
+      redirect_to admin_user_meters_path, notice: "The user meter has been deleted successfully."
     rescue Exception => e      
       redirect_to admin_user_meters_path, alert: e.message
     end

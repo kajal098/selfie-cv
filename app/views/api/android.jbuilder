@@ -27,17 +27,9 @@ if @user
 end
 
 
-if @user_education
-	json.educations @user.user_educations do |education|
-	json.extract! education, :id, :user_id, :course_id, :specialization_id, :year, :school, :skill
-
-	json.edu_created_at education.created_at.to_i
-	json.edu_updated_at education.updated_at.to_i
-end
-end
-
 if @users
-	json.users @users do |user|
+@all_users = @users.order('created_at DESC')
+	json.users @all_users do |user|
 	json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
 	json.profile user.profile_thumb_url
@@ -50,16 +42,19 @@ end
 end
 
 
-if @award
-	json.awards @user.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description, :award_type
-		json.award_created_at award.created_at.to_i
-		json.award_updated_at award.updated_at.to_i
-	end
+if @user_education
+@educations = @user.user_educations.order('created_at DESC')
+	json.educations @educations do |education|
+	json.extract! education, :id, :user_id, :course_id, :specialization_id, :year, :school, :skill
+
+	json.edu_created_at education.created_at.to_i
+	json.edu_updated_at education.updated_at.to_i
+end
 end
 
 if @user_experience
-	json.experiences @user.user_experiences do |experience|
+@experiences = @user.user_experiences.order('created_at DESC')
+	json.experiences @experiences do |experience|
 		json.extract! experience, :id, :user_id, :name, :start_from, :working_till, :designation
 
 		json.experience_created_at experience.created_at.to_i
@@ -68,7 +63,8 @@ if @user_experience
 end
 
 if @user_preferred_work
-	json.user_preferred_works @user.user_preferred_works do |user_preferred_work|
+@preferred_works = @user.user_preferred_works.order('created_at DESC')
+	json.user_preferred_works @preferred_works do |user_preferred_work|
 		json.extract! user_preferred_work, :id, :user_id, :ind_name, :functional_name, :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type
 
 		json.created_at user_preferred_work.created_at.to_i
@@ -76,8 +72,18 @@ if @user_preferred_work
 	end
 end
 
+if @award
+@awards = @user.user_awards.order('created_at DESC')
+	json.awards @awards do |award|
+		json.extract! award, :id, :user_id, :name, :description, :award_type
+		json.award_created_at award.created_at.to_i
+		json.award_updated_at award.updated_at.to_i
+	end
+end
+
 if @certificate
-	json.certificates @user.user_certificates do |certificate|
+@certificates = @user.user_certificates.order('created_at DESC')
+	json.certificates @certificates do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
 
 		json.file certificate.thumb_url
@@ -89,7 +95,8 @@ end
 
 
 if @curricular
-	json.curriculars @user.user_curriculars do |curricular|
+@curriculars = @user.user_curriculars.order('created_at DESC')
+	json.curriculars @curriculars do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
 
 		json.file curricular.thumb_url
@@ -100,7 +107,8 @@ if @curricular
 end
 
 if @future_goal
-	json.future_goals @user.user_future_goals do |future_goal|
+@future_goals = @user.user_future_goals.order('created_at DESC')
+	json.future_goals @future_goals do |future_goal|
 		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
 
 		json.file future_goal.thumb_url
@@ -111,7 +119,8 @@ if @future_goal
 end
 
 if @environment
-	json.environments @user.user_environments do |environment|
+@environments = @user.user_environments.order('created_at DESC')
+	json.environments @environments do |environment|
 		json.extract! environment, :id, :user_id, :env_type, :title
 
 		json.file environment.thumb_url
@@ -123,7 +132,8 @@ end
 
 
 if @reference
-	json.environments @user.user_references do |env|
+@references = @user.user_references.order('created_at DESC')
+	json.references @references do |env|
 		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
 
 		json.file env.thumb_url
@@ -134,7 +144,8 @@ if @reference
 end
 
 if @courses
-	json.courses @courses do |course|
+@all_courses = @courses.order('created_at DESC')
+	json.courses @all_courses do |course|
 		json.extract! course, :id, :name
 
 		json.course_created_at course.created_at.to_i
@@ -143,7 +154,8 @@ if @courses
 end
 
 if @specializations
-	json.specializations @specializations do |specialization|
+@all_specializations = @specializations.order('created_at DESC')
+	json.specializations @all_specializations do |specialization|
 		json.extract! specialization, :id, :name
 
 		json.specialization_created_at specialization.created_at.to_i

@@ -259,7 +259,13 @@ UserReference.create(user_id: 10, title: 'own ref', ref_type: 'company', from: '
 UserReference.create(user_id: 11, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
 UserReference.create(user_id: 11, title: 'own ref', ref_type: 'company', from: 'miss.anna', email: 'one@gmail.com', contact: '1234567890', date: '30/11/2011', location: 'zawer')
 
-
+Setting.create(id:'site.resume_per', value:'40')
+Setting.create(id:'site.achievement_per', value:'10')
+Setting.create(id:'site.curricular_per', value:'10')
+Setting.create(id:'site.whizquiz_per', value:'10')
+Setting.create(id:'site.future_goal_per', value:'10')
+Setting.create(id:'site.working_env_per', value:'10')
+Setting.create(id:'site.ref_per', value:'10')
 
 
 
