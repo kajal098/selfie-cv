@@ -20,4 +20,3 @@ jQuery(document).ready ->
         $('.datagrid').addClass 'float'
       else
         $('.datagrid').removeClass 'float'
-
