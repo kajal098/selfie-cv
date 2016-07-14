@@ -1,1 +1,0 @@
-json.extract! @user_meter, :resume_per, :created_at, :updated_at

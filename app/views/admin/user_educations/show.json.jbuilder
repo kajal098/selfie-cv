@@ -1,1 +1,0 @@
-json.extract! @user_education, :year, :created_at, :updated_at
