@@ -224,6 +224,7 @@ class SelfiecvAndroid < Grape::API
         end
         @user
       end
+      
 
     # for fill user's education
 
