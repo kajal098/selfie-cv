@@ -24,7 +24,8 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def show
-
+    @user = User.find params[:id]
+    @educations = @user.user_educations
   end
 
   def edit    

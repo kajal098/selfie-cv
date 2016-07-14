@@ -1,14 +1,70 @@
+<style>
+body {font-family: "Lato", sans-serif;}
+
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ff9933;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 8px 10px 8px 10px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {
+    background-color: #fff;
+}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {
+    background-color: #fff;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+}
+</style>
+
 <p id="notice"><%= notice %></p>
 
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-default">
-      <div class="panel-heading">        
-        <h3 class="panel-title" style="color: #000000"><b><%= @user.username.capitalize %></b></h3>
-      </div>
-      <div class="panel-body">
 
-<% if @user.role == 'Jobseeker' %>
+      
+<ul class="tab">
+  <li style="margin-left:40px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'Detail')" >Detail</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'Education')" >Education</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'Experience')" >Experience</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'PreferredWork')" >PreWork</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'Awards')" >Awards</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'Certificates')" >Certificates</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'Curricular')" >Curricular</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'FutureGoal')" >FutureGoal</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'WorkingEnvironment')" >WorkingEnv</a></li>
+  <li style="margin-left:10px;margin-right:10px;"><a href="#" class="tablinks" onclick="openCity(event, 'References')" >References</a></li>
+</ul>
+
+<div class="panel-body">
+<div id="Detail" class="tabcontent">
+  <h3>Detail</h3>
+  <% if @user.role == 'Jobseeker' %>
 
 <h4 class="text_decoration"><b> Personal Details </b></h4>
 <p><strong>Email:</strong><%= @user.email %></p>
@@ -63,17 +119,76 @@
 <p><strong>First Name:</strong><%= @user.first_name %></p>
 
 <% end %>
+</div>
 
+<div id="Education" class="tabcontent">
+  <h3>Education</h3>
+  <%= @educations %>
+  
+</div>
+
+<div id="Experience" class="tabcontent">
+  <h3>Experience</h3>
+  
+</div>
+
+<div id="PreferredWork" class="tabcontent">
+  <h3>Preferred Work</h3>
+  
+</div>
+
+<div id="Awards" class="tabcontent">
+  <h3>Awards</h3>
+  
+</div>
+
+<div id="Certificates" class="tabcontent">
+  <h3>Certificates</h3>
+  
+</div>
+
+<div id="Curricular" class="tabcontent">
+  <h3>Curricular</h3>
+  
+</div>
+
+<div id="FutureGoal" class="tabcontent">
+  <h3>Future Goal</h3>
+  
+</div>
+
+<div id="WorkingEnvironment" class="tabcontent">
+  <h3>Working Environment</h3>
+  
+</div>
+
+<div id="References" class="tabcontent">
+  <h3>References</h3>
+  
+</div>
 <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <%= link_to 'Edit', edit_admin_user_path(@user), class: "btn btn-primary btn-sm" %> <%= link_to "Back", admin_users_path, class: "btn btn-default btn-sm" %>
     </div>
   </div>
-</br>
-<a href="#" class="btn btn-primary btn-sm">User Education</a>  <a href="#" class="btn btn-primary btn-sm">User Experience</a>  <a href="#" class="btn btn-primary btn-sm">User Awards</a>  <a href="#" class="btn btn-primary btn-sm">User Certificates</a>
-<a href="#" class="btn btn-primary btn-sm">User Curricular</a>  <a href="#" class="btn btn-primary btn-sm">User Working Environment</a>  <a href="#" class="btn btn-primary btn-sm">User References</a>  <a href="#" class="btn btn-primary btn-sm">User Prefered work</a></br>
-
       </div>
     </div>
   </div>
 </div>
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+     
+
