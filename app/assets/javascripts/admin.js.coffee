@@ -7,6 +7,9 @@
 
 jQuery(document).ready ->
   
+  
+  $( "#user_sections" ).tabs();
+
   if $('.datagrid').size() > 0
     datagrid_top = $('.datagrid').offset().top
     
@@ -20,3 +23,5 @@ jQuery(document).ready ->
         $('.datagrid').addClass 'float'
       else
         $('.datagrid').removeClass 'float'
+
+
