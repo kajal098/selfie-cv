@@ -16,11 +16,15 @@
                 <tr>
                   <th>Username</th>
                   <th>E-mail</th>
+                  <th>Full Name</th>
+                  <th>Contact</th>
                 </tr>
                 <% @user.each do |user| %>     
                 <tr >
                   <td><%= user.username %></td>
                   <td><%= user.email %></td>
+                  <td><%= user.first_name %> <%= user.middle_name %> <%= user.last_name %></td>
+                  <td><%= user.contact_number %></td>
                 </tr>
                 <% end %>
               </tbody>
