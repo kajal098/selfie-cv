@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::ApplicationController
-
+respond_to :json, :html
   before_action :find_user, only: [:show, :edit, :update, :destroy]
 
   def index

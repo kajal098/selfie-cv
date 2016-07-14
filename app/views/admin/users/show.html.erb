@@ -124,7 +124,7 @@ ul.tab li a:focus, .active {
 
 <div id="Education" class="tabcontent">
   <h3>Education</h3>
-  <%= @educations %>
+  <%= @user.user_educations %>
   
 </div>
 
@@ -177,6 +177,9 @@ ul.tab li a:focus, .active {
   </div>
 </div>
 <script>
+$(document).ready(function(){
+  
+})
 function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
