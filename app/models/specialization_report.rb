@@ -15,7 +15,7 @@ class SpecializationReport
     model.created_at.to_date
   end
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |specialization| content_tag :span, time_ago_in_words(specialization.last_sign_in_at), title: specialization.last_sign_in_at.to_formatted_s(:long) if specialization.last_sign_in_at }
-  column(:actions, header: "Actions", html: true , class: "padding_class" ) do |specialization|
+  column(:actions, header: "", html: true , class: "padding_class" ) do |specialization|
     html = link_to "", admin_specialization_path(specialization), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View specialization"
     html += link_to "", edit_admin_specialization_path(specialization), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-edit", title: "Edit specialization"
     html += link_to "", admin_specialization_path(specialization), class: "margin_class btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove specialization", 'data-confirm' => 'Are you sure?'
