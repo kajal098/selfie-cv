@@ -124,48 +124,122 @@ ul.tab li a:focus, .active {
 
 <div id="Education" class="tabcontent">
   <h3>Education</h3>
-  <%= @user.user_educations %>
-  
+  <% @user.user_educations.each do |edu| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= edu.id %></p>
+                  <p><strong>Course :</strong><%= edu.course_id %></p>
+                  <p><strong>Specialization :</strong><%= edu.specialization_id %></p>
+                  <p><strong>Year :</strong><%= edu.year %></p>
+                  <p><strong>School :</strong><%= edu.school %></p>
+                  <p><strong>Skill :</strong><%= edu.skill %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="Experience" class="tabcontent">
   <h3>Experience</h3>
-  
+  <% @user.user_experiences.each do |exp| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= exp.id %></p>
+                  <p><strong>Name :</strong><%= exp.name %></p>
+                  <p><strong>Exp Type :</strong><%= exp.exp_type %></p>
+                  <p><strong>Start From :</strong><%= exp.start_from %></p>
+                  <p><strong>Working Till :</strong><%= exp.working_till %></p>
+                  <p><strong>Designation :</strong><%= exp.designation %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="PreferredWork" class="tabcontent">
   <h3>Preferred Work</h3>
-  
+  <% @user.user_preferred_works.each do |pre_work| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= pre_work.id %></p>
+                  <p><strong>Industry :</strong><%= pre_work.ind_name %></p>
+                  <p><strong>Functional Name :</strong><%= pre_work.functional_name %></p>
+                  <p><strong>Preffered Designation :</strong><%= pre_work.preferred_designation %></p>
+                  <p><strong>Preffered Location :</strong><%= pre_work.preferred_location %></p>
+                  <p><strong>Current Salary :</strong><%= pre_work.current_salary %></p>
+                  <p><strong>Expected Salary :</strong><%= pre_work.expected_salary %></p>
+                  <p><strong>Time Type :</strong><%= pre_work.time_type %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="Awards" class="tabcontent">
   <h3>Awards</h3>
-  
+  <% @user.user_awards.each do |award| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= award.id %></p>
+                  <p><strong>Name :</strong><%= award.name %></p>
+                  <p><strong>Award Type :</strong><%= award.award_type %></p>
+                  <p><strong>Description :</strong><%= award.description %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="Certificates" class="tabcontent">
   <h3>Certificates</h3>
-  
+  <% @user.user_certificates.each do |certi| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= certi.id %></p>
+                  <p><strong>Name :</strong><%= certi.name %></p>
+                  <p><strong>Certificate Type :</strong><%= certi.certificate_type %></p>
+                  <p><strong>Year :</strong><%= certi.year %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="Curricular" class="tabcontent">
   <h3>Curricular</h3>
-  
+  <% @user.user_curriculars.each do |curri| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= curri.id %></p>
+                  <p><strong>Curricular Type :</strong><%= curri.curricular_type %></p>
+                  <p><strong>Team Type :</strong><%= curri.team_type %></p>
+                  <p><strong>Location :</strong><%= curri.location %></p>
+                  <p><strong>Date :</strong><%= curri.date %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="FutureGoal" class="tabcontent">
   <h3>Future Goal</h3>
-  
+  <% @user.user_future_goals.each do |future| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= future.id %></p>
+                  <p><strong>Id :</strong><%= future.id %></p>
+                  <p><strong>Goal Type :</strong><%= future.goal_type %></p>
+                  <p><strong>Title :</strong><%= future.title %></p>
+                  <p><strong>Term Type :</strong><%= future.term_type %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="WorkingEnvironment" class="tabcontent">
   <h3>Working Environment</h3>
-  
+  <% @user.user_environments.each do |work_env| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= work_env.id %></p>
+                  <p><strong>Env Type :</strong><%= work_env.env_type %></p>
+                  <p><strong>Title :</strong><%= work_env.title %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 
 <div id="References" class="tabcontent">
   <h3>References</h3>
-  
+  <% @user.user_references.each do |ref| %>     
+                <tr >
+                  <p><strong>Id :</strong><%= ref.id %></p>
+                  <p><strong>Name :</strong><%= ref.title %></p>
+                  <p><strong>Exp Type :</strong><%= ref.from %></p>
+                  <p><strong>Start From :</strong><%= ref.email %></p>
+                  <p><strong>Working Till :</strong><%= ref.date %></p>
+                  <p><strong>Id :</strong><%= ref.contact %></p>
+                  <p><strong>Designation :</strong><%= ref.location %></p><hr/>
+                </tr>
+                <% end %>
 </div>
 <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
@@ -178,7 +252,7 @@ ul.tab li a:focus, .active {
 </div>
 <script>
 $(document).ready(function(){
-  
+
 })
 function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
