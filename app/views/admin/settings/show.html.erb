@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-lg-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">        
+        
+        <h3 class="panel-title">Setting</h3>
+      </div>
+      <div class="panel-body">
+      	<%= simple_form_for [:admin, @setting], html: { class: 'form-horizontal' } do |f| %>
+  
+  	<%= f.input :resume_per, label: "Resume Percentage", input_html: {class: 'span6', rows: 5} %>  
+    <%= f.input :achievement_per, label: "Achievement Percentage", input_html: {class: 'span6', rows: 5} %>
+    <%= f.input :curricular_per, label: "Curricular Percentage", input_html: {class: 'span6', rows: 5} %>
+    <%= f.input :whizquiz_per, label: "Whizquiz Percentage", input_html: {class: 'span6', rows: 5} %>   
+    <%= f.input :future_goal_per, label: "Future Goal Percentage", input_html: {class: 'span6', rows: 5} %>
+    <%= f.input :Working_env_per, label: "Woking Environment Percentage", input_html: {class: 'span6', rows: 5} %>
+    <%= f.input :reference_per, label: "References Percentage", input_html: {class: 'span6', rows: 5} %>
+    <%= f.input :site_name, label: "Site Name" %>
+    <%= f.input :site_email, label: "Site Email" %>
+    <%= f.input :site_phone, label: "Site Fon" %>
+    <%= f.input :site_fax, label: "Site Fax"%>
+    <%= f.input :facebook_url, label: "Facebook URL"%>
+    <%= f.input :twitter_url, label: "Twitter URL"%>
+    <%= f.input :google_plus_url, label: "Google URL" %>
+<%= f.submit :save, class: 'btn btn-primary btn-sm', style: "margin-left:300px;" %>
+<% end %>
+</div>
+  </div>
+</div>
+</div>
+ 
