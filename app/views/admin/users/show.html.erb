@@ -1,211 +1,181 @@
-<p id="notice"><%= notice %></p>
-
+<p id="notice"><%= notice %> </p>
 <div class="row ">
   <div class="col-lg-offset-1 col-lg-10">
-    <div class="panel panel-default" id="user_sections">
-
-
-<ul class="tab">
-  <li><a href="#Detail" >Info</a></li>
-  <li><a href="#Education" >Education</a></li>
-  <li><a href="#Experience" >Experience</a></li>
-  <li><a href="#PreferredWork" >PreWork</a></li>
-  <li><a href="#Awards" >Awards</a></li>
-  <li><a href="#Certificates" >Certificates</a></li>
-  <li><a href="#Curricular" >Curricular</a></li>
-  <li><a href="#FutureGoal" >Goal</a></li>
-  <li><a href="#WorkingEnvironment" >WorkingEnv</a></li>
-  <li><a href="#References" >References</a></li>
-</ul>
-
-<div class="panel-body">
-<div id="Detail">
-  <h3>Detail</h3>
-  <% if @user.role == 'Jobseeker' %>
-
-<h4 class="text_decoration"><b> Personal Details </b></h4>
-<p><strong>Email:</strong><%= @user.email %></p>
-<p><strong>Role:</strong><%= @user.role %></p>
-<p><strong>First Name:</strong><%= @user.first_name %></p>
-<p><strong>Second Name:</strong><%= @user.middle_name %></p>
-<p><strong>Last Name:</strong><%= @user.last_name %></p>
-<p><strong>City:</strong><%= @user.city %></p>
-<p><strong>Address:</strong><%= @user.address %></p>
-<p><strong>Contact Number:</strong><%= @user.contact_number  %></p>
-<p><strong>Nationality:</strong><%= @user.nationality %></p>
-
-<% elsif @user.role == 'Company' %>
-
-<h4 class="text_decoration"><b> Company Information </b></h4>
-<p><strong>Company Name:</strong><%= @user.company_name %></p>
-<p><strong>Company Establish From:</strong><%= @user.company_establish_from %></p>
-<p><strong>Company Industry:</strong><%= @user.company_industry %></p>
-<p><strong>Company Functional Area:</strong><%= @user.company_functional_area %></p>
-<p><strong>Company Address:</strong><%= @user.company_address %></p>
-<p><strong>Company Zipcode:</strong><%= @user.company_zipcode %></p>        
-<p><strong>Company City:</strong><%= @user.company_city %></p>
-<p><strong>Company Contact:</strong><%= @user.company_contact %></p>
-<p><strong>Company Skype Id:</strong><%= @user.company_skype_id %></p>
-<p><strong>Company:</strong><%= @user.company_id %></p>
-<h4 class="text_decoration"><b> Corporate Identity </b></h4>
-<p><strong>Company Logo:</strong><%= @user.company_logo %></p>
-<p><strong>Company Profile:</strong><%= @user.company_profile %></p>
-<p><strong>Company Brochure:</strong><%= @user.company_brochure %></p>
-<p><strong>Company Website:</strong><%= @user.company_website %></p>
-<p><strong>Company Facebook Link:</strong><%= @user.company_facebook_link %></p>
-<p><strong>Company Turnover:</strong><%= @user.company_turnover %></p>
-<p><strong>No Of Employees:</strong><%= @user.company_no_of_emp %></p>
-<p><strong>Company Growth Ratio:</strong><%= @user.company_growth_ratio %></p>
-<p><strong>Company New Ventures:</strong><%= @user.company_new_ventures %></p>
-<p><strong>Company Future Turnover:</strong><%= @user.company_future_turnover %></p>
-<p><strong>Company Future New Venture Location:</strong><%= @user.company_future_new_venture_location %></p>
-<p><strong>Company Future Outlet:</strong><%= @user.company_future_outlet %></p>
-
-<% elsif @user.role == 'Faculty' %>
-
-<h4 class="text_decoration"><b> Faculty Information </b></h4>
-<p><strong>First Name:</strong><%= @user.first_name %></p>
-<p><strong>Work Type:</strong><%= @user.faculty_work_with_type %></p>
-<p><strong>University Name:</strong><%= @user.faculty_uni_name %></p>
-<p><strong>Subject:</strong><%= @user.faculty_subject %></p>
-<p><strong>Designation:</strong><%= @user.faculty_designation %></p>
-<p><strong>Join From:</strong><%= @user.faculty_join_from %></p>
-
-<% else %>
-
-<p><strong>First Name:</strong><%= @user.first_name %></p>
-
-<% end %>
-</div>
-
-<div id="Education">
-  <h3>Education</h3>
-  <% @user.user_educations.each do |edu| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= edu.id %></p>
-                  <p><strong>Course :</strong><%= edu.course_id %></p>
-                  <p><strong>Specialization :</strong><%= edu.specialization_id %></p>
-                  <p><strong>Year :</strong><%= edu.year %></p>
-                  <p><strong>School :</strong><%= edu.school %></p>
-                  <p><strong>Skill :</strong><%= edu.skill %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="Experience">
-  <h3>Experience</h3>
-  <% @user.user_experiences.each do |exp| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= exp.id %></p>
-                  <p><strong>Name :</strong><%= exp.name %></p>
-                  <p><strong>Exp Type :</strong><%= exp.exp_type %></p>
-                  <p><strong>Start From :</strong><%= exp.start_from %></p>
-                  <p><strong>Working Till :</strong><%= exp.working_till %></p>
-                  <p><strong>Designation :</strong><%= exp.designation %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="PreferredWork">
-  <h3>Preferred Work</h3>
-  <% @user.user_preferred_works.each do |pre_work| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= pre_work.id %></p>
-                  <p><strong>Industry :</strong><%= pre_work.ind_name %></p>
-                  <p><strong>Functional Name :</strong><%= pre_work.functional_name %></p>
-                  <p><strong>Preffered Designation :</strong><%= pre_work.preferred_designation %></p>
-                  <p><strong>Preffered Location :</strong><%= pre_work.preferred_location %></p>
-                  <p><strong>Current Salary :</strong><%= pre_work.current_salary %></p>
-                  <p><strong>Expected Salary :</strong><%= pre_work.expected_salary %></p>
-                  <p><strong>Time Type :</strong><%= pre_work.time_type %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="Awards">
-  <h3>Awards</h3>
-  <% @user.user_awards.each do |award| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= award.id %></p>
-                  <p><strong>Name :</strong><%= award.name %></p>
-                  <p><strong>Award Type :</strong><%= award.award_type %></p>
-                  <p><strong>Description :</strong><%= award.description %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="Certificates">
-  <h3>Certificates</h3>
-  <% @user.user_certificates.each do |certi| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= certi.id %></p>
-                  <p><strong>Name :</strong><%= certi.name %></p>
-                  <p><strong>Certificate Type :</strong><%= certi.certificate_type %></p>
-                  <p><strong>Year :</strong><%= certi.year %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="Curricular">
-  <h3>Curricular</h3>
-  <% @user.user_curriculars.each do |curri| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= curri.id %></p>
-                  <p><strong>Curricular Type :</strong><%= curri.curricular_type %></p>
-                  <p><strong>Team Type :</strong><%= curri.team_type %></p>
-                  <p><strong>Location :</strong><%= curri.location %></p>
-                  <p><strong>Date :</strong><%= curri.date %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="FutureGoal">
-  <h3>Future Goal</h3>
-  <% @user.user_future_goals.each do |future| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= future.id %></p>
-                  <p><strong>Id :</strong><%= future.id %></p>
-                  <p><strong>Goal Type :</strong><%= future.goal_type %></p>
-                  <p><strong>Title :</strong><%= future.title %></p>
-                  <p><strong>Term Type :</strong><%= future.term_type %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="WorkingEnvironment">
-  <h3>Working Environment</h3>
-  <% @user.user_environments.each do |work_env| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= work_env.id %></p>
-                  <p><strong>Env Type :</strong><%= work_env.env_type %></p>
-                  <p><strong>Title :</strong><%= work_env.title %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-
-<div id="References">
-  <h3>References</h3>
-  <% @user.user_references.each do |ref| %>     
-                <tr >
-                  <p><strong>Id :</strong><%= ref.id %></p>
-                  <p><strong>Name :</strong><%= ref.title %></p>
-                  <p><strong>Exp Type :</strong><%= ref.from %></p>
-                  <p><strong>Start From :</strong><%= ref.email %></p>
-                  <p><strong>Working Till :</strong><%= ref.date %></p>
-                  <p><strong>Id :</strong><%= ref.contact %></p>
-                  <p><strong>Designation :</strong><%= ref.location %></p><hr/>
-                </tr>
-                <% end %>
-</div>
-<div class="form-group clearfix">
-    <div class="col-sm-offset-3 col-sm-9">
-      <%= link_to 'Edit', edit_admin_user_path(@user), class: "btn btn-primary btn-sm" %> <%= link_to "Back", admin_users_path, class: "btn btn-default btn-sm" %>
-    </div>
-  </div>
+    <div class="panel panel-default" id="user_sections" style="background:#fff;">
+      <ul class="tab">
+        <li class="text_color"><a href="#Detail" >Info</a></li>
+        <li class="text_color"><a href="#Education" >Education</a></li>
+        <li class="text_color"><a href="#Experience" >Experience</a></li>
+        <li class="text_color"><a href="#PreferredWork" >PreWork</a></li>
+        <li class="text_color"><a href="#Awards" >Awards</a></li>
+        <li class="text_color"><a href="#Certificates" >Certificates</a></li>
+        <li class="text_color"><a href="#Curricular" >Curricular</a></li>
+        <li class="text_color"><a href="#FutureGoal" >Goal</a></li>
+        <li class="text_color"><a href="#WorkingEnvironment" >WorkingEnv</a></li>
+        <li class="text_color"><a href="#References" >References</a></li>
+      </ul>
+      <div class="panel-body" style="background:#fff;">
+        <div id="Detail">
+          <% if @user.role == 'Jobseeker' %>
+          <h4 class="text_decoration"><b> Personal Details </b></h4>
+          <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
+          <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>
+          <p><strong class="text_color" >Role:</strong> <%= @user.role %> </p>
+          <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
+          <p><strong class="text_color" >Second Name:</strong> <%= @user.middle_name %> </p>
+          <p><strong class="text_color" >Last Name:</strong> <%= @user.last_name %> </p>
+          <p><strong class="text_color" >City:</strong> <%= @user.city %> </p>
+          <p><strong class="text_color" >Address:</strong> <%= @user.address %> </p>
+          <p><strong class="text_color" >Contact Number:</strong> <%= @user.contact_number  %> </p>
+          <p><strong class="text_color" >Nationality:</strong> <%= @user.nationality %> </p>
+          <% elsif @user.role == 'Company' %>
+          <h4 class="text_decoration"><b> Company Information </b></h4>
+          <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
+          <p><strong class="text_color" >Company Name:</strong> <%= @user.company_name %> </p>
+          <p><strong class="text_color" >Company Establish From:</strong> <%= @user.company_establish_from %> </p>
+          <p><strong class="text_color" >Company Industry:</strong> <%= @user.company_industry %> </p>
+          <p><strong class="text_color" >Company Functional Area:</strong> <%= @user.company_functional_area %> </p>
+          <p><strong class="text_color" >Company Address:</strong> <%= @user.company_address %> </p>
+          <p><strong class="text_color" >Company Zipcode:</strong> <%= @user.company_zipcode %> </p>        
+          <p><strong class="text_color" >Company City:</strong> <%= @user.company_city %> </p>
+          <p><strong class="text_color" >Company Contact:</strong> <%= @user.company_contact %> </p>
+          <p><strong class="text_color" >Company Skype Id:</strong> <%= @user.company_skype_id %> </p>
+          <p><strong class="text_color" >Company:</strong> <%= @user.company_id %> </p>
+          <h4 class="text_decoration"><b> Corporate Identity </b></h4>
+          <p><strong class="text_color" >Company Logo:</strong> <%= @user.company_logo %> </p>
+          <p><strong class="text_color" >Company Profile:</strong> <%= @user.company_profile %> </p>
+          <p><strong class="text_color" >Company Brochure:</strong> <%= @user.company_brochure %> </p>
+          <p><strong class="text_color" >Company Website:</strong> <%= @user.company_website %> </p>
+          <p><strong class="text_color" >Company Facebook Link:</strong> <%= @user.company_facebook_link %> </p>
+          <p><strong class="text_color" >Company Turnover:</strong> <%= @user.company_turnover %> </p>
+          <p><strong class="text_color" >No Of Employees:</strong> <%= @user.company_no_of_emp %> </p>
+          <p><strong class="text_color" >Company Growth Ratio:</strong> <%= @user.company_growth_ratio %> </p>
+          <p><strong class="text_color" >Company New Ventures:</strong> <%= @user.company_new_ventures %> </p>
+          <p><strong class="text_color" >Company Future Turnover:</strong> <%= @user.company_future_turnover %> </p>
+          <p><strong class="text_color" >Company Future New Venture Location:</strong> <%= @user.company_future_new_venture_location %> </p>
+          <p><strong class="text_color" >Company Future Outlet:</strong> <%= @user.company_future_outlet %> </p>
+          <% elsif @user.role == 'Faculty' %>
+          <h4 class="text_decoration"><b> Faculty Information </b></h4>
+          <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
+          <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
+          <p><strong class="text_color" >Work Type:</strong> <%= @user.faculty_work_with_type %> </p>
+          <p><strong class="text_color" >University Name:</strong> <%= @user.faculty_uni_name %> </p>
+          <p><strong class="text_color" >Subject:</strong> <%= @user.faculty_subject %> </p>
+          <p><strong class="text_color" >Designation:</strong> <%= @user.faculty_designation %> </p>
+          <p><strong class="text_color" >Join From:</strong> <%= @user.faculty_join_from %> </p>
+          <% else %>
+          <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
+          <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
+          <% end %>
+        </div>
+        <div id="Education">
+          <% @user.user_educations.each do |edu| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= edu.id %> </p>
+            <p><strong class="text_color" >Course :</strong> <%= edu.course_id %> </p>
+            <p><strong class="text_color" >Specialization :</strong> <%= edu.specialization_id %> </p>
+            <p><strong class="text_color" >Year :</strong> <%= edu.year %> </p>
+            <p><strong class="text_color" >School :</strong> <%= edu.school %> </p>
+            <p><strong class="text_color" >Skill :</strong> <%= edu.skill %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="Experience">
+          <% @user.user_experiences.each do |exp| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= exp.id %> </p>
+            <p><strong class="text_color" >Name :</strong> <%= exp.name %> </p>
+            <p><strong class="text_color" >Exp Type :</strong> <%= exp.exp_type %> </p>
+            <p><strong class="text_color" >Start From :</strong> <%= exp.start_from %> </p>
+            <p><strong class="text_color" >Working Till :</strong> <%= exp.working_till %> </p>
+            <p><strong class="text_color" >Designation :</strong> <%= exp.designation %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="PreferredWork">
+          <% @user.user_preferred_works.each do |pre_work| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= pre_work.id %> </p>
+            <p><strong class="text_color" >Industry :</strong> <%= pre_work.ind_name %> </p>
+            <p><strong class="text_color" >Functional Name :</strong> <%= pre_work.functional_name %> </p>
+            <p><strong class="text_color" >Preffered Designation :</strong> <%= pre_work.preferred_designation %> </p>
+            <p><strong class="text_color" >Preffered Location :</strong> <%= pre_work.preferred_location %> </p>
+            <p><strong class="text_color" >Current Salary :</strong> <%= pre_work.current_salary %> </p>
+            <p><strong class="text_color" >Expected Salary :</strong> <%= pre_work.expected_salary %> </p>
+            <p><strong class="text_color" >Time Type :</strong> <%= pre_work.time_type %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="Awards">
+          <% @user.user_awards.each do |award| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= award.id %> </p>
+            <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
+            <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
+            <p><strong class="text_color" >Description :</strong> <%= award.description %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="Certificates">
+          <% @user.user_certificates.each do |certi| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= certi.id %> </p>
+            <p><strong class="text_color" >Name :</strong> <%= certi.name %> </p>
+            <p><strong class="text_color" >Certificate Type :</strong> <%= certi.certificate_type %> </p>
+            <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="Curricular">
+          <% @user.user_curriculars.each do |curri| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= curri.id %> </p>
+            <p><strong class="text_color" >Curricular Type :</strong> <%= curri.curricular_type %> </p>
+            <p><strong class="text_color" >Team Type :</strong> <%= curri.team_type %> </p>
+            <p><strong class="text_color" >Location :</strong> <%= curri.location %> </p>
+            <p><strong class="text_color" >Date :</strong> <%= curri.date %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="FutureGoal">
+          <% @user.user_future_goals.each do |future| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
+            <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
+            <p><strong class="text_color" >Goal Type :</strong> <%= future.goal_type %> </p>
+            <p><strong class="text_color" >Title :</strong> <%= future.title %> </p>
+            <p><strong class="text_color" >Term Type :</strong> <%= future.term_type %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="WorkingEnvironment">
+          <% @user.user_environments.each do |work_env| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= work_env.id %> </p>
+            <p><strong class="text_color" >Env Type :</strong> <%= work_env.env_type %> </p>
+            <p><strong class="text_color" >Title :</strong> <%= work_env.title %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div id="References">
+          <% @user.user_references.each do |ref| %>     
+          <tr >
+            <p><strong class="text_color" >Id :</strong> <%= ref.id %> </p>
+            <p><strong class="text_color" >Name :</strong> <%= ref.title %> </p>
+            <p><strong class="text_color" >Exp Type :</strong> <%= ref.from %> </p>
+            <p><strong class="text_color" >Start From :</strong> <%= ref.email %> </p>
+            <p><strong class="text_color" >Working Till :</strong> <%= ref.date %> </p>
+            <p><strong class="text_color" >Id :</strong> <%= ref.contact %> </p>
+            <p><strong class="text_color" >Designation :</strong> <%= ref.location %> </p><hr/>
+          </tr>
+          <% end %>
+        </div>
+        <div class="form-group clearfix">
+          <div class="col-sm-offset-3 col-sm-9">
+            <%= link_to 'Edit', edit_admin_user_path(@user), class: "btn btn-primary btn-sm" %> <%= link_to "Back", admin_users_path, class: "btn btn-default btn-sm" %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-     
-

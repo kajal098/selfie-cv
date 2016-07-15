@@ -132,5 +132,11 @@ span.help-block{
 }
 .text_decoration{
 text-decoration: underline;
-color: #FFAC59;
+color: #000;
+}
+.text_color{
+  color: #e78f08;
+}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited{
+  color: #000;
 }
