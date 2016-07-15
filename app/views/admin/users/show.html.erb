@@ -21,12 +21,9 @@
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>
           <p><strong class="text_color" >Role:</strong> <%= @user.role %> </p>
-          <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
-          <p><strong class="text_color" >Second Name:</strong> <%= @user.middle_name %> </p>
-          <p><strong class="text_color" >Last Name:</strong> <%= @user.last_name %> </p>
-          <p><strong class="text_color" >City:</strong> <%= @user.city %> </p>
-          <p><strong class="text_color" >Address:</strong> <%= @user.address %> </p>
+          <p><strong class="text_color" >Full Name:</strong> <%= @user.first_name %> <%= @user.middle_name %> <%= @user.last_name %> </p>
           <p><strong class="text_color" >Contact Number:</strong> <%= @user.contact_number  %> </p>
+          <p><strong class="text_color" >Address:</strong> <%= @user.address %> , <%= @user.city %>  </p>
           <p><strong class="text_color" >Nationality:</strong> <%= @user.nationality %> </p>
           <% elsif @user.role == 'Company' %>
           <h4 class="text_decoration"><b> Company Information </b></h4>
