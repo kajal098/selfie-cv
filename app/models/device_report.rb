@@ -14,8 +14,8 @@ class DeviceReport
   column(:updated_at) do |model|
     model.created_at.to_date
   end
-  column(:actions, header: "Actions", html: true , class: "padding_class" ) do |user|
-    html = link_to "", admin_device_path(user), class: "btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'
+  column(:actions, header: "Actions", html: true , class: "margin_class padding_class" ) do |user|
+    html = link_to "", admin_device_path(user), class: "margin_class btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'
     html
   end
 

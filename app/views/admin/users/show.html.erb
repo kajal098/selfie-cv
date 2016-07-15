@@ -68,8 +68,8 @@
         <div id="Education">
           <% @user.user_educations.each do |edu| %>     
           <tr >
-            <p><strong class="text_color" >Course :</strong> <%= edu.course_id %> </p>
-            <p><strong class="text_color" >Specialization :</strong> <%= edu.specialization_id %> </p>
+            <p><strong class="text_color" >Course :</strong> <%= edu.course.name %> </p>
+            <p><strong class="text_color" >Specialization :</strong> <%= edu.specialization.name %> </p>
             <p><strong class="text_color" >Year :</strong> <%= edu.year %> </p>
             <p><strong class="text_color" >School :</strong> <%= edu.school %> </p>
             <p><strong class="text_color" >Skill :</strong> <%= edu.skill %> </p><hr/>

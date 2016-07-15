@@ -14,11 +14,10 @@ class UserReport
   column(:updated_at) do |model|
     model.created_at.to_date
   end
-  #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |user| content_tag :span, time_ago_in_words(user.last_sign_in_at), title: user.last_sign_in_at.to_formatted_s(:long) if user.last_sign_in_at }
   column(:actions, header: "Actions", html: true , class: "padding_class" ) do |user|
-    html = link_to "", admin_user_path(user), class: "btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View User"
-    html += link_to "", edit_admin_user_path(user), class: "btn btn-default btn-xs glyphicon glyphicon-edit", title: "Edit User"
-    html += link_to "", admin_user_path(user), class: "btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'
+    html = link_to "", admin_user_path(user), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View User"
+    html += link_to "", edit_admin_user_path(user), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-edit", title: "Edit User"
+    html += link_to "", admin_user_path(user), class: "margin_class btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'
     html
   end
 
