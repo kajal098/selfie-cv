@@ -68,7 +68,6 @@
         <div id="Education">
           <% @user.user_educations.each do |edu| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= edu.id %> </p>
             <p><strong class="text_color" >Course :</strong> <%= edu.course_id %> </p>
             <p><strong class="text_color" >Specialization :</strong> <%= edu.specialization_id %> </p>
             <p><strong class="text_color" >Year :</strong> <%= edu.year %> </p>
@@ -80,7 +79,6 @@
         <div id="Experience">
           <% @user.user_experiences.each do |exp| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= exp.id %> </p>
             <p><strong class="text_color" >Name :</strong> <%= exp.name %> </p>
             <p><strong class="text_color" >Exp Type :</strong> <%= exp.exp_type %> </p>
             <p><strong class="text_color" >Start From :</strong> <%= exp.start_from %> </p>
@@ -92,7 +90,6 @@
         <div id="PreferredWork">
           <% @user.user_preferred_works.each do |pre_work| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= pre_work.id %> </p>
             <p><strong class="text_color" >Industry :</strong> <%= pre_work.ind_name %> </p>
             <p><strong class="text_color" >Functional Name :</strong> <%= pre_work.functional_name %> </p>
             <p><strong class="text_color" >Preffered Designation :</strong> <%= pre_work.preferred_designation %> </p>
@@ -106,7 +103,6 @@
         <div id="Awards">
           <% @user.user_awards.each do |award| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= award.id %> </p>
             <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
             <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
             <p><strong class="text_color" >Description :</strong> <%= award.description %> </p><hr/>
@@ -116,7 +112,6 @@
         <div id="Certificates">
           <% @user.user_certificates.each do |certi| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= certi.id %> </p>
             <p><strong class="text_color" >Name :</strong> <%= certi.name %> </p>
             <p><strong class="text_color" >Certificate Type :</strong> <%= certi.certificate_type %> </p>
             <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p><hr/>
@@ -126,7 +121,6 @@
         <div id="Curricular">
           <% @user.user_curriculars.each do |curri| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= curri.id %> </p>
             <p><strong class="text_color" >Curricular Type :</strong> <%= curri.curricular_type %> </p>
             <p><strong class="text_color" >Team Type :</strong> <%= curri.team_type %> </p>
             <p><strong class="text_color" >Location :</strong> <%= curri.location %> </p>
@@ -138,7 +132,6 @@
           <% @user.user_future_goals.each do |future| %>     
           <tr >
             <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
-            <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
             <p><strong class="text_color" >Goal Type :</strong> <%= future.goal_type %> </p>
             <p><strong class="text_color" >Title :</strong> <%= future.title %> </p>
             <p><strong class="text_color" >Term Type :</strong> <%= future.term_type %> </p><hr/>
@@ -148,7 +141,6 @@
         <div id="WorkingEnvironment">
           <% @user.user_environments.each do |work_env| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= work_env.id %> </p>
             <p><strong class="text_color" >Env Type :</strong> <%= work_env.env_type %> </p>
             <p><strong class="text_color" >Title :</strong> <%= work_env.title %> </p><hr/>
           </tr>
@@ -157,7 +149,6 @@
         <div id="References">
           <% @user.user_references.each do |ref| %>     
           <tr >
-            <p><strong class="text_color" >Id :</strong> <%= ref.id %> </p>
             <p><strong class="text_color" >Name :</strong> <%= ref.title %> </p>
             <p><strong class="text_color" >Exp Type :</strong> <%= ref.from %> </p>
             <p><strong class="text_color" >Start From :</strong> <%= ref.email %> </p>
