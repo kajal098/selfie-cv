@@ -11,7 +11,7 @@ class EnvironmentUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-   ActionController::Base.helpers.asset_url("work.jpeg")
+   ActionController::Base.helpers.asset_url("work.png")
   end
 
   version :thumb do
