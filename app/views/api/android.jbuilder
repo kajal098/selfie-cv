@@ -57,7 +57,7 @@ if @user_experience
 	json.experiences @experiences do |experience|
 		json.extract! experience, :id, :user_id, :name, :start_from, :working_till, :designation
 
-		json.file user.thumb_url
+		json.file experience.thumb_url
 
 		json.experience_created_at experience.created_at.to_i
 		json.experience_updated_at experience.updated_at.to_i
