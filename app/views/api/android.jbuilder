@@ -78,6 +78,9 @@ if @award
 @awards = @user.user_awards.order('created_at DESC')
 	json.awards @awards do |award|
 		json.extract! award, :id, :user_id, :name, :description, :award_type
+
+		json.file award.thumb_url
+		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 	end
