@@ -6,14 +6,7 @@ respond_to :json, :html
     @report = UserReport.new params[:user_report]
     @assets = @report.assets
     
-    @report1 = UserCompanyReport.new params[:user_company_report]
-    @assets1 = @report1.assets
-
-    @report2 = UserJobseekerReport.new params[:user_jobseeker_report]
-    @assets2 = @report2.assets
-
-    @report3 = UserFacultyReport.new params[:user_faculty_report]
-    @assets3 = @report3.assets
+    
   end
 
   def new

@@ -1,74 +1,26 @@
 <div class="row">
-
-
-  <div class="col-lg-6">
+  <div class="col-lg-9">
     <div class="panel panel-default">
       <div class="panel-heading">        
         <%= link_to "", new_admin_user_path, class: "btn btn-primary btn-xs pull-right glyphicon glyphicon-plus", title: "Add User"%>
-        <h3 class="panel-title">Students</h3>
+        <h3 class="panel-title">Users</h3>
       </div>
       <div class="panel-body">
         <% if @assets.count > 0 %>
-        <div class="pull-left page-info">Total <%= @assets.size %> Users</div>          
-        <%= datagrid_table(@report, @assets) %>              
+          <div class="pull-left page-info">Total <%= @assets.size %> Users</div>  </br> </br>        
+          <%= datagrid_table(@report, @assets) %>              
         <% else %>
-        <p class="alert">There are no results to display . </p>
+          <p class="alert">There are no results to display . </p>
         <% end %>
       </div>
     </div>    
-  </div> 
-
-  <div class="col-lg-6">
+  </div>  
+  <div class="col-lg-3">
     <div class="panel panel-default">
       <div class="panel-heading">        
-        <%= link_to "", new_admin_user_path, class: "btn btn-primary btn-xs pull-right glyphicon glyphicon-plus", title: "Add User"%>
-        <h3 class="panel-title">Company</h3>
+        <h3 class="panel-title">Filter</h3>
       </div>
-      <div class="panel-body">
-        <% if @assets1.count > 0 %>
-        <div class="pull-left page-info">Total <%= @assets1.size %> Users</div>          
-        <%= datagrid_table(@report, @assets1) %>              
-        <% else %>
-        <p class="alert">There are no results to display . </p>
-        <% end %>
-      </div>
-    </div>    
+      <div class="panel-body"><%= render "admin/shared/filters" %></div>
+    </div>
   </div>
-
-  <div class="col-lg-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">        
-        <%= link_to "", new_admin_user_path, class: "btn btn-primary btn-xs pull-right glyphicon glyphicon-plus", title: "Add User"%>
-        <h3 class="panel-title">Jobseekers</h3>
-      </div>
-      <div class="panel-body">
-        <% if @assets2.count > 0 %>
-        <div class="pull-left page-info">Total <%= @assets2.size %> Users</div>          
-        <%= datagrid_table(@report, @assets2) %>              
-        <% else %>
-        <p class="alert">There are no results to display . </p>
-        <% end %>
-      </div>
-    </div>    
-  </div>
-
-  <div class="col-lg-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">        
-        <%= link_to "", new_admin_user_path, class: "btn btn-primary btn-xs pull-right glyphicon glyphicon-plus", title: "Add User"%>
-        <h3 class="panel-title">Faculty</h3>
-      </div>
-      <div class="panel-body">
-        <% if @assets3.count > 0 %>
-        <div class="pull-left page-info">Total <%= @assets3.size %> Users</div>          
-        <%= datagrid_table(@report, @assets3) %>              
-        <% else %>
-        <p class="alert">There are no results to display . </p>
-        <% end %>
-      </div>
-    </div>    
-  </div> 
-
-  
-
 </div>
