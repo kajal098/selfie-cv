@@ -7,9 +7,9 @@ class UserCompanyReport
   filter(:username, :string, header: "Username") {|value| where("username ilike ?", "%#{value}%")}
   filter(:email, :string, header: "E-mail") {|value| where("email ilike ?", "%#{value}%")}
   
-  column(:role, header: "Role", order: false, :order => "users.role", class: "padding_class")
+  column(:role, header: "Role",  :order => "users.role", class: "padding_class")
   column(:username, header: "Username", :order => "users.username", class: "padding_class")
-  column(:email, header: "E-mail", order: false, :order => "users.email", class: "padding_class")
+  column(:email, header: "E-mail",  :order => "users.email", class: "padding_class")
   column(:updated_at) do |model|
     model.created_at.to_date
   end
