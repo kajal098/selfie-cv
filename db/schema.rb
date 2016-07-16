@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20160713065724) do
     t.string   "curricular_per",  default: "10",                         null: false
     t.string   "whizquiz_per",    default: "10",                         null: false
     t.string   "future_goal_per", default: "10",                         null: false
-    t.string   "Working_env_per", default: "10",                         null: false
+    t.string   "working_env_per", default: "10",                         null: false
     t.string   "reference_per",   default: "10",                         null: false
     t.string   "site_name",       default: "abcdefghigklmnopqrstuvwxyz", null: false
     t.string   "site_email",      default: "abcdefghigklmnopqrstuvwxyz", null: false

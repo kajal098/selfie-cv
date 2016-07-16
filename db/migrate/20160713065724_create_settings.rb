@@ -6,7 +6,7 @@ class CreateSettings < ActiveRecord::Migration
       t.string :curricular_per, null:false, default: 10
       t.string :whizquiz_per, null:false, default: 10
       t.string :future_goal_per, null:false, default: 10
-      t.string :Working_env_per, null:false, default: 10
+      t.string :working_env_per, null:false, default: 10
       t.string :reference_per, null:false, default: 10
       t.string :site_name, null:false, default: 'abcdefghigklmnopqrstuvwxyz'
       t.string :site_email, null:false, default: 'abcdefghigklmnopqrstuvwxyz'
