@@ -10,6 +10,7 @@ class UserReport
   column(:role, header: "Role",  :order => "users.role", class: "padding_class")
   column(:username, header: "Username", :order => "users.username", class: "padding_class")
   column(:email, header: "E-mail",  :order => "users.email", class: "padding_class")
+  column(:file, header: "File",   class: "padding_class")
   column(:updated_at) do |model|
     model.created_at.to_date
   end
