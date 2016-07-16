@@ -33,6 +33,7 @@ if @users
 	json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
 	json.profile user.profile_thumb_url
+	json.profile user.profile_photo_url
 
 	json.resume user.resume_thumb_url
 
@@ -80,7 +81,7 @@ if @award
 		json.extract! award, :id, :user_id, :name, :description, :award_type
 
 		json.file award.thumb_url
-		
+
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 	end
