@@ -33,7 +33,7 @@ if @users
 	json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
 	json.profile user.profile_thumb_url
-	json.profile user.profile_photo_url
+	json.profile_video user.profile_photo_url
 
 	json.resume user.resume_thumb_url
 
