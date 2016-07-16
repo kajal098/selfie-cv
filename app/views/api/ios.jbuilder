@@ -55,6 +55,8 @@ if @user_experience
 	json.experiences @experiences do |experience|
 		json.extract! experience, :id, :user_id, :name, :start_from, :working_till, :designation
 
+		json.file experience.thumb_url
+
 		json.experience_created_at experience.created_at.to_i
 		json.experience_updated_at experience.updated_at.to_i
 	end
@@ -74,6 +76,9 @@ if @award
 @awards = @user.user_awards.order('created_at DESC')
 	json.awards @awards do |award|
 		json.extract! award, :id, :user_id, :name, :description, :award_type
+
+		json.file award.thumb_url
+		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 	end
