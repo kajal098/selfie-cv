@@ -4,7 +4,7 @@ class UserCurricular < ActiveRecord::Base
 	validates :curricular_type,:team_type,:location,:date, presence: true
 	#validates_format_of :date, :with => /\d{2}\/\d{2}\/\d{4}/
 
-	mount_uploader :file, FileUploader
+	mount_uploader :file, CurricularUploader
     def thumb_url; file.url(:thumb); end
     def photo_url; file.url; end
 end

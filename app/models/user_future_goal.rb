@@ -1,7 +1,7 @@
 class UserFutureGoal < ActiveRecord::Base
 	belongs_to :user
 	validates :goal_type,:title,:term_type, presence: true
-	mount_uploader :file, FileUploader
+	mount_uploader :file, GoalUploader
     def thumb_url; file.url(:thumb); end
     def photo_url; file.url; end
 end
