@@ -238,7 +238,7 @@ class SelfiecvAndroid < Grape::API
         optional :school
         optional :skill
       end
-      get :education, jbuilder: 'android' do
+      post :education, jbuilder: 'android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_education = UserEducation.new user_id: @user.id
