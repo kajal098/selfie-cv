@@ -1,4 +1,3 @@
-<%= jwplayer_assets %>
 <p id="notice"><%= notice %> </p>
 <div class="row ">
   <div class="col-lg-offset-1 col-lg-10">
@@ -19,7 +18,9 @@
         <div id="Detail">
           <% if @user.role == 'Jobseeker' %>
           <h4 class="text_decoration"><b> Personal Details </b></h4>
-          <p><strong class="text_color" >Player:</strong> <%= jwplayer({width: 500, height: 200}) %> </p>
+          <video width="640" height="267">
+              <source src="http://embed.wistia.com/deliveries/afe41e4a3b366c5599fb17d96c469ad85007e2df/file.mp4" type="video/mp4">
+          </video>
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>
           <p><strong class="text_color" >Role:</strong> <%= @user.role %> </p>
@@ -29,7 +30,7 @@
           <p><strong class="text_color" >Nationality:</strong> <%= @user.nationality %> </p>
           <% elsif @user.role == 'Company' %>
           <h4 class="text_decoration"><b> Company Information </b></h4>
-          <p><strong class="text_color" >Player:</strong> <%= jwplayer({width: 500, height: 200}) %> </p>
+          
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Company Name:</strong> <%= @user.company_name %> </p>
           <p><strong class="text_color" >Company Establish From:</strong> <%= @user.company_establish_from %> </p>
@@ -56,7 +57,7 @@
           <p><strong class="text_color" >Company Future Outlet:</strong> <%= @user.company_future_outlet %> </p>
           <% elsif @user.role == 'Faculty' %>
           <h4 class="text_decoration"><b> Faculty Information </b></h4>
-          <p><strong class="text_color" >Player:</strong> <%= jwplayer({width: 500, height: 200}) %> </p>
+          
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
           <p><strong class="text_color" >Work Type:</strong> <%= @user.faculty_work_with_type %> </p>
@@ -65,7 +66,7 @@
           <p><strong class="text_color" >Designation:</strong> <%= @user.faculty_designation %> </p>
           <p><strong class="text_color" >Join From:</strong> <%= @user.faculty_join_from %> </p>
           <% else %>
-          <p><strong class="text_color" >Player:</strong> <%= jwplayer({width: 500, height: 200}) %> </p>
+          
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
           <% end %>
