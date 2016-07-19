@@ -1,3 +1,5 @@
+json.status "Success"
+
 if @user_education
 	json.extract! @user_education, :id, :user_id, :course_id, :specialization_id, :year, :school, :skill
 
