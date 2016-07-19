@@ -43,7 +43,9 @@ end
 if @user_education
 @educations = @user.user_educations.order('created_at DESC')
 	json.educations @educations do |education|
-	json.extract! education, :id, :user_id, :course_id, :specialization_id, :year, :school, :skill
+	json.extract! education, :id, :user_id, :year, :school, :skill
+	json.course education.course.name
+	json.specialization education.specialization.name
 
 	json.edu_created_at education.created_at.to_i
 	json.edu_updated_at education.updated_at.to_i

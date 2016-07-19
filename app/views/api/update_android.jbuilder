@@ -1,7 +1,9 @@
 json.status "Success"
 
 if @user_education
-	json.extract! @user_education, :id, :user_id, :course_id, :specialization_id, :year, :school, :skill
+	json.extract! @user_education, :id, :user_id, :year, :school, :skill
+	json.course education.course.name
+	json.specialization education.specialization.name
 
 	json.created_at @user_education.created_at.to_i
 	json.updated_at @user_education.updated_at.to_i
