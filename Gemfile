@@ -41,8 +41,7 @@ gem 'carrierwave-video-thumbnailer'
 # for datepicker
 gem 'bootstrap-datepicker-rails'
 
-# for video play
-gem 'jwplayer-rails'
+
 
 
 # Use SCSS for stylesheets

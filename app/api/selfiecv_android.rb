@@ -405,7 +405,6 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :award_type
         optional :name        
         optional :description        
         optional :file
@@ -413,10 +412,9 @@ class SelfiecvAndroid < Grape::API
         post :award, jbuilder: 'android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-            if (params[:award_type] || params[:name] || params[:descrption] )
+            if (params[:name] || params[:descrption] )
                     @award = UserAward.new user_id: @user.id
                     @award.attributes = clean_params(params).permit(:name, :description)
-                    @award.award_type = params[:award_type] if params[:award_type]
                     @award.file = params[:file] if params[:file]
                     error!({error: @award.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @award.save
             end

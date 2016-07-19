@@ -19,7 +19,10 @@
           <% if @user.role == 'Jobseeker' %>
           <h4 class="text_decoration"><b> Personal Details </b></h4>
           <% if @user.file %>
-          <%= video_tag "https://com-dejager-dev.s3.amazonaws.com/uploads/upload/26/test.mp4", :size => "320x240", :controls => true %>
+          <%= video_tag "https://com-dejager-dev.s3.amazonaws.com/uploads/upload/26/test.mp4", :size => "320x240", :controls => true, :autobuffer => true %>
+          <video width="320" height="240" controls muted>
+  <source src="https://com-dejager-dev.s3.amazonaws.com/uploads/upload/26/test.mp4" type="video/mp4">
+  </video>
           <% end %>
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>

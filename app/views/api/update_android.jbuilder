@@ -24,7 +24,8 @@ if @user_preferred_work
 end
 
 if @user_award
-	json.extract! @user_award, :id, :user_id, :name, :description, :award_type
+	json.extract! @user_award, :id, :user_id, :name, :description
+	
 		json.created_at @user_award.created_at.to_i
 		json.updated_at @user_award.updated_at.to_i
 end
