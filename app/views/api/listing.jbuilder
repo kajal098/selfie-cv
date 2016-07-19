@@ -1,5 +1,3 @@
-json.status "Success"
-
 if @user_educations
 @educations = @user.user_educations.order('created_at DESC')
 	json.user_educations @educations do |education|

@@ -261,7 +261,7 @@ class SelfiecvAndroid < Grape::API
         optional :school
         optional :skill
       end
-      post :update_education, jbuilder: 'update' do
+      post :update_education, jbuilder: 'update_android' do
         @user_education = UserEducation.find params[:education_id]
         error!({error: 'User Education not found', status: 'Fail'}, 200) unless @user_education
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
@@ -277,7 +277,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      post :get_educations, jbuilder: 'listing' do
+      post :get_educations, jbuilder: 'listing_android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_educations = @user.user_educations
@@ -317,7 +317,7 @@ class SelfiecvAndroid < Grape::API
         optional :designation
         optional :file
       end
-      post :update_experience, jbuilder: 'update' do
+      post :update_experience, jbuilder: 'update_android' do
         @user_experience = UserExperience.find params[:experience_id]
         error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @user_experience
         @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
@@ -334,7 +334,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      post :get_experiences, jbuilder: 'listing' do
+      post :get_experiences, jbuilder: 'listing_android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_experiences = @user.user_experiences
@@ -378,7 +378,7 @@ class SelfiecvAndroid < Grape::API
         optional :expected_salary
         optional :time_type
       end
-      post :update_preferred_work, jbuilder: 'update' do
+      post :update_preferred_work, jbuilder: 'update_android' do
         @user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
         error!({error: 'User Preffered Work not found', status: 'Fail'}, 200) unless @user_preferred_work
         @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
@@ -393,7 +393,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      post :get_preferred_works, jbuilder: 'listing' do
+      post :get_preferred_works, jbuilder: 'listing_android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_preferred_works = @user.user_preferred_works
@@ -433,7 +433,7 @@ class SelfiecvAndroid < Grape::API
         optional :description        
         optional :file
       end
-      post :update_award, jbuilder: 'update' do
+      post :update_award, jbuilder: 'update_android' do
         @user_award = UserAward.find params[:award_id]
         error!({error: 'User Award not found', status: 'Fail'}, 200) unless @user_award
         @user_award.attributes = clean_params(params).permit(:name, :description)
@@ -449,7 +449,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      post :get_award, jbuilder: 'listing' do
+      post :get_award, jbuilder: 'listing_android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_awards = @user.user_awards
@@ -488,7 +488,7 @@ class SelfiecvAndroid < Grape::API
         optional :certificate_type        
         optional :file
       end
-      post :update_certificate, jbuilder: 'update' do
+      post :update_certificate, jbuilder: 'update_android' do
         @user_certificate = UserCertificate.find params[:certificate_id]
         error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @user_certificate
         @user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
@@ -504,7 +504,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
       end
-      post :get_certificates, jbuilder: 'listing' do
+      post :get_certificates, jbuilder: 'listing_android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_certificates = @user.user_certificates
@@ -547,7 +547,7 @@ class SelfiecvAndroid < Grape::API
           optional :date
           optional :file
         end
-        post :update_curricular, jbuilder: 'update' do
+        post :update_curricular, jbuilder: 'update_android' do
           @user_curricular = UserCurricular.find params[:curricular_id]
           error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @user_curricular
           @user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
@@ -563,7 +563,7 @@ class SelfiecvAndroid < Grape::API
           requires :token, type: String, regexp: UUID_REGEX
           requires :user_id
         end
-        post :get_curriculars, jbuilder: 'listing' do
+        post :get_curriculars, jbuilder: 'listing_android' do
           @user = User.find params[:user_id]
           error!({error: 'User not found', status: 'Fail'}, 200) unless @user
           @user_curriculars = @user.user_curriculars
@@ -602,7 +602,7 @@ class SelfiecvAndroid < Grape::API
           optional :term_type        
           optional :file
         end
-        post :update_future_goal, jbuilder: 'update' do
+        post :update_future_goal, jbuilder: 'update_android' do
           @future_goal = UserFutureGoal.find params[:future_goal_id]
           error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @future_goal
           @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
@@ -618,7 +618,7 @@ class SelfiecvAndroid < Grape::API
           requires :token, type: String, regexp: UUID_REGEX
           requires :user_id
         end
-        post :get_future_goals, jbuilder: 'listing' do
+        post :get_future_goals, jbuilder: 'listing_android' do
           @user = User.find params[:user_id]
           error!({error: 'User not found', status: 'Fail'}, 200) unless @user
           @user_future_goals = @user.user_future_goals
@@ -655,7 +655,7 @@ class SelfiecvAndroid < Grape::API
           optional :title
           optional :file
         end
-        post :update_working_environment, jbuilder: 'update' do
+        post :update_working_environment, jbuilder: 'update_android' do
           @environment = UserEnvironment.find params[:environment_id]
           error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @environment
           @environment.attributes = clean_params(params).permit(:env_type, :title)
@@ -671,7 +671,7 @@ class SelfiecvAndroid < Grape::API
             requires :token, type: String, regexp: UUID_REGEX
             requires :user_id
           end
-          post :get_working_environments, jbuilder: 'listing' do
+          post :get_working_environments, jbuilder: 'listing_android' do
             @user = User.find params[:user_id]
             error!({error: 'User not found', status: 'Fail'}, 200) unless @user
             @user_working_environments = @user.user_environments
@@ -718,7 +718,7 @@ class SelfiecvAndroid < Grape::API
                 optional :location
                 optional :file
               end
-              post :update_references, jbuilder: 'update' do
+              post :update_references, jbuilder: 'update_android' do
                 @reference = UserReference.find params[:reference_id]
                 error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @reference
                 @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
@@ -734,7 +734,7 @@ class SelfiecvAndroid < Grape::API
               requires :token, type: String, regexp: UUID_REGEX
               requires :user_id
             end
-            post :get_references, jbuilder: 'listing' do
+            post :get_references, jbuilder: 'listing_android' do
               @user = User.find params[:user_id]
               error!({error: 'User not found', status: 'Fail'}, 200) unless @user
               @user_references = @user.user_references
