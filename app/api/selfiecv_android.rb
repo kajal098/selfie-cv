@@ -292,7 +292,7 @@ class SelfiecvAndroid < Grape::API
         requires :education_id
       end
 
-      get :delete_education do
+      post :delete_education do
         @education = UserEducation.find params[:education_id]
         @education.destroy
         { code: 200, :status => "Success" }
@@ -364,7 +364,7 @@ class SelfiecvAndroid < Grape::API
         requires :experience_id
       end
 
-      get :delete_experience do
+      post :delete_experience do
         @experience = UserExperience.find params[:experience_id]
         @experience.destroy
         { code: 200, :status => "Success" }
@@ -438,7 +438,7 @@ class SelfiecvAndroid < Grape::API
         requires :preffered_work_id
       end
 
-      get :delete_preffered_work do
+      post :delete_preffered_work do
         @preffered_work = UserPreferredWork.find params[:preffered_work_id]
         @preffered_work.destroy
         { code: 200, :status => "Success" }
@@ -507,7 +507,7 @@ class SelfiecvAndroid < Grape::API
         requires :award_id
       end
 
-      get :delete_award do
+      post :delete_award do
         @award = UserAward.find params[:award_id]
         @award.destroy
         { code: 200, :status => "Success" }
@@ -577,7 +577,7 @@ class SelfiecvAndroid < Grape::API
         requires :certificate_id
       end
 
-      get :delete_certificate do
+      post :delete_certificate do
         @certificate = UserCertificate.find params[:certificate_id]
         @certificate.destroy
         { code: 200, :status => "Success" }
@@ -651,7 +651,7 @@ class SelfiecvAndroid < Grape::API
         requires :curricular_id
       end
 
-      get :delete_curricular do
+      post :delete_curricular do
         @curricular = UserCurricular.find params[:curricular_id]
         @curricular.destroy
         { code: 200, :status => "Success" }
@@ -721,7 +721,7 @@ class SelfiecvAndroid < Grape::API
         requires :future_goal_id
       end
 
-      get :delete_future_goal do
+      post :delete_future_goal do
         @future_goal = UserFutureGoal.find params[:future_goal_id]
         @future_goal.destroy
         { code: 200, :status => "Success" }
@@ -789,7 +789,7 @@ class SelfiecvAndroid < Grape::API
         requires :work_env_id
       end
 
-      get :delete_work_env do
+      post :delete_work_env do
         @work_env = UserEnvironment.find params[:work_env_id]
         @work_env.destroy
         { code: 200, :status => "Success" }
@@ -867,7 +867,7 @@ class SelfiecvAndroid < Grape::API
         requires :reference_id
       end
 
-      get :delete_reference do
+      post :delete_reference do
         @reference = UserReference.find params[:reference_id]
         @reference.destroy
         { code: 200, :status => "Success" }
