@@ -32,8 +32,6 @@ has_many :user_references
 has_many :company_galeries
 has_many :user_meters
 
-
-
 mount_uploader :file, CvUploader
 def resume_thumb_url; file.url(:thumb); end
 def resume_photo_url; file.url; end
@@ -54,12 +52,4 @@ mount_uploader :company_brochure, CompanyUploader
 def brochure_thumb_url; company_brochure.url(:thumb); end
 def brochure_photo_url; company_brochure.url; end
 
-
-
-TITLES = 
-[
-  ['Mr', 'Mr'] ,
-  ['Miss' , 'Miss' ],
-  ['Mrs' , 'Mrs' ] 
-]
 end

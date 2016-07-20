@@ -17,6 +17,7 @@ class UserReport
   end
   column(:file, :html => true, class: 'padding_class',) do |model|
         image_tag model.file.url,  :size => "20x20"
+        video_tag model.file.url,  :size => "200x100"
       end
   column(:actions, header: "", html: true , class: "padding_class" ) do |user|
     html = link_to "", admin_user_path(user), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View User"
