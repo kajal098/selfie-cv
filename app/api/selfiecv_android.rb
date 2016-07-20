@@ -283,6 +283,21 @@ class SelfiecvAndroid < Grape::API
         @user_educations = @user.user_educations
       end
 
+      #for delete education
+
+      desc "Delete Education"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :education_id
+      end
+
+      get :delete_education do
+        @education = UserEducation.find params[:education_id]
+        @education.destroy
+        { code: 200, :status => "Success" }
+      end
+
     # for fill user's experience
 
     desc 'User Experience'
@@ -338,6 +353,21 @@ class SelfiecvAndroid < Grape::API
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_experiences = @user.user_experiences
+      end
+
+      #for delete experience
+
+      desc "Delete Experience"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :experience_id
+      end
+
+      get :delete_experience do
+        @experience = UserExperience.find params[:experience_id]
+        @experience.destroy
+        { code: 200, :status => "Success" }
       end
 
     # for fill user's preferred work details
@@ -399,6 +429,21 @@ class SelfiecvAndroid < Grape::API
         @user_preferred_works = @user.user_preferred_works
       end
 
+      #for delete preffered work
+
+      desc "Delete Preffered Work"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :preffered_work_id
+      end
+
+      get :delete_preffered_work do
+        @preffered_work = UserPreferredWork.find params[:preffered_work_id]
+        @preffered_work.destroy
+        { code: 200, :status => "Success" }
+      end
+
     # for fill user awards
 
     desc 'User Award'
@@ -451,6 +496,21 @@ class SelfiecvAndroid < Grape::API
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_awards = @user.user_awards
+      end
+
+      #for delete award
+
+      desc "Delete Award"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :award_id
+      end
+
+      get :delete_award do
+        @award = UserAward.find params[:award_id]
+        @award.destroy
+        { code: 200, :status => "Success" }
       end
 
       # for fill user certificates
@@ -506,6 +566,21 @@ class SelfiecvAndroid < Grape::API
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user_certificates = @user.user_certificates
+      end
+
+      #for delete certificate
+
+      desc "Delete Certificate"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :certificate_id
+      end
+
+      get :delete_certificate do
+        @certificate = UserCertificate.find params[:certificate_id]
+        @certificate.destroy
+        { code: 200, :status => "Success" }
       end
 
       # for fill curriculars
@@ -567,6 +642,21 @@ class SelfiecvAndroid < Grape::API
           @user_curriculars = @user.user_curriculars
         end
 
+        #for delete curricular
+
+      desc "Delete Curricular"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :curricular_id
+      end
+
+      get :delete_curricular do
+        @curricular = UserCurricular.find params[:curricular_id]
+        @curricular.destroy
+        { code: 200, :status => "Success" }
+      end
+
         # for fill future goal
 
         desc 'User Future Goal'
@@ -622,6 +712,21 @@ class SelfiecvAndroid < Grape::API
           @user_future_goals = @user.user_future_goals
         end
 
+        #for delete future goal
+
+      desc "Delete Future Goal"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :future_goal_id
+      end
+
+      get :delete_future_goal do
+        @future_goal = UserFutureGoal.find params[:future_goal_id]
+        @future_goal.destroy
+        { code: 200, :status => "Success" }
+      end
+
           # for fill working environment
 
           desc 'User Working Environment'
@@ -674,6 +779,21 @@ class SelfiecvAndroid < Grape::API
             error!({error: 'User not found', status: 'Fail'}, 200) unless @user
             @user_working_environments = @user.user_environments
           end
+
+          #for delete work environment
+
+      desc "Delete Work Environment"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :work_env_id
+      end
+
+      get :delete_work_env do
+        @work_env = UserEnvironment.find params[:work_env_id]
+        @work_env.destroy
+        { code: 200, :status => "Success" }
+      end
 
             # for fill references
 
@@ -737,6 +857,21 @@ class SelfiecvAndroid < Grape::API
               error!({error: 'User not found', status: 'Fail'}, 200) unless @user
               @user_references = @user.user_references
             end
+
+            #for delete reference
+
+      desc "Delete reference"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :reference_id
+      end
+
+      get :delete_reference do
+        @reference = UserReference.find params[:reference_id]
+        @reference.destroy
+        { code: 200, :status => "Success" }
+      end
 
       
 
