@@ -18,12 +18,11 @@
         <div id="Detail">
           <% if @user.role == 'Jobseeker' %>
           <h4 class="text_decoration"><b> Personal Details </b></h4>
-          <% if @user.file_type == 'file' %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
-          <% else %>
+          <% if @user.file_type == 'video' %>
           <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% end %>
-          
+          <% else %>
+          <%= image_tag @user.file.url, :size => "100x100" %>
+          <% end %>          
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>
           <p><strong class="text_color" >Role:</strong> <%= @user.role %> </p>
@@ -31,15 +30,14 @@
           <p><strong class="text_color" >Contact Number:</strong> <%= @user.contact_number  %> </p>
           <p><strong class="text_color" >Address:</strong> <%= @user.address %> , <%= @user.city %>  </p>
           <p><strong class="text_color" >Nationality:</strong> <%= @user.nationality %> </p>
+          
           <% elsif @user.role == 'Company' %>
-          <h4 class="text_decoration"><b> Company Information </b></h4>
-          
-          <% if @user.file_type == 'file' %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
-          <% else %>
+          <h4 class="text_decoration"><b> Company Information </b></h4>          
+          <% if @user.file_type == 'video' %>
           <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% end %>
-          
+          <% else %>
+          <%= image_tag @user.file.url, :size => "100x100" %>
+          <% end %>          
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Company Name:</strong> <%= @user.company_name %> </p>
           <p><strong class="text_color" >Company Establish From:</strong> <%= @user.company_establish_from %> </p>
@@ -64,15 +62,14 @@
           <p><strong class="text_color" >Company Future Turnover:</strong> <%= @user.company_future_turnover %> </p>
           <p><strong class="text_color" >Company Future New Venture Location:</strong> <%= @user.company_future_new_venture_location %> </p>
           <p><strong class="text_color" >Company Future Outlet:</strong> <%= @user.company_future_outlet %> </p>
+          
           <% elsif @user.role == 'Faculty' %>
-          <h4 class="text_decoration"><b> Faculty Information </b></h4>
-          
-          <% if @user.file_type == 'file' %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
-          <% else %>
+          <h4 class="text_decoration"><b> Faculty Information </b></h4>          
+          <% if @user.file_type == 'video' %>
           <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% end %>
-          
+          <% else %>
+          <%= image_tag @user.file.url, :size => "100x100" %>
+          <% end %>           
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
           <p><strong class="text_color" >Work Type:</strong> <%= @user.faculty_work_with_type %> </p>
@@ -80,17 +77,19 @@
           <p><strong class="text_color" >Subject:</strong> <%= @user.faculty_subject %> </p>
           <p><strong class="text_color" >Designation:</strong> <%= @user.faculty_designation %> </p>
           <p><strong class="text_color" >Join From:</strong> <%= @user.faculty_join_from %> </p>
-          <% else %>
           
-          <% if @user.file_type == 'file' %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
-          <% else %>
+          <% else %>          
+          <% if @user.file_type == 'video' %>
           <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% end %>
-         
+          <% elsif @user.file_type == 'audio' %>
+          <%= audio_tag "audio.m4a", class: "audio-play" %>
+          <% else %>
+          <%= image_tag @user.file.url, :size => "100x100" %>
+          <% end %>       
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
           <% end %>
+
         </div>
         <div id="Education">
           <% @user.user_educations.each do |edu| %>     
