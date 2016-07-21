@@ -59,7 +59,9 @@ end
 if @user_experience
 @experiences = @user.user_experiences.order('created_at DESC')
 	json.experiences @experiences do |experience|
-		json.extract! experience, :id, :user_id, :name, :start_from, :working_till, :designation
+		json.extract! experience, :id, :user_id, :name, :start_from, :current_company, :working_till, :designation
+
+		
 
 		json.file experience.thumb_url
 

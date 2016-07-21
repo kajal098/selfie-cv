@@ -316,13 +316,14 @@ resources :member do
       optional :start_from
       optional :working_till
       optional :designation
+      requires :current_company
       optional :file
     end
     post :experiences, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_experience = UserExperience.new user_id: @user.id
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation)
+      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :current_company)
       @user_experience.file = params[:file] if params[:file]
       error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
     end
