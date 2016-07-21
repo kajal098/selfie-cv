@@ -18,11 +18,7 @@
         <div id="Detail">
           <% if @user.role == 'Jobseeker' %>
           <h4 class="text_decoration"><b> Personal Details </b></h4>
-          <% if @user.file_type == 'video' %>
-          <%= video_tag @user.resume_thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% else %>
-          <%= image_tag @user.resume_thumb_url, :size => "100x100" %>
-          <% end %>          
+             
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>
           <p><strong class="text_color" >Role:</strong> <%= @user.role %> </p>
@@ -30,14 +26,10 @@
           <p><strong class="text_color" >Contact Number:</strong> <%= @user.contact_number  %> </p>
           <p><strong class="text_color" >Address:</strong> <%= @user.address %> , <%= @user.city %>  </p>
           <p><strong class="text_color" >Nationality:</strong> <%= @user.nationality %> </p>
-          
+          <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.resume_thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.resume_thumb_url, :size => "100x100" %><% end %></p>  
           <% elsif @user.role == 'Company' %>
           <h4 class="text_decoration"><b> Company Information </b></h4>          
-          <% if @user.file_type == 'video' %>
-          <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% else %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
-          <% end %>          
+             
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Company Name:</strong> <%= @user.company_name %> </p>
           <p><strong class="text_color" >Company Establish From:</strong> <%= @user.company_establish_from %> </p>
@@ -50,9 +42,9 @@
           <p><strong class="text_color" >Company Skype Id:</strong> <%= @user.company_skype_id %> </p>
           <p><strong class="text_color" >Company:</strong> <%= @user.company_id %> </p>
           <h4 class="text_decoration"><b> Corporate Identity </b></h4>
-          <p><strong class="text_color" >Company Logo:</strong> <%= @user.company_logo %> </p>
-          <p><strong class="text_color" >Company Profile:</strong> <%= @user.company_profile %> </p>
-          <p><strong class="text_color" >Company Brochure:</strong> <%= @user.company_brochure %> </p>
+          <p><strong class="text_color" >Company Logo:</strong><% if @user.file_type == 'video' %><%= video_tag @user.logo_thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.logo_thumb_url, :size => "100x100" %><% end %></p>       
+          <p><strong class="text_color" >Company Profile:</strong><% if @user.file_type == 'video' %><%= video_tag @user.company_profile_thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.company_profile_thumb_url, :size => "100x100" %><% end %></p>       
+          <p><strong class="text_color" >Company Brochure:</strong><% if @user.file_type == 'video' %><%= video_tag @user.brochure_thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.brochure_thumb_url, :size => "100x100" %><% end %> </p>       
           <p><strong class="text_color" >Company Website:</strong> <%= @user.company_website %> </p>
           <p><strong class="text_color" >Company Facebook Link:</strong> <%= @user.company_facebook_link %> </p>
           <p><strong class="text_color" >Company Turnover:</strong> <%= @user.company_turnover %> </p>
@@ -65,11 +57,7 @@
           
           <% elsif @user.role == 'Faculty' %>
           <h4 class="text_decoration"><b> Faculty Information </b></h4>          
-          <% if @user.file_type == 'video' %>
-          <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% else %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
-          <% end %>           
+                     
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
           <p><strong class="text_color" >Work Type:</strong> <%= @user.faculty_work_with_type %> </p>
@@ -77,20 +65,18 @@
           <p><strong class="text_color" >Subject:</strong> <%= @user.faculty_subject %> </p>
           <p><strong class="text_color" >Designation:</strong> <%= @user.faculty_designation %> </p>
           <p><strong class="text_color" >Join From:</strong> <%= @user.faculty_join_from %> </p>
-          
+          <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "100x100" %>
+          <% end %></p>
+
+
           <% else %>          
-          <% if @user.file_type == 'video' %>
-          <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-          <% elsif @user.file_type == 'audio' %>
-          <%= audio_tag "audio.m4a", class: "audio-play" %>
-          <% else %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
-          <% end %>       
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
+          <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.profile_thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.profile_thumb_url, :size => "100x100" %><% end %></p>      
           <% end %>
 
         </div>
+
         <div id="Education">
           <% @user.user_educations.each do |edu| %>     
           <tr >
@@ -109,7 +95,8 @@
             <p><strong class="text_color" >Exp Type :</strong> <%= exp.exp_type %> </p>
             <p><strong class="text_color" >Start From :</strong> <%= exp.start_from %> </p>
             <p><strong class="text_color" >Working Till :</strong> <%= exp.working_till %> </p>
-            <p><strong class="text_color" >Designation :</strong> <%= exp.designation %> </p><hr/>
+            <p><strong class="text_color" >Designation :</strong> <%= exp.designation %> </p>
+            <p><strong class="text_color" >File :</strong> <% if exp.file_type == 'video' %><%= video_tag exp.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag exp.thumb_url, :size => "100x100" %><% end %></p><hr/>
           </tr>
           <% end %>
         </div>
@@ -131,7 +118,8 @@
           <tr >
             <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
             <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
-            <p><strong class="text_color" >Description :</strong> <%= award.description %> </p><hr/>
+            <p><strong class="text_color" >Description :</strong> <%= award.description %> </p>
+            <p><strong class="text_color" >File :</strong> <% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></p><hr/>
           </tr>
           <% end %>
         </div>
@@ -140,7 +128,9 @@
           <tr >
             <p><strong class="text_color" >Name :</strong> <%= certi.name %> </p>
             <p><strong class="text_color" >Certificate Type :</strong> <%= certi.certificate_type %> </p>
-            <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p><hr/>
+            <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p>
+            <p><strong class="text_color" >File :</strong> <% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            
           </tr>
           <% end %>
         </div>
@@ -150,7 +140,8 @@
             <p><strong class="text_color" >Curricular Type :</strong> <%= curri.curricular_type %> </p>
             <p><strong class="text_color" >Team Type :</strong> <%= curri.team_type %> </p>
             <p><strong class="text_color" >Location :</strong> <%= curri.location %> </p>
-            <p><strong class="text_color" >Date :</strong> <%= curri.date %> </p><hr/>
+            <p><strong class="text_color" >Date :</strong> <%= curri.date %> </p>
+            <p><strong class="text_color" >File :</strong> <% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "100x100" %><% end %></p><hr/>
           </tr>
           <% end %>
         </div>
@@ -160,7 +151,8 @@
             <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
             <p><strong class="text_color" >Goal Type :</strong> <%= future.goal_type %> </p>
             <p><strong class="text_color" >Title :</strong> <%= future.title %> </p>
-            <p><strong class="text_color" >Term Type :</strong> <%= future.term_type %> </p><hr/>
+            <p><strong class="text_color" >Term Type :</strong> <%= future.term_type %> </p>
+            <p><strong class="text_color" >File :</strong> <% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "100x100" %><% end %></p><hr/>
           </tr>
           <% end %>
         </div>
@@ -168,7 +160,8 @@
           <% @user.user_environments.each do |work_env| %>     
           <tr >
             <p><strong class="text_color" >Env Type :</strong> <%= work_env.env_type %> </p>
-            <p><strong class="text_color" >Title :</strong> <%= work_env.title %> </p><hr/>
+            <p><strong class="text_color" >Title :</strong> <%= work_env.title %> </p>
+            <p><strong class="text_color" >File :</strong> <% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></p><hr/>
           </tr>
           <% end %>
         </div>
@@ -180,7 +173,8 @@
             <p><strong class="text_color" >Start From :</strong> <%= ref.email %> </p>
             <p><strong class="text_color" >Working Till :</strong> <%= ref.date %> </p>
             <p><strong class="text_color" >Id :</strong> <%= ref.contact %> </p>
-            <p><strong class="text_color" >Designation :</strong> <%= ref.location %> </p><hr/>
+            <p><strong class="text_color" >Designation :</strong> <%= ref.location %> </p>
+            <p><strong class="text_color" >File :</strong> <% if ref.file_type == 'video' %><%= video_tag ref.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag ref.thumb_url, :size => "100x100" %><% end %></p><hr/>
           </tr>
           <% end %>
         </div>

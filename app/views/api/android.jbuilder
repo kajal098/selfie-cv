@@ -61,7 +61,11 @@ if @user_experience
 	json.experiences @experiences do |experience|
 		json.extract! experience, :id, :user_id, :name, :start_from, :current_company, :working_till, :designation
 
-		
+		if experience.current_company == 'true'
+			experience.working_till == "present"
+		else
+			experience.working_till
+		end
 
 		json.file experience.thumb_url
 

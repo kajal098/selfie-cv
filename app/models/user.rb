@@ -60,7 +60,7 @@ def logo_photo_url; company_logo.url; end
 mount_uploader :company_profile, FileUploader
 def company_profile_thumb_url
         if(file.identifier.blank?)
-            ActionController::Base.helpers.asset_url("company.png")
+            ActionController::Base.helpers.asset_url("cp.png")
         else    
             file.url(:thumb)
         end
@@ -70,7 +70,7 @@ def company_profile_photo_url; company_profile.url; end
 mount_uploader :company_brochure, FileUploader
 def brochure_thumb_url
         if(file.identifier.blank?)
-            ActionController::Base.helpers.asset_url("company.png")
+            ActionController::Base.helpers.asset_url("cb.png")
         else    
             file.url(:thumb)
         end
