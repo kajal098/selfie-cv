@@ -175,6 +175,19 @@ resources :member do
       @user
     end
 
+    # for delete user account
+
+    desc "Delete User Account"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+    end
+    post :delete_account do
+      authenticate!
+      @user = current_user
+      @user.destroy
+      { code: 200, :status => "Success" }
+    end
+
     # for listing users
     desc "Listing Users"
     params do
