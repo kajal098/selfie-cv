@@ -121,9 +121,9 @@ resources :member do
         @user = User.find_by_email(params[:email])
         @code = @user.reset_code
     #UserMailer.send_reset_code(@user).deliver_now
-    { code: @code, :status => "Success" }
+    @user.reset_code
     else
-      error!({error: 'User does not exist', status: 'Fail'}, 200)
+      error! "User does not exist.", 422
     end
     end
 
