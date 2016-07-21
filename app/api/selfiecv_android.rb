@@ -316,7 +316,6 @@ resources :member do
       optional :start_from
       optional :working_till
       optional :designation
-      requires :current_company
       optional :file
     end
     post :experiences, jbuilder: 'android' do
