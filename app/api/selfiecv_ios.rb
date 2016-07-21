@@ -110,6 +110,23 @@ resources :member do
     end
     end
 
+    # for resend reset password token to reset password
+    desc "Resend reset password token"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :email
+    end
+    post :resend_reset_code do
+      if
+        @user = User.find_by_email(params[:email])
+        @code = @user.reset_code
+    #UserMailer.send_reset_code(@user).deliver_now
+    { code: @code, :status => "Success" }
+    else
+      error!({error: 'User does not exist', status: 'Fail'}, 200)
+    end
+    end
+
     # for reset password
     desc "Reset Password"
     params do
