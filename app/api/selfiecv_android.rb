@@ -316,6 +316,7 @@ resources :member do
       optional :start_from
       optional :working_till
       optional :designation
+      optional :description
       requires :current_company
       optional :file
     end
@@ -323,7 +324,7 @@ resources :member do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_experience = UserExperience.new user_id: @user.id
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :current_company)
+      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :current_company)
       @user_experience.file = params[:file] if params[:file]
       error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
     end
@@ -337,13 +338,14 @@ resources :member do
       optional :start_from
       optional :working_till
       optional :designation
+      optional :description
       optional :file
     end
     post :update_experience, jbuilder: 'update_android' do
       @user_experience = UserExperience.find params[:experience_id]
       error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @user_experience
       @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
-        :designation)
+        :designation, :description)
       @user_experience.file = params[:file] if params[:file]
       error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
       @user_experience
