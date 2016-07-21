@@ -164,6 +164,19 @@ resources :member do
       @user
     end
 
+    # for delete user account
+
+    desc "Delete User Account"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+    end
+    post :delete_account do
+      authenticate!
+      @user = current_user
+      @user.destroy
+      status 200
+    end
+
     # for listing users
     desc "Listing Users"
     params do
@@ -303,6 +316,7 @@ resources :member_profile do
       optional :start_from
       optional :working_till
       optional :designation
+      requires :current_company
       optional :file
     end
     post :experience, jbuilder: 'ios' do
