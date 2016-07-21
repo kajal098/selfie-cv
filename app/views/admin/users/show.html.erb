@@ -19,9 +19,9 @@
           <% if @user.role == 'Jobseeker' %>
           <h4 class="text_decoration"><b> Personal Details </b></h4>
           <% if @user.file_type == 'video' %>
-          <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+          <%= video_tag @user.resume_thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
           <% else %>
-          <%= image_tag @user.file.url, :size => "100x100" %>
+          <%= image_tag @user.resume_thumb_url, :size => "100x100" %>
           <% end %>          
           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
           <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>
