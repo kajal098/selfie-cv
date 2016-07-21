@@ -7,6 +7,7 @@ class CreateUserExperiences < ActiveRecord::Migration
       t.date :start_from,              :default=>Date.today
       t.string :working_till,              null:false, default: ""
       t.string :designation,              null:false, default: ""
+      t.string :description,              null:false, default: ""
       t.string :file,              default: ''
       t.string :file_type,              null: false, default: ""
       t.boolean :active,            default: false
