@@ -224,19 +224,7 @@ resources :member do
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
       @user.file = params[:file] if params[:file]
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-      if(params[:file_type] == 'video')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 100
-      elsif(params[:file_type] == 'audio')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 70
-      elsif(params[:file_type] == 'file')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 50
-      elsif(params[:file_type] == 'text')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 30
-      end
+      
       @user
     end
 
