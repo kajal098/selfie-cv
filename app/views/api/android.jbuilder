@@ -7,7 +7,7 @@ if @user
 		json.profile @user.profile_thumb_url
 		json.profile_video @user.profile_photo_url
 
-		json.resume @user.resume_thumb_url
+		json.resume @user.file
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
