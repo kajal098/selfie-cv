@@ -221,7 +221,7 @@ resources :member do
     post :resume, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
       @user.file = params[:file] if params[:file]
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       if(params[:file_type] == 'video')
