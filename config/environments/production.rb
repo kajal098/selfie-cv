@@ -76,8 +76,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'selfie-cv-development.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.mandrillapp.com",
-    port: 587,
+    address: "smtp.sendgrid.net",
+    port: 25,
     domain: ENV["DOMAIN_NAME"],
     authentication: "plain",
     user_name: ENV["SENDGRID_USERNAME"],
