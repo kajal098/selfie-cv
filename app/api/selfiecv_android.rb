@@ -942,6 +942,8 @@ resources :data do
     post :course_and_spe, jbuilder: 'android' do
       @courses = Course.all
       @specializations = Specialization.all
+      @companies = Company.all
+      @industries = Industry.all
     end
 
 end
