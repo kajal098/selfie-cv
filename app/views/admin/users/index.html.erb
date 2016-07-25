@@ -5,8 +5,11 @@
   <div class="col-lg-8">
     <div class="panel panel-default">
       <div class="panel-heading">        
-        <%= link_to "", new_admin_user_path, class: "btn btn-primary btn-xs pull-right glyphicon glyphicon-plus", title: "Add User"%>
+        
         <h3 class="panel-title">Users</h3>
+        <p>
+          <%= link_to '', admin_users_path(format: "csv"), class: "btn btn-primary btn-sm fa fa-download", style: "color:#FFF;" %>
+        </p>
       </div>
       <div class="panel-body">
         <% if @assets.count > 0 %>
