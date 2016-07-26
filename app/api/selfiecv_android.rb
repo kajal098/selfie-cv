@@ -884,8 +884,8 @@ resources :company do
       end
     end
 
-    # for corporate identity
-    desc 'Growth And Goal'
+    # for evalution information
+    desc 'Company Evalution Information'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
@@ -893,15 +893,32 @@ resources :company do
       requires :company_no_of_emp
       optional :company_growth_ratio        
       optional :companu_new_ventures
+    end
+    post :evalution_information, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      if @user.role == 'Company'
+        @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures )
+        error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
+      else
+        error! "Record not found.", 200
+      end
+    end
+
+    # for evalution information
+    desc 'Company Evalution Information'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
       optional :company_future_turnover
       optional :company_future_new_venture_location
       optional :company_future_outlet
     end
-    post :growth_and_goal, jbuilder: 'android' do
+    post :future_goal, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+        @user.attributes = clean_params(params).permit(:company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       else
         error! "Record not found.", 200
