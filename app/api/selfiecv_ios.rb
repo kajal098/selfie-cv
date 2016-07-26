@@ -273,7 +273,7 @@ resources :member_profile do
       optional :school
       optional :skill
     end
-    post :update_education, jbuilder: 'update' do
+    get :update_education, jbuilder: 'update' do
       @user_education = UserEducation.find params[:education_id]
       error! 'User Education not found',422 unless @user_education
       @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
@@ -895,7 +895,7 @@ resources :company do
         error! "Record not found.", 422
       end
     end
-    
+
     # for evalution information
     desc 'Company Evalution Information'
     params do
