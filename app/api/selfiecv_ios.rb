@@ -252,7 +252,7 @@ resources :member_profile do
       optional :school
       optional :skill
     end
-    get :education, jbuilder: 'ios' do
+    post :education, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_education = UserEducation.new user_id: @user.id
@@ -273,7 +273,7 @@ resources :member_profile do
       optional :school
       optional :skill
     end
-    get :update_education, jbuilder: 'update' do
+    post :update_education, jbuilder: 'update' do
       @user_education = UserEducation.find params[:education_id]
       error! 'User Education not found',422 unless @user_education
       @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
