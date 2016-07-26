@@ -21,7 +21,7 @@ has_many :devices
 has_many :courses
 has_many :specializations
 belongs_to :company
-belongs_to :industry
+belongs_to :industry, class_name: 'Industry', foreign_key: 'company_industry'
 has_many :user_educations
 has_many :user_experiences
 has_many :user_preferred_works
