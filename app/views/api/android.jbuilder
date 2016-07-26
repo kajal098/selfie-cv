@@ -34,6 +34,10 @@ if @company
 
 		json.logo @company.logo_thumb_url
 
+		json.course @company.company.name
+
+		json.course @company.industry.name
+
 		json.profile @company.company_profile_thumb_url
 
 		json.brochure @company.brochure_thumb_url
@@ -63,7 +67,7 @@ end
 if @user_education
 @educations = @user.user_educations.order('created_at DESC')
 	json.educations @educations do |education|
-	json.extract! education, :id, :user_id, :year, :school, :skill
+	json.extract! education, :id, :user_id, :year, :school, :skill, course_id, :specialization_id
 	json.course education.course.name
 	json.specialization education.specialization.name
 
