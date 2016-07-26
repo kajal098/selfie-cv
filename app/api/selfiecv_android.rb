@@ -855,7 +855,7 @@ resources :company do
         @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       else
-        error! "Record not found.", 200
+        error!({error: 'Record not found', status: 'Fail'}, 200)
       end
     end
 
@@ -880,7 +880,7 @@ resources :company do
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
       else
-        error! "Record not found.", 200
+        error!({error: 'Record not found', status: 'Fail'}, 200)
       end
     end
 
@@ -901,7 +901,7 @@ resources :company do
         @user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures )
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       else
-        error! "Record not found.", 200
+        error!({error: 'Record not found', status: 'Fail'}, 200)
       end
     end
 
@@ -921,7 +921,7 @@ resources :company do
         @user.attributes = clean_params(params).permit(:company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       else
-        error! "Record not found.", 200
+        error!({error: 'Record not found', status: 'Fail'}, 200)
       end
     end
 
