@@ -252,7 +252,7 @@ resources :member_profile do
       optional :school
       optional :skill
     end
-    post :education, jbuilder: 'ios' do
+    get :education, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_education = UserEducation.new user_id: @user.id
