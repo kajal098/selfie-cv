@@ -905,8 +905,8 @@ resources :company do
       end
     end
 
-    # for evalution information
-    desc 'Company Evalution Information'
+    # for company future goal
+    desc 'Company Future Goal'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
