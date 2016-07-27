@@ -19,13 +19,7 @@ if @user
 
 		json.profile @user.company_profile_thumb_url
 
-if @user.company_id
-		json.company @user.company.name
 
-end
-if @user.company_industry
-		json.industry @user.industry.name
-end
 		json.brochure @user.brochure_thumb_url
 
 		json.created_at @user.created_at.to_i
