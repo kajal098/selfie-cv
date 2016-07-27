@@ -32,7 +32,7 @@ has_many :user_future_goals
 has_many :user_environments
 has_many :user_references
 has_many :company_galeries
-has_many :user_meters
+has_one :user_meter
 
 mount_uploader :file, FileUploader
     # def resume_thumb_url

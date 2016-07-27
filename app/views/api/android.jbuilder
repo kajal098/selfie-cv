@@ -19,6 +19,10 @@ if @user
 
 		json.profile @user.company_profile_thumb_url
 
+		json.company @user.company.name
+
+		json.industry @user.industry.name
+
 		json.brochure @user.brochure_thumb_url
 
 		json.created_at @user.created_at.to_i
