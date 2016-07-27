@@ -1,5 +1,5 @@
 if @user_education
-	json.extract! @user_education, :id, :user_id, :year, :school, :skill
+	json.extract! @user_education, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
 	json.course @user_education.course.name
 	json.specialization @user_education.specialization.name
 
