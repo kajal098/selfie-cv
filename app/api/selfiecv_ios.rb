@@ -779,7 +779,7 @@ resources :member_profile do
       optional :location
       optional :file
     end
-    get :references, jbuilder: 'ios' do
+    post :references, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @reference = UserReference.new user_id: @user.id
