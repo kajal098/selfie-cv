@@ -4,7 +4,7 @@ if @user
 
 		json.profile @user.profile_thumb_url
 
-		json.usermeter @user.user_meter.resume_per
+		
 
 		json.resume @user.resume_thumb_url
 

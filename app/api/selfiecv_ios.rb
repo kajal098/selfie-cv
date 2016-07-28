@@ -76,7 +76,6 @@ resources :member do
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
     end
 
-
     # for user login
     desc 'User login with email and password'
     params do
