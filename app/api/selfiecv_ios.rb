@@ -84,7 +84,7 @@ resources :member do
       requires :password
       requires :role
     end
-    get :login , jbuilder: 'ios' do
+    post :login , jbuilder: 'ios' do
       @user = User.find_by username: params[:username]
       error! 'Device not registered',422 unless current_device
       error! 'User not found',422 unless @user
