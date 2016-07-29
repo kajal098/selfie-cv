@@ -852,20 +852,20 @@ resources :company do
       requires :user_id
       requires :company_name
       optional :company_establish_from
-      requires :company_industry        
-      requires :company_functional_area
-      requires :company_address
-      requires :company_zipcode
-      requires :company_city
-      requires :company_contact
+      optional :industry_id        
+      optional :company_functional_area
+      optional :company_address
+      optional :company_zipcode
+      optional :company_city
+      optional :company_contact
       optional :company_skype_id
-      requires :company_id
+      optional :company_id
     end
     post :company_info, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :company_industry, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
+        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       else
         error! "Record not found.", 422
