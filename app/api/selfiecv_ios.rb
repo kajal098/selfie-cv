@@ -861,7 +861,7 @@ resources :company do
       optional :company_skype_id
       optional :company_id
     end
-    post :company_info, jbuilder: 'ios' do
+    get :company_info, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if @user.role == 'Company'

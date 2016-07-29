@@ -4,8 +4,6 @@ if @user
 
 		json.profile @user.profile_thumb_url
 
-		
-
 		json.resume @user.resume_thumb_url
 
 		json.created_at @user.created_at.to_i
