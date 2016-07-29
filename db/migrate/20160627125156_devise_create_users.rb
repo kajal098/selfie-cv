@@ -26,14 +26,14 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :faculty_join_from,              :default => Date.today      
       t.string :company_name,              null: false, default: ""
       t.string :company_establish_from,              null: false, default: ""
-      t.string :company_industry,              null: false, default: ""
+      t.string :industry_id,              null: false, default: 0
       t.string :company_functional_area,              null: false, default: ""
       t.string :company_address,              null: false, default: ""
       t.string :company_zipcode,              null: false, default: ""           
       t.string :company_city,              null: false, default: ""
       t.string :company_contact,              null: false, default: ""
       t.string :company_skype_id,              null: false, default: ""
-      t.string :company_id,              null: false, default: ""
+      t.string :company_id,              null: false, default: 0
       t.string :company_logo,              default: ''
       t.string :company_profile,              default: ''
       t.string :company_brochure,              default: ''
