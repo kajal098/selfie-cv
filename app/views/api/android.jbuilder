@@ -189,6 +189,16 @@ if @courses
 	end
 end
 
+if @industries
+@all_industries = @industries.order('created_at DESC')
+	json.industries @all_industries do |industry|
+		json.extract! industry, :id, :name
+
+		json.industry_created_at industry.created_at.to_i
+		json.industry_updated_at industry.updated_at.to_i
+	end
+end
+
 if @companies
 @all_companies = @companies.order('created_at DESC')
 	json.companies @all_companies do |company|
@@ -199,15 +209,7 @@ if @companies
 	end
 end
 
-if @industries
-@all_industries = @industries.order('created_at DESC')
-	json.industries @all_industries do |industry|
-		json.extract! industry, :id, :name
 
-		json.industry_created_at industry.created_at.to_i
-		json.industry_updated_at industry.updated_at.to_i
-	end
-end
 
 if @specializations
 @all_specializations = @specializations.order('created_at DESC')

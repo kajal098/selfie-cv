@@ -967,7 +967,7 @@ resources :data do
     params do
       requires :token, type: String, regexp: UUID_REGEX
     end
-    post :course_and_spe, jbuilder: 'android' do
+    post :all_data, jbuilder: 'android' do
       @courses = Course.all
       @specializations = Specialization.all
       @companies = Company.all
