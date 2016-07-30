@@ -852,20 +852,21 @@ resources :company do
       requires :user_id
       requires :company_name
       optional :company_establish_from
-      optional :industry_id        
-      optional :company_functional_area
-      optional :company_address
-      optional :company_zipcode
-      optional :company_city
-      optional :company_contact
+      requires :industry_id        
+      requires :company_functional_area
+      requires :company_address
+      requires :company_zipcode
+      requires :company_city
+      requires :company_country
+      requires :company_contact
       optional :company_skype_id
-      optional :company_id
+      requires :company_id
     end
     get :company_info, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
+        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id)
         error! @user.errors.full_messages.join(', '), 422 unless @user.save
       else
         error! "Record not found.", 422
@@ -923,7 +924,7 @@ resources :company do
       requires :token, type: String, regexp: UUID_REGEX
       requires :company_id
     end
-    post :get_company_information, jbuilder: 'android' do
+    get :get_company_information, jbuilder: 'android' do
       @company = User.find params[:company_id]
       error! 'User not found', 422 unless @company
     end

@@ -35,9 +35,7 @@ if @company
 
 		json.logo @company.logo_thumb_url
 
-		json.company @company.company.name
-
-		json.industry @company.industry.name
+		
 
 		json.profile @company.company_profile_thumb_url
 

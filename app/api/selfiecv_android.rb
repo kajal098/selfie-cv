@@ -844,6 +844,7 @@ resources :company do
       requires :company_address
       requires :company_zipcode
       requires :company_city
+      requires :company_country
       requires :company_contact
       optional :company_skype_id
       requires :company_id
@@ -852,7 +853,7 @@ resources :company do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id)
+        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id)
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       else
         error!({error: 'Record not found', status: 'Fail'}, 200)
