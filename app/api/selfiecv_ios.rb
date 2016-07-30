@@ -971,6 +971,8 @@ resources :data do
     post :course_and_spe, jbuilder: 'ios' do
       @courses = Course.all
       @specializations = Specialization.all
+      @companies = Company.all
+      @industries = Industry.all
     end
 
 end
