@@ -917,6 +917,17 @@ resources :company do
       end
     end
 
+    # for get evalution information
+    desc 'Get Company Evalution Information'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :company_id
+    end
+    post :get_company_information, jbuilder: 'android' do
+      @company = User.find params[:company_id]
+      error! 'User not found', 422 unless @company
+    end
+
     # for company future goal
     desc 'Company Future Goal'
     params do
