@@ -949,6 +949,45 @@ resources :company do
       end
     end
 
+    #edit company info
+    desc 'Edit Company Info'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :company_name
+      optional :company_establish_from
+      optional :industry_id        
+      optional :company_functional_area
+      optional :company_address
+      optional :company_zipcode
+      optional :company_city
+      optional :company_country
+      optional :company_contact
+      optional :company_skype_id
+      optional :company_id
+      optional :company_logo
+      optional :company_profile
+      optional :company_brochure        
+      optional :company_website
+      optional :company_facebook_link
+      optional :company_turnover
+      optional :company_no_of_emp
+      optional :company_growth_ratio        
+      optional :companu_new_ventures
+      optional :company_future_turnover
+      optional :company_future_new_venture_location
+      optional :company_future_outlet
+    end
+    post :edit_company, jbuilder: 'update' do
+      @company = User.find params[:user_id]
+      
+      @company.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+      @user.company_logo = params[:company_logo] if params[:company_logo]
+        @user.company_profile = params[:company_profile] if params[:company_profile]
+        @user.company_brochure = params[:company_brochure] if params[:company_brochure]
+      error! @company.errors.full_messages.join(', '), 422 unless @company.save
+    end
+
     # for company galery
     desc 'Company Galery'
     params do
