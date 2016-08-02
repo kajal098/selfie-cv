@@ -323,7 +323,7 @@ resources :member_profile do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_experience = UserExperience.new user_id: @user.id
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description)
+      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :exp_type)
       @user_experience.file = params[:file] if params[:file]
       error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
     end
@@ -334,6 +334,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :experience_id
       optional :name
+      optional :exp_type
       optional :start_from
       optional :working_till
       optional :designation
@@ -344,7 +345,7 @@ resources :member_profile do
       @user_experience = UserExperience.find params[:experience_id]
       error! 'User Experience not found',422 unless @user_experience
       @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
-        :designation, :description)
+        :designation, :description, :exp_type)
       @user_experience.file = params[:file] if params[:file]
       error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
       @user_experience
