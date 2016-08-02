@@ -8,7 +8,7 @@ if @user_education
 end
 
 if @user_experience
-	json.extract! @user_experience, :id, :user_id, :name, :start_from, :working_till, :designation
+	json.extract! @user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation
 
 	json.file @user_experience.thumb_url
 
