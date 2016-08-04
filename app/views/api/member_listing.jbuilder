@@ -10,7 +10,7 @@ if @users
 						json.updated_at user.updated_at.to_i
 
 					json.usereducation user.user_educations do |edu|
-						json.extract! edu, :skill
+						json.extract! edu, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
 					end
 
 				elsif user.role == "Company"
