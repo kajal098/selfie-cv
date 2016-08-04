@@ -183,7 +183,7 @@ resources :member do
       requires :token, type: String, regexp: UUID_REGEX
       requires :role
     end
-    post :listing , jbuilder: 'ios' do
+    post :listing , jbuilder: 'member_listing' do
       if params[:role]
         @users = User.where(role: params[:role])
       else
