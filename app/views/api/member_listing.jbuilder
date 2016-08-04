@@ -1,6 +1,6 @@
 if @users
 @all_users = @users.order('created_at DESC')
-		json.jobseekers @all_users do |user|
+		json.users @all_users do |user|
 				if user.role == "Jobseeker"
 						json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 						json.profile user.profile_thumb_url
