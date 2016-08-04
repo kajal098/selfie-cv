@@ -906,7 +906,7 @@ resources :company do
       optional :company_turnover
       requires :company_no_of_emp
       optional :company_growth_ratio        
-      optional :companu_new_ventures
+      optional :company_new_ventures
     end
     post :evalution_information, jbuilder: 'android' do
       @user = User.find params[:user_id]
