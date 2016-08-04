@@ -183,7 +183,7 @@ resources :member do
       requires :token, type: String, regexp: UUID_REGEX
       requires :role
     end
-    post :listing , jbuilder: 'member_listing' do
+    get :listing , jbuilder: 'member_listing' do
       if params[:role]
         @users = User.where(role: params[:role])
       else
@@ -974,7 +974,7 @@ resources :company do
       optional :company_turnover
       optional :company_no_of_emp
       optional :company_growth_ratio        
-      optional :companu_new_ventures
+      optional :company_new_ventures
       optional :company_future_turnover
       optional :company_future_new_venture_location
       optional :company_future_outlet
