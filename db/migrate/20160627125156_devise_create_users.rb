@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :company_country,              null: false, default: ""
       t.string :company_contact,              null: false, default: ""
       t.string :company_skype_id,              null: false, default: ""
-      t.string :company_id,              null: false, default: 0
+      t.string :company_type_id,              null: false, default: 0
       t.string :company_logo,              default: ''
       t.string :company_profile,              default: ''
       t.string :company_brochure,              default: ''

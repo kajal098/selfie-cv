@@ -77,3 +77,19 @@ if @reference
 		json.created_at @reference.created_at.to_i
 		json.updated_at @reference.updated_at.to_i
 end
+
+if @company
+	
+		json.Company @company, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_type_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
+
+		json.logo @company.logo_thumb_url		
+
+		json.profile @company.company_profile_thumb_url
+
+		json.brochure @company.brochure_thumb_url
+
+		json.created_at @company.created_at.to_i
+		json.updated_at @company.updated_at.to_i
+		
+	
+end

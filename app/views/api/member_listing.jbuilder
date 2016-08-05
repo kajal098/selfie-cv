@@ -14,7 +14,7 @@ if @users
 					end
 
 				elsif user.role == "Company"
-						json.extract! user, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
+						json.extract! user, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_type_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 						json.logo user.logo_thumb_url
 						json.profile user.company_profile_thumb_url
 						json.brochure user.brochure_thumb_url

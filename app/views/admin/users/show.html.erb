@@ -38,7 +38,7 @@
                           <p><strong class="text_color" >Company City:</strong> <%= @user.company_city %> </p>
                           <p><strong class="text_color" >Company Contact:</strong> <%= @user.company_contact %> </p>
                           <p><strong class="text_color" >Company Skype Id:</strong> <%= @user.company_skype_id %> </p>
-                          <p><strong class="text_color" >Company:</strong> <%= @user.company_id %> </p>
+                          <p><strong class="text_color" >Company:</strong> <%= @user.company_type_id %> </p>
                   <h4 class="text_decoration"><b> Corporate Identity </b></h4>
                           <p><strong class="text_color" >Company Logo:</strong><% if @user.file_type == 'video' %><%= video_tag @user.company_logo, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.company_logo, :size => "100x100" %><% end %></p>       
                           <p><strong class="text_color" >Company Profile:</strong><% if @user.file_type == 'video' %><%= video_tag @user.company_profile, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.company_profile, :size => "100x100" %><% end %></p>       
