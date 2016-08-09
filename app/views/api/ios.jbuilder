@@ -28,9 +28,13 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
-		json.course @user.company.name
+		if @user.company_type_id
+			json.course @user.company.name
+		end
 
-		json.course @user.industry.name
+		if @user.industry_id
+			json.course @user.industry.name
+		end
 
 		json.user_resume_per @user.user_meter.resume_per.to_i
 		json.user_achievement_per @user.user_meter.achievement_per.to_i
