@@ -258,7 +258,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.string   "faculty_join_from",                             default: "2016-08-09"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
-    t.string   "industry_id",                                   default: "0",          null: false
+    t.integer  "industry_id"
     t.string   "company_functional_area",                       default: "",           null: false
     t.string   "company_address",                               default: "",           null: false
     t.string   "company_zipcode",                               default: "",           null: false
@@ -266,7 +266,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.string   "company_country",                               default: "",           null: false
     t.string   "company_contact",                               default: "",           null: false
     t.string   "company_skype_id",                              default: "",           null: false
-    t.string   "company_type_id",                               default: "0",          null: false
+    t.integer  "company_id"
     t.string   "company_logo",                                  default: ""
     t.string   "company_profile",                               default: ""
     t.string   "company_brochure",                              default: ""
