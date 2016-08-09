@@ -17,7 +17,7 @@ if @user
 		json.user_reference_per @user.user_meter.ref_per.to_i
 
 	elsif @user.role == 'Company'
-		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_type_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
+		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_type_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
 		json.logo @user.logo_thumb_url
 
@@ -27,6 +27,10 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
+
+		json.course @user.company.name
+
+		json.course @user.industry.name
 
 		json.user_resume_per @user.user_meter.resume_per.to_i
 		json.user_achievement_per @user.user_meter.achievement_per.to_i
@@ -40,15 +44,17 @@ end
 
 if @company
 	
-		json.User @company, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_type_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
+		json.User @company, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_type_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
-		json.logo @company.logo_thumb_url
-
-		
+		json.logo @company.logo_thumb_url		
 
 		json.profile @company.company_profile_thumb_url
 
 		json.brochure @company.brochure_thumb_url
+
+		json.course @company.company.name
+
+		json.course @company.industry.name
 
 		json.created_at @company.created_at.to_i
 		json.updated_at @company.updated_at.to_i
