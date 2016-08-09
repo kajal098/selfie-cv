@@ -111,6 +111,15 @@ UserMeter.create(user_id: 8, resume_per:0, achievement_per:0, curri_per:0, lifeg
 UserMeter.create(user_id: 9, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
 UserMeter.create(user_id: 10, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
 UserMeter.create(user_id: 11, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 12, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 13, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 14, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 15, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 16, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 17, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 18, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 19, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
+UserMeter.create(user_id: 20, resume_per:0, achievement_per:0, curri_per:0, lifegoal_per:0, working_per:0, ref_per:0)
 
 
 UserAward.create(user_id: 1, name:'abc', award_type:'pqr', description:'xyz')
