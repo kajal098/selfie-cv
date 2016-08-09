@@ -28,11 +28,11 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
-		json.company_id @user.company_id if @user.company_id
-		json.company @user.company.name if @user.company_id
+		json.company_id @user.company_id ? @user.company_id : ""
+		json.company @user.company_id ? @user.company.name : ""
 
-		json.industry_id @user.industry_id if @user.industry_id
-		json.industry @user.industry.name if @user.industry_id
+		json.industry_id @user.industry_id ? @user.industry_id : ""
+		json.industry @user.industry_id ? @user.industry.name : ""
 		
 
 		json.user_resume_per @user.user_meter.resume_per.to_i
@@ -55,11 +55,11 @@ if @company
 
 		json.brochure @company.brochure_thumb_url
 
-		json.company_id @company.company_id if @company.company_id
-		json.company @company.company.name if @company.company_id
+		json.company_id @company.company_id ? @company.company_id : ""
+		json.company @company.company_id ? @company.company.name : ""
 
-		json.industry_id @company.industry_id if @company.industry_id
-		json.industry @company.industry.name if @company.industry_id
+		json.industry_id @company.industry_id ? @company.industry_id : ""
+		json.industry @company.industry_id ? @company.industry.name : ""
 
 		json.created_at @company.created_at.to_i
 		json.updated_at @company.updated_at.to_i
