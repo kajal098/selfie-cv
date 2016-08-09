@@ -928,7 +928,7 @@ resources :company do
       requires :token, type: String, regexp: UUID_REGEX
       requires :company_id
     end
-    post :get_company_information, jbuilder: 'ios' do
+    get :get_company_information, jbuilder: 'ios' do
       @company = User.find params[:company_id]
       error! 'User not found', 422 unless @company
     end
