@@ -89,7 +89,7 @@ if @company
 		json.updated_at @company.updated_at.to_i
 
 		json.user_resume_per @company.user_meter.resume_per.to_i
-		json.user_achievement_per @company.user_meter.acievement_per.to_i
+		json.user_achievement_per @company.user_meter.achievement_per.to_i
 		json.user_curricular_per @company.user_meter.curri_per.to_i
 		json.user_lifegoal_per @company.user_meter.lifegoal_per.to_i
 		json.user_working_environment_per @company.user_meter.working_per.to_i

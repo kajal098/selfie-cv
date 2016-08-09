@@ -3,7 +3,7 @@ class CreateUserMeters < ActiveRecord::Migration
     create_table :user_meters do |t|
       t.integer :user_id
       t.integer :resume_per,              null:false, default: 0
-      t.integer :acievement_per,              null:false, default: 0
+      t.integer :achievement_per,              null:false, default: 0
       t.integer :curri_per,              null:false, default: 0
       t.integer :lifegoal_per,              null:false, default: 0
       t.integer :working_per,              null:false, default: 0
