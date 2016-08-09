@@ -28,11 +28,11 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
-		if @user.company_type_id
+		if @user.company_type_id > 0
 			json.course @user.company.name
 		end
 
-		if @user.industry_id
+		if @user.industry_id > 0
 			json.course @user.industry.name
 		end
 
