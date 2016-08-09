@@ -5,12 +5,18 @@ if @user
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
 		json.profile @user.profile_thumb_url
-		json.profile_video @user.profile_photo_url
 
-		json.resume @user.file
+		json.resume @user.resume_thumb_url
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
+
+		json.user_resume_per @user.user_meter.resume_per.to_i
+		json.user_achievement_per @user.user_meter.acievement_per.to_i
+		json.user_curricular_per @user.user_meter.curri_per.to_i
+		json.user_lifegoal_per @user.user_meter.lifegoal_per.to_i
+		json.user_working_environment_per @user.user_meter.working_per.to_i
+		json.user_reference_per @user.user_meter.ref_per.to_i
 
 	elsif @user.role == 'Company'
 		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_type_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
@@ -19,15 +25,20 @@ if @user
 
 		json.profile @user.company_profile_thumb_url
 
-
 		json.brochure @user.brochure_thumb_url
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
+
+		json.user_resume_per @user.user_meter.resume_per.to_i
+		json.user_achievement_per @user.user_meter.acievement_per.to_i
+		json.user_curricular_per @user.user_meter.curri_per.to_i
+		json.user_lifegoal_per @user.user_meter.lifegoal_per.to_i
+		json.user_working_environment_per @user.user_meter.working_per.to_i
+		json.user_reference_per @user.user_meter.ref_per.to_i
 		
 	end
 end
-
 
 if @company
 	
@@ -35,7 +46,9 @@ if @company
 
 		json.logo @company.logo_thumb_url
 
-		
+		json.company @company.company.name
+
+		json.industry @company.industry.name
 
 		json.profile @company.company_profile_thumb_url
 
@@ -43,9 +56,17 @@ if @company
 
 		json.created_at @company.created_at.to_i
 		json.updated_at @company.updated_at.to_i
+
+		json.user_resume_per @company.user_meter.resume_per.to_i
+		json.user_achievement_per @company.user_meter.acievement_per.to_i
+		json.user_curricular_per @company.user_meter.curri_per.to_i
+		json.user_lifegoal_per @company.user_meter.lifegoal_per.to_i
+		json.user_working_environment_per @company.user_meter.working_per.to_i
+		json.user_reference_per @company.user_meter.ref_per.to_i
 		
 	
 end
+
 
 if @users
 @all_users = @users.order('created_at DESC')
@@ -53,12 +74,18 @@ if @users
 	json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
 	json.profile user.profile_thumb_url
-	json.profile_video user.profile_photo_url
 
 	json.resume user.resume_thumb_url
 
 	json.created_at user.created_at.to_i
 	json.updated_at user.updated_at.to_i
+
+	json.user_resume_per user.user_meter.resume_per.to_i
+	json.user_achievement_per user.user_meter.acievement_per.to_i
+	json.user_curricular_per user.user_meter.curri_per.to_i
+	json.user_lifegoal_per user.user_meter.lifegoal_per.to_i
+	json.user_working_environment_per user.user_meter.working_per.to_i
+	json.user_reference_per user.user_meter.ref_per.to_i
 end
 end
 
@@ -66,25 +93,19 @@ end
 if @user_education
 @educations = @user.user_educations.order('created_at DESC')
 	json.educations @educations do |education|
-	json.extract! education, :id, :user_id, :year, :school, :skill, course_id, :specialization_id
-	json.course education.course.name
-	json.specialization education.specialization.name
+		json.extract! education, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
+		json.course education.course.name
+		json.specialization education.specialization.name
 
-	json.edu_created_at education.created_at.to_i
-	json.edu_updated_at education.updated_at.to_i
-end
+		json.edu_created_at education.created_at.to_i
+		json.edu_updated_at education.updated_at.to_i
+	end
 end
 
 if @user_experience
 @experiences = @user.user_experiences.order('created_at DESC')
 	json.experiences @experiences do |experience|
-		json.extract! experience, :id, :user_id, :name, :start_from, :current_company, :working_till, :designation
-
-		if experience.current_company == 'true'
-			experience.working_till == "present"
-		else
-			experience.working_till
-		end
+		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation
 
 		json.file experience.thumb_url
 
@@ -109,7 +130,7 @@ if @award
 		json.extract! award, :id, :user_id, :name, :description
 
 		json.file award.thumb_url
-
+		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 	end

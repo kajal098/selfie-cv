@@ -74,6 +74,9 @@ resources :member do
       error! 'Device not registered',422 unless current_device
       error! 'password not matched', 200 if params[:password] != params[:password_confirmation]
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
+      @user_meter = UserMeter.new user_id: @user.id
+      error! @user_meter.errors.full_messages.join(', '), 422 unless @user_meter.save
+      
     end
 
     # for user login
@@ -908,7 +911,7 @@ resources :company do
       optional :company_growth_ratio        
       optional :company_new_ventures
     end
-    post :evalution_information, jbuilder: 'android' do
+    post :evalution_information, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if @user.role == 'Company'
@@ -925,7 +928,7 @@ resources :company do
       requires :token, type: String, regexp: UUID_REGEX
       requires :company_id
     end
-    post :get_company_information, jbuilder: 'android' do
+    post :get_company_information, jbuilder: 'ios' do
       @company = User.find params[:company_id]
       error! 'User not found', 422 unless @company
     end
@@ -939,7 +942,7 @@ resources :company do
       optional :company_future_new_venture_location
       optional :company_future_outlet
     end
-    post :future_goal, jbuilder: 'android' do
+    post :future_goal, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if @user.role == 'Company'
