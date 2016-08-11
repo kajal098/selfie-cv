@@ -9,7 +9,10 @@ if @users
 						json.created_at user.created_at.to_i
 						json.updated_at user.updated_at.to_i
 
-					if user.user_educations
+					if !user.user_educations.empty?
+						json.usereducation user.user_educations do |edu|
+							json.extract! edu, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
+						end
 					else
 						json.usereducation ""
 					end
