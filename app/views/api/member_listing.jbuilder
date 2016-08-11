@@ -14,7 +14,9 @@ if @users
 							json.extract! edu, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
 						end
 					else
-						json.usereducation.skill ""
+						json.usereducation 1.times do |t|
+							json.skill ""
+						end
 					end
 
 					json.user_resume_per user.user_meter.resume_per.to_i
