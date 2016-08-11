@@ -8,10 +8,13 @@ if @users
 						json.resume user.resume_thumb_url
 						json.created_at user.created_at.to_i
 						json.updated_at user.updated_at.to_i
-					
+
+					if user.user_educations
 					json.usereducation user.user_educations do |edu|
-						json.extract! edu, :id, :user_id, :year, :school, :course_id, :specialization_id
-						json.skill edu.skill ? edu.skill : ""
+						json.extract! edu, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
+					end
+					else
+					json.usereducation.skill ""
 					end
 
 					json.user_resume_per user.user_meter.resume_per.to_i
