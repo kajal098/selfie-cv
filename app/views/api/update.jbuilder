@@ -89,10 +89,10 @@ if @company
 		json.updated_at @company.updated_at.to_i
 
 		json.company_id @company.company_id ? @company.company_id : ""
-						json.company @company.company_id ? @company.company.name : ""
+		json.company @company.company_id ? @company.company.name : ""
 
-						json.industry_id @company.industry_id ? @company.industry_id : ""
-						json.industry @company.industry_id ? @company.industry.name : ""
+		json.industry_id @company.industry_id ? @company.industry_id : ""
+		json.industry @company.industry_id ? @company.industry.name : ""
 
 
 		json.user_resume_per @company.user_meter.resume_per.to_i
