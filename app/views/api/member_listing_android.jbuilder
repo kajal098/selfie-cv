@@ -30,11 +30,11 @@ if @users
 						json.created_at user.created_at.to_i
 						json.updated_at user.updated_at.to_i
 
-						json.company_id user.company_id ? user.company_id : ""
-						json.company user.company_id ? user.company.name : ""
+						json.company_id user.company ? user.company_id : ""
+						json.company user.company ? user.company.name : ""
 
-						json.industry_id user.industry_id ? user.industry_id : ""
-						json.industry user.industry_id ? user.industry.name : ""
+						json.industry_id user.industry ? user.industry_id : ""
+						json.industry user.industry ? user.industry.name : ""
 
 						json.user_resume_per user.user_meter.resume_per.to_i
 						json.user_achievement_per user.user_meter.achievement_per.to_i
