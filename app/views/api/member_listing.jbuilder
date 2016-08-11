@@ -10,11 +10,11 @@ if @users
 						json.updated_at user.updated_at.to_i
 
 					if user.user_educations
-					json.usereducation user.user_educations do |edu|
-						json.extract! edu, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
-					end
+						json.usereducation user.user_educations do |edu|
+							json.extract! edu, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
+						end
 					else
-					json.usereducation.skill ""
+						json.usereducation ""
 					end
 
 					json.user_resume_per user.user_meter.resume_per.to_i
