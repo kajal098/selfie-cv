@@ -55,11 +55,11 @@ if @company
 
 		json.brochure @company.brochure_thumb_url
 
-		json.company_id @company.company_id ? @company.company_id : ""
-		json.company @company.company_id ? @company.company.name : ""
+		json.company_id @company.company ? @company.company_id : ""
+		json.company @company.company ? @company.company.name : ""
 
-		json.industry_id @company.industry_id ? @company.industry_id : ""
-		json.industry @company.industry_id ? @company.industry.name : ""
+		json.industry_id @company.industry ? @company.industry_id : ""
+		json.industry @company.industry ? @company.industry.name : ""
 
 		json.created_at @company.created_at.to_i
 		json.updated_at @company.updated_at.to_i
