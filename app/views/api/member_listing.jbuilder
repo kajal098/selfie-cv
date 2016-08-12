@@ -8,16 +8,8 @@ if @users
 						json.resume user.resume_thumb_url
 						json.created_at user.created_at.to_i
 						json.updated_at user.updated_at.to_i
+						json.skills !user.user_educations.empty? ? user.user_educations.first.skill : ""
 
-					if !user.user_educations.empty?
-						json.usereducation user.user_educations do |edu|
-							json.extract! edu, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
-						end
-					else
-						json.usereducation 1.times do |t|
-							json.skill ""
-						end
-					end
 
 					json.user_resume_per user.user_meter.resume_per.to_i
 					json.user_achievement_per user.user_meter.achievement_per.to_i
