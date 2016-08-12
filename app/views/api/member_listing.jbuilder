@@ -8,7 +8,7 @@ if @users
 						json.resume user.resume_thumb_url
 						json.created_at user.created_at.to_i
 						json.updated_at user.updated_at.to_i
-						json.skills !user.user_educations.empty? ? user.user_educations.first.skill : ""
+						json.skills !user.user_educations.empty? ? user.user_educations.map(&:skill).join(",") : ""
 
 
 					json.user_resume_per user.user_meter.resume_per.to_i
