@@ -152,7 +152,7 @@ resources :member do
       error!({error: 'Password not same as previous password.', status: 'Fail'}, 200) if @user.valid_password?(params[:password])
       error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
-      error! @user.errors.full_messages.join(', '), 200 unless @user.save
+      error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       { msg: 'Your password has been changed ..!!', :status => "Success" }
     end
 
@@ -171,7 +171,7 @@ resources :member do
       error!({error: 'Password not same as previous password.', status: 'Fail'}, 200) if @user.valid_password?(params[:password])
       error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
       @user.attributes = clean_params(params).permit(:password, :password_confirmation)
-      error! @user.errors.full_messages.join(', '), 200 unless @user.save
+      error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       @user
     end
 

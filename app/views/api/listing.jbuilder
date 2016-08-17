@@ -13,7 +13,7 @@ end
 if @user_experiences
 @experiences = @user.user_experiences.order('created_at DESC')
 	json.user_experiences @experiences do |experience|
-	json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation
+	json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
 
 	json.edu_created_at experience.created_at.to_i
 	json.edu_updated_at experience.updated_at.to_i
