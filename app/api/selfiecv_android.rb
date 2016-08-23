@@ -1018,4 +1018,41 @@ end
 
 #--------------------------------data end----------------------------------#
 
+
+#--------------------------------student start----------------------------------#
+
+resources :student do 
+
+    # for fill student basic info
+    desc 'Student Basic Info'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :first_name
+      optional :last_name
+      optional :gender  
+      optional :date_of_birth 
+      optional :nationality 
+      optional :address 
+      optional :city
+      optional :zipcode
+      optional :contact_number
+      optional :file
+      optional :file_type
+    end
+    post :basic_info, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      @user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
+      @user.file = params[:file] if params[:file]
+      error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
+      
+      @user
+    end
+
+end
+
+#--------------------------------student end----------------------------------#
+
+
 end

@@ -41,6 +41,16 @@ if @user
 		json.user_lifegoal_per @user.user_meter.lifegoal_per.to_i
 		json.user_working_environment_per @user.user_meter.working_per.to_i
 		json.user_reference_per @user.user_meter.ref_per.to_i
+
+	elsif @user.role == 'Student'
+		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
+
+		json.profile @user.profile_thumb_url
+
+		json.file @user.resume_thumb_url
+
+		json.created_at @user.created_at.to_i
+		json.updated_at @user.updated_at.to_i
 		
 	end
 end

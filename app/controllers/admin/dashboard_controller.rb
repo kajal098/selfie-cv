@@ -2,7 +2,10 @@ class Admin::DashboardController < Admin::ApplicationController
 
   def index
 	
-	@user = User.order("created_at desc").limit(11)
+	@student = User.where(role: 1).order("created_at desc").limit(3)
+	@faculty = User.where(role: 2).order("created_at desc").limit(3)
+	@jobseeker = User.where(role: 3).order("created_at desc").limit(3)
+	@company = User.where(role: 4).order("created_at desc").limit(3)
   
 	end
 
