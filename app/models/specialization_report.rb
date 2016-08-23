@@ -9,11 +9,10 @@ class SpecializationReport
   #filter(:id, header: "Personeelsnummer")
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
-  column(:id, header: "Id", :order => "specializations.id")
   column(:name, header: "Name", :order => "specializations.name", class: "padding_class")
-  column(:updated_at) do |model|
-    model.created_at.to_date
-  end
+  column(:created_at, html: true, header: "Created At") { |specialization| content_tag :span, time_ago_in_words(specialization.created_at), title: specialization.created_at.to_formatted_s(:long) if specialization.created_at }
+  column(:updated_at, html: true, header: "Updated At") { |specialization| content_tag :span, time_ago_in_words(specialization.updated_at), title: specialization.updated_at.to_formatted_s(:long) if specialization.updated_at }
+  
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |specialization| content_tag :span, time_ago_in_words(specialization.last_sign_in_at), title: specialization.last_sign_in_at.to_formatted_s(:long) if specialization.last_sign_in_at }
   column(:actions, header: "", html: true , class: "padding_class" ) do |specialization|
     html = link_to "", admin_specialization_path(specialization), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View specialization"
