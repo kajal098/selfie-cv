@@ -53,8 +53,6 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
-
-		
 		
 	end
 end
@@ -91,23 +89,46 @@ end
 
 if @users
 @all_users = @users.order('created_at DESC')
-	json.users @all_users do |user|
-	json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
+		json.users @all_users do |user|
+				if user.role == "Jobseeker"
+						json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
+						json.profile user.profile_thumb_url
+						json.profile_video user.profile_photo_url
+						json.resume user.resume_thumb_url
+						json.created_at user.created_at.to_i
+						json.updated_at user.updated_at.to_i
+						json.skills !user.user_educations.empty? ? user.user_educations.map(&:skill).join(",") : ""
 
-	json.profile user.profile_thumb_url
 
-	json.resume user.resume_thumb_url
+					json.user_resume_per user.user_meter.resume_per.to_i
+					json.user_achievement_per user.user_meter.achievement_per.to_i
+					json.user_curricular_per user.user_meter.curri_per.to_i
+					json.user_lifegoal_per user.user_meter.lifegoal_per.to_i
+					json.user_working_environment_per user.user_meter.working_per.to_i
+					json.user_reference_per user.user_meter.ref_per.to_i
 
-	json.created_at user.created_at.to_i
-	json.updated_at user.updated_at.to_i
+				elsif user.role == "Company"
+						json.extract! user, :id, :username, :role, :company_name, :company_establish_from,  :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id,  :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
+						json.logo user.logo_thumb_url
+						json.profile user.company_profile_thumb_url
+						json.brochure user.brochure_thumb_url
+						json.created_at user.created_at.to_i
+						json.updated_at user.updated_at.to_i
 
-	json.user_resume_per user.user_meter.resume_per.to_i
-	json.user_achievement_per user.user_meter.achievement_per.to_i
-	json.user_curricular_per user.user_meter.curri_per.to_i
-	json.user_lifegoal_per user.user_meter.lifegoal_per.to_i
-	json.user_working_environment_per user.user_meter.working_per.to_i
-	json.user_reference_per user.user_meter.ref_per.to_i
-end
+						json.company_id user.company ? user.company_id : ""
+						json.company user.company ? user.company.name : ""
+
+						json.industry_id user.industry ? user.industry_id : ""
+						json.industry user.industry ? user.industry.name : ""
+
+						json.user_resume_per user.user_meter.resume_per.to_i
+						json.user_achievement_per user.user_meter.achievement_per.to_i
+						json.user_curricular_per user.user_meter.curri_per.to_i
+						json.user_lifegoal_per user.user_meter.lifegoal_per.to_i
+						json.user_working_environment_per user.user_meter.working_per.to_i
+						json.user_reference_per user.user_meter.ref_per.to_i
+				end
+		end
 end
 
 
@@ -260,3 +281,195 @@ if @specializations
 		json.specialization_updated_at specialization.updated_at.to_i
 	end
 end
+
+
+if @user_educations
+@educations = @user.user_educations.order('created_at DESC')
+	json.user_educations @educations do |education|
+	json.extract! education, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
+	json.course education.course.name
+	json.specialization education.specialization.name
+
+	json.edu_created_at education.created_at.to_i
+	json.edu_updated_at education.updated_at.to_i
+end
+end
+
+if @user_experiences
+@experiences = @user.user_experiences.order('created_at DESC')
+	json.user_experiences @experiences do |experience|
+	json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
+
+	json.edu_created_at experience.created_at.to_i
+	json.edu_updated_at experience.updated_at.to_i
+end
+end
+
+if @user_preferred_works
+@preferred_works = @user.user_preferred_works.order('created_at DESC')
+	json.user_preferred_works @preferred_works do |user_preferred_work|
+		json.extract! user_preferred_work, :id, :user_id, :ind_name, :functional_name, :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type
+
+		json.created_at user_preferred_work.created_at.to_i
+		json.updated_at user_preferred_work.updated_at.to_i
+	end
+end
+
+if @user_awards
+@awards = @user.user_awards.order('created_at DESC')
+	json.awards @awards do |award|
+		json.extract! award, :id, :user_id, :name, :description
+		json.award_created_at award.created_at.to_i
+		json.award_updated_at award.updated_at.to_i
+	end
+end
+
+if @user_certificates
+@certificates = @user.user_certificates.order('created_at DESC')
+	json.certificates @certificates do |certificate|
+		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
+
+		json.file certificate.thumb_url
+
+		json.certificate_created_at certificate.created_at.to_i
+		json.certificate_updated_at certificate.updated_at.to_i
+	end
+end
+
+
+if @user_curriculars
+@curriculars = @user.user_curriculars.order('created_at DESC')
+	json.user_curriculars @curriculars do |curricular|
+		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
+
+		json.file curricular.thumb_url
+
+		json.curricular_created_at curricular.created_at.to_i
+		json.curricular_updated_at curricular.updated_at.to_i
+	end
+end
+
+if @user_future_goals
+@future_goals = @user.user_future_goals.order('created_at DESC')
+	json.user_future_goals @future_goals do |future_goal|
+		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
+
+		json.file future_goal.thumb_url
+
+		json.future_goal_created_at future_goal.created_at.to_i
+		json.future_goal_updated_at future_goal.updated_at.to_i
+	end
+end
+
+if @user_working_environments
+@environments = @user.user_environments.order('created_at DESC')
+	json.user_working_environments @environments do |environment|
+		json.extract! environment, :id, :user_id, :env_type, :title
+
+		json.file environment.thumb_url
+
+		json.environment_created_at environment.created_at.to_i
+		json.environment_updated_at environment.updated_at.to_i
+	end
+end
+
+
+if @user_references
+@references = @user.user_references.order('created_at DESC')
+	json.user_references @references do |env|
+		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
+
+		json.file env.thumb_url
+
+		json.env_created_at env.created_at.to_i
+		json.env_updated_at env.updated_at.to_i
+	end
+end
+
+if @update_user_education
+	json.extract! @update_user_education, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
+	json.course @update_user_education.course.name
+	json.specialization @update_user_education.specialization.name
+
+	json.created_at @update_user_education.created_at.to_i
+	json.updated_at @update_user_education.updated_at.to_i
+end
+
+if @update_user_experience
+	json.extract! @update_user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
+
+	json.file @update_user_experience.thumb_url
+
+	json.created_at @update_user_experience.created_at.to_i
+	json.updated_at @update_user_experience.updated_at.to_i
+end
+
+if @update_user_preferred_work
+	json.extract! @update_user_preferred_work, :id, :user_id, :ind_name, :functional_name, :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type
+
+		json.created_at @update_user_preferred_work.created_at.to_i
+		json.updated_at @update_user_preferred_work.updated_at.to_i
+end
+
+if @update_user_award
+	json.extract! @update_user_award, :id, :user_id, :name, :description
+		json.created_at @update_user_award.created_at.to_i
+		json.updated_at @update_user_award.updated_at.to_i
+end
+
+if @update_user_certificate
+	json.extract! @update_user_certificate, :id, :user_id, :certificate_type, :name, :year
+
+		json.file @update_user_certificate.thumb_url
+
+		json.created_at @update_user_certificate.created_at.to_i
+		json.updated_at @update_user_certificate.updated_at.to_i
+end
+
+if @update_user_curricular
+	json.extract! @update_user_curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
+
+		json.file @update_user_curricular.thumb_url
+
+		json.created_at @update_user_curricular.created_at.to_i
+		json.updated_at @update_user_curricular.updated_at.to_i
+end
+
+if @update_user_future_goal
+	json.extract! @update_user_future_goal, :id, :user_id, :goal_type, :title, :term_type
+
+		json.file @update_user_future_goal.thumb_url
+
+		json.created_at @update_user_future_goal.created_at.to_i
+		json.updated_at @update_user_future_goal.updated_at.to_i
+end
+
+if @update_user_environment
+	json.extract! @update_user_environment, :id, :user_id, :env_type, :title
+
+		json.file @update_user_environment.thumb_url
+
+		json.created_at @update_user_environment.created_at.to_i
+		json.updated_at @update_user_environment.updated_at.to_i
+end
+
+
+if @update_user_reference
+	json.extract! @update_user_reference, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
+
+		json.file @update_user_reference.thumb_url
+
+		json.created_at @update_user_reference.created_at.to_i
+		json.updated_at @update_user_reference.updated_at.to_i
+end
+
+if @resume
+json.UserResume @resume, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
+
+		json.file @resume.resume_thumb_url
+
+		json.created_at @resume.created_at.to_i
+		json.updated_at @resume.updated_at.to_i
+end
+
+

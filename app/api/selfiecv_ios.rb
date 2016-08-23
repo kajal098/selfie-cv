@@ -244,6 +244,16 @@ resources :member_profile do
       @user
     end
 
+    # for get user resume
+    desc 'Get User Resume'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_user_resume, jbuilder: 'ios' do
+      @resume = User.find params[:user_id]
+    end
+
     # for fill user's education
     desc 'User Education'
     params do
@@ -276,13 +286,13 @@ resources :member_profile do
       optional :school
       optional :skill
     end
-    post :update_education, jbuilder: 'update' do
-      @user_education = UserEducation.find params[:education_id]
-      error! 'User Education not found',422 unless @user_education
-      @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
+    post :update_education, jbuilder: 'ios' do
+      @update_user_education = UserEducation.find params[:education_id]
+      error! 'User Education not found',422 unless @update_user_education
+      @update_user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
         :school, :skill)
-      error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
-      @user_education
+      error! @update_user_education.errors.full_messages.join(', '), 422 unless @update_user_education.save
+      @update_user_education
     end
 
     # for get user's education detail
@@ -291,7 +301,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_educations, jbuilder: 'listing' do
+    post :get_educations, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_educations = @user.user_educations
@@ -344,14 +354,14 @@ resources :member_profile do
       optional :description
       optional :file
     end
-    post :update_experience, jbuilder: 'update' do
-      @user_experience = UserExperience.find params[:experience_id]
-      error! 'User Experience not found',422 unless @user_experience
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
+    post :update_experience, jbuilder: 'ios' do
+      @update_user_experience = UserExperience.find params[:experience_id]
+      error! 'User Experience not found',422 unless @update_user_experience
+      @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
         :designation, :description, :exp_type)
-      @user_experience.file = params[:file] if params[:file]
-      error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
-      @user_experience
+      @update_user_experience.file = params[:file] if params[:file]
+      error! @update_user_experience.errors.full_messages.join(', '), 422 unless @update_user_experience.save
+      @update_user_experience
     end
 
     # for get user's experience detail
@@ -360,7 +370,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_experiences, jbuilder: 'listing' do
+    post :get_experiences, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_experiences = @user.user_experiences
@@ -414,12 +424,12 @@ resources :member_profile do
       optional :expected_salary
       optional :time_type
     end
-    post :update_preferred_work, jbuilder: 'update' do
-      @user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
-      error! 'User not found',422 unless @user_preferred_work
-      @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
-      error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
-      @user_preferred_work
+    post :update_preferred_work, jbuilder: 'ios' do
+      @update_user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
+      error! 'User not found',422 unless @update_user_preferred_work
+      @update_user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+      error! @update_user_preferred_work.errors.full_messages.join(', '), 422 unless @update_user_preferred_work.save
+      @update_user_preferred_work
     end
 
     # for get user's preferred works detail
@@ -428,7 +438,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_preferred_works, jbuilder: 'listing' do
+    post :get_preferred_works, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_preferred_works = @user.user_preferred_works
@@ -478,13 +488,13 @@ resources :member_profile do
       optional :description        
       optional :file
     end
-    post :update_award, jbuilder: 'update' do
-      @user_award = UserAward.find params[:award_id]
-      error! 'User not found',422 unless @user_award
-      @user_award.attributes = clean_params(params).permit(:name, :description)
-      @user_award.file = params[:file] if params[:file]
-      error! @user_award.errors.full_messages.join(', '), 422 unless @user_award.save
-      @user_award
+    post :update_award, jbuilder: 'ios' do
+      @update_user_award = UserAward.find params[:award_id]
+      error! 'User not found',422 unless @update_user_award
+      @update_user_award.attributes = clean_params(params).permit(:name, :description)
+      @update_user_award.file = params[:file] if params[:file]
+      error! @update_user_award.errors.full_messages.join(', '), 422 unless @update_user_award.save
+      @update_user_award
     end
 
     # for get user's awards
@@ -493,7 +503,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_award, jbuilder: 'listing' do
+    post :get_award, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_awards = @user.user_awards
@@ -542,13 +552,13 @@ resources :member_profile do
       optional :certificate_type        
       optional :file
     end
-    post :update_certificate, jbuilder: 'update' do
-      @user_certificate = UserCertificate.find params[:certificate_id]
-      error! 'User Certificate not found',422 unless @user_certificate
-      @user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+    post :update_certificate, jbuilder: 'ios' do
+      @update_user_certificate = UserCertificate.find params[:certificate_id]
+      error! 'User Certificate not found',422 unless @update_user_certificate
+      @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
       @certificate.file = params[:file] if params[:file]
-      error! @user_certificate.errors.full_messages.join(', '), 422 unless @user_certificate.save
-      @user_certificate
+      error! @update_user_certificate.errors.full_messages.join(', '), 422 unless @update_user_certificate.save
+      @update_user_certificate
     end
 
     # for get user's certificate
@@ -557,7 +567,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_certificates, jbuilder: 'listing' do
+    post :get_certificates, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_certificates = @user.user_certificates
@@ -610,13 +620,13 @@ resources :member_profile do
       optional :date
       optional :file
     end
-    post :update_curricular, jbuilder: 'update' do
-      @user_curricular = UserCurricular.find params[:curricular_id]
-      error! 'User Curricular not found',422 unless @user_curricular
-      @user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
-      @user_curricular.file = params[:file] if params[:file]
-      error! @user_curricular.errors.full_messages.join(', '), 422 unless @user_curricular.save
-      @user_curricular
+    post :update_curricular, jbuilder: 'ios' do
+      @update_user_curricular = UserCurricular.find params[:curricular_id]
+      error! 'User Curricular not found',422 unless @update_user_curricular
+      @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+      @update_user_curricular.file = params[:file] if params[:file]
+      error! @update_user_curricular.errors.full_messages.join(', '), 422 unless @update_user_curricular.save
+      @update_user_curricular
     end
 
     # for get user's curriculars detail
@@ -625,7 +635,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_curriculars, jbuilder: 'listing' do
+    post :get_curriculars, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_curriculars = @user.user_curriculars
@@ -674,13 +684,13 @@ resources :member_profile do
       optional :term_type        
       optional :file
     end
-    post :update_future_goal, jbuilder: 'update' do
-      @future_goal = UserFutureGoal.find params[:future_goal_id]
-      error! 'User Future Goal not found',422 unless @future_goal
-      @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
-      @future_goal.file = params[:file] if params[:file]
-      error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
-      @future_goal
+    post :update_future_goal, jbuilder: 'ios' do
+      @update_user_future_goal = UserFutureGoal.find params[:future_goal_id]
+      error! 'User Future Goal not found',422 unless @update_user_future_goal
+      @update_user_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
+      @update_user_future_goal.file = params[:file] if params[:file]
+      error! @update_user_future_goal.errors.full_messages.join(', '), 422 unless @update_user_future_goal.save
+      @update_user_future_goal
     end
 
     # for get user's future goals detail
@@ -689,7 +699,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_future_goals, jbuilder: 'listing' do
+    post :get_future_goals, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_future_goals = @user.user_future_goals
@@ -736,13 +746,13 @@ resources :member_profile do
       optional :title
       optional :file
     end
-    post :update_working_environment, jbuilder: 'update' do
-      @environment = UserEnvironment.find params[:environment_id]
-      error! 'User Environment not found',422 unless @environment
-      @environment.attributes = clean_params(params).permit(:env_type, :title)
-      @environment.file = params[:file] if params[:file]
-      error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
-      @environment
+    post :update_working_environment, jbuilder: 'ios' do
+      @update_user_environment = UserEnvironment.find params[:environment_id]
+      error! 'User Environment not found',422 unless @update_user_environment
+      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title)
+      @update_user_environment.file = params[:file] if params[:file]
+      error! @update_user_environment.errors.full_messages.join(', '), 422 unless @update_user_environment.save
+      @update_user_environment
     end
 
     # for get user's working environments detail
@@ -751,7 +761,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_working_environments, jbuilder: 'listing' do
+    post :get_working_environments, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_working_environments = @user.user_environments
@@ -808,13 +818,13 @@ resources :member_profile do
       optional :location
       optional :file
     end
-    post :update_references, jbuilder: 'update' do
-      @reference = UserReference.find params[:reference_id]
-      error! 'User not found',422 unless @reference
-      @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
-      @reference.file = params[:file] if params[:file]
-      error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
-      @reference
+    post :update_references, jbuilder: 'ios' do
+      @update_user_reference = UserReference.find params[:reference_id]
+      error! 'User not found',422 unless @update_user_reference
+      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
+      @update_user_reference.file = params[:file] if params[:file]
+      error! @update_user_reference.errors.full_messages.join(', '), 422 unless @update_user_reference.save
+      @update_user_reference
     end
 
     # for get user's references detail
@@ -823,7 +833,7 @@ resources :member_profile do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_references, jbuilder: 'listing' do
+    post :get_references, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_references = @user.user_references
@@ -982,7 +992,7 @@ resources :company do
       optional :company_future_new_venture_location
       optional :company_future_outlet
     end
-    post :edit_company, jbuilder: 'update' do
+    post :edit_company, jbuilder: 'ios' do
       @company = User.find params[:user_id]
       
       @company.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
