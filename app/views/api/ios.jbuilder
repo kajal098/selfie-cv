@@ -463,7 +463,7 @@ end
 
 
 if @resume
-json.UserResume @resume, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
+json.BasicInfoOfStudent @resume, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
 		json.file @resume.resume_thumb_url
 

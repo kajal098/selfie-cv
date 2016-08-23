@@ -275,7 +275,7 @@ resources :member do
       requires :user_id
     end
     post :get_user_resume, jbuilder: 'android' do
-      @resume = User.find params[:user_id]
+      @user = User.find params[:user_id]
     end
 
     # for fill user's education
@@ -1091,13 +1091,50 @@ resources :student do
       optional :file_type
     end
     post :basic_info, jbuilder: 'android' do
-      @user = User.find params[:user_id]
-      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
-      @user.file = params[:file] if params[:file]
-      error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
+      @basic_info = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
+      @basic_info.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
+      @basic_info.file = params[:file] if params[:file]
+      error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       
-      @user
+      @basic_info
+    end
+
+    # for update user's education
+    desc 'Update User Education'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :first_name
+      optional :last_name
+      optional :gender  
+      optional :date_of_birth 
+      optional :nationality 
+      optional :address 
+      optional :city
+      optional :zipcode
+      optional :contact_number
+      optional :file
+      optional :file_type
+    end
+    post :update_basic_info, jbuilder: 'android' do
+      @basic_info = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
+      @basic_info.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
+        :school, :skill)
+      error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
+      @basic_info
+    end
+
+    # for get basic info
+    desc 'Get Basic Info'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_basic_info, jbuilder: 'android' do
+      @basic_info = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
     end
 
 end

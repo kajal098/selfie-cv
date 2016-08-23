@@ -1114,6 +1114,43 @@ resources :student do
       @user
     end
 
+    # for update user's education
+    desc 'Update User Education'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :first_name
+      optional :last_name
+      optional :gender  
+      optional :date_of_birth 
+      optional :nationality 
+      optional :address 
+      optional :city
+      optional :zipcode
+      optional :contact_number
+      optional :file
+      optional :file_type
+    end
+    post :update_basic_info, jbuilder: 'android' do
+      @basic_info = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
+      @basic_info.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
+        :school, :skill)
+      error! @basic_info.errors.full_messages.join(', '), 422 unless @basic_info.save
+      @basic_info
+    end
+
+    # for get basic info
+    desc 'Get Basic Info'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_basic_info, jbuilder: 'android' do
+      @basic_info = User.find params[:user_id]
+      error! 'User not found', 422 unless @basic_info
+    end
+
 end
 
 #--------------------------------student end----------------------------------#

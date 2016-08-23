@@ -463,13 +463,13 @@ if @update_user_reference
 		json.updated_at @update_user_reference.updated_at.to_i
 end
 
-if @resume
-json.UserResume @resume, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
+if @basic_info
+json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
-		json.file @resume.resume_thumb_url
+		json.file @basic_info.resume_thumb_url
 
-		json.created_at @resume.created_at.to_i
-		json.updated_at @resume.updated_at.to_i
+		json.created_at @basic_info.created_at.to_i
+		json.updated_at @basic_info.updated_at.to_i
 end
 
 
