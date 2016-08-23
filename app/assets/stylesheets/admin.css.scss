@@ -146,3 +146,64 @@ li.text_color.ui-state-default.ui-corner-top{
 .margin_class{
   margin-left: 10px;
 }
+
+/* Tables */
+.table {table-layout: fixed;}
+.table tbody tr td {padding: 10px;}
+div.order { float: right; }
+th.ordered.asc a.asc, th.ordered.desc a.desc { visibility: hidden }
+th.photo { width: 70px !important }
+th.menus, th.dishes { width: 75px !important }
+td.photo {
+  max-width: 100px;
+  img {
+    object-fit: cover;
+    width: 60px;
+    text-align: center;
+  }
+}
+
+td.website {
+  text-transform: lowercase !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+td.actions {
+  .btn { margin-right: 3px; }
+}
+
+table.table-condensed {
+  th, td { padding: 3px !important; }
+}
+table.float {
+  thead {
+    position: fixed;
+    top: 0px;
+    background-color: #f9f9f9;
+  }
+}
+
+table > tbody > tr >td > a.btn-sm:nth-of-type(2) {
+  margin-top: 5px;
+}
+
+.dataTables_paginate.paging_bootstrap.pagination {
+  float: right;
+  text-align: right;
+  padding-top: 0;
+  margin-top: 0;
+}
+.dataTables_wrapper .dataTables_info {
+  float: left;
+  padding-top: 0;
+  padding: 0 15px;
+  margin-top: 10px;
+}
+ul.pagination {
+  margin: 0;
+  > li > a {
+    background-color: transparent !important;
+    border: none;
+  }
+} 

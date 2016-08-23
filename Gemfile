@@ -41,7 +41,11 @@ gem 'carrierwave-video-thumbnailer'
 # for datepicker
 gem 'bootstrap-datepicker-rails'
 
+# for pagination
+gem 'kaminari'
 
+# for font
+gem "font-awesome-rails"
 
 
 # Use SCSS for stylesheets

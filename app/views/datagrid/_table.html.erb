@@ -4,6 +4,7 @@ Local variables:
 * assets - Array of database Entities
 * options - passed options Hash
 %>
+<% options[:html][:class] += " table dataTable table-hover no-footer" %>
 <%= content_tag :table, options[:html] do %>
   <thead>
     <%= datagrid_header(grid, options) %>

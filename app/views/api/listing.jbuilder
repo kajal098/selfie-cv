@@ -20,6 +20,18 @@ if @user_experiences
 end
 end
 
+if @user_experience
+@experiences = @user.user_experiences.order('created_at DESC')
+	json.experiences @experiences do |experience|
+		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
+
+		json.file experience.thumb_url
+
+		json.experience_created_at experience.created_at.to_i
+		json.experience_updated_at experience.updated_at.to_i
+	end
+end
+
 if @user_preferred_works
 @preferred_works = @user.user_preferred_works.order('created_at DESC')
 	json.user_preferred_works @preferred_works do |user_preferred_work|
