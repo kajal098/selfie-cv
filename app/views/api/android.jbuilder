@@ -472,4 +472,16 @@ json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name,
 		json.updated_at @basic_info.updated_at.to_i
 end
 
+if @student_education
+	@educations = @user.user_educations.order('created_at DESC')
+	json.educations @educations do |education|
+		json.extract! education, :id, :user_id, :standard_id
+		json.course education.standard.name
+		
+
+		json.edu_created_at education.created_at.to_i
+		json.edu_updated_at education.updated_at.to_i
+	end
+end
+
 
