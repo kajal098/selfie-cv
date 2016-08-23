@@ -291,7 +291,7 @@ resources :member_profile do
       requires :user_id
     end
     post :get_user_resume, jbuilder: 'ios' do
-      @resume = User.find params[:user_id]
+      @user = User.find params[:user_id]
     end
 
     # for fill user's education
@@ -1105,7 +1105,7 @@ resources :student do
       optional :file
       optional :file_type
     end
-    post :basic_info, jbuilder: 'android' do
+    post :basic_info, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
@@ -1131,7 +1131,7 @@ resources :student do
       optional :file
       optional :file_type
     end
-    post :update_basic_info, jbuilder: 'android' do
+    post :update_basic_info, jbuilder: 'ios' do
       @basic_info = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
       @basic_info.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
@@ -1146,9 +1146,71 @@ resources :student do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_basic_info, jbuilder: 'android' do
+    post :get_basic_info, jbuilder: 'ios' do
       @basic_info = User.find params[:user_id]
       error! 'User not found', 422 unless @basic_info
+    end
+
+    # for fill working environment
+    desc 'User Working Environment'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :env_type
+      optional :title
+      optional :file
+    end
+    post :working_environment, jbuilder: 'ios' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      if (params[:env_type] || params[:title] )
+        @environment = UserEnvironment.new user_id: @user.id
+        @environment.attributes = clean_params(params).permit(:env_type, :title)
+        @environment.file = params[:file] if params[:file]
+        error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
+      end          
+    end
+
+    # for update user's working environment
+    desc 'Update User Working Environment'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :environment_id
+      optional :env_type
+      optional :title
+      optional :file
+    end
+    post :update_working_environment, jbuilder: 'ios' do
+      @update_user_environment = UserEnvironment.find params[:environment_id]
+      error! 'User Environment not found',422 unless @update_user_environment
+      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title)
+      @update_user_environment.file = params[:file] if params[:file]
+      error! @update_user_environment.errors.full_messages.join(', '), 422 unless @update_user_environment.save
+      @update_user_environment
+    end
+
+    # for get user's working environments detail
+    desc 'Get Users Working Environments Detail'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_working_environments, jbuilder: 'ios' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      @user_working_environments = @user.user_environments
+    end
+
+    #for delete work environment
+    desc "Delete Work Environment"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :work_env_id
+    end
+    post :delete_work_env do
+      @work_env = UserEnvironment.find params[:work_env_id]
+      @work_env.destroy
+      status 200
     end
 
 end
