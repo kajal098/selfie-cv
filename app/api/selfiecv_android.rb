@@ -1137,6 +1137,67 @@ resources :student do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
     end
 
+    # for fill student education
+    desc 'Student Education'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :standard_id
+      optional :school
+      optional :year
+    end
+    post :student_education, jbuilder: 'ios' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      if (params[:standard_id] || params[:school] || params[:year] )
+        @student_education = UserEducation.new user_id: @user.id
+        @student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
+        error!({error: @student_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @student_education.save
+      end          
+    end
+
+    # for update student education
+    desc 'Update Student Education'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :education_id
+      optional :standard_id
+      optional :school
+      optional :year
+    end
+    post :update_student_education, jbuilder: 'ios' do
+      @update_student_education = UserEducation.find params[:education_id]
+      error! 'User Environment not found',422 unless @update_student_education
+      @update_student_education.attributes = clean_params(params).permit(:env_type, :title)
+      @update_student_education.file = params[:file] if params[:file]
+      error!({error: @update_student_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_education.save
+      @update_student_education
+    end
+
+    # for get student educations
+    desc 'Get Student Educations'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_student_educations, jbuilder: 'ios' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      @user_student_educations = @user.user_educations
+    end
+
+    #for delete student education
+    desc "Delete Student Education"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :education_id
+    end
+    post :delete_student_education do
+      @student_education = UserEducation.find params[:education_id]
+      @student_education.destroy
+      status 200
+    end
+
 end
 
 #--------------------------------student end----------------------------------#

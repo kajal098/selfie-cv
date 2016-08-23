@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: redirect('/admin')
   namespace :admin do
     root 'dashboard#index'
-    resources :devices, :courses, :users, :specializations, :user_meters, :user_educations, :user_experiences,  :user_preffered_works, :user_awards,   :user_certificates, :user_curriculars, :user_future_goals, :user_environments, :user_references
+    resources :devices, :courses, :companies, :standards, :users, :specializations, :user_meters, :user_educations, :user_experiences,  :user_preffered_works, :user_awards,   :user_certificates, :user_curriculars, :user_future_goals, :user_environments, :user_references
     resource  :settings, only: [:show, :create, :update]
   end
   mount SelfiecvAndroid => '/'

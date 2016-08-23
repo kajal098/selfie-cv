@@ -1151,65 +1151,64 @@ resources :student do
       error! 'User not found', 422 unless @basic_info
     end
 
-    # for fill working environment
-    desc 'User Working Environment'
+    # for fill student education
+    desc 'Student Education'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
-      optional :env_type
-      optional :title
-      optional :file
+      optional :standard_id
+      optional :school
+      optional :year
     end
-    post :working_environment, jbuilder: 'ios' do
+    post :student_education, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
-      if (params[:env_type] || params[:title] )
-        @environment = UserEnvironment.new user_id: @user.id
-        @environment.attributes = clean_params(params).permit(:env_type, :title)
-        @environment.file = params[:file] if params[:file]
-        error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
+      if (params[:standard_id] || params[:school] || params[:year] )
+        @student_education = UserEducation.new user_id: @user.id
+        @student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
+        error! @student_education.errors.full_messages.join(', '), 422 unless @student_education.save
       end          
     end
 
-    # for update user's working environment
-    desc 'Update User Working Environment'
+    # for update student education
+    desc 'Update Student Education'
     params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :environment_id
-      optional :env_type
-      optional :title
-      optional :file
+      requires :education_id
+      optional :standard_id
+      optional :school
+      optional :year
     end
-    post :update_working_environment, jbuilder: 'ios' do
-      @update_user_environment = UserEnvironment.find params[:environment_id]
-      error! 'User Environment not found',422 unless @update_user_environment
-      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title)
-      @update_user_environment.file = params[:file] if params[:file]
-      error! @update_user_environment.errors.full_messages.join(', '), 422 unless @update_user_environment.save
-      @update_user_environment
+    post :update_student_education, jbuilder: 'ios' do
+      @update_student_education = UserEducation.find params[:education_id]
+      error! 'User Environment not found',422 unless @update_student_education
+      @update_student_education.attributes = clean_params(params).permit(:env_type, :title)
+      @update_student_education.file = params[:file] if params[:file]
+      error! @update_student_education.errors.full_messages.join(', '), 422 unless @update_student_education.save
+      @update_student_education
     end
 
-    # for get user's working environments detail
-    desc 'Get Users Working Environments Detail'
+    # for get student educations
+    desc 'Get Student Educations'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_working_environments, jbuilder: 'ios' do
+    post :get_student_educations, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
-      @user_working_environments = @user.user_environments
+      @user_student_educations = @user.user_educations
     end
 
-    #for delete work environment
-    desc "Delete Work Environment"
+    #for delete student education
+    desc "Delete Student Education"
     params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :work_env_id
+      requires :education_id
     end
-    post :delete_work_env do
-      @work_env = UserEnvironment.find params[:work_env_id]
-      @work_env.destroy
+    post :delete_student_education do
+      @student_education = UserEducation.find params[:education_id]
+      @student_education.destroy
       status 200
     end
 

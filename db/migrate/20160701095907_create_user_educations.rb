@@ -4,6 +4,7 @@ class CreateUserEducations < ActiveRecord::Migration
       t.integer :user_id
       t.integer :course_id
       t.integer :specialization_id
+      t.integer :standard_id
       t.string :year,              null: false, default: ""
       t.string :school,              null: false, default: ""
       t.string :skill,              null: false, default: ""
@@ -17,5 +18,7 @@ class CreateUserEducations < ActiveRecord::Migration
     add_foreign_key :user_educations, :courses, on_delete: :cascade
     add_index :user_educations, [:specialization_id]
     add_foreign_key :user_educations, :specializations, on_delete: :cascade
+    add_index :user_educations, [:standard_id]
+    add_foreign_key :user_educations, :standards, on_delete: :cascade
   end
 end

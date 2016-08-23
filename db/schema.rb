@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725123542) do
+ActiveRecord::Schema.define(version: 20160823111525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,12 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "standards", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_awards", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name",        default: "",      null: false
@@ -114,7 +120,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-08-09'
+    t.date     "date",            default: '2016-08-23'
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
     t.boolean  "active",          default: false
@@ -128,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.integer  "user_id"
     t.integer  "course_id"
     t.integer  "specialization_id"
+    t.integer  "standard_id"
     t.string   "year",              default: "",    null: false
     t.string   "school",            default: "",    null: false
     t.string   "skill",             default: "",    null: false
@@ -138,6 +145,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
 
   add_index "user_educations", ["course_id"], name: "index_user_educations_on_course_id", using: :btree
   add_index "user_educations", ["specialization_id"], name: "index_user_educations_on_specialization_id", using: :btree
+  add_index "user_educations", ["standard_id"], name: "index_user_educations_on_standard_id", using: :btree
   add_index "user_educations", ["user_id"], name: "index_user_educations_on_user_id", using: :btree
 
   create_table "user_environments", force: :cascade do |t|
@@ -157,7 +165,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-08-09'
+    t.date     "start_from",      default: '2016-08-23'
     t.string   "working_till",    default: "",           null: false
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
@@ -184,6 +192,20 @@ ActiveRecord::Schema.define(version: 20160725123542) do
   end
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
+
+  create_table "user_marksheets", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "school_name", default: "", null: false
+    t.string   "standard",    default: "", null: false
+    t.string   "grade",       default: "", null: false
+    t.string   "year",        default: "", null: false
+    t.string   "file",        default: ""
+    t.string   "file_type",   default: "", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "user_marksheets", ["user_id"], name: "index_user_marksheets_on_user_id", using: :btree
 
   create_table "user_meters", force: :cascade do |t|
     t.integer  "user_id"
@@ -222,7 +244,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-08-09'
+    t.date     "date",       default: '2016-08-23'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "file_type",  default: "",           null: false
@@ -243,7 +265,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-08-09"
+    t.string   "date_of_birth",                                 default: "2016-08-23"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -255,7 +277,7 @@ ActiveRecord::Schema.define(version: 20160725123542) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-08-09"
+    t.string   "faculty_join_from",                             default: "2016-08-23"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -303,10 +325,12 @@ ActiveRecord::Schema.define(version: 20160725123542) do
   add_foreign_key "user_curriculars", "users", on_delete: :cascade
   add_foreign_key "user_educations", "courses", on_delete: :cascade
   add_foreign_key "user_educations", "specializations", on_delete: :cascade
+  add_foreign_key "user_educations", "standards", on_delete: :cascade
   add_foreign_key "user_educations", "users", on_delete: :cascade
   add_foreign_key "user_environments", "users", on_delete: :cascade
   add_foreign_key "user_experiences", "users", on_delete: :cascade
   add_foreign_key "user_future_goals", "users", on_delete: :cascade
+  add_foreign_key "user_marksheets", "users", on_delete: :cascade
   add_foreign_key "user_meters", "users", on_delete: :cascade
   add_foreign_key "user_preferred_works", "users", on_delete: :cascade
   add_foreign_key "user_references", "users", on_delete: :cascade
