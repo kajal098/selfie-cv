@@ -4,7 +4,7 @@ class Admin::DevicesController < Admin::ApplicationController
 
   def index
     @report = DeviceReport.new params[:device_report]
-    @assets = @report.assets
+    @assets = @report.assets.page( params[:page])
   end
 
   def new

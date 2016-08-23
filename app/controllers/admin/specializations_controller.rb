@@ -4,7 +4,7 @@ class Admin::SpecializationsController < Admin::ApplicationController
 
   def index
     @report = SpecializationReport.new params[:specialization_report]
-    @assets = @report.assets
+    @assets = @report.assets.page( params[:page])
   end
 
   def new

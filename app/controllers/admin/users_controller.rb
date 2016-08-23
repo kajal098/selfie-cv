@@ -4,7 +4,7 @@ respond_to :json, :html
 
   def index
     @report = UserReport.new params[:user_report]
-    @assets = @report.assets
+    @assets = @report.assets.page( params[:page])
     respond_to do |format|
       format.html
       format.csv { send_data @report.to_csv }

@@ -17,6 +17,8 @@ validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 #validates :username, length: { in: 6..20 }
 #validates :username, length: { is: 6 }
 
+paginates_per 10
+
 has_many :devices
 has_many :courses
 has_many :specializations

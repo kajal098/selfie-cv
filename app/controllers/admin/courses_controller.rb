@@ -4,7 +4,7 @@ class Admin::CoursesController < Admin::ApplicationController
 
   def index
     @report = CourseReport.new params[:course_report]
-    @assets = @report.assets
+    @assets = @report.assets.page( params[:page])
   end
 
   def new

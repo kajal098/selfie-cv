@@ -7,8 +7,9 @@
       </div>
       <div class="panel-body">
         <% if @assets.count > 0 %>
-          <div class="pull-left page-info">Total <%= @assets.size %> Specializations</div>  </br> </br>        
-          <%= datagrid_table(@report, @assets) %>              
+          <%= datagrid_table(@report, @assets) %>
+          <%= paginate @assets %>
+           <%= page_entries_info @assets %>              
         <% else %>
           <p class="alert">There are no results to display . </p>
         <% end %>

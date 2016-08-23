@@ -4,18 +4,19 @@ class UserReport
 
   scope { User.where.not(role: 0).all }
   
+  filter(:role, :string, header: "Role") {|value| where("CAST(role AS text) ilike ?", "%#{value}%")}
   filter(:username, :string, header: "Username") {|value| where("username ilike ?", "%#{value}%")}
-  filter(:email, :string, header: "E-mail") {|value| where("email ilike ?", "%#{value}%")}
+  filter(:contact_number, :string, header: "Number") {|value| where("contact_number ilike ?", "%#{value}%")}
   
-  column(:id, header: "Id",  :order => "users.id", class: "padding_class")
-  column(:role, header: "Role",  :order => "users.role", class: "padding_class")
-  column(:username, header: "Username", :order => "users.username", class: "padding_class")
-  column(:contact_number, header: "Contact Number",  :order => "users.contact_number", class: "padding_class")
+  column(:id, header: "Id",  :order => "users.id")
+  column(:role, header: "Role",  :order => "users.role")
+  column(:username, header: "Username", :order => "users.username")
+  column(:contact_number, header: "Number",  :order => "users.contact_number")
   column(:updated_at, html: true, header: "Updated At") { |user| content_tag :span, time_ago_in_words(user.updated_at), title: user.updated_at.to_formatted_s(:long) if user.updated_at }
   column(:file, :html => true, class: 'padding_class',) do |model|
         image_tag model.resume_thumb_url,  :size => "20x20"
       end
-  column(:actions, header: "Action", html: true , class: "padding_class" ) do |user|
+  column(:actions, header: "Action", html: true  ) do |user|
     html = link_to "", admin_user_path(user), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View User"
     html += link_to "", admin_user_path(user), class: "margin_class btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'
     html
