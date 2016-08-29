@@ -5,7 +5,5 @@ class UserEducation < ActiveRecord::Base
 	
 	validates :course_id, :specialization_id,  :year, :school, :skill, presence: true
 	validates :year, :numericality => true, :allow_nil => true
-
-	
 	
 end
