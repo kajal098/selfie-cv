@@ -1062,6 +1062,7 @@ resources :data do
       @specializations = Specialization.all
       @companies = Company.all
       @industries = Industry.all
+      @standards = Stadard.all
     end
 
 end
