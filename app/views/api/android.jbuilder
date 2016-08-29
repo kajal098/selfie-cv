@@ -53,6 +53,16 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
+
+	elsif @user.role == 'Faculty'
+		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from
+
+		json.profile @user.profile_thumb_url
+
+		json.file @user.resume_thumb_url
+
+		json.created_at @user.created_at.to_i
+		json.updated_at @user.updated_at.to_i
 		
 	end
 end

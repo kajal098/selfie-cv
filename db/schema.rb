@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20160823111525) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-08-23'
+    t.date     "date",            default: '2016-08-29'
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
     t.boolean  "active",          default: false
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 20160823111525) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-08-23'
+    t.date     "start_from",      default: '2016-08-29'
     t.string   "working_till",    default: "",           null: false
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
@@ -244,7 +244,7 @@ ActiveRecord::Schema.define(version: 20160823111525) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-08-23'
+    t.date     "date",       default: '2016-08-29'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "file_type",  default: "",           null: false
@@ -265,7 +265,7 @@ ActiveRecord::Schema.define(version: 20160823111525) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-08-23"
+    t.string   "date_of_birth",                                 default: "2016-08-29"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -277,7 +277,7 @@ ActiveRecord::Schema.define(version: 20160823111525) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-08-23"
+    t.string   "faculty_join_from",                             default: "2016-08-29"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
