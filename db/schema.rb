@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829052358) do
+ActiveRecord::Schema.define(version: 20160829095948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -247,6 +247,16 @@ ActiveRecord::Schema.define(version: 20160829052358) do
 
   add_index "user_preferred_works", ["user_id"], name: "index_user_preferred_works_on_user_id", using: :btree
 
+  create_table "user_projects", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title",       default: "", null: false
+    t.string   "description", default: "", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "user_projects", ["user_id"], name: "index_user_projects_on_user_id", using: :btree
+
   create_table "user_references", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title",      default: "",           null: false
@@ -344,5 +354,6 @@ ActiveRecord::Schema.define(version: 20160829052358) do
   add_foreign_key "user_marksheets", "users", on_delete: :cascade
   add_foreign_key "user_meters", "users", on_delete: :cascade
   add_foreign_key "user_preferred_works", "users", on_delete: :cascade
+  add_foreign_key "user_projects", "users", on_delete: :cascade
   add_foreign_key "user_references", "users", on_delete: :cascade
 end

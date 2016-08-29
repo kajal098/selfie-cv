@@ -540,3 +540,30 @@ if @student_marksheets
 end
 end
 
+if @student_project
+	@projectss = @user.user_projects.order('created_at DESC')
+	json.student_projects @projects do |project|
+		json.extract! project, :id, :user_id, :title, :description
+		json.standard project.standard.name		
+
+		json.edu_created_at project.created_at.to_i
+		json.edu_updated_at project.updated_at.to_i
+	end
+end
+
+if @update_student_project
+	json.extract! @update_student_project, :id, :user_id, :title, :description
+
+	json.edu_created_at @update_student_project.created_at.to_i
+	json.edu_updated_at @update_student_project.updated_at.to_i
+end
+
+if @student_projects
+@projects = @user.user_projects.order('created_at DESC')
+	json.student_projects @projects do |project|
+	json.extract! project, :id, :user_id, :title, :description
+
+	json.edu_created_at project.created_at.to_i
+	json.edu_updated_at project.updated_at.to_i
+end
+end

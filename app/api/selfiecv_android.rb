@@ -1243,8 +1243,55 @@ resources :student do
       { code: 200, :status => "Success" }
     end
 
-    # for get student educations
-    desc 'Get Student Educations'
+    # for fill student project
+    desc 'Student Project'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :title
+      optional :description
+    end
+    post :student_project, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      if (params[:title] || params[:description] )
+        @student_project = UserProject.new user_id: @user.id
+        @student_project.attributes = clean_params(params).permit(:title, :description)
+        error!({error: @student_project.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @student_project.save
+      end          
+    end
+
+    # for update student project
+    desc 'Update Student Project'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :project_id
+      optional :title
+      optional :description
+    end
+    post :update_student_project, jbuilder: 'android' do
+      @update_student_project = UserProject.find params[:project_id]
+      error! 'Student project not found',422 unless @update_student_project
+      @update_student_project.attributes = clean_params(params).permit(:title, :description)
+      @update_student_project.file = params[:file] if params[:file]
+      error!({error: @update_student_project.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_project.save
+      @update_student_project
+    end
+
+    #for delete student project
+    desc "Delete Student Project"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :project_id
+    end
+    post :delete_student_project do
+      @student_project = UserProject.find params[:project_id]
+      @student_project.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for get student stuff
+    desc 'Get Student Stuff'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
@@ -1254,6 +1301,7 @@ resources :student do
       error! 'User not found',422 unless @user
       @student_educations = @user.student_educations
       @student_marksheets = @user.user_marksheets
+      @student_projects = @user.user_projects
     end
 
     

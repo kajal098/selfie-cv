@@ -37,6 +37,7 @@ has_many :user_references
 has_many :company_galeries
 has_many :user_marksheets
 has_one :user_meter
+has_many :user_projects
 
 mount_uploader :file, FileUploader
     # def resume_thumb_url
