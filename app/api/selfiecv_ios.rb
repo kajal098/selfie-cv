@@ -1212,7 +1212,7 @@ resources :student do
       optional :file
       optional :file_type
     end
-    post :student_marksheet, jbuilder: 'android' do
+    post :student_marksheet, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:school_name] || params[:standard] || params[:grade] || params[:year] )
@@ -1235,7 +1235,7 @@ resources :student do
       optional :file
       optional :file_type
     end
-    post :update_student_marksheet, jbuilder: 'android' do
+    post :update_student_marksheet, jbuilder: 'ios' do
       @update_student_marksheet = UserMarksheet.find params[:marksheet_id]
       error! 'Student marksheet not found',422 unless @update_student_marksheet
       @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
@@ -1262,7 +1262,7 @@ resources :student do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_student_stuff, jbuilder: 'android' do
+    post :get_student_stuff, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @student_educations = @user.student_educations
