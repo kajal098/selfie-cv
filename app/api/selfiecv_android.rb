@@ -1273,7 +1273,6 @@ resources :student do
       @update_student_project = UserProject.find params[:project_id]
       error! 'Student project not found',422 unless @update_student_project
       @update_student_project.attributes = clean_params(params).permit(:title, :description)
-      @update_student_project.file = params[:file] if params[:file]
       error!({error: @update_student_project.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_project.save
       @update_student_project
     end

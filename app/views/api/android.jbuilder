@@ -541,7 +541,7 @@ end
 end
 
 if @student_project
-	@projectss = @user.user_projects.order('created_at DESC')
+	@projects = @user.user_projects.order('created_at DESC')
 	json.student_projects @projects do |project|
 		json.extract! project, :id, :user_id, :title, :description
 		
