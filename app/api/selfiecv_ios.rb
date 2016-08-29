@@ -263,7 +263,7 @@ resources :member_profile do
       optional :file
       optional :file_type
     end
-    post :update_resume, jbuilder: 'android' do
+    post :update_resume, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
@@ -1264,7 +1264,7 @@ resources :student do
       optional :title
       optional :description
     end
-    post :student_project, jbuilder: 'android' do
+    post :student_project, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:title] || params[:description] )
@@ -1282,7 +1282,7 @@ resources :student do
       optional :title
       optional :description
     end
-    post :update_student_project, jbuilder: 'android' do
+    post :update_student_project, jbuilder: 'ios' do
       @update_student_project = UserProject.find params[:project_id]
       error! 'Student project not found',422 unless @update_student_project
       @update_student_project.attributes = clean_params(params).permit(:title, :description)
