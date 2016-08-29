@@ -484,8 +484,7 @@ if @student_education
 	@educations = @user.student_educations.order('created_at DESC')
 	json.student_educations @educations do |education|
 		json.extract! education, :id, :user_id, :standard_id, :school, :year
-		json.standard education.standard.name
-		
+		json.standard education.standard.name		
 
 		json.edu_created_at education.created_at.to_i
 		json.edu_updated_at education.updated_at.to_i
@@ -504,10 +503,38 @@ if @student_educations
 @educations = @user.student_educations.order('created_at DESC')
 	json.student_educations @educations do |education|
 	json.extract! education, :id, :user_id, :standard_id, :school, :year
-	json.course education.standard.name
-	
+
+	json.standard education.standard.name	
 
 	json.edu_created_at education.created_at.to_i
 	json.edu_updated_at education.updated_at.to_i
 end
 end
+
+if @student_marksheet
+	@marksheets = @user.user_marksheets.order('created_at DESC')
+	json.student_marksheets @marksheets do |education|
+		json.extract! education, :id, :user_id, :school_name, :standard, :grade, :year		
+
+		json.edu_created_at education.created_at.to_i
+		json.edu_updated_at education.updated_at.to_i
+	end
+end
+
+if @update_student_marksheet
+	json.extract! @update_student_marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
+
+	json.edu_created_at @update_student_marksheet.created_at.to_i
+	json.edu_updated_at @update_student_marksheet.updated_at.to_i
+end
+
+if @student_marksheets
+@marksheets = @user.user_marksheets.order('created_at DESC')
+	json.student_marksheets @marksheets do |marksheet|
+	json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
+
+	json.edu_created_at marksheet.created_at.to_i
+	json.edu_updated_at marksheet.updated_at.to_i
+end
+end
+

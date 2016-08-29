@@ -1188,18 +1188,6 @@ resources :student do
       @update_student_education
     end
 
-    # for get student educations
-    desc 'Get Student Educations'
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
-    end
-    post :get_student_educations, jbuilder: 'ios' do
-      @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
-      @student_educations = @user.student_educations
-    end
-
     #for delete student education
     desc "Delete Student Education"
     params do
@@ -1210,6 +1198,75 @@ resources :student do
       @student_education = StudentEducation.find params[:education_id]
       @student_education.destroy
       status 200
+    end
+
+    # for fill student marksheet
+    desc 'Student Marksheet'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :school_name
+      optional :standard
+      optional :grade
+      optional :year
+      optional :file
+      optional :file_type
+    end
+    post :student_marksheet, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      if (params[:school_name] || params[:standard] || params[:grade] || params[:year] )
+        @student_marksheet = UserMarksheet.new user_id: @user.id
+        @student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
+        @student_marksheet.file = params[:file] if params[:file]
+        error! @student_marksheet.errors.full_messages.join(', '),422 unless @student_marksheet.save
+      end          
+    end
+
+    # for update student education
+    desc 'Update Student Education'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :marksheet_id
+      optional :school_name
+      optional :standard
+      optional :grade
+      optional :year
+      optional :file
+      optional :file_type
+    end
+    post :update_student_marksheet, jbuilder: 'android' do
+      @update_student_marksheet = UserMarksheet.find params[:marksheet_id]
+      error! 'Student marksheet not found',422 unless @update_student_marksheet
+      @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
+      @update_student_marksheet.file = params[:file] if params[:file]
+      error! @update_student_marksheet.errors.full_messages.join(', '),422 unless @update_student_marksheet.save
+      @update_student_marksheet
+    end
+
+    #for delete student marksheet
+    desc "Delete Student Marksheet"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :marksheet_id
+    end
+    post :delete_student_marksheet do
+      @student_education = UserMarksheet.find params[:marksheet_id]
+      @student_education.destroy
+      status 200
+    end
+
+    # for get student educations
+    desc 'Get Student Educations'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_student_stuff, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      @student_educations = @user.student_educations
+      @student_marksheets = @user.user_marksheets
     end
 
 end

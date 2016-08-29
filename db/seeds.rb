@@ -362,7 +362,13 @@ UserReference.create(user_id: 10, title: 'own ref', ref_type: 'company', from: '
 UserReference.create(user_id: 11, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
 UserReference.create(user_id: 11, title: 'own ref', ref_type: 'company', from: 'miss.anna', email: 'one@gmail.com', contact: '1234567890', date: '30/11/2011', location: 'zawer')
 
-
+UserMarksheet.create(user_id: 7,school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)
+UserMarksheet.create(user_id: 8,school_name: 'qwertyu', standard: 'third', grade: 'C', year: 2011)
+UserMarksheet.create(user_id: 9,school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)
+UserMarksheet.create(user_id: 10,school_name: 'qwertyu', standard: 'third', grade: 'C', year: 2011)
+UserMarksheet.create(user_id: 7,school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)
+UserMarksheet.create(user_id: 8,school_name: 'qwertyu', standard: 'third', grade: 'C', year: 2011)
+UserMarksheet.create(user_id: 9,school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)
 
 Setting.create(resume_per: 40, achievement_per: 10, curricular_per: 10, whizquiz_per: 10, future_goal_per: 10, working_env_per: 10,reference_per: 10,site_name: 'Selfie Cv', site_email: 'selfiecv@gmailcom',site_phone: 12345678,site_fax: 1234567,facebook_url:'http://www.facebook.com/selfiecv',twitter_url:'http://www.twitter.com/selfiecv',google_plus_url: 'http://www.googleplus.com/selfiecv')
 
