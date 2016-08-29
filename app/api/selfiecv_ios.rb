@@ -1314,6 +1314,7 @@ resources :student do
       error! 'User not found',422 unless @user
       @student_educations = @user.student_educations
       @student_marksheets = @user.user_marksheets
+      @student_projects = @user.user_projects
     end
 
 end
