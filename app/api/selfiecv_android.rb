@@ -1120,8 +1120,9 @@ resources :student do
     post :update_basic_info, jbuilder: 'android' do
       @basic_info = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
-      @basic_info.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
-        :school, :skill)
+      @basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
+        :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number)
+      @basic_info.file = params[:file] if params[:file]
       error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       @basic_info
     end
@@ -1146,11 +1147,11 @@ resources :student do
       optional :school
       optional :year
     end
-    post :student_education, jbuilder: 'ios' do
+    post :student_education, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:standard_id] || params[:school] || params[:year] )
-        @student_education = UserEducation.new user_id: @user.id
+        @student_education = StudentEducation.new user_id: @user.id
         @student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
         error!({error: @student_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @student_education.save
       end          
@@ -1165,10 +1166,10 @@ resources :student do
       optional :school
       optional :year
     end
-    post :update_student_education, jbuilder: 'ios' do
-      @update_student_education = UserEducation.find params[:education_id]
+    post :update_student_education, jbuilder: 'android' do
+      @update_student_education = StudentEducation.find params[:education_id]
       error! 'User Environment not found',422 unless @update_student_education
-      @update_student_education.attributes = clean_params(params).permit(:env_type, :title)
+      @update_student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
       @update_student_education.file = params[:file] if params[:file]
       error!({error: @update_student_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_education.save
       @update_student_education
@@ -1180,10 +1181,10 @@ resources :student do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_student_educations, jbuilder: 'ios' do
+    post :get_student_educations, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
-      @user_student_educations = @user.user_educations
+      @student_educations = @user.student_educations
     end
 
     #for delete student education
@@ -1193,9 +1194,9 @@ resources :student do
       requires :education_id
     end
     post :delete_student_education do
-      @student_education = UserEducation.find params[:education_id]
+      @student_education = StudentEducation.find params[:education_id]
       @student_education.destroy
-      status 200
+      { code: 200, :status => "Success" }
     end
 
 end

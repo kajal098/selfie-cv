@@ -51,6 +51,16 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
+
+	elsif @user.role == 'Faculty'
+		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from
+
+		json.profile @user.profile_thumb_url
+
+		json.file @user.resume_thumb_url
+
+		json.created_at @user.created_at.to_i
+		json.updated_at @user.updated_at.to_i
 		
 	end
 end
@@ -461,7 +471,6 @@ if @update_user_reference
 		json.updated_at @update_user_reference.updated_at.to_i
 end
 
-
 if @basic_info
 json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
@@ -472,10 +481,10 @@ json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name,
 end
 
 if @student_education
-	@educations = @user.user_educations.order('created_at DESC')
-	json.educations @educations do |education|
+	@educations = @user.student_educations.order('created_at DESC')
+	json.student_educations @educations do |education|
 		json.extract! education, :id, :user_id, :standard_id, :school, :year
-		json.course education.standard.name
+		json.standard education.standard.name
 		
 
 		json.edu_created_at education.created_at.to_i
@@ -483,9 +492,17 @@ if @student_education
 	end
 end
 
+if @update_student_education
+	json.extract! @update_student_education, :id, :user_id, :standard_id, :school, :year
+	json.standard @update_student_education.standard.name
+
+	json.edu_created_at @update_student_education.created_at.to_i
+	json.edu_updated_at @update_student_education.updated_at.to_i
+end
+
 if @student_educations
-@educations = @user.user_educations.order('created_at DESC')
-	json.user_educations @educations do |education|
+@educations = @user.student_educations.order('created_at DESC')
+	json.student_educations @educations do |education|
 	json.extract! education, :id, :user_id, :standard_id, :school, :year
 	json.course education.standard.name
 	

@@ -25,6 +25,7 @@ has_many :specializations
 belongs_to :company
 belongs_to :industry
 has_many :user_educations
+has_many :student_educations
 has_many :user_experiences
 has_many :user_preferred_works
 has_many :user_awards

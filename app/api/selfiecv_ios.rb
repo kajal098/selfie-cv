@@ -1164,7 +1164,7 @@ resources :student do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:standard_id] || params[:school] || params[:year] )
-        @student_education = UserEducation.new user_id: @user.id
+        @student_education = StudentEducation.new user_id: @user.id
         @student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
         error! @student_education.errors.full_messages.join(', '), 422 unless @student_education.save
       end          
@@ -1180,9 +1180,9 @@ resources :student do
       optional :year
     end
     post :update_student_education, jbuilder: 'ios' do
-      @update_student_education = UserEducation.find params[:education_id]
+      @update_student_education = StudentEducation.find params[:education_id]
       error! 'User Environment not found',422 unless @update_student_education
-      @update_student_education.attributes = clean_params(params).permit(:env_type, :title)
+      @update_student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
       @update_student_education.file = params[:file] if params[:file]
       error! @update_student_education.errors.full_messages.join(', '), 422 unless @update_student_education.save
       @update_student_education
@@ -1197,7 +1197,7 @@ resources :student do
     post :get_student_educations, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
-      @user_student_educations = @user.user_educations
+      @student_educations = @user.student_educations
     end
 
     #for delete student education
@@ -1207,7 +1207,7 @@ resources :student do
       requires :education_id
     end
     post :delete_student_education do
-      @student_education = UserEducation.find params[:education_id]
+      @student_education = StudentEducation.find params[:education_id]
       @student_education.destroy
       status 200
     end
