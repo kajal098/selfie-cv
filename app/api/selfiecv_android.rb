@@ -221,7 +221,8 @@ resources :member do
     post :resume, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
+        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
       @user.file = params[:file] if params[:file]
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       
@@ -250,7 +251,8 @@ resources :member do
     post :update_resume, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
+        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       if(params[:file_type] == 'video')
         @user_meter = UserMeter.find_by user_id: params[:user_id]
@@ -903,7 +905,8 @@ resources :company do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id)
+        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id,
+         :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id)
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       else
         error!({error: 'Record not found', status: 'Fail'}, 200)
@@ -1019,7 +1022,8 @@ resources :company do
     post :edit_company, jbuilder: 'android' do
       @company = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @company
-      @company.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+      @company.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id,
+       :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
       @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
@@ -1094,7 +1098,8 @@ resources :student do
     post :basic_info, jbuilder: 'android' do
       @basic_info = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
-      @basic_info.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+      @basic_info.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,
+        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
       @basic_info.file = params[:file] if params[:file]
       error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       
@@ -1122,7 +1127,7 @@ resources :student do
       @basic_info = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
       @basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number)
+        :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type)
       @basic_info.file = params[:file] if params[:file]
       error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       @basic_info

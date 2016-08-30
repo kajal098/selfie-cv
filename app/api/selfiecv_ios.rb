@@ -225,7 +225,7 @@ resources :member_profile do
     post :resume, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number)
       @user.file = params[:file] if params[:file]
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
       if(params[:file_type] == 'video')
@@ -266,7 +266,7 @@ resources :member_profile do
     post :update_resume, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type)
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
       if(params[:file_type] == 'video')
         @user_meter = UserMeter.find_by user_id: params[:user_id]
@@ -1109,7 +1109,7 @@ resources :student do
     post :basic_info, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city,  :contact_number, :file_type)
+      @user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
       @user.file = params[:file] if params[:file]
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
       @user
@@ -1134,9 +1134,9 @@ resources :student do
     end
     post :update_basic_info, jbuilder: 'ios' do
       @basic_info = User.find params[:user_id]
-      error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
-      @basic_info.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
-        :school, :skill)
+      error! 'User not found', 422 unless @basic_info
+      @basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
+        :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type)
       error! @basic_info.errors.full_messages.join(', '), 422 unless @basic_info.save
       @basic_info
     end
