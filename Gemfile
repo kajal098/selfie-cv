@@ -48,8 +48,11 @@ gem 'kaminari'
 gem "font-awesome-rails"
 
 # for charts
-
 gem 'chartkick', '~> 1.2.4'
+
+# supporting gems for chart
+gem 'groupdate', '~> 2.1.1'
+gem 'active_median', '~> 0.1.0'
 
 
 # Use SCSS for stylesheets
