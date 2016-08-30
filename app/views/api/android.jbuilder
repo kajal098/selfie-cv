@@ -292,6 +292,15 @@ if @specializations
 	end
 end
 
+if @standards
+@all_standards = @standards.order('created_at DESC')
+	json.standards @all_standards do |standard|
+		json.extract! standard, :id, :name
+
+		json.standard_created_at standard.created_at.to_i
+		json.standard_updated_at standard.updated_at.to_i
+	end
+end
 
 if @user_educations
 @educations = @user.user_educations.order('created_at DESC')
