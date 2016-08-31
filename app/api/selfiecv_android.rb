@@ -216,6 +216,7 @@ resources :member do
       requires :zipcode
       requires :contact_number
       optional :file
+      optional :text_field
       optional :file_type
     end
     post :resume, jbuilder: 'android' do
@@ -223,7 +224,11 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
         :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
-      @user.file = params[:file] if params[:file]
+      if (params[:file_type] == 'text')
+        @user.text_field = params[:text_field]
+      else
+        @user.file = params[:file] if params[:file]
+      end
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       
       @user
