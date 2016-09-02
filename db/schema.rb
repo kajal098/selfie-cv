@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
 
   create_table "student_educations", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "standard"
+    t.string   "standard",   default: "", null: false
     t.string   "year",       default: "", null: false
     t.string   "school",     default: "", null: false
     t.datetime "created_at",              null: false
