@@ -1172,16 +1172,16 @@ resources :student do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
-      optional :standard_id
+      optional :standard
       optional :school
       optional :year
     end
     post :student_education, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
-      if (params[:standard_id] || params[:school] || params[:year] )
+      if (params[:standard] || params[:school] || params[:year] )
         @student_education = StudentEducation.new user_id: @user.id
-        @student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
+        @student_education.attributes = clean_params(params).permit(:standard, :school, :year)
         error! @student_education.errors.full_messages.join(', '), 422 unless @student_education.save
       end          
     end
@@ -1191,14 +1191,14 @@ resources :student do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :education_id
-      optional :standard_id
+      optional :standard
       optional :school
       optional :year
     end
     post :update_student_education, jbuilder: 'ios' do
       @update_student_education = StudentEducation.find params[:education_id]
       error! 'User Environment not found',422 unless @update_student_education
-      @update_student_education.attributes = clean_params(params).permit(:standard_id, :school, :year)
+      @update_student_education.attributes = clean_params(params).permit(:standard, :school, :year)
       @update_student_education.file = params[:file] if params[:file]
       error! @update_student_education.errors.full_messages.join(', '), 422 unless @update_student_education.save
       @update_student_education
