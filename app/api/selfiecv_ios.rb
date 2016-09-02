@@ -220,13 +220,20 @@ resources :member_profile do
       requires :zipcode
       requires :contact_number
       optional :file
+      optional :text_field
       optional :file_type
     end
     post :resume, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number)
-      @user.file = params[:file] if params[:file]
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
+       :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,
+        :contact_number)
+      if (params[:file_type] == 'text')
+        @user.text_field = params[:text_field]
+      else
+        @user.file = params[:file] if params[:file]
+      end
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
       if(params[:file_type] == 'video')
         @user_meter = UserMeter.find_by user_id: params[:user_id]
@@ -261,12 +268,20 @@ resources :member_profile do
       optional :zipcode
       optional :contact_number
       optional :file
+      optional :text_field
       optional :file_type
     end
     post :update_resume, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
+       :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,
+        :contact_number, :file_type)
+      if (params[:file_type] == 'text')
+        @user.text_field = params[:text_field]
+      else
+        @user.file = params[:file] if params[:file]
+      end
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
       if(params[:file_type] == 'video')
         @user_meter = UserMeter.find_by user_id: params[:user_id]

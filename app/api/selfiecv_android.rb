@@ -230,7 +230,19 @@ resources :member do
         @user.file = params[:file] if params[:file]
       end
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-      
+      if(params[:file_type] == 'video')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 100
+      elsif(params[:file_type] == 'audio')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 70
+      elsif(params[:file_type] == 'file')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 50
+      elsif(params[:file_type] == 'text')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 30
+      end
       @user
     end
 
@@ -251,6 +263,7 @@ resources :member do
       optional :zipcode
       optional :contact_number
       optional :file
+      optional :text_field
       optional :file_type
     end
     post :update_resume, jbuilder: 'android' do
@@ -258,6 +271,11 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
         :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+      if (params[:file_type] == 'text')
+        @user.text_field = params[:text_field]
+      else
+        @user.file = params[:file] if params[:file]
+      end
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       if(params[:file_type] == 'video')
         @user_meter = UserMeter.find_by user_id: params[:user_id]
@@ -302,7 +320,6 @@ resources :member do
       @user_education = UserEducation.new user_id: @user.id
       if (params[:course_id] || params[:specialization_id] || params[:year] || params[:school] || params[:skill] )
         @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
-        @user.file = params[:file] if params[:file]
         error!({error: @user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_education.save
       end
     end
