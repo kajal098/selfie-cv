@@ -34,7 +34,7 @@ user = User.create!(email: 'sam@gmail.com', password: '12345678' , username: 'sa
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 user = User.create!(email: 'riya@gmail.com', password: '12345678' , username: 'riya' , role: 'Jobseeker', first_name: 'sam', middle_name: 'deo', last_name: 'jacson', city: 'pune', address: 'street 4,near community hall', nationality: "Indian", contact_number: 9988776655 )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
-user = User.create!(email: 'nicolecross1579@gmail.com', password: '12345678' , username: 'nicole' , role: 'Jobseeker', first_name: 'sam', middle_name: 'deo', last_name: 'jacson', city: 'pune', address: 'street 4,near community hall', nationality: "Indian", contact_number: 9988776655 )
+user = User.create!(email: 'self@gmail.com', password: '12345678' , username: 'self' , role: 'Jobseeker', first_name: 'sam', middle_name: 'deo', last_name: 'jacson', city: 'pune', address: 'street 4,near community hall', nationality: "Indian", contact_number: 9988776655 )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 user = User.create!(email: 'thomas@gmail.com', password: '12345678' , username: 'thomas' , role: 'Jobseeker', first_name: 'sam', middle_name: 'deo', last_name: 'jacson', city: 'pune', address: 'street 4,near community hall', nationality: "Indian", contact_number: 9988776655 )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
