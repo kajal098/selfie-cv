@@ -292,16 +292,6 @@ if @specializations
 	end
 end
 
-if @standards
-@all_standards = @standards.order('created_at DESC')
-	json.standards @all_standards do |standard|
-		json.extract! standard, :id, :name
-
-		json.standard_created_at standard.created_at.to_i
-		json.standard_updated_at standard.updated_at.to_i
-	end
-end
-
 if @user_educations
 @educations = @user.user_educations.order('created_at DESC')
 	json.user_educations @educations do |education|
@@ -494,18 +484,16 @@ end
 if @student_education
 	@educations = @user.student_educations.order('created_at DESC')
 	json.student_educations @educations do |education|
-		json.extract! education, :id, :user_id, :standard_id, :school, :year
-		json.standard education.standard.name		
-
+		json.extract! education, :id, :user_id, :standard, :school, :year
+		
 		json.edu_created_at education.created_at.to_i
 		json.edu_updated_at education.updated_at.to_i
 	end
 end
 
 if @update_student_education
-	json.extract! @update_student_education, :id, :user_id, :standard_id, :school, :year
-	json.standard @update_student_education.standard.name
-
+	json.extract! @update_student_education, :id, :user_id, :standard, :school, :year
+	
 	json.edu_created_at @update_student_education.created_at.to_i
 	json.edu_updated_at @update_student_education.updated_at.to_i
 end
@@ -513,10 +501,9 @@ end
 if @student_educations
 @educations = @user.student_educations.order('created_at DESC')
 	json.student_educations @educations do |education|
-	json.extract! education, :id, :user_id, :standard_id, :school, :year
+	json.extract! education, :id, :user_id, :standard, :school, :year
 
-	json.standard education.standard.name	
-
+	
 	json.edu_created_at education.created_at.to_i
 	json.edu_updated_at education.updated_at.to_i
 end
