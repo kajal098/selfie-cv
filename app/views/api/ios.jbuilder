@@ -1,3 +1,5 @@
+json.status "Success"
+
 if @user
 	if @user.role == 'Jobseeker'
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
@@ -15,7 +17,9 @@ if @user
 		json.user_lifegoal_per @user.user_meter.lifegoal_per.to_i
 		json.user_working_environment_per @user.user_meter.working_per.to_i
 		json.user_reference_per @user.user_meter.ref_per.to_i
-
+		json.user_whizquiz_per @user.user_meter.whizquiz_per.to_i
+		json.user_total_per 40
+		
 	elsif @user.role == 'Company'
 		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field
 
@@ -35,12 +39,13 @@ if @user
 		json.industry @user.industry ? @user.industry.name : ""
 		
 
-		json.user_resume_per @user.user_meter.resume_per.to_i
-		json.user_achievement_per @user.user_meter.achievement_per.to_i
-		json.user_curricular_per @user.user_meter.curri_per.to_i
-		json.user_lifegoal_per @user.user_meter.lifegoal_per.to_i
-		json.user_working_environment_per @user.user_meter.working_per.to_i
-		json.user_reference_per @user.user_meter.ref_per.to_i
+		json.company_info_per @user.user_meter.company_info_per.to_i
+		json.company_corporate_identity_per @user.user_meter.corporate_identity_per.to_i
+		json.company_growth_and_goal_per @user.user_meter.growth_and_goal_per.to_i
+		json.company_tribute_per @user.user_meter.company_tribute_per.to_i
+		json.company_gallery_per @user.user_meter.galery_per.to_i
+		json.company_working_env_per @user.user_meter.working_env_per.to_i
+		json.user_total_per 40
 
 	elsif @user.role == 'Student'
 		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
@@ -49,6 +54,11 @@ if @user
 
 		json.file @user.resume_thumb_url
 
+		json.student_basic_info_per @user.user_meter.student_basic_info_per.to_i
+      	json.student_education_per @user.user_meter.student_education_per.to_i
+      	json.student_achievement_per @user.user_meter.student_achievement_per.to_i
+      	json.student_extra_curri_per @user.user_meter.student_extra_curri_per.to_i
+      
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
@@ -58,6 +68,11 @@ if @user
 		json.profile @user.profile_thumb_url
 
 		json.file @user.resume_thumb_url
+
+		json.faculty_basic_info_per @user.user_meter.faculty_basic_info_per.to_i
+      	json.faculty_experience_per @user.user_meter.faculty_experience_per.to_i
+      	json.faculty_achievement_per @user.user_meter.faculty_achievement_per.to_i
+
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
@@ -84,12 +99,13 @@ if @company
 		json.created_at @company.created_at.to_i
 		json.updated_at @company.updated_at.to_i
 
-		json.user_resume_per @company.user_meter.resume_per.to_i
-		json.user_achievement_per @company.user_meter.achievement_per.to_i
-		json.user_curricular_per @company.user_meter.curri_per.to_i
-		json.user_lifegoal_per @company.user_meter.lifegoal_per.to_i
-		json.user_working_environment_per @company.user_meter.working_per.to_i
-		json.user_reference_per @company.user_meter.ref_per.to_i
+		json.company_info_per @company.user_meter.company_info_per.to_i
+		json.company_corporate_identity_per @company.user_meter.corporate_identity_per.to_i
+		json.company_growth_and_goal_per @company.user_meter.growth_and_goal_per.to_i
+		json.company_tribute_per @company.user_meter.company_tribute_per.to_i
+		json.company_gallery_per @company.user_meter.galery_per.to_i
+		json.company_working_env_per @company.user_meter.working_env_per.to_i
+		json.user_total_per 40
 		
 	
 end
@@ -114,6 +130,8 @@ if @users
 					json.user_lifegoal_per user.user_meter.lifegoal_per.to_i
 					json.user_working_environment_per user.user_meter.working_per.to_i
 					json.user_reference_per user.user_meter.ref_per.to_i
+					json.user_whizquiz_per user.user_meter.whizquiz_per.to_i
+					json.user_total_per 40
 
 				elsif user.role == "Company"
 						json.extract! user, :id, :username, :role, :company_name, :company_establish_from,  :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id,  :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
@@ -129,12 +147,13 @@ if @users
 						json.industry_id user.industry ? user.industry_id : ""
 						json.industry user.industry ? user.industry.name : ""
 
-						json.user_resume_per user.user_meter.resume_per.to_i
-						json.user_achievement_per user.user_meter.achievement_per.to_i
-						json.user_curricular_per user.user_meter.curri_per.to_i
-						json.user_lifegoal_per user.user_meter.lifegoal_per.to_i
-						json.user_working_environment_per user.user_meter.working_per.to_i
-						json.user_reference_per user.user_meter.ref_per.to_i
+						json.company_info_per user.user_meter.company_info_per.to_i
+						json.company_corporate_identity_per user.user_meter.corporate_identity_per.to_i
+						json.company_growth_and_goal_per user.user_meter.growth_and_goal_per.to_i
+						json.company_tribute_per user.user_meter.company_tribute_per.to_i
+						json.company_gallery_per user.user_meter.galery_per.to_i
+						json.company_working_env_per user.user_meter.working_env_per.to_i
+						json.user_total_per 40
 				end
 		end
 end
@@ -162,6 +181,15 @@ if @user_experience
 		json.experience_created_at experience.created_at.to_i
 		json.experience_updated_at experience.updated_at.to_i
 	end
+end
+
+if @user_experience
+		json.extract! @user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
+
+		json.file @user_experience.thumb_url
+
+		json.user_experience_created_at @user_experience.created_at.to_i
+		json.user_experience_updated_at @user_experience.updated_at.to_i
 end
 
 if @user_preferred_work

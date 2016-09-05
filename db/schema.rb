@@ -219,14 +219,28 @@ ActiveRecord::Schema.define(version: 20160829095948) do
 
   create_table "user_meters", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "resume_per",      default: 0, null: false
-    t.integer  "achievement_per", default: 0, null: false
-    t.integer  "curri_per",       default: 0, null: false
-    t.integer  "lifegoal_per",    default: 0, null: false
-    t.integer  "working_per",     default: 0, null: false
-    t.integer  "ref_per",         default: 0, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.integer  "resume_per",              default: 0, null: false
+    t.integer  "achievement_per",         default: 0, null: false
+    t.integer  "curri_per",               default: 0, null: false
+    t.integer  "lifegoal_per",            default: 0, null: false
+    t.integer  "working_per",             default: 0, null: false
+    t.integer  "ref_per",                 default: 0, null: false
+    t.integer  "whizquiz_per",            default: 0, null: false
+    t.integer  "company_info_per",        default: 0, null: false
+    t.integer  "corporate_identity_per",  default: 0, null: false
+    t.integer  "growth_and_goal_per",     default: 0, null: false
+    t.integer  "company_tribute_per",     default: 0, null: false
+    t.integer  "galery_per",              default: 0, null: false
+    t.integer  "working_env_per",         default: 0, null: false
+    t.integer  "student_basic_info_per",  default: 0, null: false
+    t.integer  "student_education_per",   default: 0, null: false
+    t.integer  "student_achievement_per", default: 0, null: false
+    t.integer  "student_extra_curri_per", default: 0, null: false
+    t.integer  "faculty_basic_info_per",  default: 0, null: false
+    t.integer  "faculty_experience_per",  default: 0, null: false
+    t.integer  "faculty_achievement_per", default: 0, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "user_meters", ["user_id"], name: "index_user_meters_on_user_id", using: :btree
