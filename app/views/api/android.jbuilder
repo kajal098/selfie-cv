@@ -591,3 +591,85 @@ if @student_projects
 	json.edu_updated_at project.updated_at.to_i
 end
 end
+
+if @user_stuff
+	if @user_stuff.role == 'Jobseeker'
+		json.User @user_stuff, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+
+		json.profile @user_stuff.profile_thumb_url
+
+		json.resume @user_stuff.resume_thumb_url
+
+		json.created_at @user_stuff.created_at.to_i
+		json.updated_at @user_stuff.updated_at.to_i
+
+		json.user_resume_per @user_stuff.user_meter.resume_per.to_i
+		json.user_achievement_per @user_stuff.user_meter.achievement_per.to_i
+		json.user_curricular_per @user_stuff.user_meter.curri_per.to_i
+		json.user_lifegoal_per @user_stuff.user_meter.lifegoal_per.to_i
+		json.user_working_environment_per @user_stuff.user_meter.working_per.to_i
+		json.user_reference_per @user_stuff.user_meter.ref_per.to_i
+		json.user_whizquiz_per @user_stuff.user_meter.whizquiz_per.to_i
+		json.user_total_per @user_stuff.user_meter.total_per.to_i
+		
+	elsif @user_stuff.role == 'Company'
+		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field
+
+		json.logo @user_stuff.logo_thumb_url
+
+		json.profile @user_stuff.company_profile_thumb_url
+
+		json.brochure @user_stuff.brochure_thumb_url
+
+		json.created_at @user_stuff.created_at.to_i
+		json.updated_at @user_stuff.updated_at.to_i
+
+		json.company_id @user_stuff.company ? @user_stuff.company_id : ""
+		json.company @user_stuff.company ? @user_stuff.company.name : ""
+
+		json.industry_id @user_stuff.industry ? @user_stuff.industry_id : ""
+		json.industry @user_stuff.industry ? @user_stuff.industry.name : ""
+		
+
+		json.company_info_per @user_stuff.user_meter.company_info_per.to_i
+		json.company_corporate_identity_per @user_stuff.user_meter.corporate_identity_per.to_i
+		json.company_growth_and_goal_per @user_stuff.user_meter.growth_and_goal_per.to_i
+		json.company_tribute_per @user_stuff.user_meter.company_tribute_per.to_i
+		json.company_gallery_per @user_stuff.user_meter.galery_per.to_i
+		json.company_working_env_per @user_stuff.user_meter.working_env_per.to_i
+		json.user_total_per @user_stuff.user_meter.total_per.to_i
+
+	elsif @user_stuff.role == 'Student'
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+
+		json.profile @user_stuff.profile_thumb_url
+
+		json.file @user_stuff.resume_thumb_url
+
+		json.student_basic_info_per @user_stuff.user_meter.student_basic_info_per.to_i
+      	json.student_education_per @user_stuff.user_meter.student_education_per.to_i
+      	json.student_achievement_per @user_stuff.user_meter.student_achievement_per.to_i
+      	json.student_extra_curri_per @user_stuff.user_meter.student_extra_curri_per.to_i
+      	json.user_total_per @user_stuff.user_meter.total_per.to_i
+      
+		json.created_at @user_stuff.created_at.to_i
+		json.updated_at @user_stuff.updated_at.to_i
+
+	elsif @user_stuff.role == 'Faculty'
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
+
+		json.profile @user_stuff.profile_thumb_url
+
+		json.file @user_stuff.resume_thumb_url
+
+		json.faculty_basic_info_per @user_stuff.user_meter.faculty_basic_info_per.to_i
+      	json.faculty_experience_per @user_stuff.user_meter.faculty_experience_per.to_i
+      	json.faculty_achievement_per @user_stuff.user_meter.faculty_achievement_per.to_i
+      	json.user_total_per @user_stuff.user_meter.total_per.to_i
+
+
+		json.created_at @user_stuff.created_at.to_i
+		json.updated_at @user_stuff.updated_at.to_i
+		
+	end
+end

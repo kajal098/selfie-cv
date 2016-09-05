@@ -195,13 +195,13 @@ resources :member do
       @users
     end
 
-    # for user all stuff
-    desc 'User stuff'
+    # for jobseeker all stuff
+    desc 'Jobseeker stuff'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :username
     end
-    post :all_stuff , jbuilder: 'android' do
+    post :jobseeker_all_stuff , jbuilder: 'android' do
       @user = User.find_by username: params[:username]
       error! 'User not found',422 unless @user
       @user_educations = @user.user_educations
