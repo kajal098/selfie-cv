@@ -195,6 +195,26 @@ resources :member do
       @users
     end
 
+    # for user all stuff
+    desc 'User stuff'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :username
+    end
+    post :all_stuff , jbuilder: 'android' do
+      @user = User.find_by username: params[:username]
+      error! 'User not found',422 unless @user
+      @user_educations = @user.user_educations
+      @user_experiences = @user.user_experiences
+      @user_preferred_works = @user.user_preferred_works
+      @user_awards = @user.user_awards
+      @user_certificates = @user.user_certificates
+      @user_curriculars = @user.user_curriculars
+      @user_future_goals = @user.user_future_goals
+      @user_working_environments = @user.user_environments
+      @user_references = @user.user_references
+    end
+
 end
  
 #--------------------------------member end----------------------------------#
