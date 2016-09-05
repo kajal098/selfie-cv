@@ -155,7 +155,6 @@ if @user_education
 end
 
 if @user_experience
-json.user_experience @user_experience.thumb_url
 @experiences = @user.user_experiences.order('created_at DESC')
 	json.experiences @experiences do |experience|
 		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
@@ -165,6 +164,15 @@ json.user_experience @user_experience.thumb_url
 		json.experience_created_at experience.created_at.to_i
 		json.experience_updated_at experience.updated_at.to_i
 	end
+end
+
+if @user_experience
+		json.extract! @user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
+
+		json.file @user_experience.thumb_url
+
+		json.user_experience_created_at @user_experience.created_at.to_i
+		json.user_experience_updated_at @user_experience.updated_at.to_i
 end
 
 if @user_preferred_work
