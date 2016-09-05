@@ -206,7 +206,7 @@ if @curricular
 	json.curriculars @curriculars do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
 
-		json.file curricular.file.url
+		json.file curricular.thumb_url
 
 		json.curricular_created_at curricular.created_at.to_i
 		json.curricular_updated_at curricular.updated_at.to_i
