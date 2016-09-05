@@ -207,8 +207,7 @@ resources :member do
     end
     post :all_stuff , jbuilder: 'android_all_stuff' do
       @user_stuff = User.find params[:user_id]
-      error!({error: 'User not found', status: 'Fail'}, 200) unless @user_stuff
-      
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user_stuff      
     end
 
     # for fill user resume

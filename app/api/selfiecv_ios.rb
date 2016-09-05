@@ -195,24 +195,15 @@ resources :member do
       @users
     end
 
-    # for jobseeker all stuff
-    desc 'Jobseeker stuff'
+    # for all stuff
+    desc 'All stuff'
     params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :username
+      requires :user_id
     end
-    post :jobseeker_all_stuff , jbuilder: 'android' do
-      @user = User.find_by username: params[:username]
-      error! 'User not found',422 unless @user
-      @user_educations = @user.user_educations
-      @user_experiences = @user.user_experiences
-      @user_preferred_works = @user.user_preferred_works
-      @user_awards = @user.user_awards
-      @user_certificates = @user.user_certificates
-      @user_curriculars = @user.user_curriculars
-      @user_future_goals = @user.user_future_goals
-      @user_working_environments = @user.user_environments
-      @user_references = @user.user_references
+    post :all_stuff , jbuilder: 'android_all_stuff' do
+      @user_stuff = User.find params[:user_id]
+      error! 'User not found',422 unless @user_stuff      
     end
 
 end

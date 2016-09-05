@@ -348,6 +348,15 @@ UserReference.create(user_id: 10, title: 'own ref', ref_type: 'company', from: '
 UserReference.create(user_id: 11, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
 UserReference.create(user_id: 11, title: 'own ref', ref_type: 'company', from: 'miss.anna', email: 'one@gmail.com', contact: '1234567890', date: '30/11/2011', location: 'zawer')
 
+StudentEducation.create(user_id:3, standard:'wwww', year:2011, school:'gggg')
+StudentEducation.create(user_id:3, standard:'wwww', year:2011, school:'gggg')
+StudentEducation.create(user_id:4, standard:'gggg', year:2011, school:'ssss')
+StudentEducation.create(user_id:4, standard:'gggg', year:2011, school:'ssss')
+StudentEducation.create(user_id:5, standard:'wwww', year:2011, school:'gggg')
+StudentEducation.create(user_id:5, standard:'wwww', year:2011, school:'gggg')
+StudentEducation.create(user_id:6, standard:'gggg', year:2011, school:'ssss')
+StudentEducation.create(user_id:6, standard:'gggg', year:2011, school:'ssss')
+
 UserMarksheet.create(user_id: 7,school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)
 UserMarksheet.create(user_id: 8,school_name: 'qwertyu', standard: 'third', grade: 'C', year: 2011)
 UserMarksheet.create(user_id: 9,school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)

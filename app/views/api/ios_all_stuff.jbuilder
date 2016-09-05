@@ -1,5 +1,3 @@
-json.status "Success"
-
 if @user_stuff
 	if @user_stuff.role == 'Jobseeker'
 		json.User @user_stuff, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
