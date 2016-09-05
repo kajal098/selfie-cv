@@ -6,6 +6,7 @@ class CreateUserCertificates < ActiveRecord::Migration
       t.string :name,              null: false, default: ""
       t.string :year,              null: false, default: ""
       t.string :file,              default: ''
+      t.string :text_field,              null: false, default: ""
       t.string :file_type,              null: false, default: ""
       t.boolean :active,            default: false
       t.timestamps null: false

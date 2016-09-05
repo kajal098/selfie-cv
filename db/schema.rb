@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "award_type",  default: "award", null: false
     t.string   "description", default: "",      null: false
     t.string   "file",        default: ""
+    t.string   "text_field",  default: "",      null: false
     t.string   "file_type",   default: "",      null: false
     t.boolean  "active",      default: false
     t.datetime "created_at",                    null: false
@@ -111,6 +112,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "name",             default: "",    null: false
     t.string   "year",             default: "",    null: false
     t.string   "file",             default: ""
+    t.string   "text_field",       default: "",    null: false
     t.string   "file_type",        default: "",    null: false
     t.boolean  "active",           default: false
     t.datetime "created_at",                       null: false
@@ -125,8 +127,9 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-09-02'
+    t.date     "date",            default: '2016-09-05'
     t.string   "file",            default: ""
+    t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
     t.boolean  "active",          default: false
     t.datetime "created_at",                             null: false
@@ -156,6 +159,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "env_type",   default: "",    null: false
     t.string   "title",      default: "",    null: false
     t.string   "file",       default: ""
+    t.string   "text_field", default: "",    null: false
     t.string   "file_type",  default: "",    null: false
     t.boolean  "active",     default: false
     t.datetime "created_at",                 null: false
@@ -168,11 +172,12 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-09-02'
+    t.date     "start_from",      default: '2016-09-05'
     t.string   "working_till",    default: "",           null: false
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
+    t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
     t.boolean  "active",          default: false
     t.boolean  "current_company", default: false
@@ -188,6 +193,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "title",      default: "",    null: false
     t.string   "term_type",  default: "",    null: false
     t.string   "file",       default: ""
+    t.string   "text_field", default: "",    null: false
     t.string   "file_type",  default: "",    null: false
     t.boolean  "active",     default: false
     t.datetime "created_at",                 null: false
@@ -203,6 +209,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "grade",       default: "", null: false
     t.string   "year",        default: "", null: false
     t.string   "file",        default: ""
+    t.string   "text_field",  default: "", null: false
     t.string   "file_type",   default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
@@ -257,9 +264,10 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-09-02'
+    t.date     "date",       default: '2016-09-05'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
+    t.string   "text_field", default: "",           null: false
     t.string   "file_type",  default: "",           null: false
     t.boolean  "active",     default: false
     t.datetime "created_at",                        null: false
@@ -278,7 +286,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-09-02"
+    t.string   "date_of_birth",                                 default: "2016-09-05"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -291,7 +299,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-09-02"
+    t.string   "faculty_join_from",                             default: "2016-09-05"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
