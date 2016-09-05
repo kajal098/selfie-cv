@@ -22,6 +22,7 @@ class CreateUserMeters < ActiveRecord::Migration
       t.integer :faculty_basic_info_per,        null:false, default: 0
       t.integer :faculty_experience_per,        null:false, default: 0
       t.integer :faculty_achievement_per,        null:false, default: 0
+      t.integer :total_per,        null:false, default: 0
       t.timestamps null: false
     end
     add_index :user_meters, [:user_id]

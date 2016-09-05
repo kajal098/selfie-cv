@@ -239,6 +239,7 @@ ActiveRecord::Schema.define(version: 20160829095948) do
     t.integer  "faculty_basic_info_per",  default: 0, null: false
     t.integer  "faculty_experience_per",  default: 0, null: false
     t.integer  "faculty_achievement_per", default: 0, null: false
+    t.integer  "total_per",               default: 0, null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
