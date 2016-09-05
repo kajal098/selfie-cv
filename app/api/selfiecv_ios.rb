@@ -1347,4 +1347,59 @@ end
 
 #--------------------------------student end----------------------------------#
 
+#--------------------------------faculty start----------------------------------#
+
+resources :faculty do 
+
+# for fill faculty resume
+    desc 'Faculty Resume'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :first_name
+      optional :middle_name
+      optional :last_name
+      optional :gender  
+      optional :date_of_birth 
+      optional :nationality 
+      optional :address 
+      optional :city
+      optional :country
+      optional :zipcode
+      optional :contact_number
+      optional :file
+      optional :text_field
+      optional :file_type
+    end
+    post :basic_info, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      @user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
+        :date_of_birth, :nationality, :address, :city, :country, :zipcode,  :contact_number, :file_type)
+      if (params[:file_type] == 'text')
+        @user.text_field = params[:text_field]
+      else
+        @user.file = params[:file] if params[:file]
+      end
+      error! @user.errors.full_messages.join(', '),422 unless @user.save
+      if(params[:file_type] == 'video')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 100
+      elsif(params[:file_type] == 'audio')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 70
+      elsif(params[:file_type] == 'file')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 50
+      elsif(params[:file_type] == 'text')
+        @user_meter = UserMeter.find_by user_id: params[:user_id]
+        @user_meter.update_column :resume_per, 30
+      end
+      @user
+    end
+
+end
+
+#--------------------------------faculty end----------------------------------#
+
 end

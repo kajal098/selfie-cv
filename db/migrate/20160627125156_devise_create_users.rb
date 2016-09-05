@@ -15,6 +15,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :nationality,              null: false, default: ""
       t.string :address,              null: false, default: ""
       t.string :city,              null: false, default: ""
+      t.string :country,              null: false, default: ""
       t.string :zipcode,              null: false, default: ""
       t.string :contact_number,              null: false, default: ""
       t.string :file,              default: ''
