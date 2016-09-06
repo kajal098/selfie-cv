@@ -1415,7 +1415,7 @@ resources :faculty do
       if (params[:university] || params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
         @faculty_affiliation = FacultyAffiliation.new user_id: @user.id
         @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
-        error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
+        error! @faculty_affiliation.errors.full_messages.join(', '),422 unless @faculty_affiliation.save
       end          
     end
 
@@ -1434,7 +1434,7 @@ resources :faculty do
       @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
       error! 'Faculty affiliation not found',422 unless @update_faculty_affiliation
       @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
-      error!({error: @update_faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_affiliation.save
+      error! @update_faculty_affiliation.errors.full_messages.join(', '),422 unless @update_faculty_affiliation.save
       @update_faculty_affiliation
     end
 
@@ -1478,7 +1478,7 @@ resources :faculty do
       @update_faculty_workshop = FacultyWorkshop.find params[:workshop_id]
       error! 'Student workshop not found',422 unless @update_faculty_workshop
       @update_faculty_workshop.attributes = clean_params(params).permit(:description)
-      error!({error: @update_faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_workshop.save
+      error! @update_faculty_workshop.errors.full_messages.join(', '),422 unless @update_faculty_workshop.save
       @update_faculty_workshop
     end
 
@@ -1491,7 +1491,7 @@ resources :faculty do
     post :delete_faculty_workshop do
       @faculty_workshop = FacultyWorkshop.find params[:workshop_id]
       @faculty_workshop.destroy
-      { code: 200, :status => "Success" }
+      status 200
     end
 
     # for fill faculty publication
@@ -1508,7 +1508,7 @@ resources :faculty do
       if (params[:title] || params[:description] )
         @faculty_publication = FacultyPublication.new user_id: @user.id
         @faculty_publication.attributes = clean_params(params).permit(:title, :description)
-        error!({error: @faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_publication.save
+        error! @faculty_publication.errors.full_messages.join(', '),422 unless @faculty_publication.save
       end          
     end
 
@@ -1524,7 +1524,7 @@ resources :faculty do
       @update_faculty_publication = FacultyPublication.find params[:publication_id]
       error! 'Student publication not found',422 unless @update_faculty_publication
       @update_faculty_publication.attributes = clean_params(params).permit(:title, :description)
-      error!({error: @update_faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_publication.save
+      error! @update_faculty_publication.errors.full_messages.join(', '),422 unless @update_faculty_publication.save
       @update_faculty_publication
     end
 
@@ -1537,7 +1537,7 @@ resources :faculty do
     post :delete_faculty_publication do
       @faculty_publication = FacultyPublication.find params[:publication_id]
       @faculty_publication.destroy
-      { code: 200, :status => "Success" }
+      status 200
     end
 
     # for fill faculty research
@@ -1554,7 +1554,7 @@ resources :faculty do
       if (params[:title] || params[:description] )
         @faculty_research = FacultyResearch.new user_id: @user.id
         @faculty_research.attributes = clean_params(params).permit(:title, :description)
-        error!({error: @faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_research.save
+        error! @faculty_research.errors.full_messages.join(', '),422 unless @faculty_research.save
       end          
     end
 
@@ -1570,7 +1570,7 @@ resources :faculty do
       @update_faculty_research = FacultyResearch.find params[:research_id]
       error! 'Student research not found',422 unless @update_faculty_research
       @update_faculty_research.attributes = clean_params(params).permit(:title, :description)
-      error!({error: @update_faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_research.save
+      error! @update_faculty_research.errors.full_messages.join(', '),422 unless @update_faculty_research.save
       @update_faculty_research
     end
 
@@ -1583,7 +1583,7 @@ resources :faculty do
     post :delete_faculty_research do
       @faculty_research = FacultyResearch.find params[:research_id]
       @faculty_research.destroy
-      { code: 200, :status => "Success" }
+      status 200
     end
 
     # for get faculty stuff
