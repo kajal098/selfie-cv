@@ -1371,7 +1371,7 @@ resources :faculty do
       optional :text_field
       optional :file_type
     end
-    post :basic_info, jbuilder: 'android' do
+    post :basic_info, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
@@ -1409,7 +1409,7 @@ resources :faculty do
       optional :designation
       optional :join_from
     end
-    post :faculty_affiliation, jbuilder: 'android' do
+    post :faculty_affiliation, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:university] || params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
@@ -1430,7 +1430,7 @@ resources :faculty do
       optional :designation
       optional :join_from
     end
-    post :update_faculty_affiliation, jbuilder: 'android' do
+    post :update_faculty_affiliation, jbuilder: 'ios' do
       @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
       error! 'Faculty affiliation not found',422 unless @update_faculty_affiliation
       @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
@@ -1457,7 +1457,7 @@ resources :faculty do
       requires :user_id
       optional :description
     end
-    post :faculty_workshop, jbuilder: 'android' do
+    post :faculty_workshop, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       
@@ -1474,7 +1474,7 @@ resources :faculty do
       requires :workshop_id
       optional :description
     end
-    post :update_faculty_workshop, jbuilder: 'android' do
+    post :update_faculty_workshop, jbuilder: 'ios' do
       @update_faculty_workshop = FacultyWorkshop.find params[:workshop_id]
       error! 'Student workshop not found',422 unless @update_faculty_workshop
       @update_faculty_workshop.attributes = clean_params(params).permit(:description)
@@ -1502,7 +1502,7 @@ resources :faculty do
       optional :title
       optional :description
     end
-    post :faculty_publication, jbuilder: 'android' do
+    post :faculty_publication, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:title] || params[:description] )
@@ -1520,7 +1520,7 @@ resources :faculty do
       optional :title
       optional :description
     end
-    post :update_faculty_publication, jbuilder: 'android' do
+    post :update_faculty_publication, jbuilder: 'ios' do
       @update_faculty_publication = FacultyPublication.find params[:publication_id]
       error! 'Student publication not found',422 unless @update_faculty_publication
       @update_faculty_publication.attributes = clean_params(params).permit(:title, :description)
@@ -1548,7 +1548,7 @@ resources :faculty do
       optional :title
       optional :description
     end
-    post :faculty_research, jbuilder: 'android' do
+    post :faculty_research, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:title] || params[:description] )
@@ -1566,7 +1566,7 @@ resources :faculty do
       optional :title
       optional :description
     end
-    post :update_faculty_research, jbuilder: 'android' do
+    post :update_faculty_research, jbuilder: 'ios' do
       @update_faculty_research = FacultyResearch.find params[:research_id]
       error! 'Student research not found',422 unless @update_faculty_research
       @update_faculty_research.attributes = clean_params(params).permit(:title, :description)
@@ -1592,7 +1592,7 @@ resources :faculty do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :get_faculty_stuff, jbuilder: 'android' do
+    post :get_faculty_stuff, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @faculty_affiliations = @user.faculty_affiliations

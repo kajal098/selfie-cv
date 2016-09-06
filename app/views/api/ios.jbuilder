@@ -591,7 +591,7 @@ end
 end
 
 if @faculty_affiliation
-	@affiliations = @user.user_affiliations.order('created_at DESC')
+	@affiliations = @user.faculty_affiliations.order('created_at DESC')
 	json.faculty_affiliations @affiliations do |affiliation|
 		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from
 		
@@ -609,7 +609,7 @@ if @update_faculty_affiliation
 end
 
 if @faculty_affiliations
-	@affiliations = @user.user_affiliations.order('created_at DESC')
+	@affiliations = @user.faculty_affiliations.order('created_at DESC')
 	json.faculty_affiliations @affiliations do |affiliation|
 	json.extract! affiliation, :id, :user_id, :title, :description
 
@@ -619,7 +619,7 @@ if @faculty_affiliations
 end
 
 if @faculty_workshop
-	@workshops = @user.user_workshops.order('created_at DESC')
+	@workshops = @user.faculty_workshops.order('created_at DESC')
 	json.faculty_workshops @workshops do |workshop|
 		json.extract! workshop, :id, :user_id, :description
 		
@@ -637,7 +637,7 @@ if @update_faculty_workshop
 end
 
 if @faculty_workshops
-	@workshops = @user.user_workshops.order('created_at DESC')
+	@workshops = @user.faculty_workshops.order('created_at DESC')
 	json.faculty_workshops @workshops do |workshop|
 	json.extract! workshop, :id, :user_id, :title, :description
 
@@ -647,7 +647,7 @@ if @faculty_workshops
 end
 
 if @faculty_publication
-	@publications = @user.user_publications.order('created_at DESC')
+	@publications = @user.faculty_publications.order('created_at DESC')
 	json.faculty_publications @publications do |publication|
 		json.extract! publication, :id, :user_id, :title, :description
 		
@@ -665,7 +665,7 @@ if @update_faculty_publication
 end
 
 if @faculty_publications
-	@publications = @user.user_publications.order('created_at DESC')
+	@publications = @user.faculty_publications.order('created_at DESC')
 	json.faculty_publications @publications do |publication|
 	json.extract! publication, :id, :user_id, :title, :description
 
@@ -675,7 +675,7 @@ if @faculty_publications
 end
 
 if @faculty_research
-	@researches = @user.user_researches.order('created_at DESC')
+	@researches = @user.faculty_researches.order('created_at DESC')
 	json.faculty_researches @researches do |research|
 		json.extract! research, :id, :user_id, :title, :description
 		
@@ -693,7 +693,7 @@ if @update_faculty_research
 end
 
 if @faculty_researches
-	@researches = @user.user_researches.order('created_at DESC')
+	@researches = @user.faculty_researches.order('created_at DESC')
 	json.faculty_researches @researches do |research|
 	json.extract! research, :id, :user_id, :title, :description
 
