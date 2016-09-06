@@ -7,11 +7,9 @@ class UserCertificate < ActiveRecord::Base
 
 	mount_uploader :file, FileUploader
     def thumb_url
-        if(file.identifier.blank?)
-            ActionController::Base.helpers.asset_url("certificate.png")
-        else    
+          
             file.url(:thumb)
-        end
+        
     end
     def photo_url; file.url; end
 end
