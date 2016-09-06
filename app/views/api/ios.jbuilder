@@ -1,5 +1,3 @@
-json.status "Success"
-
 if @user
 	if @user.role == 'Jobseeker'
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
@@ -18,7 +16,7 @@ if @user
 		json.user_working_environment_per @user.user_meter.working_per.to_i
 		json.user_reference_per @user.user_meter.ref_per.to_i
 		json.user_whizquiz_per @user.user_meter.whizquiz_per.to_i
-		json.user_total_per 40
+		json.user_total_per @user.user_meter.total_per.to_i
 		
 	elsif @user.role == 'Company'
 		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field
@@ -45,7 +43,7 @@ if @user
 		json.company_tribute_per @user.user_meter.company_tribute_per.to_i
 		json.company_gallery_per @user.user_meter.galery_per.to_i
 		json.company_working_env_per @user.user_meter.working_env_per.to_i
-		json.user_total_per 40
+		json.user_total_per @user.user_meter.total_per.to_i
 
 	elsif @user.role == 'Student'
 		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
@@ -58,12 +56,13 @@ if @user
       	json.student_education_per @user.user_meter.student_education_per.to_i
       	json.student_achievement_per @user.user_meter.student_achievement_per.to_i
       	json.student_extra_curri_per @user.user_meter.student_extra_curri_per.to_i
+      	json.user_total_per @user.user_meter.total_per.to_i
       
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
 	elsif @user.role == 'Faculty'
-		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
+		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
 
 		json.profile @user.profile_thumb_url
 
@@ -72,6 +71,7 @@ if @user
 		json.faculty_basic_info_per @user.user_meter.faculty_basic_info_per.to_i
       	json.faculty_experience_per @user.user_meter.faculty_experience_per.to_i
       	json.faculty_achievement_per @user.user_meter.faculty_achievement_per.to_i
+      	json.user_total_per @user.user_meter.total_per.to_i
 
 
 		json.created_at @user.created_at.to_i
@@ -105,7 +105,7 @@ if @company
 		json.company_tribute_per @company.user_meter.company_tribute_per.to_i
 		json.company_gallery_per @company.user_meter.galery_per.to_i
 		json.company_working_env_per @company.user_meter.working_env_per.to_i
-		json.user_total_per 40
+		json.user_total_per @company.user_meter.total_per.to_i
 		
 	
 end
@@ -131,7 +131,7 @@ if @users
 					json.user_working_environment_per user.user_meter.working_per.to_i
 					json.user_reference_per user.user_meter.ref_per.to_i
 					json.user_whizquiz_per user.user_meter.whizquiz_per.to_i
-					json.user_total_per 40
+					json.user_total_per user.user_meter.total_per.to_i
 
 				elsif user.role == "Company"
 						json.extract! user, :id, :username, :role, :company_name, :company_establish_from,  :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id,  :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
@@ -153,7 +153,7 @@ if @users
 						json.company_tribute_per user.user_meter.company_tribute_per.to_i
 						json.company_gallery_per user.user_meter.galery_per.to_i
 						json.company_working_env_per user.user_meter.working_env_per.to_i
-						json.user_total_per 40
+						json.user_total_per user.user_meter.total_per.to_i
 				end
 		end
 end
@@ -588,4 +588,116 @@ if @student_projects
 	json.edu_created_at project.created_at.to_i
 	json.edu_updated_at project.updated_at.to_i
 end
+end
+
+if @faculty_affiliation
+	@affiliations = @user.user_affiliations.order('created_at DESC')
+	json.faculty_affiliations @affiliations do |affiliation|
+		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from
+		
+
+		json.created_at affiliation.created_at.to_i
+		json.updated_at affiliation.updated_at.to_i
+	end
+end
+
+if @update_faculty_affiliation
+	json.extract! @update_faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from
+
+	json.edu_created_at @update_faculty_affiliation.created_at.to_i
+	json.edu_updated_at @update_faculty_affiliation.updated_at.to_i
+end
+
+if @faculty_affiliations
+	@affiliations = @user.user_affiliations.order('created_at DESC')
+	json.faculty_affiliations @affiliations do |affiliation|
+	json.extract! affiliation, :id, :user_id, :title, :description
+
+	json.edu_created_at affiliation.created_at.to_i
+	json.edu_updated_at affiliation.updated_at.to_i
+	end
+end
+
+if @faculty_workshop
+	@workshops = @user.user_workshops.order('created_at DESC')
+	json.faculty_workshops @workshops do |workshop|
+		json.extract! workshop, :id, :user_id, :description
+		
+
+		json.edu_created_at workshop.created_at.to_i
+		json.edu_updated_at workshop.updated_at.to_i
+	end
+end
+
+if @update_faculty_workshop
+	json.extract! @update_faculty_workshop, :id, :user_id, :description
+
+	json.edu_created_at @update_faculty_workshop.created_at.to_i
+	json.edu_updated_at @update_faculty_workshop.updated_at.to_i
+end
+
+if @faculty_workshops
+	@workshops = @user.user_workshops.order('created_at DESC')
+	json.faculty_workshops @workshops do |workshop|
+	json.extract! workshop, :id, :user_id, :title, :description
+
+	json.edu_created_at workshop.created_at.to_i
+	json.edu_updated_at workshop.updated_at.to_i
+	end
+end
+
+if @faculty_publication
+	@publications = @user.user_publications.order('created_at DESC')
+	json.faculty_publications @publications do |publication|
+		json.extract! publication, :id, :user_id, :title, :description
+		
+
+		json.edu_created_at publication.created_at.to_i
+		json.edu_updated_at publication.updated_at.to_i
+	end
+end
+
+if @update_faculty_publication
+	json.extract! @update_faculty_publication, :id, :user_id, :title, :description
+
+	json.edu_created_at @update_faculty_publication.created_at.to_i
+	json.edu_updated_at @update_faculty_publication.updated_at.to_i
+end
+
+if @faculty_publications
+	@publications = @user.user_publications.order('created_at DESC')
+	json.faculty_publications @publications do |publication|
+	json.extract! publication, :id, :user_id, :title, :description
+
+	json.edu_created_at publication.created_at.to_i
+	json.edu_updated_at publication.updated_at.to_i
+	end
+end
+
+if @faculty_research
+	@researches = @user.user_researches.order('created_at DESC')
+	json.faculty_researches @researches do |research|
+		json.extract! research, :id, :user_id, :title, :description
+		
+
+		json.edu_created_at research.created_at.to_i
+		json.edu_updated_at research.updated_at.to_i
+	end
+end
+
+if @update_faculty_research
+	json.extract! @update_faculty_research, :id, :user_id, :title, :description
+
+	json.edu_created_at @update_faculty_research.created_at.to_i
+	json.edu_updated_at @update_faculty_research.updated_at.to_i
+end
+
+if @faculty_researches
+	@researches = @user.user_researches.order('created_at DESC')
+	json.faculty_researches @researches do |research|
+	json.extract! research, :id, :user_id, :title, :description
+
+	json.edu_created_at research.created_at.to_i
+	json.edu_updated_at research.updated_at.to_i
+	end
 end

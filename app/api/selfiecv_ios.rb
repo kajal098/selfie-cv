@@ -1398,6 +1398,209 @@ resources :faculty do
       @user
     end
 
+    # for fill faculty affiliation
+    desc 'Faculty Affiliation'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :university
+      optional :collage_name
+      optional :subject
+      optional :designation
+      optional :join_from
+    end
+    post :faculty_affiliation, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      if (params[:university] || params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
+        @faculty_affiliation = FacultyAffiliation.new user_id: @user.id
+        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
+        error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
+      end          
+    end
+
+    # for update faculty affiliation
+    desc 'Update Faculty Affiliation'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :affiliation_id
+      optional :university
+      optional :collage_name
+      optional :subject
+      optional :designation
+      optional :join_from
+    end
+    post :update_faculty_affiliation, jbuilder: 'android' do
+      @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+      error! 'Faculty affiliation not found',422 unless @update_faculty_affiliation
+      @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
+      error!({error: @update_faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_affiliation.save
+      @update_faculty_affiliation
+    end
+
+    #for delete faculty affiliation
+    desc "Delete Faculty Affiliation"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :affiliation_id
+    end
+    post :delete_faculty_affiliation do
+      @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+      @faculty_affiliation.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for fill faculty workshop
+    desc 'Faculty Workshop'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :description
+    end
+    post :faculty_workshop, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      
+        @faculty_workshop = FacultyWorkshop.new user_id: @user.id
+        @faculty_workshop.attributes = clean_params(params).permit(:description)
+        error!({error: @faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_workshop.save
+           
+    end
+
+    # for update faculty workshop
+    desc 'Update Faculty Workshop'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :workshop_id
+      optional :description
+    end
+    post :update_faculty_workshop, jbuilder: 'android' do
+      @update_faculty_workshop = FacultyWorkshop.find params[:workshop_id]
+      error! 'Student workshop not found',422 unless @update_faculty_workshop
+      @update_faculty_workshop.attributes = clean_params(params).permit(:description)
+      error!({error: @update_faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_workshop.save
+      @update_faculty_workshop
+    end
+
+    #for delete faculty workshop
+    desc 'Delete Faculty Workshop'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :workshop_id
+    end
+    post :delete_faculty_workshop do
+      @faculty_workshop = FacultyWorkshop.find params[:workshop_id]
+      @faculty_workshop.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for fill faculty publication
+    desc 'Faculty Publication'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :title
+      optional :description
+    end
+    post :faculty_publication, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      if (params[:title] || params[:description] )
+        @faculty_publication = FacultyPublication.new user_id: @user.id
+        @faculty_publication.attributes = clean_params(params).permit(:title, :description)
+        error!({error: @faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_publication.save
+      end          
+    end
+
+    # for update faculty publication
+    desc 'Update Faculty Publication'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :publication_id
+      optional :title
+      optional :description
+    end
+    post :update_faculty_publication, jbuilder: 'android' do
+      @update_faculty_publication = FacultyPublication.find params[:publication_id]
+      error! 'Student publication not found',422 unless @update_faculty_publication
+      @update_faculty_publication.attributes = clean_params(params).permit(:title, :description)
+      error!({error: @update_faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_publication.save
+      @update_faculty_publication
+    end
+
+    #for delete faculty publication
+    desc "Delete Faculty Publication"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :publication_id
+    end
+    post :delete_faculty_publication do
+      @faculty_publication = FacultyPublication.find params[:publication_id]
+      @faculty_publication.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for fill faculty research
+    desc 'Faculty Research'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :title
+      optional :description
+    end
+    post :faculty_research, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      if (params[:title] || params[:description] )
+        @faculty_research = FacultyResearch.new user_id: @user.id
+        @faculty_research.attributes = clean_params(params).permit(:title, :description)
+        error!({error: @faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_research.save
+      end          
+    end
+
+    # for update faculty research
+    desc 'Update Faculty Reaserch'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :research_id
+      optional :title
+      optional :description
+    end
+    post :update_faculty_research, jbuilder: 'android' do
+      @update_faculty_research = FacultyResearch.find params[:research_id]
+      error! 'Student research not found',422 unless @update_faculty_research
+      @update_faculty_research.attributes = clean_params(params).permit(:title, :description)
+      error!({error: @update_faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_research.save
+      @update_faculty_research
+    end
+
+    #for delete faculty research
+    desc "Delete Faculty Research"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :research_id
+    end
+    post :delete_faculty_research do
+      @faculty_research = FacultyResearch.find params[:research_id]
+      @faculty_research.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for get faculty stuff
+    desc 'Get Faculty Stuff'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_faculty_stuff, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      @faculty_affiliations = @user.faculty_affiliations
+      @faculty_workshops = @user.faculty_workshops
+      @faculty_publications = @user.faculty_publications
+      @faculty_researches = @user.faculty_researches
+    end
+
 end
 
 #--------------------------------faculty end----------------------------------#

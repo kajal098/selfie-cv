@@ -373,6 +373,27 @@ UserProject.create(user_id: 7,title: 'sdfgh', description: 'first')
 UserProject.create(user_id: 8,title: 'qwertyu', description: 'third')
 UserProject.create(user_id: 9,title: 'sdfgh', description: 'first')
 
+FacultyAffiliation.create(user_id:7, university:'gtu', collage_name: 'vgec', subject: 'computer', designation: 'chandkheda', join_from: '22/11/2011' )
+FacultyAffiliation.create(user_id:8, university:'gtu', collage_name: 'vgec', subject: 'computer', designation: 'chandkheda', join_from: '22/11/2011' )
+FacultyAffiliation.create(user_id:9, university:'gtu', collage_name: 'vgec', subject: 'computer', designation: 'chandkheda', join_from: '22/11/2011' )
+FacultyAffiliation.create(user_id:10, university:'gtu', collage_name: 'vgec', subject: 'computer', designation: 'chandkheda', join_from: '22/11/2011' )
+
+
+FacultyPublication.create(user_id:7, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+FacultyPublication.create(user_id:8, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+FacultyPublication.create(user_id:9, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+FacultyPublication.create(user_id:10, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+
+FacultyResearch.create(user_id:7, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+FacultyResearch.create(user_id:8, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+FacultyResearch.create(user_id:9, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+FacultyResearch.create(user_id:10, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+
+FacultyWorkshop.create(user_id:7, description:'abcdefghijklmnopqrstuvwxyz' )
+FacultyWorkshop.create(user_id:8, description:'abcdefghijklmnopqrstuvwxyz' )
+FacultyWorkshop.create(user_id:9, description:'abcdefghijklmnopqrstuvwxyz' )
+FacultyWorkshop.create(user_id:10, description:'abcdefghijklmnopqrstuvwxyz' )
+
 Setting.create(resume_per: 40, achievement_per: 10, curricular_per: 10, whizquiz_per: 10, future_goal_per: 10, working_env_per: 10,reference_per: 10,site_name: 'Selfie Cv', site_email: 'selfiecv@gmailcom',site_phone: 12345678,site_fax: 1234567,facebook_url:'http://www.facebook.com/selfiecv',twitter_url:'http://www.twitter.com/selfiecv',google_plus_url: 'http://www.googleplus.com/selfiecv')
 
 

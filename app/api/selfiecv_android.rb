@@ -1269,7 +1269,7 @@ resources :student do
     end
     post :student_education, jbuilder: 'android' do
       @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:standard] || params[:school] || params[:year] )
         @student_education = StudentEducation.new user_id: @user.id
         @student_education.attributes = clean_params(params).permit(:standard, :school, :year)
@@ -1288,7 +1288,7 @@ resources :student do
     end
     post :update_student_education, jbuilder: 'android' do
       @update_student_education = StudentEducation.find params[:education_id]
-      error! 'Student education not found',422 unless @update_student_education
+      error!({error: 'Student education not found', status: 'Fail'}, 200) unless @update_student_education
       @update_student_education.attributes = clean_params(params).permit(:standard, :school, :year)
       @update_student_education.file = params[:file] if params[:file]
       error!({error: @update_student_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_education.save
@@ -1321,7 +1321,7 @@ resources :student do
     end
     post :student_marksheet, jbuilder: 'android' do
       @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:school_name] || params[:standard] || params[:grade] || params[:year] )
         @student_marksheet = UserMarksheet.new user_id: @user.id
         @student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
@@ -1344,7 +1344,7 @@ resources :student do
     end
     post :update_student_marksheet, jbuilder: 'android' do
       @update_student_marksheet = UserMarksheet.find params[:marksheet_id]
-      error! 'Student marksheet not found',422 unless @update_student_marksheet
+      error!({error: 'Student marksheet not found', status: 'Fail'}, 200) unless @update_student_marksheet
       @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
       @update_student_marksheet.file = params[:file] if params[:file]
       error!({error: @update_student_marksheet.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_marksheet.save
@@ -1373,7 +1373,7 @@ resources :student do
     end
     post :student_project, jbuilder: 'android' do
       @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:title] || params[:description] )
         @student_project = UserProject.new user_id: @user.id
         @student_project.attributes = clean_params(params).permit(:title, :description)
@@ -1391,7 +1391,7 @@ resources :student do
     end
     post :update_student_project, jbuilder: 'android' do
       @update_student_project = UserProject.find params[:project_id]
-      error! 'Student project not found',422 unless @update_student_project
+      error!({error: 'Student project not found', status: 'Fail'}, 200) unless @update_student_project
       @update_student_project.attributes = clean_params(params).permit(:title, :description)
       error!({error: @update_student_project.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_project.save
       @update_student_project
@@ -1417,7 +1417,7 @@ resources :student do
     end
     post :get_student_stuff, jbuilder: 'android' do
       @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @student_educations = @user.student_educations
       @student_marksheets = @user.user_marksheets
       @student_projects = @user.user_projects
@@ -1478,6 +1478,209 @@ resources :faculty do
         @user_meter.update_column :resume_per, 30
       end
       @user
+    end
+
+    # for fill faculty affiliation
+    desc 'Faculty Affiliation'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :university
+      optional :collage_name
+      optional :subject
+      optional :designation
+      optional :join_from
+    end
+    post :faculty_affiliation, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      if (params[:university] || params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
+        @faculty_affiliation = FacultyAffiliation.new user_id: @user.id
+        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
+        error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
+      end          
+    end
+
+    # for update faculty affiliation
+    desc 'Update Faculty Affiliation'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :affiliation_id
+      optional :university
+      optional :collage_name
+      optional :subject
+      optional :designation
+      optional :join_from
+    end
+    post :update_faculty_affiliation, jbuilder: 'android' do
+      @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+      error!({error: 'Faculty affiliation not found', status: 'Fail'}, 200) unless @update_faculty_affiliation
+      @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
+      error!({error: @update_faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_affiliation.save
+      @update_faculty_affiliation
+    end
+
+    #for delete faculty affiliation
+    desc "Delete Faculty Affiliation"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :affiliation_id
+    end
+    post :delete_faculty_affiliation do
+      @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+      @faculty_affiliation.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for fill faculty workshop
+    desc 'Faculty Workshop'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :description
+    end
+    post :faculty_workshop, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      
+        @faculty_workshop = FacultyWorkshop.new user_id: @user.id
+        @faculty_workshop.attributes = clean_params(params).permit(:description)
+        error!({error: @faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_workshop.save
+           
+    end
+
+    # for update faculty workshop
+    desc 'Update Faculty Workshop'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :workshop_id
+      optional :description
+    end
+    post :update_faculty_workshop, jbuilder: 'android' do
+      @update_faculty_workshop = FacultyWorkshop.find params[:workshop_id]
+      error!({error: 'Student workshop not found', status: 'Fail'}, 200) unless @update_faculty_workshop
+      @update_faculty_workshop.attributes = clean_params(params).permit(:description)
+      error!({error: @update_faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_workshop.save
+      @update_faculty_workshop
+    end
+
+    #for delete faculty workshop
+    desc 'Delete Faculty Workshop'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :workshop_id
+    end
+    post :delete_faculty_workshop do
+      @faculty_workshop = FacultyWorkshop.find params[:workshop_id]
+      @faculty_workshop.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for fill faculty publication
+    desc 'Faculty Publication'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :title
+      optional :description
+    end
+    post :faculty_publication, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      if (params[:title] || params[:description] )
+        @faculty_publication = FacultyPublication.new user_id: @user.id
+        @faculty_publication.attributes = clean_params(params).permit(:title, :description)
+        error!({error: @faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_publication.save
+      end          
+    end
+
+    # for update faculty publication
+    desc 'Update Faculty Publication'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :publication_id
+      optional :title
+      optional :description
+    end
+    post :update_faculty_publication, jbuilder: 'android' do
+      @update_faculty_publication = FacultyPublication.find params[:publication_id]
+      error!({error: 'Student publication not found', status: 'Fail'}, 200) unless @update_faculty_publication
+      @update_faculty_publication.attributes = clean_params(params).permit(:title, :description)
+      error!({error: @update_faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_publication.save
+      @update_faculty_publication
+    end
+
+    #for delete faculty publication
+    desc "Delete Faculty Publication"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :publication_id
+    end
+    post :delete_faculty_publication do
+      @faculty_publication = FacultyPublication.find params[:publication_id]
+      @faculty_publication.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for fill faculty research
+    desc 'Faculty Research'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :title
+      optional :description
+    end
+    post :faculty_research, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      if (params[:title] || params[:description] )
+        @faculty_research = FacultyResearch.new user_id: @user.id
+        @faculty_research.attributes = clean_params(params).permit(:title, :description)
+        error!({error: @faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_research.save
+      end          
+    end
+
+    # for update faculty research
+    desc 'Update Faculty Reaserch'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :research_id
+      optional :title
+      optional :description
+    end
+    post :update_faculty_research, jbuilder: 'android' do
+      @update_faculty_research = FacultyResearch.find params[:research_id]
+      error!({error: 'Student research not found', status: 'Fail'}, 200) unless @update_faculty_research
+      @update_faculty_research.attributes = clean_params(params).permit(:title, :description)
+      error!({error: @update_faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_research.save
+      @update_faculty_research
+    end
+
+    #for delete faculty research
+    desc "Delete Faculty Research"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :research_id
+    end
+    post :delete_faculty_research do
+      @faculty_research = FacultyResearch.find params[:research_id]
+      @faculty_research.destroy
+      { code: 200, :status => "Success" }
+    end
+
+    # for get faculty stuff
+    desc 'Get Faculty Stuff'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :get_faculty_stuff, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      @faculty_affiliations = @user.faculty_affiliations
+      @faculty_workshops = @user.faculty_workshops
+      @faculty_publications = @user.faculty_publications
+      @faculty_researches = @user.faculty_researches
     end
 
 end
