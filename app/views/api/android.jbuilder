@@ -613,7 +613,8 @@ end
 if @faculty_affiliations
 	@affiliations = @user.faculty_affiliations.order('created_at DESC')
 	json.faculty_affiliations @affiliations do |affiliation|
-	json.extract! affiliation, :id, :user_id, :title, :description
+	json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from
+
 
 	json.edu_created_at affiliation.created_at.to_i
 	json.edu_updated_at affiliation.updated_at.to_i
@@ -641,7 +642,7 @@ end
 if @faculty_workshops
 	@workshops = @user.faculty_workshops.order('created_at DESC')
 	json.faculty_workshops @workshops do |workshop|
-	json.extract! workshop, :id, :user_id, :title, :description
+	json.extract! workshop, :id, :user_id, :description
 
 	json.edu_created_at workshop.created_at.to_i
 	json.edu_updated_at workshop.updated_at.to_i
