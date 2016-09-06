@@ -26,6 +26,9 @@
                           <p><strong class="text_color" >Address:</strong> <%= @user.address %> , <%= @user.city %>  </p>
                           <p><strong class="text_color" >Nationality:</strong> <%= @user.nationality %> </p>
                           <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.file, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file, :size => "100x100" %><% end %></p>
+
+                          <p><strong class="text_color" >File URL:</strong> <%= @user.file.url %></p>
+
                           <p><strong class="text_color" >All Percentage:</strong><br>
                           Resume :<%= @user.user_meter.resume_per.to_i %><br>
                           Achievement :<%= @user.user_meter.achievement_per.to_i %><br>
@@ -61,6 +64,7 @@
                           <p><strong class="text_color" >Company Future Turnover:</strong> <%= @user.company_future_turnover %> </p>
                           <p><strong class="text_color" >Company Future New Venture Location:</strong> <%= @user.company_future_new_venture_location %> </p>
                           <p><strong class="text_color" >Company Future Outlet:</strong> <%= @user.company_future_outlet %> </p>
+                          <p><strong class="text_color" >File URL:</strong> <%= @user.file.url %></p>
                           <p><strong class="text_color" >All Percentage:</strong><br>
                           Company Info :<%= @user.user_meter.company_info_per.to_i %><br>
                           Corporate Identity :<%= @user.user_meter.corporate_identity_per.to_i %><br>
@@ -81,7 +85,7 @@
                           <p><strong class="text_color" >Designation:</strong> <%= @user.faculty_designation %> </p>
                           <p><strong class="text_color" >Join From:</strong> <%= @user.faculty_join_from %> </p>
                           <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "100x100" %><% end %></p>
-
+                          <p><strong class="text_color" >File URL:</strong> <%= @user.file.url %></p>
                           <p><strong class="text_color" >All Percentage:</strong><br>
                           Basic Info :<%= @user.user_meter.faculty_basic_info_per.to_i %><br>
                           Experience :<%= @user.user_meter.faculty_experience_per.to_i %><br>
@@ -92,7 +96,7 @@
                           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
                           <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
                           <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "100x100" %><% end %></p>
-
+                          <p><strong class="text_color" >File URL:</strong> <%= @user.file.url %></p>
                           <p><strong class="text_color" >All Percentage:</strong><br>
                           Basic Info :<%= @user.user_meter.student_basic_info_per.to_i %><br>
                           Education :<%= @user.user_meter.student_education_per.to_i %><br>
