@@ -1447,7 +1447,7 @@ resources :faculty do
     post :delete_faculty_affiliation do
       @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
       @faculty_affiliation.destroy
-      { code: 200, :status => "Success" }
+      status 200
     end
 
     # for fill faculty workshop

@@ -38,6 +38,10 @@ has_many :company_galeries
 has_many :user_marksheets
 has_one :user_meter
 has_many :user_projects
+has_many :faculty_affiliations
+has_many :faculty_workshops
+has_many :faculty_publications
+has_many :faculty_researches
 
 mount_uploader :file, FileUploader
     # def resume_thumb_url
