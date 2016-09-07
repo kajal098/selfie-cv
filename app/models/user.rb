@@ -42,6 +42,7 @@ has_many :faculty_affiliations
 has_many :faculty_workshops
 has_many :faculty_publications
 has_many :faculty_researches
+has_many :faculty_groups
 
 mount_uploader :file, FileUploader
     # def resume_thumb_url

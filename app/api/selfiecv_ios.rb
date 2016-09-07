@@ -1408,13 +1408,14 @@ resources :faculty do
       optional :subject
       optional :designation
       optional :join_from
+      optional :switch_btn
     end
     post :faculty_affiliation, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:university] || params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
         @faculty_affiliation = FacultyAffiliation.new user_id: @user.id
-        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
+        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :switch_btn)
         error! @faculty_affiliation.errors.full_messages.join(', '),422 unless @faculty_affiliation.save
       end          
     end
@@ -1429,11 +1430,12 @@ resources :faculty do
       optional :subject
       optional :designation
       optional :join_from
+      optional :switch_btn
     end
     post :update_faculty_affiliation, jbuilder: 'ios' do
       @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
       error! 'Faculty affiliation not found',422 unless @update_faculty_affiliation
-      @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
+      @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :switch_btn)
       error! @update_faculty_affiliation.errors.full_messages.join(', '),422 unless @update_faculty_affiliation.save
       @update_faculty_affiliation
     end

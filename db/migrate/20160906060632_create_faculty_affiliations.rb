@@ -7,6 +7,7 @@ class CreateFacultyAffiliations < ActiveRecord::Migration
       t.string :subject,              null:false, default: ""
       t.string :designation,              null:false, default: ""
       t.date :join_from,                  :default=>Date.today
+      t.boolean :switch_btn,               default: false
 
       t.timestamps null: false
     end
