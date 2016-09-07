@@ -595,7 +595,7 @@ end
 if @faculty_affiliation
 	@affiliations = @user.faculty_affiliations.order('created_at DESC')
 	json.faculty_affiliations @affiliations do |affiliation|
-		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :switch_btn
+		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from
 		
 
 		json.created_at affiliation.created_at.to_i
@@ -604,7 +604,7 @@ if @faculty_affiliation
 end
 
 if @update_faculty_affiliation
-	json.extract! @update_faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :switch_btn
+	json.extract! @update_faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from
 
 	json.edu_created_at @update_faculty_affiliation.created_at.to_i
 	json.edu_updated_at @update_faculty_affiliation.updated_at.to_i
@@ -613,7 +613,7 @@ end
 if @faculty_affiliations
 	@affiliations = @user.faculty_affiliations.order('created_at DESC')
 	json.faculty_affiliations @affiliations do |affiliation|
-	json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :switch_btn
+	json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from
 
 
 	json.edu_created_at affiliation.created_at.to_i
