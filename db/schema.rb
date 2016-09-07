@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907102536) do
+ActiveRecord::Schema.define(version: 20160907121436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,16 +62,6 @@ ActiveRecord::Schema.define(version: 20160907102536) do
 
   add_index "faculty_affiliations", ["user_id"], name: "index_faculty_affiliations_on_user_id", using: :btree
 
-  create_table "faculty_groups", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "name",       default: "", null: false
-    t.integer  "code",                    null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "faculty_groups", ["user_id"], name: "index_faculty_groups_on_user_id", using: :btree
-
   create_table "faculty_publications", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title",       default: "", null: false
@@ -106,6 +96,27 @@ ActiveRecord::Schema.define(version: 20160907102536) do
   end
 
   add_index "faculty_workshops", ["user_id"], name: "index_faculty_workshops_on_user_id", using: :btree
+
+  create_table "group_users", force: :cascade do |t|
+    t.integer  "group_id",                   null: false
+    t.integer  "user_id",                    null: false
+    t.integer  "status",     default: 0
+    t.integer  "invite",     default: 0
+    t.boolean  "admin",      default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "group_users", ["group_id"], name: "index_group_users_on_group_id", using: :btree
+  add_index "group_users", ["user_id"], name: "index_group_users_on_user_id", using: :btree
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "name",       default: "", null: false
+    t.integer  "code",                    null: false
+    t.string   "group_pic",  default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "industries", force: :cascade do |t|
     t.string   "name"
@@ -417,10 +428,11 @@ ActiveRecord::Schema.define(version: 20160907102536) do
   add_foreign_key "company_galeries", "users", on_delete: :cascade
   add_foreign_key "devices", "users", on_delete: :cascade
   add_foreign_key "faculty_affiliations", "users", on_delete: :cascade
-  add_foreign_key "faculty_groups", "users", on_delete: :cascade
   add_foreign_key "faculty_publications", "users", on_delete: :cascade
   add_foreign_key "faculty_researches", "users", on_delete: :cascade
   add_foreign_key "faculty_workshops", "users", on_delete: :cascade
+  add_foreign_key "group_users", "groups", on_delete: :cascade
+  add_foreign_key "group_users", "users", on_delete: :cascade
   add_foreign_key "student_educations", "users", on_delete: :cascade
   add_foreign_key "user_awards", "users", on_delete: :cascade
   add_foreign_key "user_certificates", "users", on_delete: :cascade

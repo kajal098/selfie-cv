@@ -1605,4 +1605,30 @@ end
 
 #--------------------------------faculty end----------------------------------#
 
+#--------------------------------group start----------------------------------#
+
+resources :group do 
+
+  params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :name
+      optional :group_pic
+    end
+
+  post :create, jbuilder: 'ios_group' do
+      @group = Group.new clean_params(params).permit(:name)
+      @group.code = Random.rand(500000..900000)
+      @group.group_pic = params[:group_pic]
+      error! @group.errors.full_messages.join(', '), 422 unless @group.save
+      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id
+      error! @group_user.errors.full_messages.join(', '), 422 unless @group_user.save
+       #Device.notify User.where(id: current_user.id).active_devices, alert: "#{current_user} has added you to group #{@group}."
+      
+  end
+
+end
+
+#--------------------------------group end----------------------------------#
+
+
 end
