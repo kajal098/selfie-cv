@@ -51,12 +51,11 @@ ActiveRecord::Schema.define(version: 20160907102536) do
 
   create_table "faculty_affiliations", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "university",   default: "",           null: false
+    t.boolean  "university",   default: false
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
     t.date     "join_from",    default: '2016-09-07'
-    t.boolean  "switch_btn",   default: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end

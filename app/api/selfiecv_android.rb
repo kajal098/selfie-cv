@@ -1490,14 +1490,13 @@ resources :faculty do
       optional :subject
       optional :designation
       optional :join_from
-      optional :switch_btn
     end
     post :faculty_affiliation, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:university] || params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
         @faculty_affiliation = FacultyAffiliation.new user_id: @user.id
-        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :switch_btn)
+        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
         error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
       end          
     end
@@ -1512,12 +1511,11 @@ resources :faculty do
       optional :subject
       optional :designation
       optional :join_from
-      optional :switch_btn
     end
     post :update_faculty_affiliation, jbuilder: 'android' do
       @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
       error!({error: 'Faculty affiliation not found', status: 'Fail'}, 200) unless @update_faculty_affiliation
-      @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :switch_btn)
+      @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
       error!({error: @update_faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_affiliation.save
       @update_faculty_affiliation
     end
@@ -1692,7 +1690,7 @@ end
 #--------------------------------group start----------------------------------#
 
 resources :group do 
-
+  
 end
 
 #--------------------------------group end----------------------------------#

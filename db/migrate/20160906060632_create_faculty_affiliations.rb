@@ -2,13 +2,12 @@ class CreateFacultyAffiliations < ActiveRecord::Migration
   def change
     create_table :faculty_affiliations do |t|
       t.integer :user_id
-      t.string :university,              null:false, default: ""
+      t.boolean :university,               default: false
       t.string :collage_name,              null:false, default: ""
       t.string :subject,              null:false, default: ""
       t.string :designation,              null:false, default: ""
       t.date :join_from,                  :default=>Date.today
-      t.boolean :switch_btn,               default: false
-
+      
       t.timestamps null: false
     end
     add_index :faculty_affiliations, [:user_id]
