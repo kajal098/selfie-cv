@@ -1494,7 +1494,7 @@ resources :faculty do
     post :faculty_affiliation, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      if (params[:university] || params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
+      if (params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] )
         @faculty_affiliation = FacultyAffiliation.new user_id: @user.id
         @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from)
         error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
@@ -1690,7 +1690,7 @@ end
 #--------------------------------group start----------------------------------#
 
 resources :group do 
-  
+
 end
 
 #--------------------------------group end----------------------------------#
