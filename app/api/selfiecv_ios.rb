@@ -1106,6 +1106,22 @@ resources :data do
       @industries = Industry.all
     end
 
+    # for only image upload
+    desc 'Image Upload'
+    
+    params do
+        requires :token, type: String, regexp: UUID_REGEX
+        optional :profile_pic
+      end
+
+      post :image_upload do
+        @upload = User.new clean_params(params).permit(:profile_pic)
+        @upload.profile_pic = params[:profile_pic] if params[:profile_pic]
+        error! @upload.errors.full_messages.join(', '), 422 unless @upload.save
+        @upload
+      end
+  
+
 end
 
 #--------------------------------data end----------------------------------#
