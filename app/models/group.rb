@@ -1,8 +1,8 @@
 class Group < ActiveRecord::Base
-	mount_uploader :file, FileUploader
+	mount_uploader :group_pic, FileUploader
     def thumb_url
           
-            file.url(:thumb)
+            group_pic.url(:thumb)
         
     end
 end
