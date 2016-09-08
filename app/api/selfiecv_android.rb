@@ -1782,6 +1782,22 @@ resources :group do
         { code: 200, :status => "Success" }
       end
 
+      # Join group
+
+    desc 'Join Group'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :code
+    end
+
+    post :join, jbuilder: 'android_group' do
+      @group = Group.find_by_code params[:code]
+      error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group
+      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false 
+      error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save     
+      @group_user
+    end
+
     
 
 end

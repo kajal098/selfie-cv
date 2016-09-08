@@ -3,8 +3,6 @@ class CreateGroupUsers < ActiveRecord::Migration
     create_table :group_users do |t|
     	  t.integer :group_id, null: false
         t.integer :user_id, null: false
-        t.integer :status, default: 0
-        t.integer :invite, default: 0
         t.boolean :admin, default: false
 
       t.timestamps null: false
