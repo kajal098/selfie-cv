@@ -1748,7 +1748,7 @@ resources :group do
       @group = Group.find params[:group_id]
       @group.attributes = clean_params(params).permit(:name)
       @group.group_pic = params[:group_pic] if params[:group_pic]
-      error! ({error: @group.errors.full_messages.join(', '), status: 'Fail'},200) unless @group.save
+      error!({error: @group.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group.save
       @group
     end
 
