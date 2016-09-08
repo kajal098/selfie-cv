@@ -1654,6 +1654,25 @@ resources :group do
       
      end
 
+     # for update group detail
+
+    desc "Update Group"
+
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+      optional :name
+      optional :group_pic
+    end
+
+    post :update, jbuilder: 'android_group' do
+      @group = Group.find params[:group_id]
+      @group.attributes = clean_params(params).permit(:name)
+      @group.group_pic = params[:group_pic] if params[:group_pic]
+      error! @group.errors.full_messages.join(', '), 422 unless @group.save
+      @group
+    end
+
 end
 
 #--------------------------------group end----------------------------------#
