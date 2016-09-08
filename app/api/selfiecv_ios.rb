@@ -1646,7 +1646,7 @@ resources :group do
       requires :group_id
     end
    
-    get :info, jbuilder: 'ios_group' do
+    post :info, jbuilder: 'ios_group' do
       @group = Group.find(params[:group_id])
       
         error! 'Record not found',422 unless @group
