@@ -1190,7 +1190,7 @@ resources :data do
       requires :user_id
       optional :profile_pic
     end
-    post :update_image, jbuilder: 'ios' do
+    post :update_image, jbuilder: 'android' do
       @update_image = User.find params[:user_id]
       error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_image
       @update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
