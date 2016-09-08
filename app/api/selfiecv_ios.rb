@@ -1111,15 +1111,31 @@ resources :data do
     
     params do
         requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
         optional :profile_pic
       end
 
       post :image_upload do
-        @upload = User.new clean_params(params).permit(:profile_pic)
-        @upload.profile_pic = params[:profile_pic] if params[:profile_pic]
-        error! @upload.errors.full_messages.join(', '), 422 unless @upload.save
-        @upload
+        @user = User.find params[:user_id]
+        @user.profile_pic = params[:profile_pic] if params[:profile_pic]
+        error! @user.errors.full_messages.join(', '), 422 unless @user.save
+        @user
       end
+
+      # for update student education
+    desc 'Update Student Education'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :profile_pic
+    end
+    post :update_image, jbuilder: 'ios' do
+      @update_image = User.find params[:user_id]
+      error! 'User Environment not found',422 unless @update_image
+      @update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
+      error! @update_image.errors.full_messages.join(', '), 422 unless @update_image.save
+      @update_image
+    end
   
 
 end
