@@ -1,5 +1,3 @@
-json.status "Success"
-
 if @group
 	
 		json.Group @group, :id, :name, :code
@@ -16,4 +14,13 @@ if @group_user
 	json.created_at @group_user.created_at.to_i
 		json.updated_at @group_user.updated_at.to_i
 	
+end
+
+if @groups
+	json.groups @groups do |group|
+		json.extract! group, :id, :name, :code
+		
+		json.group_created_at group.created_at.to_i
+		json.group_updated_at group.updated_at.to_i
+	end
 end

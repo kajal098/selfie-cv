@@ -1609,6 +1609,7 @@ end
 
 resources :group do 
 
+  # for create group
   params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :name
@@ -1625,6 +1626,33 @@ resources :group do
        #Device.notify User.where(id: current_user.id).active_devices, alert: "#{current_user} has added you to group #{@group}."
       
   end
+
+  # for listing groups of current user
+  params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+  end
+
+  post :listing, jbuilder: 'ios_group' do
+      @groups = current_user.all_groups
+  end
+
+  # for view of group
+
+    desc "Information of Group"
+    
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+    end
+   
+    get :info, jbuilder: 'ios_group' do
+      @group = Group.find(params[:group_id])
+      
+        error! 'Record not found',422 unless @group
+     
+      
+     end
 
 end
 
