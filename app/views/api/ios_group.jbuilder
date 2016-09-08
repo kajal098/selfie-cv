@@ -9,7 +9,7 @@ end
 
 if @group_user
 
-	json.GroupUser @group_user, :id, :group_id, :user_id, :status, :invite, :admin
+	json.GroupUser @group_user, :id, :group_id, :user_id, :admin
 	
 	json.created_at @group_user.created_at.to_i
 		json.updated_at @group_user.updated_at.to_i
