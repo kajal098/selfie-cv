@@ -1752,6 +1752,21 @@ resources :group do
       @group
     end
 
+    #for delete group
+
+      desc "Delete Group"
+
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :group_id
+      end
+
+      post :delete do
+        @group = Group.find params[:group_id]
+        @group.destroy
+        { code: 200, :status => "Success" }
+      end
+
     
 
 end
