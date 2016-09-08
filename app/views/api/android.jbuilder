@@ -1,5 +1,10 @@
 json.status "Success"
 
+if @update_image
+	json.profile_thumb @update_image.profile_thumb_url
+	json.profile @update_image.profile_photo_url
+end
+
 if @user
 	if @user.role == 'Jobseeker'
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field

@@ -1183,6 +1183,21 @@ resources :data do
       @industries = Industry.all
     end
 
+    # for update student education
+    desc 'Update Student Education'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :profile_pic
+    end
+    post :update_image, jbuilder: 'ios' do
+      @update_image = User.find params[:user_id]
+      error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_image
+      @update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
+      error!({error: @update_image.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_image.save
+      @update_image
+    end
+
 end
 
 #--------------------------------data end----------------------------------#

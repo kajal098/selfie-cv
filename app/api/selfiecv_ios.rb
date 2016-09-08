@@ -1106,23 +1106,7 @@ resources :data do
       @industries = Industry.all
     end
 
-    # for only image upload
-    desc 'Image Upload'
-    
-    params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :user_id
-        optional :profile_pic
-      end
-
-      post :image_upload do
-        @user = User.find params[:user_id]
-        @user.profile_pic = params[:profile_pic] if params[:profile_pic]
-        error! @user.errors.full_messages.join(', '), 422 unless @user.save
-        @user
-      end
-
-      # for update student education
+    # for update student education
     desc 'Update Student Education'
     params do
       requires :token, type: String, regexp: UUID_REGEX
