@@ -2,6 +2,7 @@ json.status "Success"
 
 if @update_image
 	json.profile @update_image.profile_thumb_url
+	json.profile @update_image.profile_photo_url
 end
 
 if @user
