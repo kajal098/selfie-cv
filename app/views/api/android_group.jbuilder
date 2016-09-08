@@ -3,7 +3,7 @@ json.status "Success"
 if @group
 	
 		json.Group @group, :id, :name, :code
-		
+		json.group_pic @group.thumb_url
 		json.created_at @group.created_at.to_i
 		json.updated_at @group.updated_at.to_i
 	

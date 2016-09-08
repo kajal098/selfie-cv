@@ -1701,7 +1701,7 @@ resources :group do
   post :create, jbuilder: 'android_group' do
       @group = Group.new clean_params(params).permit(:name)
       @group.code = Random.rand(500000..900000)
-      @group.group_pic = params[:group_pic]
+      @group.group_pic = params[:group_pic] if params[:group_pic]
       error!({error: @group.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group.save
       @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id
       error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save
@@ -1734,6 +1734,25 @@ resources :group do
      
       
      end
+
+     # for update group detail
+
+    desc "Update Group"
+
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+      requires :name
+      optional :group_pic
+    end
+
+    post :update do
+      @group = group.find params[:group_id]
+      @group.attributes = clean_params(params).permit(:name)
+      @group.group_pic = params[:group_pic] if params[:group_pic]
+      error! @group.errors.full_messages.join(', '), 422 unless @group.save
+      @group
+    end
 
 end
 
