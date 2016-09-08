@@ -1,4 +1,4 @@
 class GroupUser < ActiveRecord::Base
-	has_many :user
-	has_many :groups
+	belongs_to :group
+	belongs_to :user, foreign_key: "user_id"
 end

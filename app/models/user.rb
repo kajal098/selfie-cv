@@ -42,7 +42,8 @@ has_many :faculty_affiliations
 has_many :faculty_workshops
 has_many :faculty_publications
 has_many :faculty_researches
-belongs_to :group_user
+has_many :groups, class_name: 'GroupUser',foreign_key: "user_id"
+has_many :all_groups, through: :groups, class_name: 'Group', source: :group
 
 mount_uploader :file, FileUploader
     # def resume_thumb_url
