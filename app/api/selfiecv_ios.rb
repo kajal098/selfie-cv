@@ -1695,8 +1695,11 @@ resources :group do
     end
 
     post :delete do
-        @group = Group.find params[:group_id]
-        @group.destroy
+        @group = Group.find params[:group_id]        
+          unless @group.deleted_from.include? current_user.id
+            @group.deleted_from << current_user.id
+            @group.update_column :deleted_from, @group.deleted_from
+          end        
         status 200
     end
 

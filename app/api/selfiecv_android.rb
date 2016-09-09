@@ -1729,7 +1729,7 @@ resources :group do
   end
 
   post :listing, jbuilder: 'android_group' do
-      @groups = current_user.all_groups
+      @groups = current_user.all_groups(current_user)
   end
 
   # for view of group
@@ -1777,28 +1777,15 @@ resources :group do
       end
 
       post :delete do
-        @group = Group.find params[:group_id]
-        @group.destroy
+        @group = Group.find params[:group_id]        
+          unless @group.deleted_from.include? current_user.id
+            @group.deleted_from << current_user.id
+            @group.update_column :deleted_from, @group.deleted_from
+          end        
         { code: 200, :status => "Success" }
       end
 
-      desc 'destroy Message'
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :conversation_id
-    end
-    post :destroy do
-      @conversation = Conversation.find params[:conversation_id]
-      @conversation.messages.each do |message|  
-      unless message.deleted_from.include? current_user.id
-          message.deleted_from << current_user.id
-          message.update_column :deleted_from, message.deleted_from
-        end
-      end
-      status 200
-    end
-
-      # Join group
+# Join group
 
     desc 'Join Group'
     params do
