@@ -1718,7 +1718,7 @@ resources :group do
       @group.code = Random.rand(500000..900000)
       @group.group_pic = params[:group_pic] if params[:group_pic]
       error!({error: @group.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group.save
-      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id, admin: true , status: 'member' 
+      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id, admin: true , status: 'joined' 
       error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save
       end
 
@@ -1781,6 +1781,22 @@ resources :group do
         @group.destroy
         { code: 200, :status => "Success" }
       end
+
+      desc 'destroy Message'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :conversation_id
+    end
+    post :destroy do
+      @conversation = Conversation.find params[:conversation_id]
+      @conversation.messages.each do |message|  
+      unless message.deleted_from.include? current_user.id
+          message.deleted_from << current_user.id
+          message.update_column :deleted_from, message.deleted_from
+        end
+      end
+      status 200
+    end
 
       # Join group
 
