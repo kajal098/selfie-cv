@@ -4,7 +4,7 @@ class CreateGroupUsers < ActiveRecord::Migration
     	  t.integer :group_id, null: false
         t.integer :user_id, null: false
         t.boolean :admin, default: false
-        t.integer :status, default: 0
+        t.integer :status
         t.timestamps null: false
     end
     add_index :group_users, [:user_id]

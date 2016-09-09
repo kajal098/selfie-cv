@@ -6,10 +6,16 @@ class GroupUserReport
   scope { GroupUser.all }
 
   #filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
+  filter(:user_id, :enum, header: "User", select: ->{ User.pluck(:first_name, :id) })
+  filter(:group_id, :enum, header: "Group", select: ->{ Group.pluck(:name, :id) })
   
+  column(:user_id, header: "User Id", :order => "groups.user_id")
+
   column(:user_id, header: "User", :order => "group_users.user_id",) do |model|
     model.user.first_name
   end
+
+  column(:group_id, header: "Group Id", :order => "groups.group_id")
 
   column(:group_id, header: "Group", :order => "group_users.group_id",) do |model|
     model.group.name

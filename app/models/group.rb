@@ -5,4 +5,5 @@ class Group < ActiveRecord::Base
             group_pic.url(:thumb)
         
     end
+    has_many :users, class_name: 'GroupUser'
 end

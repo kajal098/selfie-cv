@@ -1711,7 +1711,7 @@ resources :group do
     post :join, jbuilder: 'ios_group' do
       @group = Group.find_by_code params[:code]
       error! 'Group not found or wrong code', 422 unless @group
-      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'member' 
+      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined' 
       error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save     
       @group_user
     end
@@ -1721,11 +1721,14 @@ resources :group do
     desc 'Leave Group'
     params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
+      requires :group_id
     end
 
-    post :leave, jbuilder: 'android_group' do
-        
+    post :leave, jbuilder: 'ios_group' do
+        @group = Group.find params[:group_id]
+        @group_user = @group.users.where(user_id: current_user.id).first
+        @group_user.status = "leaved"
+        @group_user.save
     end
 
 end

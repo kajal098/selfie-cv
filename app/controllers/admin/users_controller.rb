@@ -67,4 +67,11 @@ private
     end
   end
 
+  def filter_params
+    params.fetch(:user, {}).
+    permit(
+      :roles => []
+      )
+  end
+
 end

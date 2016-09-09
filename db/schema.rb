@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20160907121436) do
     t.integer  "group_id",                   null: false
     t.integer  "user_id",                    null: false
     t.boolean  "admin",      default: false
-    t.integer  "status",     default: 0
+    t.integer  "status"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
@@ -110,11 +110,13 @@ ActiveRecord::Schema.define(version: 20160907121436) do
   add_index "group_users", ["user_id"], name: "index_group_users_on_user_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name",       default: "", null: false
-    t.integer  "code",                    null: false
-    t.string   "group_pic",  default: ""
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "name",         default: "", null: false
+    t.integer  "code",                      null: false
+    t.string   "group_pic",    default: ""
+    t.integer  "deleted_from", default: [],              array: true
+    t.datetime "deleted_at"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "industries", force: :cascade do |t|

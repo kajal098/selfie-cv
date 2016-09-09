@@ -4,9 +4,10 @@ class UserReport
 
   scope { User.where.not(role: 0).all }
   
-  filter(:role, :string, header: "Role") {|value| where("CAST(role AS text) ilike ?", "%#{value}%")}
+  #filter(:role, :string, header: "Role") {|value| where("CAST(role AS text) ilike ?", "%#{value}%")}
   filter(:username, :string, header: "Username") {|value| where("username ilike ?", "%#{value}%")}
   filter(:contact_number, :string, header: "Number") {|value| where("contact_number ilike ?", "%#{value}%")}
+  filter(:role, :enum, header: "Role", select: ->{ User.roles})
   
   column(:id, header: "Id",  :order => "users.id")
   column(:role, header: "Role",  :order => "users.role")
