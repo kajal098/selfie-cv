@@ -8,7 +8,7 @@ class GroupUserReport
   #filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:user_id, header: "User", :order => "group_users.user_id",) do |model|
-    model.user.id
+    model.user.first_name
   end
 
   column(:group_id, header: "Group", :order => "group_users.group_id",) do |model|
