@@ -1718,7 +1718,7 @@ resources :group do
       @group.code = Random.rand(500000..900000)
       @group.group_pic = params[:group_pic] if params[:group_pic]
       error!({error: @group.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group.save
-      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id
+      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id, admin: true , status: 'member' 
       error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save
       end
 
@@ -1793,12 +1793,22 @@ resources :group do
     post :join, jbuilder: 'android_group' do
       @group = Group.find_by_code params[:code]
       error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group
-      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false 
+      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'member' 
       error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save     
       @group_user
     end
 
-    
+    # leave group
+
+    desc 'Leave Group'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+
+    post :leave, jbuilder: 'android_group' do
+
+    end
 
 end
 

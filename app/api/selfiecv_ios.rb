@@ -1637,7 +1637,7 @@ resources :group do
         @group.code = Random.rand(500000..900000)
         @group.group_pic = params[:group_pic]
         error! @group.errors.full_messages.join(', '), 422 unless @group.save
-        @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id
+        @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id, admin: true , status: 'member' 
         error! @group_user.errors.full_messages.join(', '), 422 unless @group_user.save
         #Device.notify User.where(id: current_user.id).active_devices, alert: "#{current_user} has added you to group #{@group}."
     end
@@ -1711,9 +1711,21 @@ resources :group do
     post :join, jbuilder: 'ios_group' do
       @group = Group.find_by_code params[:code]
       error! 'Group not found or wrong code', 422 unless @group
-      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false 
+      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'member' 
       error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save     
       @group_user
+    end
+
+    # leave group
+
+    desc 'Leave Group'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+
+    post :leave, jbuilder: 'android_group' do
+        
     end
 
 end

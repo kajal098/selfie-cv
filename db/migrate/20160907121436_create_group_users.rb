@@ -4,8 +4,8 @@ class CreateGroupUsers < ActiveRecord::Migration
     	  t.integer :group_id, null: false
         t.integer :user_id, null: false
         t.boolean :admin, default: false
-
-      t.timestamps null: false
+        t.integer :status, default: 0
+        t.timestamps null: false
     end
     add_index :group_users, [:user_id]
     add_foreign_key :group_users, :users, on_delete: :cascade
