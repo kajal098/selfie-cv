@@ -1734,6 +1734,18 @@ resources :group do
         @group_user.save
     end
 
+    # quick message listing
+
+    desc 'Quick Message'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :role
+    end
+
+    post :quick_message, jbuilder: 'ios_message' do
+      @messages = Message.where(role: Message::ROLES[params[:role]])
+    end
+
 end
 
 #--------------------------------group end----------------------------------#
