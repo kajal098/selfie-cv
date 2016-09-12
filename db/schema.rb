@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20160912125524) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "messages", force: :cascade do |t|
+  create_table "quick_messages", force: :cascade do |t|
     t.string   "text",       default: "",    null: false
     t.boolean  "role",       default: false
     t.datetime "created_at",                 null: false

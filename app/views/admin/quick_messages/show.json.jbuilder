@@ -1,0 +1,1 @@
+json.extract! @quick_message, :text, :created_at, :updated_at
