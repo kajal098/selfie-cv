@@ -1743,7 +1743,7 @@ resources :group do
     post :info, jbuilder: 'android_group' do
       @group = Group.find(params[:group_id])      
       error!({error: 'Record not found', status: 'Fail'}, 200) unless @group
-     
+      @group_users =  @group.users
       
      end
 

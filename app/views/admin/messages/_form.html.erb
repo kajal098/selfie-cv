@@ -1,0 +1,20 @@
+<%= simple_form_for [:admin, @message], html: { class: 'form-horizontal' } do |f| %>
+  
+  <%= f.input :text, label: "Text" %>
+
+
+
+
+ <%= f.label(:role, "Student") %>
+ <%= f.radio_button(:role, "student") %>
+ <%= f.label(:role, "Faculty") %>
+ <%= f.radio_button(:role, "faculty")%>
+
+
+
+  <div class="form-group clearfix">
+    <div class="col-sm-offset-3 col-sm-9">
+      <button type="submit" class="btn btn-primary btn-sm">Save</button> <%= link_to "Back", admin_messages_path, class: "btn btn-default btn-sm" %>
+    </div>
+  </div>
+<% end %>
