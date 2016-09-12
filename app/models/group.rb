@@ -6,6 +6,7 @@ class Group < ActiveRecord::Base
         
     end
     belongs_to :user
-    #has_many :users, class_name: 'GroupUser'
+    has_many :users, class_name: 'GroupUser'
     scope :fetch_groups, -> (user) {where("#{user.id} != ALL (deleted_from)").all}
+
 end

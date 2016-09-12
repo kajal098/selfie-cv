@@ -1725,7 +1725,6 @@ resources :group do
   # for listing groups of current user
   params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
   end
 
   post :listing, jbuilder: 'android_group' do
@@ -1774,14 +1773,27 @@ resources :group do
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :group_id
+        optional :user_id
       end
 
       post :delete do
-        @group = Group.find params[:group_id]        
-          unless @group.deleted_from.include? current_user.id
-            @group.deleted_from << current_user.id
-            @group.update_column :deleted_from, @group.deleted_from
-          end        
+        @group = Group.find params[:group_id]  
+        if params[:user_id]   
+              @user = User.find params[:user_id]   
+              unless @group.deleted_from.include? @user.id
+                @group.deleted_from << @user.id
+                @group.update_column :deleted_from, @group.deleted_from
+              end        
+        else
+              if current_user.role == 'Faculty'
+                @group.destroy
+              else
+                  unless @group.deleted_from.include? current_user.id
+                    @group.deleted_from << current_user.id
+                    @group.update_column :deleted_from, @group.deleted_from
+                  end
+              end
+        end
         { code: 200, :status => "Success" }
       end
 
