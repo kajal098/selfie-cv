@@ -5,6 +5,9 @@ class Group < ActiveRecord::Base
             group_pic.url(:thumb)
         
     end
+
+    paginates_per 10
+    
     belongs_to :user
     has_many :users, class_name: 'GroupUser'
     scope :fetch_groups, -> (user) {where("#{user.id} != ALL (deleted_from)").all}

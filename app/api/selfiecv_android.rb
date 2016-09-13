@@ -419,6 +419,8 @@ resources :member do
       optional :designation
       optional :description
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_experience, jbuilder: 'android' do
       @update_user_experience = UserExperience.find params[:experience_id]
@@ -849,7 +851,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:env_type] || params[:title] )
         @environment = UserEnvironment.new user_id: @user.id
-        @environment.attributes = clean_params(params).permit(:env_type, :title)
+        @environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
         if (params[:file_type] == 'text')
         @environment.text_field = params[:text_field]
       else
@@ -873,7 +875,7 @@ resources :member do
     post :update_working_environment, jbuilder: 'android' do
       @update_user_environment = UserEnvironment.find params[:environment_id]
       error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_user_environment
-      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title)
+      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
       if (params[:file_type] == 'text')
         @update_user_environment.text_field = params[:text_field]
       else
@@ -928,7 +930,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @reference = UserReference.new user_id: @user.id
       if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
-        @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
+        @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
         if (params[:file_type] == 'text')
         @reference.text_field = params[:text_field]
       else
@@ -957,7 +959,7 @@ resources :member do
     post :update_references, jbuilder: 'android' do
       @update_user_reference = UserReference.find params[:reference_id]
       error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @update_user_reference
-      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
+      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
       if (params[:file_type] == 'text')
         @update_user_reference.text_field = params[:text_field]
       else

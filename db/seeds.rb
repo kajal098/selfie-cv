@@ -10,13 +10,13 @@ user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: Secur
 user = User.create(email: 'michel@example.com', password: '12345678' , username: 'michel' , role: 'Admin' )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 
-user = User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student' ) 
+user = User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student', first_name: 'trupti' ) 
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
-user = User.create!(email: 'anni@gmail.com', password:'12345678' , username: 'anni' , role: 'Student' ) 
+user = User.create!(email: 'anni@gmail.com', password:'12345678' , username: 'anni' , role: 'Student', first_name: 'anni' ) 
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
-user = User.create!(email: 'julia@gmail.com', password:'12345678' , username: 'julia' , role: 'Student' ) 
+user = User.create!(email: 'julia@gmail.com', password:'12345678' , username: 'julia' , role: 'Student', first_name: 'julia' ) 
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
-user = User.create!(email: 'mary@gmail.com', password:'12345678' , username: 'mary' , role: 'Student' ) 
+user = User.create!(email: 'mary@gmail.com', password:'12345678' , username: 'mary' , role: 'Student', first_name: 'mary' ) 
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 
 user = User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'Faculty' )
@@ -394,13 +394,45 @@ FacultyWorkshop.create(user_id:8, description:'abcdefghijklmnopqrstuvwxyz' )
 FacultyWorkshop.create(user_id:9, description:'abcdefghijklmnopqrstuvwxyz' )
 FacultyWorkshop.create(user_id:10, description:'abcdefghijklmnopqrstuvwxyz' )
 
+Group.create(name: 'daisy group', code: 123456 )
+Group.create(name: 'jekky group', code: 123456 )
+Group.create(name: 'angela group', code: 123456 )
+Group.create(name: 'diana group', code: 123456 )
+
+GroupUser.create(group_id:1, user_id:7 ,admin:true, status: 'joined')
+GroupUser.create(group_id:2, user_id:8 ,admin:true, status: 'joined')
+GroupUser.create(group_id:3, user_id:9 ,admin:true, status: 'joined')
+GroupUser.create(group_id:4, user_id:10 ,admin:true, status: 'joined')
+
+GroupUser.create(group_id:1, user_id:3 ,admin:false, status: 'joined')
+GroupUser.create(group_id:2, user_id:3 ,admin:false, status: 'joined')
+GroupUser.create(group_id:3, user_id:3 ,admin:false, status: 'joined')
+GroupUser.create(group_id:4, user_id:3 ,admin:false, status: 'joined')
+
+GroupUser.create(group_id:1, user_id:4 ,admin:false, status: 'joined')
+GroupUser.create(group_id:2, user_id:4 ,admin:false, status: 'joined')
+GroupUser.create(group_id:3, user_id:4 ,admin:false, status: 'joined')
+GroupUser.create(group_id:4, user_id:4 ,admin:false, status: 'joined')
+
+GroupUser.create(group_id:1, user_id:5 ,admin:false, status: 'joined')
+GroupUser.create(group_id:2, user_id:5 ,admin:false, status: 'joined')
+GroupUser.create(group_id:3, user_id:5 ,admin:false, status: 'joined')
+GroupUser.create(group_id:4, user_id:5 ,admin:false, status: 'joined')
+
+GroupUser.create(group_id:1, user_id:6 ,admin:false, status: 'joined')
+GroupUser.create(group_id:2, user_id:6 ,admin:false, status: 'joined')
+GroupUser.create(group_id:3, user_id:6 ,admin:false, status: 'joined')
+GroupUser.create(group_id:4, user_id:6 ,admin:false, status: 'joined')
+
 Setting.create(resume_per: 40, achievement_per: 10, curricular_per: 10, whizquiz_per: 10, future_goal_per: 10, working_env_per: 10,reference_per: 10,site_name: 'Selfie Cv', site_email: 'selfiecv@gmailcom',site_phone: 12345678,site_fax: 1234567,facebook_url:'http://www.facebook.com/selfiecv',twitter_url:'http://www.twitter.com/selfiecv',google_plus_url: 'http://www.googleplus.com/selfiecv')
 
-
-
-
-
-
+QuickMessage.create(text: 'Your homework for today is.', role: 'student')
+QuickMessage.create(text: 'Great work class !! Keep it up !!', role: 'student')
+QuickMessage.create(text: 'Tommorrow we will be starting a new chapter. Make sure you dont miss it.', role: 'student')
+QuickMessage.create(text: 'Many students are having problems with current chapter. I know its difficult but dont worry i am always here to help you.', role: 'student')
+QuickMessage.create(text: 'You have a surprise test tomorrow.', role: 'student')
+QuickMessage.create(text: 'Life teaching : The best preparation for tomorrow is doing your best today.', role: 'student')
+QuickMessage.create(text: 'If you are facing any perticular problem, do feel free to share with me.', role: 'student')
 
 
 

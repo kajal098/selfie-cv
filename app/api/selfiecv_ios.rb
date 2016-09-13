@@ -239,7 +239,7 @@ resources :member_profile do
       error! 'User not found',422 unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
        :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,
-        :contact_number)
+        :contact_number, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user.text_field = params[:text_field]
       else
@@ -287,7 +287,7 @@ resources :member_profile do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
        :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,
-        :contact_number, :file_type)
+        :contact_number, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user.text_field = params[:text_field]
       else
@@ -397,13 +397,19 @@ resources :member_profile do
       optional :designation
       optional :description
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :experience, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_experience = UserExperience.new user_id: @user.id
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :exp_type)
-      @user_experience.file = params[:file] if params[:file]
+      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :exp_type, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @user_experience.text_field = params[:text_field]
+      else
+        @user_experience.file = params[:file] if params[:file]
+      end
       error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
     end
 
@@ -419,13 +425,19 @@ resources :member_profile do
       optional :designation
       optional :description
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_experience, jbuilder: 'ios' do
       @update_user_experience = UserExperience.find params[:experience_id]
       error! 'User Experience not found',422 unless @update_user_experience
       @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
-        :designation, :description, :exp_type)
-      @update_user_experience.file = params[:file] if params[:file]
+        :designation, :description, :exp_type, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @update_user_experience.text_field = params[:text_field]
+      else
+        @update_user_experience.file = params[:file] if params[:file]
+      end
       error! @update_user_experience.errors.full_messages.join(', '), 422 unless @update_user_experience.save
       @update_user_experience
     end
@@ -531,15 +543,21 @@ resources :member_profile do
       optional :name        
       optional :description        
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :award, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:award_type] || params[:name] || params[:descrption] )
         @award = UserAward.new user_id: @user.id
-        @award.attributes = clean_params(params).permit(:name, :description)
+        @award.attributes = clean_params(params).permit(:name, :description, :file_type, :text_field)
         @award.award_type = params[:award_type] if params[:award_type]
-        @award.file = params[:file] if params[:file]
+        if (params[:file_type] == 'text')
+          @award.text_field = params[:text_field]
+        else
+          @award.file = params[:file] if params[:file]
+        end
         error! @award.errors.full_messages.join(', '), 422 unless @award.save
       end
     end
@@ -553,12 +571,18 @@ resources :member_profile do
       optional :name        
       optional :description        
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_award, jbuilder: 'ios' do
       @update_user_award = UserAward.find params[:award_id]
       error! 'User not found',422 unless @update_user_award
-      @update_user_award.attributes = clean_params(params).permit(:name, :description)
-      @update_user_award.file = params[:file] if params[:file]
+      @update_user_award.attributes = clean_params(params).permit(:name, :description, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @update_user_award.text_field = params[:text_field]
+      else
+        @update_user_award.file = params[:file] if params[:file]
+      end
       error! @update_user_award.errors.full_messages.join(', '), 422 unless @update_user_award.save
       @update_user_award
     end
@@ -596,14 +620,20 @@ resources :member_profile do
       optional :year
       optional :certificate_type        
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :certificate, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:name] || params[:year] || params[:certificate_type] )
         @certificate = UserCertificate.new user_id: @user.id
-        @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
-        @certificate.file = params[:file] if params[:file]
+        @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type, :text_field)
+        if (params[:file_type] == 'text')
+          @certificate.text_field = params[:text_field]
+        else
+          @certificate.file = params[:file] if params[:file]
+        end
         error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
       end
     end
@@ -617,12 +647,18 @@ resources :member_profile do
       optional :year
       optional :certificate_type        
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_certificate, jbuilder: 'ios' do
       @update_user_certificate = UserCertificate.find params[:certificate_id]
       error! 'User Certificate not found',422 unless @update_user_certificate
-      @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
-      @certificate.file = params[:file] if params[:file]
+      @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @certificate.text_field = params[:text_field]
+      else
+        @certificate.file = params[:file] if params[:file]
+      end
       error! @update_user_certificate.errors.full_messages.join(', '), 422 unless @update_user_certificate.save
       @update_user_certificate
     end
@@ -662,14 +698,20 @@ resources :member_profile do
       optional :location
       optional :date
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :curriculars, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
         @curricular = UserCurricular.new user_id: @user.id
-        @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
-        @curricular.file = params[:file] if params[:file]
+        @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
+        if (params[:file_type] == 'text')
+          @curricular.text_field = params[:text_field]
+        else
+          @curricular.file = params[:file] if params[:file]
+        end
         error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save 
       end         
     end
@@ -685,12 +727,18 @@ resources :member_profile do
       optional :location
       optional :date
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_curricular, jbuilder: 'ios' do
       @update_user_curricular = UserCurricular.find params[:curricular_id]
       error! 'User Curricular not found',422 unless @update_user_curricular
-      @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
-      @update_user_curricular.file = params[:file] if params[:file]
+      @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @update_user_curricular.text_field = params[:text_field]
+      else
+        @update_user_curricular.file = params[:file] if params[:file]
+      end
       error! @update_user_curricular.errors.full_messages.join(', '), 422 unless @update_user_curricular.save
       @update_user_curricular
     end
@@ -728,14 +776,20 @@ resources :member_profile do
       optional :title
       optional :term_type        
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :future_goal, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:goal_type] || params[:title] || params[:term_type] )
         @future_goal = UserFutureGoal.new user_id: @user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
-        @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
-        @future_goal.file = params[:file] if params[:file]
+        @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
+        if (params[:file_type] == 'text')
+          @future_goal.text_field = params[:text_field]
+        else
+          @future_goal.file = params[:file] if params[:file]
+        end
         error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
       end          
     end
@@ -749,12 +803,18 @@ resources :member_profile do
       optional :title
       optional :term_type        
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_future_goal, jbuilder: 'ios' do
       @update_user_future_goal = UserFutureGoal.find params[:future_goal_id]
       error! 'User Future Goal not found',422 unless @update_user_future_goal
-      @update_user_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
-      @update_user_future_goal.file = params[:file] if params[:file]
+      @update_user_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @update_user_future_goal.text_field = params[:text_field]
+      else
+        @update_user_future_goal.file = params[:file] if params[:file]
+      end
       error! @update_user_future_goal.errors.full_messages.join(', '), 422 unless @update_user_future_goal.save
       @update_user_future_goal
     end
@@ -791,14 +851,20 @@ resources :member_profile do
       optional :env_type
       optional :title
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :working_environment, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if (params[:env_type] || params[:title] )
         @environment = UserEnvironment.new user_id: @user.id
-        @environment.attributes = clean_params(params).permit(:env_type, :title)
-        @environment.file = params[:file] if params[:file]
+        @environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
+        if (params[:file_type] == 'text')
+          @environment.text_field = params[:text_field]
+        else
+          @environment.file = params[:file] if params[:file]
+        end
         error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
       end          
     end
@@ -811,12 +877,18 @@ resources :member_profile do
       optional :env_type
       optional :title
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_working_environment, jbuilder: 'ios' do
       @update_user_environment = UserEnvironment.find params[:environment_id]
       error! 'User Environment not found',422 unless @update_user_environment
-      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title)
-      @update_user_environment.file = params[:file] if params[:file]
+      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @update_user_environment.text_field = params[:text_field]
+      else
+        @update_user_environment.file = params[:file] if params[:file]
+      end
       error! @update_user_environment.errors.full_messages.join(', '), 422 unless @update_user_environment.save
       @update_user_environment
     end
@@ -858,14 +930,20 @@ resources :member_profile do
       optional :date
       optional :location
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :references, jbuilder: 'ios' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @reference = UserReference.new user_id: @user.id
       if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
-        @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
-        @reference.file = params[:file] if params[:file]
+        @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
+        if (params[:file_type] == 'text')
+          @reference.text_field = params[:text_field]
+        else
+          @reference.file = params[:file] if params[:file]
+        end
         error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
       end          
     end
@@ -883,12 +961,18 @@ resources :member_profile do
       optional :date
       optional :location
       optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_references, jbuilder: 'ios' do
       @update_user_reference = UserReference.find params[:reference_id]
       error! 'User not found',422 unless @update_user_reference
-      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location)
-      @update_user_reference.file = params[:file] if params[:file]
+      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
+      if (params[:file_type] == 'text')
+        @update_user_reference.text_field = params[:text_field]
+      else
+        @update_user_reference.file = params[:file] if params[:file]
+      end
       error! @update_user_reference.errors.full_messages.join(', '), 422 unless @update_user_reference.save
       @update_user_reference
     end

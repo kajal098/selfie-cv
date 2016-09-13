@@ -207,3 +207,15 @@ ul.pagination {
     border: none;
   }
 } 
+
+.dataTable div.order{
+  display: block;
+  float: none;
+}
+.dataTable .margin_class{
+  margin:3px;
+  display: inline-block;
+}
+.dataTable tbody tr td{
+  vertical-align: middle;
+}
