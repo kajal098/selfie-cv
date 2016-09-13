@@ -20,7 +20,7 @@ class GroupUserReport
   column(:group_id, header: "Group", :order => "group_users.group_id",) do |model|
     model.group.name
   end
-
+  column(:leaved_from, header: "leaved from", :order => "groups.leaved_from")
   column(:status, header: "Status", :order => "groups.status")
 
   column(:admin, header: "Admin", :order => "groups.admin")
