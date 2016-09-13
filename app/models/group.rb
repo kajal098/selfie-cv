@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
             group_pic.url(:thumb)
         
     end
+    def photo_url; group_pic.url; end
 
     paginates_per 10
     

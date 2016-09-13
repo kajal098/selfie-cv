@@ -1837,7 +1837,7 @@ resources :group do
     end
 
     post :quick_message, jbuilder: 'android_message' do
-      @messages = Message.where(role: Message::ROLES[params[:role]])
+      @messages = QuickMessage.where(role: QuickMessage::ROLES[params[:role]])
     end
 
     
@@ -1845,5 +1845,35 @@ end
 
 #--------------------------------group end----------------------------------#
 
+#--------------------------------message end----------------------------------#
+
+resources :chats do
+
+  #  before { authenticate! }
+
+    desc 'create Chat'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+      requires :sender_id
+      requires :quick_msg
+      requires :receiver_ids, type: Array, default: []
+      requires :file
+      requires :file_type
+    end
+    post :create do
+      params[:receiver_ids].each do |receiver_id|
+        @chat = Chat.new group_id: params[:group_id], sender_id: params[:sender_id], receiver_id: receiver_id, quick_msg: params[:quick_msg], file_type: params[:file_type]
+        error! @chat.errors.full_messages.join(', '), 422 unless @chat.save
+      end
+      @chat
+    end
+
+   
+  
+
+end
+
+#--------------------------------message end----------------------------------#
 
 end

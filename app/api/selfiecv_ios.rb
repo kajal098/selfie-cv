@@ -1827,7 +1827,7 @@ resources :group do
     end
 
     post :quick_message, jbuilder: 'ios_message' do
-      @messages = Message.where(role: Message::ROLES[params[:role]])
+      @messages = QuickMessage.where(role: QuickMessage::ROLES[params[:role]])
     end
 
 end
