@@ -10,6 +10,8 @@ class Group < ActiveRecord::Base
     paginates_per 10
     
     belongs_to :user
+    has_many :chats
+
     has_many :users, class_name: 'GroupUser'
     scope :fetch_groups, -> (user) {where("#{user.id} != ALL (deleted_from)").all}
 

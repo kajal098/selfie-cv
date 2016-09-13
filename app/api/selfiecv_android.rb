@@ -1864,6 +1864,17 @@ resources :chats do
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save     
     end
 
+    desc 'Listing of Chat'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+    end
+    post :listing, jbuilder: 'android_message' do
+        @group = Group.find params[:group_id]
+        @chats = @group.chats
+        error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chats  
+    end
+
    
   
 

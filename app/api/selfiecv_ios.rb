@@ -1853,7 +1853,16 @@ resources :chats do
         error! @chat.errors.full_messages.join(', '), 422 unless @chat.save
     end
 
-   
+    desc 'Listing of Chat'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+    end
+    post :listing, jbuilder: 'ios_message' do
+        @group = Group.find params[:group_id]
+        @chats = @group.chats
+        error! @chat.errors.full_messages.join(', '),422 unless @chats  
+    end
   
 
 end
