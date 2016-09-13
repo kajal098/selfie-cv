@@ -426,15 +426,16 @@ GroupUser.create(group_id:4, user_id:6 ,admin:false, status: 'joined')
 
 Setting.create(resume_per: 40, achievement_per: 10, curricular_per: 10, whizquiz_per: 10, future_goal_per: 10, working_env_per: 10,reference_per: 10,site_name: 'Selfie Cv', site_email: 'selfiecv@gmailcom',site_phone: 12345678,site_fax: 1234567,facebook_url:'http://www.facebook.com/selfiecv',twitter_url:'http://www.twitter.com/selfiecv',google_plus_url: 'http://www.googleplus.com/selfiecv')
 
-QuickMessage.create(text: 'Your homework for today is.', role: 'student')
-QuickMessage.create(text: 'Great work class !! Keep it up !!', role: 'student')
-QuickMessage.create(text: 'Tommorrow we will be starting a new chapter. Make sure you dont miss it.', role: 'student')
-QuickMessage.create(text: 'Many students are having problems with current chapter. I know its difficult but dont worry i am always here to help you.', role: 'student')
-QuickMessage.create(text: 'You have a surprise test tomorrow.', role: 'student')
-QuickMessage.create(text: 'Life teaching : The best preparation for tomorrow is doing your best today.', role: 'student')
-QuickMessage.create(text: 'If you are facing any perticular problem, do feel free to share with me.', role: 'student')
+QuickMessage.create(text: 'Your homework for today is.', role: 'faculty')
+QuickMessage.create(text: 'Great work class !! Keep it up !!', role: 'faculty')
+QuickMessage.create(text: 'Tommorrow we will be starting a new chapter. Make sure you dont miss it.', role: 'faculty')
+QuickMessage.create(text: 'Many students are having problems with current chapter. I know its difficult but dont worry i am always here to help you.', role: 'faculty')
+QuickMessage.create(text: 'You have a surprise test tomorrow.', role: 'faculty')
+QuickMessage.create(text: 'Life teaching : The best preparation for tomorrow is doing your best today.', role: 'faculty')
+QuickMessage.create(text: 'If you are facing any perticular problem, do feel free to share with me.', role: 'faculty')
 
-
-
+QuickMessage.create(text: 'My query for current chapter.', role: 'student')
+QuickMessage.create(text: 'Thank you for help mam/sir.', role: 'student')
+QuickMessage.create(text: 'I will not able to come class tomorrow due to fever.', role: 'student')
 
 
