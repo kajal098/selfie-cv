@@ -1807,7 +1807,7 @@ resources :group do
 
     post :join, jbuilder: 'android_group' do
       @group = Group.find_by_code params[:code]
-      error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group
+      error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group      
       @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined' 
       error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save     
       @group_user
