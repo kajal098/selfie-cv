@@ -1844,9 +1844,9 @@ resources :messages do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :group_id
-      requires :quick_msg
-      requires :file
-      requires :file_type
+      optional :quick_msg
+      optional :file
+      optional :file_type
     end
     post :create, jbuilder: 'ios_message' do
         @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id, quick_msg: params[:quick_msg], file_type: params[:file_type]
