@@ -1847,7 +1847,7 @@ end
 
 #--------------------------------message end----------------------------------#
 
-resources :chats do
+resources :messages do
 
   #  before { authenticate! }
 
