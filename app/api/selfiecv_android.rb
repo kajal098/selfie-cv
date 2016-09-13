@@ -1862,9 +1862,19 @@ resources :messages do
       optional :quick_msg
       optional :file
       optional :file_type
+      optional :quick_msg_id
+      optional :text_value
     end
     post :create, jbuilder: 'android_message' do
-        @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id, quick_msg: params[:quick_msg], file_type: params[:file_type]
+      @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id
+      @chat.file_type = params[:file_type] if params[:file_type]
+      
+        if params[:quick_msg_id]
+          @msg = QuickMessage.find params[:quick_msg_id]
+          @chat.quick_msg = @msg.text
+        else
+          @chat.quick_msg = params[:text_value] if params[:text_value]
+        end
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save     
     end
 

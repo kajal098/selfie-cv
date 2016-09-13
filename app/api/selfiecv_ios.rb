@@ -1853,8 +1853,16 @@ resources :messages do
       optional :file_type
     end
     post :create, jbuilder: 'ios_message' do
-        @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id, quick_msg: params[:quick_msg], file_type: params[:file_type]
-        error! @chat.errors.full_messages.join(', '), 422 unless @chat.save
+        @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id
+        @chat.file_type = params[:file_type] if params[:file_type]
+        
+        if params[:quick_msg_id]
+          @msg = QuickMessage.find params[:quick_msg_id]
+          @chat.quick_msg = @msg.text
+        else
+          @chat.quick_msg = params[:text_value] if params[:text_value]
+        end
+        error! @chat.errors.full_messages.join(', '),422 unless @chat.save 
     end
 
     desc 'Listing of Chat'
