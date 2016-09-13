@@ -18,17 +18,16 @@ ActiveRecord::Schema.define(version: 20160912125524) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "sender_id"
-    t.integer  "receiver_id"
     t.integer  "group_id"
-    t.string   "quick_msg",   default: "", null: false
-    t.string   "file",        default: ""
-    t.string   "file_type",   default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "quick_msg",  default: "", null: false
+    t.string   "file",       default: ""
+    t.string   "file_type",  default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "chats", ["group_id"], name: "index_chats_on_group_id", using: :btree
-  add_index "chats", ["sender_id", "receiver_id"], name: "index_chats_on_sender_id_and_receiver_id", using: :btree
+  add_index "chats", ["sender_id"], name: "index_chats_on_sender_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -448,7 +447,6 @@ ActiveRecord::Schema.define(version: 20160912125524) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "chats", "groups", on_delete: :cascade
-  add_foreign_key "chats", "users", column: "receiver_id", on_delete: :cascade
   add_foreign_key "chats", "users", column: "sender_id", on_delete: :cascade
   add_foreign_key "company_galeries", "users", on_delete: :cascade
   add_foreign_key "devices", "users", on_delete: :cascade

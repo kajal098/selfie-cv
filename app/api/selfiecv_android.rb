@@ -1855,18 +1855,13 @@ resources :chats do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :group_id
-      requires :sender_id
       requires :quick_msg
-      requires :receiver_ids, type: Array, default: []
       requires :file
       requires :file_type
     end
-    post :create do
-      params[:receiver_ids].each do |receiver_id|
-        @chat = Chat.new group_id: params[:group_id], sender_id: params[:sender_id], receiver_id: receiver_id, quick_msg: params[:quick_msg], file_type: params[:file_type]
-        error! @chat.errors.full_messages.join(', '), 422 unless @chat.save
-      end
-      @chat
+    post :create, jbuilder: 'android_message' do
+        @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id, quick_msg: params[:quick_msg], file_type: params[:file_type]
+        error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save     
     end
 
    
