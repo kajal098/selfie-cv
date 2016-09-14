@@ -1889,7 +1889,19 @@ resources :messages do
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chats  
     end
 
-   
+   desc 'Create schedule'
+   params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :table_name
+      requires :dates, type: Array, default: []
+      requires :times, type: Array, default: []
+      requires :discriptions, type: Array, default: []
+      requires :long_description
+      requires :group_ids, type: Array, default: []
+   end
+    post :create_schedule, jbuilder: 'android_message' do
+      
+    end
   
 
 end

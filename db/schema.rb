@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912125524) do
+ActiveRecord::Schema.define(version: 20160914102946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chat_schedules", force: :cascade do |t|
+    t.string   "table_name",       default: "", null: false
+    t.integer  "date",             default: [],              array: true
+    t.integer  "time",             default: [],              array: true
+    t.integer  "discription",      default: [],              array: true
+    t.string   "long_description", default: "", null: false
+    t.integer  "group_id",         default: [],              array: true
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "chats", force: :cascade do |t|
     t.integer  "sender_id"

@@ -1,5 +1,6 @@
 class Chat < ActiveRecord::Base
 	belongs_to :user
+	has_many :chat_schedules
 
 	mount_uploader :file, FileUploader
     def thumb_url
