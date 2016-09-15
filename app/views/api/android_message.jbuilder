@@ -23,3 +23,19 @@ json.msgs @chats do |chat|
 	json.msg_updated_at chat.updated_at.to_i
 end
 end
+
+if @chat_schedule
+	json.chat_schedule @chat_schedule, :id, :name, :info
+	json.date @chat_schedule.date.count.times do |i|
+		json.set!("date" + i.to_s, @chat_schedule.date[i].to_s)
+	end
+	json.my_time @chat_schedule.my_time.count.times do |i|
+		json.set!("time" + i.to_s, @chat_schedule.my_time[i].to_s)
+	end
+	json.description @chat_schedule.description.count.times do |i|
+		json.set!("description" + i.to_s, @chat_schedule.description[i].to_s)
+	end
+	json.group_id @chat_schedule.group_id.count.times do |i|
+		json.set!("group" + i.to_s, @chat_schedule.group_id[i].to_s)
+	end
+end

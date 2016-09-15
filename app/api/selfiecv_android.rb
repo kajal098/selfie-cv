@@ -1892,16 +1892,36 @@ resources :messages do
    desc 'Create schedule'
    params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :table_name
-      requires :dates, type: Array, default: []
-      requires :times, type: Array, default: []
-      requires :discriptions, type: Array, default: []
-      requires :long_description
-      requires :group_ids, type: Array, default: []
+      requires :name
+      requires :date, type: Array, default: []
+      requires :my_time, type: Array, default: []
+      requires :description, type: Array, default: []
+      optional :info
+      requires :group_id, type: Array, default: []
    end
     post :create_schedule, jbuilder: 'android_message' do
-      
+        @chat_schedule = ChatSchedule.new
+        @chat_schedule.name = params[:name] if params[:name]
+        @chat_schedule.date = params[:date]
+        @chat_schedule.my_time = params[:my_time]
+        @chat_schedule.description = params[:description]
+        @chat_schedule.info = params[:info] if params[:info]
+        @chat_schedule.group_id = params[:group_id]
+        error!({error: @chat_schedule.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat_schedule.save
+        @chat_schedule
     end
+
+    desc 'Create schedule'
+   params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :schedule_id
+   end
+    post :view_schedule, jbuilder: 'android_message' do
+        @chat_schedule = ChatSchedule.find params[:schedule_id]
+        error!({error: 'Schedule not found', status: 'Fail'}, 200) unless @chat_schedule
+   end
+  
+
   
 
 end

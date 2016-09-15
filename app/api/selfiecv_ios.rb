@@ -1875,6 +1875,38 @@ resources :messages do
         @chats = @group.chats
         error! @chat.errors.full_messages.join(', '),422 unless @chats  
     end
+
+    desc 'Create schedule'
+   params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :name
+      requires :date, type: Array, default: []
+      requires :my_time, type: Array, default: []
+      requires :description, type: Array, default: []
+      optional :info
+      requires :group_id, type: Array, default: []
+   end
+    post :create_schedule, jbuilder: 'android_message' do
+        @chat_schedule = ChatSchedule.new
+        @chat_schedule.name = params[:name] if params[:name]
+        @chat_schedule.date = params[:date]
+        @chat_schedule.my_time = params[:my_time]
+        @chat_schedule.description = params[:description]
+        @chat_schedule.info = params[:info] if params[:info]
+        @chat_schedule.group_id = params[:group_id]
+        error! @chat_schedule.errors.full_messages.join(', '),422 unless @chat_schedule.save
+        @chat_schedule
+    end
+
+    desc 'Create schedule'
+   params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :schedule_id
+   end
+    post :view_schedule, jbuilder: 'android_message' do
+        @chat_schedule = ChatSchedule.find params[:schedule_id]
+        error! 'Schedule not found',422 unless @chat_schedule
+   end
   
 
 end
