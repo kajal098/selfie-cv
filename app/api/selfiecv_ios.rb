@@ -1886,7 +1886,7 @@ resources :messages do
       optional :info
       requires :group_id, type: Array, default: []
    end
-    post :create_schedule, jbuilder: 'android_message' do
+    post :create_schedule, jbuilder: 'ios_message' do
         @chat_schedule = ChatSchedule.new
         @chat_schedule.name = params[:name] if params[:name]
         @chat_schedule.date = params[:date]
@@ -1903,7 +1903,7 @@ resources :messages do
       requires :token, type: String, regexp: UUID_REGEX
       requires :schedule_id
    end
-    post :view_schedule, jbuilder: 'android_message' do
+    post :view_schedule, jbuilder: 'ios_message' do
         @chat_schedule = ChatSchedule.find params[:schedule_id]
         error! 'Schedule not found',422 unless @chat_schedule
    end
