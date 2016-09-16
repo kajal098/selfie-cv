@@ -7,6 +7,15 @@ class Group < ActiveRecord::Base
     end
     def photo_url; group_pic.url; end
 
+    before_validation :set_slug
+
+    def set_slug 
+        self.slug = name.parameterize
+    end
+
+    validates :slug, presence: true
+    validates_uniqueness_of :slug, message: "Group Name is already exists"
+
     paginates_per 10
     
     belongs_to :user

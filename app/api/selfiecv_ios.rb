@@ -1601,6 +1601,9 @@ resources :faculty do
       requires :user_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :faculty_publication, jbuilder: 'ios' do
       @user = User.find params[:user_id]
@@ -1608,6 +1611,11 @@ resources :faculty do
       if (params[:title] || params[:description] )
         @faculty_publication = FacultyPublication.new user_id: @user.id
         @faculty_publication.attributes = clean_params(params).permit(:title, :description)
+        if (params[:file_type] == 'text')
+          @faculty_publication.text_field = params[:text_field] if params[:text_field]
+        else
+          @faculty_publication.file = params[:file] if params[:file]
+        end
         error! @faculty_publication.errors.full_messages.join(', '),422 unless @faculty_publication.save
       end          
     end
@@ -1619,11 +1627,19 @@ resources :faculty do
       requires :publication_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_faculty_publication, jbuilder: 'ios' do
       @update_faculty_publication = FacultyPublication.find params[:publication_id]
       error! 'Student publication not found',422 unless @update_faculty_publication
       @update_faculty_publication.attributes = clean_params(params).permit(:title, :description)
+      if (params[:file_type] == 'text')
+        @update_faculty_publication.text_field = params[:text_field] if params[:text_field]
+      else
+        @update_faculty_publication.file = params[:file] if params[:file]
+      end
       error! @update_faculty_publication.errors.full_messages.join(', '),422 unless @update_faculty_publication.save
       @update_faculty_publication
     end
@@ -1647,6 +1663,9 @@ resources :faculty do
       requires :user_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :faculty_research, jbuilder: 'ios' do
       @user = User.find params[:user_id]
@@ -1654,6 +1673,11 @@ resources :faculty do
       if (params[:title] || params[:description] )
         @faculty_research = FacultyResearch.new user_id: @user.id
         @faculty_research.attributes = clean_params(params).permit(:title, :description)
+        if (params[:file_type] == 'text')
+          @faculty_research.text_field = params[:text_field] if params[:text_field]
+        else
+          @faculty_research.file = params[:file] if params[:file]
+        end
         error! @faculty_research.errors.full_messages.join(', '),422 unless @faculty_research.save
       end          
     end
@@ -1665,11 +1689,19 @@ resources :faculty do
       requires :research_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_faculty_research, jbuilder: 'ios' do
       @update_faculty_research = FacultyResearch.find params[:research_id]
       error! 'Student research not found',422 unless @update_faculty_research
       @update_faculty_research.attributes = clean_params(params).permit(:title, :description)
+      if (params[:file_type] == 'text')
+        @update_faculty_research.text_field = params[:text_field] if params[:text_field]
+      else
+        @update_faculty_research.file = params[:file] if params[:file]
+      end
       error! @update_faculty_research.errors.full_messages.join(', '),422 unless @update_faculty_research.save
       @update_faculty_research
     end

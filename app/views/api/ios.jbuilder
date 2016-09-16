@@ -648,6 +648,7 @@ if @faculty_publication
 	json.faculty_publications @publications do |publication|
 		json.extract! publication, :id, :user_id, :title, :description
 		
+		json.file faculty_publication.thumb_url
 
 		json.edu_created_at publication.created_at.to_i
 		json.edu_updated_at publication.updated_at.to_i
@@ -656,6 +657,8 @@ end
 
 if @update_faculty_publication
 	json.extract! @update_faculty_publication, :id, :user_id, :title, :description
+
+	json.file @update_faculty_publication.thumb_url
 
 	json.edu_created_at @update_faculty_publication.created_at.to_i
 	json.edu_updated_at @update_faculty_publication.updated_at.to_i
@@ -666,6 +669,8 @@ if @faculty_publications
 	json.faculty_publications @publications do |publication|
 	json.extract! publication, :id, :user_id, :title, :description
 
+	json.file publication.thumb_url
+
 	json.edu_created_at publication.created_at.to_i
 	json.edu_updated_at publication.updated_at.to_i
 	end
@@ -675,6 +680,8 @@ if @faculty_research
 	@researches = @user.faculty_researches.order('created_at DESC')
 	json.faculty_researches @researches do |research|
 		json.extract! research, :id, :user_id, :title, :description
+
+		json.file research.thumb_url
 		
 
 		json.edu_created_at research.created_at.to_i
@@ -685,6 +692,8 @@ end
 if @update_faculty_research
 	json.extract! @update_faculty_research, :id, :user_id, :title, :description
 
+	json.file @update_faculty_research.thumb_url
+
 	json.edu_created_at @update_faculty_research.created_at.to_i
 	json.edu_updated_at @update_faculty_research.updated_at.to_i
 end
@@ -693,6 +702,8 @@ if @faculty_researches
 	@researches = @user.faculty_researches.order('created_at DESC')
 	json.faculty_researches @researches do |research|
 	json.extract! research, :id, :user_id, :title, :description
+
+	json.file research.thumb_url
 
 	json.edu_created_at research.created_at.to_i
 	json.edu_updated_at research.updated_at.to_i

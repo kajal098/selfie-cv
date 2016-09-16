@@ -236,7 +236,7 @@ resources :member do
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
         :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
       if (params[:file_type] == 'text')
-        @user.text_field = params[:text_field]
+        @user.text_field = params[:text_field] if params[:text_field]
       else
         @user.file = params[:file] if params[:file]
       end
@@ -283,7 +283,7 @@ resources :member do
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
         :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
       if (params[:file_type] == 'text')
-        @user.text_field = params[:text_field]
+        @user.text_field = params[:text_field] if params[:text_field]
       else
         @user.file = params[:file] if params[:file]
       end
@@ -401,7 +401,7 @@ resources :member do
       @user_experience = UserExperience.new user_id: @user.id
       @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :current_company)
       if (params[:file_type] == 'text')
-        @user_experience.text_field = params[:text_field]
+        @user_experience.text_field = params[:text_field] if params[:text_field]
       else
         @user_experience.file = params[:file] if params[:file]
       end
@@ -428,7 +428,7 @@ resources :member do
       @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
         :designation, :description)
       if (params[:file_type] == 'text')
-        @update_user_experience.text_field = params[:text_field]
+        @update_user_experience.text_field = params[:text_field] if params[:text_field]
       else
         @update_user_experience.file = params[:file] if params[:file]
       end
@@ -546,7 +546,7 @@ resources :member do
         @award = UserAward.new user_id: @user.id
         @award.attributes = clean_params(params).permit(:name, :description)
         if (params[:file_type] == 'text')
-        @award.text_field = params[:text_field]
+        @award.text_field = params[:text_field] if params[:text_field]
       else
         @award.file = params[:file] if params[:file]
       end
@@ -571,7 +571,7 @@ resources :member do
       error!({error: 'User Award not found', status: 'Fail'}, 200) unless @update_user_award
       @update_user_award.attributes = clean_params(params).permit(:name, :description)
       if (params[:file_type] == 'text')
-        @update_user_award.text_field = params[:text_field]
+        @update_user_award.text_field = params[:text_field] if params[:text_field]
       else
         @update_user_award.file = params[:file] if params[:file]
       end
@@ -622,7 +622,7 @@ resources :member do
         @certificate = UserCertificate.new user_id: @user.id
         @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
         if (params[:file_type] == 'text')
-        @certificate.text_field = params[:text_field]
+        @certificate.text_field = params[:text_field] if params[:text_field]
       else
         @certificate.file = params[:file] if params[:file]
       end
@@ -647,7 +647,7 @@ resources :member do
       error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @update_user_certificate
       @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
       if (params[:file_type] == 'text')
-        @update_user_certificate.text_field = params[:text_field]
+        @update_user_certificate.text_field = params[:text_field] if params[:text_field]
       else
         @update_user_certificate.file = params[:file] if params[:file]
       end
@@ -700,7 +700,7 @@ resources :member do
         @curricular = UserCurricular.new user_id: @user.id
         @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
         if (params[:file_type] == 'text')
-        @curricular.text_field = params[:text_field]
+        @curricular.text_field = params[:text_field] if params[:text_field]
       else
         @curricular.file = params[:file] if params[:file]
       end
@@ -727,7 +727,7 @@ resources :member do
       error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @update_user_curricular
       @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
       if (params[:file_type] == 'text')
-        @update_user_curricular.text_field = params[:text_field]
+        @update_user_curricular.text_field = params[:text_field] if params[:text_field]
       else
         @update_user_curricular.file = params[:file] if params[:file]
       end
@@ -778,7 +778,7 @@ resources :member do
         @future_goal = UserFutureGoal.new user_id: @user.id
         @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
         if (params[:file_type] == 'text')
-        @future_goal.text_field = params[:text_field]
+        @future_goal.text_field = params[:text_field] if params[:text_field]
       else
         @future_goal.file = params[:file] if params[:file]
       end
@@ -803,7 +803,7 @@ resources :member do
       error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @update_future_goal
       @update_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
       if (params[:file_type] == 'text')
-        @update_future_goal.text_field = params[:text_field]
+        @update_future_goal.text_field = params[:text_field] if params[:text_field]
       else
         @update_future_goal.file = params[:file] if params[:file]
       end
@@ -853,7 +853,7 @@ resources :member do
         @environment = UserEnvironment.new user_id: @user.id
         @environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
         if (params[:file_type] == 'text')
-        @environment.text_field = params[:text_field]
+        @environment.text_field = params[:text_field] if params[:text_field]
       else
         @environment.file = params[:file] if params[:file]
       end
@@ -877,7 +877,7 @@ resources :member do
       error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_user_environment
       @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
       if (params[:file_type] == 'text')
-        @update_user_environment.text_field = params[:text_field]
+        @update_user_environment.text_field = params[:text_field] if params[:text_field]
       else
         @update_user_environment.file = params[:file] if params[:file]
       end
@@ -932,7 +932,7 @@ resources :member do
       if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
         @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
         if (params[:file_type] == 'text')
-        @reference.text_field = params[:text_field]
+        @reference.text_field = params[:text_field] if params[:text_field]
       else
         @reference.file = params[:file] if params[:file]
       end
@@ -961,7 +961,7 @@ resources :member do
       error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @update_user_reference
       @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
       if (params[:file_type] == 'text')
-        @update_user_reference.text_field = params[:text_field]
+        @update_user_reference.text_field = params[:text_field] if params[:text_field]
       else
         @update_user_reference.file = params[:file] if params[:file]
       end
@@ -1476,7 +1476,7 @@ resources :faculty do
       @user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
         :date_of_birth, :nationality, :address, :city, :country, :zipcode,  :contact_number, :file_type)
       if (params[:file_type] == 'text')
-        @user.text_field = params[:text_field]
+        @user.text_field = params[:text_field] if params[:text_field]
       else
         @user.file = params[:file] if params[:file]
       end
@@ -1600,6 +1600,9 @@ resources :faculty do
       requires :user_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :faculty_publication, jbuilder: 'android' do
       @user = User.find params[:user_id]
@@ -1607,6 +1610,11 @@ resources :faculty do
       if (params[:title] || params[:description] )
         @faculty_publication = FacultyPublication.new user_id: @user.id
         @faculty_publication.attributes = clean_params(params).permit(:title, :description)
+        if (params[:file_type] == 'text')
+          @faculty_publication.text_field = params[:text_field] if params[:text_field]
+        else
+          @faculty_publication.file = params[:file] if params[:file]
+        end
         error!({error: @faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_publication.save
       end          
     end
@@ -1618,11 +1626,19 @@ resources :faculty do
       requires :publication_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_faculty_publication, jbuilder: 'android' do
       @update_faculty_publication = FacultyPublication.find params[:publication_id]
       error!({error: 'Student publication not found', status: 'Fail'}, 200) unless @update_faculty_publication
       @update_faculty_publication.attributes = clean_params(params).permit(:title, :description)
+      if (params[:file_type] == 'text')
+        @update_faculty_publication.text_field = params[:text_field] if params[:text_field]
+      else
+        @update_faculty_publication.file = params[:file] if params[:file]
+      end
       error!({error: @update_faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_publication.save
       @update_faculty_publication
     end
@@ -1646,6 +1662,9 @@ resources :faculty do
       requires :user_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :faculty_research, jbuilder: 'android' do
       @user = User.find params[:user_id]
@@ -1653,6 +1672,11 @@ resources :faculty do
       if (params[:title] || params[:description] )
         @faculty_research = FacultyResearch.new user_id: @user.id
         @faculty_research.attributes = clean_params(params).permit(:title, :description)
+        if (params[:file_type] == 'text')
+          @faculty_research.text_field = params[:text_field] if params[:text_field]
+        else
+          @faculty_research.file = params[:file] if params[:file]
+        end
         error!({error: @faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_research.save
       end          
     end
@@ -1664,11 +1688,19 @@ resources :faculty do
       requires :research_id
       optional :title
       optional :description
+      optional :file
+      optional :text_field
+      optional :file_type
     end
     post :update_faculty_research, jbuilder: 'android' do
       @update_faculty_research = FacultyResearch.find params[:research_id]
       error!({error: 'Student research not found', status: 'Fail'}, 200) unless @update_faculty_research
       @update_faculty_research.attributes = clean_params(params).permit(:title, :description)
+      if (params[:file_type] == 'text')
+        @update_faculty_research.text_field = params[:text_field] if params[:text_field]
+      else
+        @update_faculty_research.file = params[:file] if params[:file]
+      end
       error!({error: @update_faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_research.save
       @update_faculty_research
     end
@@ -1808,7 +1840,10 @@ resources :group do
     post :join, jbuilder: 'android_group' do
       @group = Group.find_by_code params[:code]
       error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group      
-      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined' 
+      #@group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined' 
+      @group_user = GroupUser.find_or_initialize_by(user_id: current_user.id, group_id: @group.id) 
+      @group_user.admin = false
+      @group_user.status = 'joined'
       error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save     
       @group_user
     end
@@ -1859,7 +1894,6 @@ resources :messages do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :group_id
-      optional :quick_msg
       optional :file
       optional :file_type
       optional :quick_msg_id

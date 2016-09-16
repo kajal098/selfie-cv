@@ -10,4 +10,5 @@ class FacultyPublication < ActiveRecord::Base
             file.url(:thumb)
         
     end
+    def photo_url; file.url; end
 end
