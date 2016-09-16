@@ -1956,10 +1956,10 @@ resources :group do
       requires :q
     end
    
-    get :search , jbuilder: 'android_group' do
+    post :search , jbuilder: 'android_group' do
       authenticate!
-      @member_groups =  current_user.all_groups.search(params[:q])
-      @member_groups
+      @groups =  current_user.all_groups.search(params[:q])
+      @groups
     end
 
     
