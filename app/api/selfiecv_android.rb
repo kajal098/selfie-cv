@@ -175,17 +175,32 @@ resources :member do
       @user
     end
 
+    # for send delete code to user
+
+    desc "Send Delete Code To User"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+    end
+    post :send_delete_account_code do
+      authenticate!
+      @user = current_user
+      @user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
+      UserMailer.send_ac_delete_code(@user).deliver_now
+      { code: 200, :status => "Success" }
+    end
+
     # for delete user account
 
     desc "Delete User Account"
     params do
       requires :token, type: String, regexp: UUID_REGEX
+      requires :delete_code
     end
     post :delete_account do
       authenticate!
-      @user = current_user
-      @user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
-      UserMailer.send_ac_delete_code(@user).deliver_now
+      @user = User.find_by_delete_code(params[:delete_code])
+      error! "Wrong delete code.", 422 unless @user
+      @user.destroy
       { code: 200, :status => "Success" }
     end
 
@@ -196,6 +211,7 @@ resources :member do
       requires :role
     end
     post :listing , jbuilder: 'android' do
+      authenticate!
       @users = User.where(role: params[:role])
       @users         
     end
@@ -207,6 +223,7 @@ resources :member do
       requires :user_id
     end
     post :all_stuff , jbuilder: 'android_all_stuff' do
+      authenticate!
       @user_stuff = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user_stuff      
     end
@@ -232,6 +249,7 @@ resources :member do
       optional :file_type
     end
     post :resume, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
@@ -279,6 +297,7 @@ resources :member do
       optional :file_type
     end
     post :update_resume, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
@@ -312,6 +331,7 @@ resources :member do
       requires :user_id
     end
     post :get_user_resume, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
     end
 
@@ -327,6 +347,7 @@ resources :member do
       optional :skill
     end
     post :education, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_education = UserEducation.new user_id: @user.id
@@ -348,6 +369,7 @@ resources :member do
       optional :skill
     end
     post :update_education, jbuilder: 'android' do
+      authenticate!
       @update_user_education = UserEducation.find params[:education_id]
       error!({error: 'User Education not found', status: 'Fail'}, 200) unless @update_user_education
       @update_user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
@@ -363,6 +385,7 @@ resources :member do
       requires :user_id
     end
     post :get_educations, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_educations = @user.user_educations
@@ -375,6 +398,7 @@ resources :member do
       requires :education_id
     end
     post :delete_education do
+      authenticate!
       @education = UserEducation.find params[:education_id]
       @education.destroy
       { code: 200, :status => "Success" }
@@ -397,6 +421,7 @@ resources :member do
       optional :file_type
     end
     post :experiences, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_experience = UserExperience.new user_id: @user.id
@@ -424,6 +449,7 @@ resources :member do
       optional :file_type
     end
     post :update_experience, jbuilder: 'android' do
+      authenticate!
       @update_user_experience = UserExperience.find params[:experience_id]
       error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @update_user_experience
       @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
@@ -444,6 +470,7 @@ resources :member do
       requires :user_id
     end
     post :get_experiences, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_experiences = @user.user_experiences
@@ -456,6 +483,7 @@ resources :member do
       requires :experience_id
     end
     post :delete_experience do
+      authenticate!
       @experience = UserExperience.find params[:experience_id]
       @experience.destroy
       { code: 200, :status => "Success" }
@@ -475,6 +503,7 @@ resources :member do
       optional :time_type
     end
     post :preferred_work, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location] || params[:current_salary] || params[:expected_salary] || params[:time_type] )
@@ -498,6 +527,7 @@ resources :member do
       optional :time_type
     end
     post :update_preferred_work, jbuilder: 'android' do
+      authenticate!
       @update_user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
       error!({error: 'User Preffered Work not found', status: 'Fail'}, 200) unless @update_user_preferred_work
       @update_user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
@@ -512,6 +542,7 @@ resources :member do
       requires :user_id
     end
     post :get_preferred_works, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_preferred_works = @user.user_preferred_works
@@ -524,6 +555,7 @@ resources :member do
       requires :preffered_work_id
     end
     post :delete_preffered_work do
+      authenticate!
       @preffered_work = UserPreferredWork.find params[:preffered_work_id]
       @preffered_work.destroy
       { code: 200, :status => "Success" }
@@ -541,6 +573,7 @@ resources :member do
       optional :file_type
     end
     post :award, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:name] || params[:descrption] )
@@ -568,6 +601,7 @@ resources :member do
       optional :file_type
     end
     post :update_award, jbuilder: 'android' do
+      authenticate!
       @update_user_award = UserAward.find params[:award_id]
       error!({error: 'User Award not found', status: 'Fail'}, 200) unless @update_user_award
       @update_user_award.attributes = clean_params(params).permit(:name, :description)
@@ -587,6 +621,7 @@ resources :member do
       requires :user_id
     end
     post :get_award, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_awards = @user.user_awards
@@ -599,6 +634,7 @@ resources :member do
       requires :award_id
     end
     post :delete_award do
+      authenticate!
       @award = UserAward.find params[:award_id]
       @award.destroy
       { code: 200, :status => "Success" }
@@ -617,6 +653,7 @@ resources :member do
       optional :file_type
     end
     post :certificate, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:name] || params[:year] || params[:certificate_type] )
@@ -644,6 +681,7 @@ resources :member do
       optional :file_type
     end
     post :update_certificate, jbuilder: 'android' do
+      authenticate!
       @update_user_certificate = UserCertificate.find params[:certificate_id]
       error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @update_user_certificate
       @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
@@ -663,6 +701,7 @@ resources :member do
       requires :user_id
     end
     post :get_certificates, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_certificates = @user.user_certificates
@@ -675,6 +714,7 @@ resources :member do
       requires :certificate_id
     end
     post :delete_certificate do
+      authenticate!
       @certificate = UserCertificate.find params[:certificate_id]
       @certificate.destroy
       { code: 200, :status => "Success" }
@@ -695,6 +735,7 @@ resources :member do
       optional :file_type
     end
     post :curriculars, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
@@ -724,6 +765,7 @@ resources :member do
       optional :file_type
     end
     post :update_curricular, jbuilder: 'android' do
+      authenticate!
       @update_user_curricular = UserCurricular.find params[:curricular_id]
       error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @update_user_curricular
       @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
@@ -743,6 +785,7 @@ resources :member do
       requires :user_id
     end
     post :get_curriculars, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_curriculars = @user.user_curriculars
@@ -755,6 +798,7 @@ resources :member do
       requires :curricular_id
     end
     post :delete_curricular do
+      authenticate!
       @curricular = UserCurricular.find params[:curricular_id]
       @curricular.destroy
       { code: 200, :status => "Success" }
@@ -773,6 +817,7 @@ resources :member do
       optional :file_type
     end
     post :future_goal, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:goal_type] || params[:title] || params[:term_type] )
@@ -800,6 +845,7 @@ resources :member do
       optional :file_type
     end
     post :update_future_goal, jbuilder: 'android' do
+      authenticate!
       @update_future_goal = UserFutureGoal.find params[:update_future_goal_id]
       error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @update_future_goal
       @update_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
@@ -819,6 +865,7 @@ resources :member do
       requires :user_id
     end
     post :get_future_goals, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_future_goals = @user.user_future_goals
@@ -831,6 +878,7 @@ resources :member do
       requires :future_goal_id
     end
     post :delete_future_goal do
+      authenticate!
       @future_goal = UserFutureGoal.find params[:future_goal_id]
       @future_goal.destroy
       { code: 200, :status => "Success" }
@@ -848,6 +896,7 @@ resources :member do
       optional :file_type
     end
     post :working_environment, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:env_type] || params[:title] )
@@ -874,6 +923,7 @@ resources :member do
       optional :file_type
     end
     post :update_working_environment, jbuilder: 'android' do
+      authenticate!
       @update_user_environment = UserEnvironment.find params[:environment_id]
       error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_user_environment
       @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
@@ -893,6 +943,7 @@ resources :member do
       requires :user_id
     end
     post :get_working_environments, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_working_environments = @user.user_environments
@@ -905,6 +956,7 @@ resources :member do
       requires :work_env_id
     end
     post :delete_work_env do
+      authenticate!
       @work_env = UserEnvironment.find params[:work_env_id]
       @work_env.destroy
       { code: 200, :status => "Success" }
@@ -927,6 +979,7 @@ resources :member do
       optional :file_type
     end
     post :references, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @reference = UserReference.new user_id: @user.id
@@ -958,6 +1011,7 @@ resources :member do
       optional :file_type
     end
     post :update_references, jbuilder: 'android' do
+      authenticate!
       @update_user_reference = UserReference.find params[:reference_id]
       error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @update_user_reference
       @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
@@ -977,6 +1031,7 @@ resources :member do
       requires :user_id
     end
     post :get_references, jbuilder: 'android' do
+      authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_references = @user.user_references
@@ -989,6 +1044,7 @@ resources :member do
       requires :reference_id
     end
     post :delete_reference do
+      authenticate!
       @reference = UserReference.find params[:reference_id]
       @reference.destroy
       { code: 200, :status => "Success" }
@@ -1001,6 +1057,8 @@ end
 #--------------------------------company start----------------------------------#
 
 resources :company do 
+
+  before { authenticate! }
 
     # for fill company information
     desc 'Company Information'
@@ -1174,6 +1232,8 @@ end
 
 resources :data do 
 
+  before { authenticate! }
+
     # for dropdown data
     desc 'Company Information'
     params do
@@ -1209,6 +1269,8 @@ end
 #--------------------------------student start----------------------------------#
 
 resources :student do 
+
+  before { authenticate! }
 
     # for fill student basic info
     desc 'Student Basic Info'
@@ -1450,6 +1512,8 @@ end
 #--------------------------------faculty start----------------------------------#
 
 resources :faculty do 
+
+  before { authenticate! }
 
 # for fill faculty resume
     desc 'Faculty Resume'
@@ -1741,6 +1805,8 @@ end
 
 resources :group do 
 
+  before { authenticate! }
+
   # for create group
   params do
       requires :token, type: String, regexp: UUID_REGEX
@@ -1890,7 +1956,7 @@ end
 
 resources :messages do
 
-  #  before { authenticate! }
+  before { authenticate! }
 
     desc 'create Chat'
     params do

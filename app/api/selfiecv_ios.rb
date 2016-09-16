@@ -187,6 +187,7 @@ resources :member do
       requires :role
     end
     post :listing , jbuilder: 'ios' do
+      authenticate!
       if params[:role]
         @users = User.where(role: params[:role])
       else
@@ -202,6 +203,7 @@ resources :member do
       requires :user_id
     end
     post :all_stuff , jbuilder: 'android_all_stuff' do
+      authenticate!
       @user_stuff = User.find params[:user_id]
       error! 'User not found',422 unless @user_stuff      
     end
@@ -213,6 +215,8 @@ end
 #--------------------------------member profile start----------------------------------#
  
 resources :member_profile do 
+
+  before { authenticate! }
 
     # for fill user resume
     desc 'User Resume'
@@ -1009,6 +1013,8 @@ end
 
 resources :company do 
 
+  before { authenticate! }
+
     # for fill company information
     desc 'Company Information'
     params do
@@ -1178,6 +1184,8 @@ end
 
 resources :data do 
 
+  before { authenticate! }
+
     # for dropdown data
     desc 'Company Information'
     params do
@@ -1213,6 +1221,8 @@ end
 #--------------------------------student start----------------------------------#
 
 resources :student do 
+
+  before { authenticate! }
 
     # for fill student basic info
     desc 'Student Basic Info'
@@ -1450,6 +1460,8 @@ end
 #--------------------------------faculty start----------------------------------#
 
 resources :faculty do 
+
+  before { authenticate! }
 
 # for fill faculty resume
     desc 'Faculty Resume'
@@ -1741,6 +1753,8 @@ end
 
 resources :group do 
 
+  before { authenticate! }
+
     # for create group
     params do
         requires :token, type: String, regexp: UUID_REGEX
@@ -1878,7 +1892,7 @@ end
 
 resources :messages do
 
-  #  before { authenticate! }
+  before { authenticate! }
 
     desc 'create Chat'
     params do
