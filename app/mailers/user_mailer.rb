@@ -11,9 +11,8 @@ class UserMailer < ApplicationMailer
     mail(to: user.email, subject: "Welcome to Selfie CV")
   end
 
-  def send_ac_delete_code(user,code)
+  def send_ac_delete_code(user)
   	@user = user
-  	@code = code
   	mail(to: user.email, subject: "Your A/C delete code")
   end
 
