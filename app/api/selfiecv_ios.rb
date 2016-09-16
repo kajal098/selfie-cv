@@ -1988,6 +1988,24 @@ resources :messages do
         @chat_schedule = ChatSchedule.find params[:schedule_id]
         error! 'Schedule not found',422 unless @chat_schedule
    end
+
+   # for create share file with multiple groups
+    desc 'Send File To Multiple Group'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_ids, type: Array, default: []
+      optional :file
+      optional :file_type
+    end
+    post :send_file_to_groups, jbuilder: 'android_message' do
+      params[:group_ids].each do |group_id|
+        @chat = Chat.new sender_id: current_user.id, group_id: group_id
+        @chat.file_type = params[:file_type] if params[:file_type]
+        @chat.file = params[:file] if params[:file]
+        error! @chat.errors.full_messages.join(', '), 422 unless @chat.save
+      end
+      {}
+    end
   
 
 end

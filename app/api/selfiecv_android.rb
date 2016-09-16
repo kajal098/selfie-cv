@@ -1973,6 +1973,7 @@ resources :messages do
 
   before { authenticate! }
 
+    # for create message
     desc 'create Chat'
     params do
       requires :token, type: String, regexp: UUID_REGEX
@@ -1985,6 +1986,7 @@ resources :messages do
     post :create, jbuilder: 'android_message' do
       @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id
       @chat.file_type = params[:file_type] if params[:file_type]
+      @chat.file = params[:file] if params[:file]
       
         if params[:quick_msg_id]
           @msg = QuickMessage.find params[:quick_msg_id]
@@ -1995,6 +1997,7 @@ resources :messages do
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save     
     end
 
+    # for listing of chat
     desc 'Listing of Chat'
     params do
       requires :token, type: String, regexp: UUID_REGEX
@@ -2006,6 +2009,7 @@ resources :messages do
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chats  
     end
 
+   # for create schedule
    desc 'Create schedule'
    params do
       requires :token, type: String, regexp: UUID_REGEX
@@ -2028,7 +2032,8 @@ resources :messages do
         @chat_schedule
     end
 
-    desc 'Create schedule'
+    # for view schedule
+    desc 'View schedule'
    params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :schedule_id
@@ -2037,6 +2042,24 @@ resources :messages do
         @chat_schedule = ChatSchedule.find params[:schedule_id]
         error!({error: 'Schedule not found', status: 'Fail'}, 200) unless @chat_schedule
    end
+
+   # for create share file with multiple groups
+    desc 'Send File To Multiple Group'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_ids, type: Array, default: []
+      optional :file
+      optional :file_type
+    end
+    post :send_file_to_groups, jbuilder: 'android_message' do
+      params[:group_ids].each do |group_id|
+        @chat = Chat.new sender_id: current_user.id, group_id: group_id
+        @chat.file_type = params[:file_type] if params[:file_type]
+        @chat.file = params[:file] if params[:file]
+        error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save
+      end
+      {}
+    end
   
 
   
