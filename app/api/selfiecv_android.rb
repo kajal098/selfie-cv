@@ -1842,7 +1842,7 @@ resources :group do
       error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group      
       @group_user = @group.users.find_by_user_id(current_user.id)
       if @group_user.present?
-        error!({error: 'user 6e group ma', status: 'Fail'}, 200)
+        error!({error: 'You are already in this group.', status: 'Fail'}, 200)
       else
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
         error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save      

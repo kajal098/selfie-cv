@@ -1832,7 +1832,7 @@ resources :group do
       error! 'Group not found or wrong code', 422 unless @group
       @group_user = @group.users.find_by_user_id(current_user.id)
       if @group_user.present?
-        error! 'user 6e group ma',422
+        error! 'You are already in this group.',422
       else
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
         error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save      
