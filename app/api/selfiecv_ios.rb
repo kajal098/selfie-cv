@@ -1909,7 +1909,7 @@ resources :group do
       requires :q
     end
    
-    get :search_group , jbuilder: 'ios_group' do
+    get :search , jbuilder: 'ios_group' do
       authenticate!
       @member_groups =  current_user.all_groups.search(params[:q])
       @member_groups
