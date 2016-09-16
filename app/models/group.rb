@@ -13,6 +13,14 @@ class Group < ActiveRecord::Base
         self.slug = name.parameterize
     end
 
+    def self.search(search)
+        if search
+          where(['name ILIKE ?', "%#{search}%"])
+        else
+          scoped
+        end
+    end
+
     validates :slug, presence: true
     validates_uniqueness_of :slug, message: "Group Name is already exists"
 
