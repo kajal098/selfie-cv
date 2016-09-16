@@ -1947,6 +1947,21 @@ resources :group do
       @messages = QuickMessage.where(role: QuickMessage::ROLES[params[:role]])
     end
 
+    # for search group of current user
+
+    desc "Search Group Of Current User"
+    
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :q
+    end
+   
+    get :search_group , jbuilder: 'android_group' do
+      authenticate!
+      @member_groups =  current_user.all_groups.search(params[:q])
+      @member_groups
+    end
+
     
 end
 
