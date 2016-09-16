@@ -184,7 +184,8 @@ resources :member do
     post :delete_account do
       authenticate!
       @user = current_user
-      @user.destroy
+      @user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
+      UserMailer.send_ac_delete_code(@user).deliver_now
       { code: 200, :status => "Success" }
     end
 

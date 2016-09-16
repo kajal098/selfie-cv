@@ -24,4 +24,6 @@ class Group < ActiveRecord::Base
     has_many :users, class_name: 'GroupUser'
     scope :fetch_groups, -> (user) {where("#{user.id} != ALL (deleted_from)").all}
 
+    has_many :accepted_users, ->{ where("group_users.status = ?", GroupUser.statuses[:joined]) }, class_name: 'GroupUser', source: :group_user
+
 end
