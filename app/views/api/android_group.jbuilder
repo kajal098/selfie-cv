@@ -27,17 +27,7 @@ if @group
 	
 end
 
-if @group_user
 
-	json.GroupUser @group_user, :id, :group_id, :user_id, :admin, :status, :leaved_from
-	
-	json.user_name @group_user.user ? @group_user.user.first_name : ""
-
-	json.profile_pic @group_user.user.file.url
-	json.group_user_created_at @group_user.created_at.to_i
-	json.group_user_updated_at @group_user.updated_at.to_i
-	
-end
 
 if @groups
 	json.groups @groups do |group|

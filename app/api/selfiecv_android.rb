@@ -1840,12 +1840,13 @@ resources :group do
     post :join, jbuilder: 'android_group' do
       @group = Group.find_by_code params[:code]
       error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group      
-      #@group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined' 
-      @group_user = GroupUser.find_or_initialize_by(user_id: current_user.id, group_id: @group.id) 
-      @group_user.admin = false
-      @group_user.status = 'joined'
-      error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save     
-      @group_user
+      @group_user = @group.users.find_by_user_id(current_user.id)
+      if @group_user.present?
+        error!({error: 'user 6e group ma', status: 'Fail'}, 200)
+      else
+        @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
+        error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save      
+      end      
     end
 
     # leave group

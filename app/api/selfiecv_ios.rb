@@ -1830,9 +1830,13 @@ resources :group do
     post :join, jbuilder: 'ios_group' do
       @group = Group.find_by_code params[:code]
       error! 'Group not found or wrong code', 422 unless @group
-      @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined' 
-      error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save     
-      @group_user
+      @group_user = @group.users.find_by_user_id(current_user.id)
+      if @group_user.present?
+        error! 'user 6e group ma',422
+      else
+        @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
+        error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save      
+      end    
     end
 
     # leave group
