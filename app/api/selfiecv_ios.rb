@@ -167,15 +167,31 @@ resources :member do
       @user
     end
 
+    # for send delete code to user
+
+    desc "Send Delete Code To User"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+    end
+    post :send_delete_account_code do
+      authenticate!
+      @user = current_user
+      @user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
+      UserMailer.send_ac_delete_code(@user).deliver_now
+      status 200
+    end
+
     # for delete user account
 
     desc "Delete User Account"
     params do
       requires :token, type: String, regexp: UUID_REGEX
+      requires :delete_code
     end
     post :delete_account do
       authenticate!
-      @user = current_user
+      @user = User.find_by_delete_code(params[:delete_code])
+      error! "Wrong delete code.", 422 unless @user
       @user.destroy
       status 200
     end

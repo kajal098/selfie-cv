@@ -199,7 +199,7 @@ resources :member do
     post :delete_account do
       authenticate!
       @user = User.find_by_delete_code(params[:delete_code])
-      error! "Wrong delete code.", 422 unless @user
+      error!({error: 'Wrong delete code.', status: 'Fail'}, 200) unless @user 
       @user.destroy
       { code: 200, :status => "Success" }
     end
