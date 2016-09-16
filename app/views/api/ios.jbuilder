@@ -648,7 +648,7 @@ if @faculty_publication
 	json.faculty_publications @publications do |publication|
 		json.extract! publication, :id, :user_id, :title, :description
 		
-		json.file faculty_publication.thumb_url
+		json.file publication.thumb_url
 
 		json.edu_created_at publication.created_at.to_i
 		json.edu_updated_at publication.updated_at.to_i
