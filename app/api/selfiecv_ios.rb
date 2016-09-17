@@ -193,7 +193,9 @@ resources :member do
       @user = User.find_by_delete_code(params[:delete_code])
       error! "Wrong delete code.", 422 unless @user
       @user.destroy
-      status 200
+      {
+      status: 200,code: @user.delete_code
+      }
     end
 
     # for listing users
