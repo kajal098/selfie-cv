@@ -2058,7 +2058,7 @@ resources :messages do
         @chat.file = params[:file] if params[:file]
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save
       end
-      {}
+      @chat
     end
   
 
