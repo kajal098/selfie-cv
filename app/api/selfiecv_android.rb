@@ -1932,7 +1932,12 @@ resources :group do
             @group_user.leaved_from << current_user.id
             @group_user.update_column :leaved_from, @group_user.leaved_from
           end
-        @group_user.save
+          @group_user.save
+          unless @group.leaved_from.include? current_user.id
+                @group.leaved_from << current_user.id
+                @group.update_column :leaved_from, @group.leaved_from
+          end   
+        @group.save
     end
 
     # quick message listing
@@ -2053,12 +2058,12 @@ resources :messages do
     end
     post :send_file_to_groups, jbuilder: 'android_message' do
       params[:group_ids].each do |group_id|
-        @chat = Chat.new sender_id: current_user.id, group_id: group_id
-        @chat.file_type = params[:file_type] if params[:file_type]
-        @chat.file = params[:file] if params[:file]
-        error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save
+        @a = Chat.new sender_id: current_user.id, group_id: group_id
+        @a.file_type = params[:file_type] if params[:file_type]
+        @a.file = params[:file] if params[:file]
+        error!({error: @a.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @a.save
       end
-      {}
+      @groups = current_user.groups
     end
   
 
