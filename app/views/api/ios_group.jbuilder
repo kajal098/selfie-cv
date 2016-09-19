@@ -26,23 +26,7 @@ if @group
 		end
 
 
-		json.unread_message Chat::count_unread(@group,current_user)
-  
-		json.last_message do
-		 
-		    if(Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).count > 0)
-
-		      json.extract! Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last, :id, :sender_id, :group_id, :quick_msg, :user_ids, :file_type
-
-		      json.file Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last.file.url
-
-		      json.create_at Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last.created_at.to_i
-		      
-		      json.update_at Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last.updated_at.to_i
-		  else
-		    json.array!
-		  end
-		end
+		
 	
 end
 
@@ -73,25 +57,6 @@ if @groups
 				json.chat_created_at chat.created_at.to_i
 				json.chat_updated_at chat.updated_at.to_i
 		end
-
-		json.unread_message Chat::count_unread(group,current_user)
-  
-		json.last_message do
-		 
-		    if(Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).count > 0)
-
-		      json.extract! Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).last, :id, :sender_id, :group_id, :quick_msg, :user_ids, :file_type
-
-		      json.file Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).last.file.url
-
-		      json.create_at Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).last.created_at.to_i
-		      
-		      json.update_at Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).last.updated_at.to_i
-		  else
-		    json.array!
-		  end
-		end
-
 
 
 	end
