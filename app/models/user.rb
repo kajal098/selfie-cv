@@ -25,31 +25,32 @@ validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 
 paginates_per 10
 
-has_many :devices
-has_many :courses
-has_many :specializations
-belongs_to :company
-belongs_to :industry
-has_many :user_educations
-has_many :student_educations
-has_many :user_experiences
-has_many :user_preferred_works
-has_many :user_awards
-has_many :user_certificates
-has_many :user_curriculars
-has_many :user_future_goals
-has_many :user_environments
-has_many :user_references
-has_many :company_galeries
-has_many :user_marksheets
-has_one :user_meter
-has_many :user_projects
-has_many :faculty_affiliations
-has_many :faculty_workshops
-has_many :faculty_publications
-has_many :faculty_researches
-has_many :groups, class_name: 'GroupUser',foreign_key: "user_id"
-has_many :all_groups, -> (user) { where("#{user.id} != ALL (deleted_from)") }, through: :groups, class_name: 'Group', source: :group
+has_many    :devices
+has_many    :courses
+has_many    :specializations
+belongs_to  :company
+belongs_to  :industry
+has_many    :user_educations
+has_many    :student_educations
+has_many    :user_experiences
+has_many    :user_preferred_works
+has_many    :user_awards
+has_many    :user_certificates
+has_many    :user_curriculars
+has_many    :user_future_goals
+has_many    :user_environments
+has_many    :user_references
+has_many    :company_galeries
+has_many    :user_marksheets
+has_one     :user_meter
+has_many    :user_projects
+has_many    :faculty_affiliations
+has_many    :faculty_workshops
+has_many    :faculty_publications
+has_many    :faculty_researches
+has_one     :user_likes
+has_many    :groups, class_name: 'GroupUser',foreign_key: "user_id"
+has_many    :all_groups, -> (user) { where("#{user.id} != ALL (deleted_from)") }, through: :groups, class_name: 'Group', source: :group
 
 mount_uploader :file, FileUploader
     # def resume_thumb_url

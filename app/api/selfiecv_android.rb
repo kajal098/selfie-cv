@@ -2082,4 +2082,36 @@ end
 
 #--------------------------------message end----------------------------------#
 
+#--------------------------------notification end----------------------------------#
+
+resources :notifications do
+
+
+
+
+
+  before { authenticate! }
+
+  # for like profile of user
+    desc 'Like Profile'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :like_id
+    end
+    post :like, jbuilder: 'android_notification' do
+      @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
+      error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
+    end
+
+
+
+
+
+
+
+
+end
+
+  #--------------------------------notification end----------------------------------#
+
 end

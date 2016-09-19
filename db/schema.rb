@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914102946) do
+ActiveRecord::Schema.define(version: 20160919110349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,6 +307,15 @@ ActiveRecord::Schema.define(version: 20160914102946) do
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
 
+  create_table "user_likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "like_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_likes", ["user_id", "like_id"], name: "index_user_likes_on_user_id_and_like_id", using: :btree
+
   create_table "user_marksheets", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "school_name", default: "", null: false
@@ -482,6 +491,8 @@ ActiveRecord::Schema.define(version: 20160914102946) do
   add_foreign_key "user_environments", "users", on_delete: :cascade
   add_foreign_key "user_experiences", "users", on_delete: :cascade
   add_foreign_key "user_future_goals", "users", on_delete: :cascade
+  add_foreign_key "user_likes", "users", column: "like_id", on_delete: :cascade
+  add_foreign_key "user_likes", "users", on_delete: :cascade
   add_foreign_key "user_marksheets", "users", on_delete: :cascade
   add_foreign_key "user_meters", "users", on_delete: :cascade
   add_foreign_key "user_preferred_works", "users", on_delete: :cascade
