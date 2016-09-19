@@ -1,3 +1,5 @@
+json.status "Success"
+
 if @group
 	
 		json.Group @group, :id, :name, :code
