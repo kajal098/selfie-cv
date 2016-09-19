@@ -1882,11 +1882,8 @@ resources :group do
     post :leave, jbuilder: 'ios_group' do
         @group = Group.find params[:group_id]
         @group_user = @group.users.where(user_id: current_user.id).first
-        @group_user.status = "leaved"
-            unless @group_user.leaved_from.include? current_user.id
-              @group_user.leaved_from << current_user.id
-              @group_user.update_column :leaved_from, @group_user.leaved_from
-            end
+        @group_user.status = "leaved"          
+        @group_user.deleted_at = Time.now
         @group_user.save
     end
 

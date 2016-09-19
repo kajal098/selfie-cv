@@ -8,7 +8,7 @@ if @group
 		json.group_updated_at @group.updated_at.to_i
 
 		json.group_users @group.accepted_users do |group_user|
-			json.extract! group_user, :id, :group_id, :user_id, :admin, :status	, :leaved_from
+			json.extract! group_user, :id, :group_id, :user_id, :admin, :status	, :deleted_at
 			
 			json.user_name group_user.user ? group_user.user.first_name : ""
 
@@ -38,7 +38,7 @@ if @groups
 	
 
 		json.group_users group.accepted_users do |group_user|
-				json.extract! group_user, :id, :group_id, :user_id, :admin, :status	, :leaved_from
+				json.extract! group_user, :id, :group_id, :user_id, :admin, :status	, :deleted_at
 				
 				json.user_name group_user.user ? group_user.user.first_name : ""
 
