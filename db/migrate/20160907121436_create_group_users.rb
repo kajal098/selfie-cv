@@ -5,7 +5,7 @@ class CreateGroupUsers < ActiveRecord::Migration
         t.integer :user_id, null: false
         t.boolean :admin, default: false
         t.integer :status
-        t.integer :leaved_from, array: true, default: []
+        t.datetime :deleted_at
         t.timestamps null: false
     end
     add_index :group_users, [:user_id]

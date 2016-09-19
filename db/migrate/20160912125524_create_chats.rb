@@ -6,6 +6,7 @@ class CreateChats < ActiveRecord::Migration
       t.string :quick_msg,              null: false, default: ""
       t.string :file,              default: ''
       t.string :file_type,              null:false, default: ""
+      t.integer :user_ids, array: true, default: []
 
       t.timestamps null: false
     end

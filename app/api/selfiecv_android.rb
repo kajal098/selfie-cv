@@ -2002,6 +2002,23 @@ resources :messages do
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat.save     
     end
 
+    # for read message
+    desc 'read Message'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+    end
+    post :read , jbuilder: 'android_message' do
+      @group = Group.find params[:group_id]
+      @group.chats.each do |chat|       
+        unless chat.user_ids.include? current_user.id
+          chat.user_ids << current_user.id
+          chat.update_column :user_ids, chat.user_ids
+        end
+      end
+      status 200
+  end
+
     # for listing of chat
     desc 'Listing of Chat'
     params do

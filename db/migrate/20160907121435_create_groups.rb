@@ -5,11 +5,7 @@ class CreateGroups < ActiveRecord::Migration
       t.string :slug,               null: false, default: ""
       t.integer :code,              null: false, default: ""
       t.string :group_pic,              default: ''
-      t.integer :deleted_from, array: true, default: []
-      t.integer :leaved_from, array: true, default: []
-      t.datetime :deleted_at
-
-        
+      t.integer :deleted_from, array: true, default: []       
 
       t.timestamps null: false
     end
