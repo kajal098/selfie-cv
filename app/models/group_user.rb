@@ -5,4 +5,6 @@ class GroupUser < ActiveRecord::Base
 
 	paginates_per 10
 	
+	scope :current, -> (user) {where(user_id: user.id).first}
+
 end

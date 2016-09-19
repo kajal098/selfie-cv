@@ -1793,11 +1793,10 @@ resources :group do
     # for listing groups of current user
     params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :user_id
     end
 
     post :listing, jbuilder: 'ios_group' do
-        @groups = current_user.all_groups
+        @groups = current_user.all_groups(current_user)
     end
 
     # for view of group
