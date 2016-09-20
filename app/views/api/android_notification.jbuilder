@@ -2,23 +2,80 @@ json.status "Success"
 
 if @user_like
 	json.User @user_like, :id, :user_id, :like_id
-	json.LikedUser 
 
-	json.LikedUser do
-		 
-		    if(Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).count > 0)
+	json.WhoLike do		    
+		json.extract! User::where(id: @user_like.user_id).first, :id, :username	
+		json.file User::where(id: @user_like.user_id).first.file.url	 
+	end
+	
+	json.LikedUser do	 
+		json.extract! User::where(id: @user_like.like_id).first, :id, :username	 
+		json.file User::where(id: @user_like.like_id).first.file.url	 
+	end
 
-		      json.extract! User::where(id: @user_like.like_id)..last, :id, :sender_id, :group_id, :quick_msg, :user_ids, :file_type
 
-		      json.file Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last.file.url
+end
 
-		      json.create_at Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last.created_at.to_i
-		      
-		      json.update_at Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last.updated_at.to_i
-		  else
-		    json.array!
-		  end
-		end
+if @user_view
+	json.User @user_view, :id, :user_id, :view_id
+
+	json.WhoView do		    
+		json.extract! User::where(id: @user_view.user_id).first, :id, :username	
+		json.file User::where(id: @user_view.user_id).first.file.url	 
+	end
+	
+	json.ViewedUser do	 
+		json.extract! User::where(id: @user_view.view_id).first, :id, :username	 
+		json.file User::where(id: @user_view.view_id).first.file.url	 
+	end
+
+
+end
+
+if @user_share
+	json.User @user_share, :id, :user_id, :share_id, :share_type
+
+	json.WhoShare do		    
+		json.extract! User::where(id: @user_share.user_id).first, :id, :username	
+		json.file User::where(id: @user_share.user_id).first.file.url	 
+	end
+	
+	json.SharedUser do	 
+		json.extract! User::where(id: @user_share.share_id).first, :id, :username	 
+		json.file User::where(id: @user_share.share_id).first.file.url	 
+	end
+
+
+end
+
+if @user_favourite
+	json.User @user_favourite, :id, :user_id, :favourite_id
+
+	json.WhoFavourite do		    
+		json.extract! User::where(id: @user_favourite.user_id).first, :id, :username	
+		json.file User::where(id: @user_favourite.user_id).first.file.url	 
+	end
+	
+	json.FavouritedUser do	 
+		json.extract! User::where(id: @user_favourite.favourite_id).first, :id, :username	 
+		json.file User::where(id: @user_favourite.favourite_id).first.file.url	 
+	end
+
+
+end
+
+if @user_rate
+	json.User @user_rate, :id, :user_id, :rate_id, :rate_type
+
+	json.WhoRate do		    
+		json.extract! User::where(id: @user_rate.user_id).first, :id, :username	
+		json.file User::where(id: @user_rate.user_id).first.file.url	 
+	end
+	
+	json.RatedUser do	 
+		json.extract! User::where(id: @user_rate.rate_id).first, :id, :username	 
+		json.file User::where(id: @user_rate.rate_id).first.file.url	 
+	end
 
 
 end

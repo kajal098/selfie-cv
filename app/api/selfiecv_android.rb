@@ -2103,6 +2103,53 @@ resources :notifications do
       error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
     end
 
+    # for view profile of user
+    desc 'View Profile'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :view_id
+    end
+    post :view, jbuilder: 'android_notification' do
+      @user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
+      error!({error: @user_view.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_view.save     
+    end
+
+    # for share profile of user
+    desc 'Share Profile'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :share_id
+      requires :share_type
+    end
+    post :share, jbuilder: 'android_notification' do
+      @user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
+      error!({error: @user_share.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_share.save     
+    end
+
+    # for favourite profile of user
+    desc 'Favourite Profile'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :favourite_id
+    end
+    post :favourite, jbuilder: 'android_notification' do
+      @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
+      error!({error: @user_favourite.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_favourite.save     
+    end
+
+
+    # for rate profile of user
+    desc 'Rate Profile'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :rate_id
+      requires :rate_type
+    end
+    post :rate, jbuilder: 'android_notification' do
+      @user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
+      error!({error: @user_rate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_rate.save     
+    end
+
 
 
 

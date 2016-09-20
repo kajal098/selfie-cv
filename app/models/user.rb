@@ -48,9 +48,20 @@ has_many    :faculty_affiliations
 has_many    :faculty_workshops
 has_many    :faculty_publications
 has_many    :faculty_researches
-has_one     :user_likes
+
 has_many    :groups, class_name: 'GroupUser',foreign_key: "user_id"
 has_many    :all_groups, -> (user) { where("#{user.id} != ALL (deleted_from)") }, through: :groups, class_name: 'Group', source: :group
+
+has_many    :user_likes
+has_many    :like_counts, class_name: 'UserLike',foreign_key: "like_id"
+has_many    :user_views
+has_many    :view_counts, class_name: 'UserView',foreign_key: "view_id"
+has_many    :user_shares
+has_many    :share_counts, class_name: 'UserShare',foreign_key: "share_id"
+has_many    :user_favourites
+has_many    :favourite_counts, class_name: 'UserFavourite',foreign_key: "favourite_id"
+has_many    :user_rates
+has_many    :rate_counts, class_name: 'UserRate',foreign_key: "rate_id"
 
 mount_uploader :file, FileUploader
     # def resume_thumb_url

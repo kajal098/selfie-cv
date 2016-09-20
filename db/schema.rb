@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919110349) do
+ActiveRecord::Schema.define(version: 20160920055600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,9 @@ ActiveRecord::Schema.define(version: 20160919110349) do
     t.string   "facebook_url",    default: "abcdefghigklmnopqrstuvwxyz", null: false
     t.string   "twitter_url",     default: "abcdefghigklmnopqrstuvwxyz", null: false
     t.string   "google_plus_url", default: "abcdefghigklmnopqrstuvwxyz", null: false
+    t.string   "bronze",          default: "2",                          null: false
+    t.string   "silver",          default: "3",                          null: false
+    t.string   "gold",            default: "5",                          null: false
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
   end
@@ -292,6 +295,15 @@ ActiveRecord::Schema.define(version: 20160919110349) do
 
   add_index "user_experiences", ["user_id"], name: "index_user_experiences_on_user_id", using: :btree
 
+  create_table "user_favourites", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "favourite_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "user_favourites", ["user_id", "favourite_id"], name: "index_user_favourites_on_user_id_and_favourite_id", using: :btree
+
   create_table "user_future_goals", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "goal_type",  default: "",    null: false
@@ -386,6 +398,16 @@ ActiveRecord::Schema.define(version: 20160919110349) do
 
   add_index "user_projects", ["user_id"], name: "index_user_projects_on_user_id", using: :btree
 
+  create_table "user_rates", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "rate_id"
+    t.string   "rate_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_rates", ["user_id", "rate_id"], name: "index_user_rates_on_user_id_and_rate_id", using: :btree
+
   create_table "user_references", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title",      default: "",           null: false
@@ -404,6 +426,25 @@ ActiveRecord::Schema.define(version: 20160919110349) do
   end
 
   add_index "user_references", ["user_id"], name: "index_user_references_on_user_id", using: :btree
+
+  create_table "user_shares", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "share_id"
+    t.string   "share_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_shares", ["user_id", "share_id"], name: "index_user_shares_on_user_id_and_share_id", using: :btree
+
+  create_table "user_views", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "view_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_views", ["user_id", "view_id"], name: "index_user_views_on_user_id_and_view_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.integer  "role",                                          default: 0,            null: false
@@ -490,6 +531,8 @@ ActiveRecord::Schema.define(version: 20160919110349) do
   add_foreign_key "user_educations", "users", on_delete: :cascade
   add_foreign_key "user_environments", "users", on_delete: :cascade
   add_foreign_key "user_experiences", "users", on_delete: :cascade
+  add_foreign_key "user_favourites", "users", column: "favourite_id", on_delete: :cascade
+  add_foreign_key "user_favourites", "users", on_delete: :cascade
   add_foreign_key "user_future_goals", "users", on_delete: :cascade
   add_foreign_key "user_likes", "users", column: "like_id", on_delete: :cascade
   add_foreign_key "user_likes", "users", on_delete: :cascade
@@ -497,5 +540,11 @@ ActiveRecord::Schema.define(version: 20160919110349) do
   add_foreign_key "user_meters", "users", on_delete: :cascade
   add_foreign_key "user_preferred_works", "users", on_delete: :cascade
   add_foreign_key "user_projects", "users", on_delete: :cascade
+  add_foreign_key "user_rates", "users", column: "rate_id", on_delete: :cascade
+  add_foreign_key "user_rates", "users", on_delete: :cascade
   add_foreign_key "user_references", "users", on_delete: :cascade
+  add_foreign_key "user_shares", "users", column: "share_id", on_delete: :cascade
+  add_foreign_key "user_shares", "users", on_delete: :cascade
+  add_foreign_key "user_views", "users", column: "view_id", on_delete: :cascade
+  add_foreign_key "user_views", "users", on_delete: :cascade
 end

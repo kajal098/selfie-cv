@@ -24,6 +24,12 @@ if @user
 		json.user_reference_per @user.user_meter.ref_per.to_i
 		json.user_whizquiz_per @user.user_meter.whizquiz_per.to_i
 		json.user_total_per @user.user_meter.total_per.to_i
+
+		json.likes @user.like_counts.count
+		json.views @user.view_counts.count
+		json.shares @user.share_counts.count
+		json.favourites @user.favourite_counts.count
+		json.rates @user.rate_counts.count
 		
 	elsif @user.role == 'Company'
 		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field
@@ -52,6 +58,12 @@ if @user
 		json.company_working_env_per @user.user_meter.working_env_per.to_i
 		json.user_total_per @user.user_meter.total_per.to_i
 
+		json.likes @user.like_counts.count
+		json.views @user.view_counts.count
+		json.shares @user.share_counts.count
+		json.favourites @user.favourite_counts.count
+		json.rates @user.rate_counts.count
+
 	elsif @user.role == 'Student'
 		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
 
@@ -68,6 +80,12 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
+		json.likes @user.like_counts.count
+		json.views @user.view_counts.count
+		json.shares @user.share_counts.count
+		json.favourites @user.favourite_counts.count
+		json.rates @user.rate_counts.count
+
 	elsif @user.role == 'Faculty'
 		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
 
@@ -83,6 +101,12 @@ if @user
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
+
+		json.likes @user.like_counts.count
+		json.views @user.view_counts.count
+		json.shares @user.share_counts.count
+		json.favourites @user.favourite_counts.count
+		json.rates @user.rate_counts.count
 		
 	end
 end
@@ -113,6 +137,12 @@ if @company
 		json.company_gallery_per @company.user_meter.galery_per.to_i
 		json.company_working_env_per @company.user_meter.working_env_per.to_i
 		json.user_total_per @company.user_meter.total_per.to_i
+
+		json.likes @company.like_counts.count
+		json.views @company.view_counts.count
+		json.shares @company.share_counts.count
+		json.favourites @company.favourite_counts.count
+		json.rates @company.rate_counts.count
 		
 	
 end
@@ -140,6 +170,12 @@ if @users
 					json.user_whizquiz_per user.user_meter.whizquiz_per.to_i
 					json.user_total_per user.user_meter.total_per.to_i
 
+					json.likes user.like_counts.count
+					json.views user.view_counts.count
+					json.shares user.share_counts.count
+					json.favourites user.favourite_counts.count
+					json.rates user.rate_counts.count
+
 				elsif user.role == "Company"
 						json.extract! user, :id, :username, :role, :company_name, :company_establish_from,  :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id,  :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 						json.logo user.logo_thumb_url
@@ -161,6 +197,13 @@ if @users
 						json.company_gallery_per user.user_meter.galery_per.to_i
 						json.company_working_env_per user.user_meter.working_env_per.to_i
 						json.user_total_per user.user_meter.total_per.to_i
+
+						json.likes user.like_counts.count
+						json.views user.view_counts.count
+						json.shares user.share_counts.count
+						json.favourites user.favourite_counts.count
+						json.rates user.rate_counts.count
+
 				end
 		end
 end

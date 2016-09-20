@@ -23,6 +23,10 @@
     <%= f.input :future_goal_per, label: "Future Goal Percentage" %>
     <%= f.input :working_env_per, label: "Woking Environment Percentage" %>
     <%= f.input :reference_per, label: "References Percentage" %>
+    <h4 class="text_decoration"><b> Rate Setting </b></h4>
+  <%= f.input :bronze, label: "Bronze" %>
+    <%= f.input :silver, label: "Silver" %>
+    <%= f.input :gold, label: "Gold" %>
     
 <%= f.submit :save, class: 'btn btn-primary btn-sm', style: "margin-left:300px;" %>
 <% end %>

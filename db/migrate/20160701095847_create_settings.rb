@@ -15,6 +15,9 @@ class CreateSettings < ActiveRecord::Migration
       t.string :facebook_url, null:false, default: 'abcdefghigklmnopqrstuvwxyz'
       t.string :twitter_url, null:false, default: 'abcdefghigklmnopqrstuvwxyz'
       t.string :google_plus_url, null:false, default: 'abcdefghigklmnopqrstuvwxyz'
+      t.string :bronze, null:false, default: 2
+      t.string :silver, null:false, default: 3
+      t.string :gold, null:false, default: 5
       t.timestamps null: false
     end
   end
