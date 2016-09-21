@@ -1783,7 +1783,7 @@ resources :group do
     post :create, jbuilder: 'ios_group' do
         @group = Group.new clean_params(params).permit(:name)
         @group.code = Random.rand(500000..900000)
-        @group.group_pic = params[:group_pic]
+        @group.group_pic = params[:group_pic] if params[:group_pic]
         error! @group.errors.full_messages.join(', '), 422 unless @group.save
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id, admin: true , status: 'joined' 
         error! @group_user.errors.full_messages.join(', '), 422 unless @group_user.save
