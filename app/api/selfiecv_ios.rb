@@ -178,7 +178,9 @@ resources :member do
       @user = current_user
       @user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
       UserMailer.send_ac_delete_code(@user).deliver_now
-      status 200
+      {
+      status: 200,code: @user.delete_code
+      }
     end
 
     # for delete user account
@@ -193,7 +195,7 @@ resources :member do
       @user = User.find_by_delete_code(params[:delete_code])
       error! "Wrong delete code.", 422 unless @user
       @user.destroy
-      @user.delete_code
+      status 200
     end
 
     # for listing users
