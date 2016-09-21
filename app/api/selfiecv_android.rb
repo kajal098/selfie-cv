@@ -370,12 +370,12 @@ resources :member do
     end
     post :update_education, jbuilder: 'android' do
       authenticate!
-      @user_education = UserEducation.find params[:education_id]
-      error!({error: 'User Education not found', status: 'Fail'}, 200) unless @user_education
-      @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
+      @update_user_education = UserEducation.find params[:education_id]
+      error!({error: 'User Education not found', status: 'Fail'}, 200) unless @update_user_education
+      @update_user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
         :school, :skill)
-      error!({error: @user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_education.save
-      @user_education
+      error!({error: @update_user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_education.save
+      @update_user_education
     end
 
     # for get user's education detail
@@ -450,17 +450,17 @@ resources :member do
     end
     post :update_experience, jbuilder: 'android' do
       authenticate!
-      @user_experience = UserExperience.find params[:experience_id]
-      error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @user_experience
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
+      @update_user_experience = UserExperience.find params[:experience_id]
+      error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @update_user_experience
+      @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
         :designation, :description)
       if (params[:file_type] == 'text')
-        @user_experience.text_field = params[:text_field] if params[:text_field]
+        @update_user_experience.text_field = params[:text_field] if params[:text_field]
       else
-        @user_experience.file = params[:file] if params[:file]
+        @update_user_experience.file = params[:file] if params[:file]
       end
-      error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
-      @user_experience
+      error!({error: @update_user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_experience.save
+      @update_user_experience
     end
 
     # for get user's experience detail
@@ -528,11 +528,11 @@ resources :member do
     end
     post :update_preferred_work, jbuilder: 'android' do
       authenticate!
-      @user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
-      error!({error: 'User Preffered Work not found', status: 'Fail'}, 200) unless @user_preferred_work
-      @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
-      error!({error: @user_preferred_work.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_preferred_work.save
-      @user_preferred_work
+      @update_user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
+      error!({error: 'User Preffered Work not found', status: 'Fail'}, 200) unless @update_user_preferred_work
+      @update_user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+      error!({error: @update_user_preferred_work.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_preferred_work.save
+      @update_user_preferred_work
     end
 
     # for get user's preferred works detail
@@ -602,16 +602,16 @@ resources :member do
     end
     post :update_award, jbuilder: 'android' do
       authenticate!
-      @award = UserAward.find params[:award_id]
-      error!({error: 'User Award not found', status: 'Fail'}, 200) unless @award
-      @award.attributes = clean_params(params).permit(:name, :description)
+      @update_user_award = UserAward.find params[:award_id]
+      error!({error: 'User Award not found', status: 'Fail'}, 200) unless @update_user_award
+      @update_user_award.attributes = clean_params(params).permit(:name, :description)
       if (params[:file_type] == 'text')
-        @award.text_field = params[:text_field] if params[:text_field]
+        @update_user_award.text_field = params[:text_field] if params[:text_field]
       else
-        @award.file = params[:file] if params[:file]
+        @update_user_award.file = params[:file] if params[:file]
       end
-      error!({error: @award.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @award.save
-      @award
+      error!({error: @update_user_award.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_award.save
+      @update_user_award
     end
 
     # for get user's awards
@@ -682,16 +682,16 @@ resources :member do
     end
     post :update_certificate, jbuilder: 'android' do
       authenticate!
-      @certificate = UserCertificate.find params[:certificate_id]
-      error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @certificate
-      @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+      @update_user_certificate = UserCertificate.find params[:certificate_id]
+      error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @update_user_certificate
+      @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
       if (params[:file_type] == 'text')
-        @certificate.text_field = params[:text_field] if params[:text_field]
+        @update_user_certificate.text_field = params[:text_field] if params[:text_field]
       else
-        @certificate.file = params[:file] if params[:file]
+        @update_user_certificate.file = params[:file] if params[:file]
       end
-      error!({error: @certificate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @certificate.save
-      @certificate
+      error!({error: @update_user_certificate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_certificate.save
+      @update_user_certificate
     end
 
     # for get user's certificate
@@ -766,16 +766,16 @@ resources :member do
     end
     post :update_curricular, jbuilder: 'android' do
       authenticate!
-      @curricular = UserCurricular.find params[:curricular_id]
-      error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @curricular
-      @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+      @update_user_curricular = UserCurricular.find params[:curricular_id]
+      error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @update_user_curricular
+      @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
       if (params[:file_type] == 'text')
-        @curricular.text_field = params[:text_field] if params[:text_field]
+        @update_user_curricular.text_field = params[:text_field] if params[:text_field]
       else
-        @curricular.file = params[:file] if params[:file]
+        @update_user_curricular.file = params[:file] if params[:file]
       end
-      error!({error: @curricular.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @curricular.save
-      @curricular
+      error!({error: @update_user_curricular.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_curricular.save
+      @update_user_curricular
     end
 
     # for get user's curriculars detail
@@ -846,16 +846,16 @@ resources :member do
     end
     post :update_future_goal, jbuilder: 'android' do
       authenticate!
-      @future_goal = UserFutureGoal.find params[:future_goal_id]
-      error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @future_goal
-      @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
+      @update_future_goal = UserFutureGoal.find params[:update_future_goal_id]
+      error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @update_future_goal
+      @update_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
       if (params[:file_type] == 'text')
-        @future_goal.text_field = params[:text_field] if params[:text_field]
+        @update_future_goal.text_field = params[:text_field] if params[:text_field]
       else
-        @future_goal.file = params[:file] if params[:file]
+        @update_future_goal.file = params[:file] if params[:file]
       end
-      error!({error: @future_goal.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @future_goal.save
-      @future_goal
+      error!({error: @update_future_goal.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_future_goal.save
+      @update_future_goal
     end
 
     # for get user's future goals detail
@@ -924,16 +924,16 @@ resources :member do
     end
     post :update_working_environment, jbuilder: 'android' do
       authenticate!
-      @environment = UserEnvironment.find params[:environment_id]
-      error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @environment
-      @environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
+      @update_user_environment = UserEnvironment.find params[:environment_id]
+      error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_user_environment
+      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
       if (params[:file_type] == 'text')
-        @environment.text_field = params[:text_field] if params[:text_field]
+        @update_user_environment.text_field = params[:text_field] if params[:text_field]
       else
-        @environment.file = params[:file] if params[:file]
+        @update_user_environment.file = params[:file] if params[:file]
       end
-      error!({error: @environment.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @environment.save
-      @environment
+      error!({error: @update_user_environment.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_environment.save
+      @update_user_environment
     end
 
     # for get user's working environments detail
@@ -1012,16 +1012,16 @@ resources :member do
     end
     post :update_references, jbuilder: 'android' do
       authenticate!
-      @reference = UserReference.find params[:reference_id]
-      error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @reference
-      @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
+      @update_user_reference = UserReference.find params[:reference_id]
+      error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @update_user_reference
+      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
       if (params[:file_type] == 'text')
-        @reference.text_field = params[:text_field] if params[:text_field]
+        @update_user_reference.text_field = params[:text_field] if params[:text_field]
       else
-        @reference.file = params[:file] if params[:file]
+        @update_user_reference.file = params[:file] if params[:file]
       end
-      error!({error: @reference.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @reference.save
-      @reference
+      error!({error: @update_user_reference.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_reference.save
+      @update_user_reference
     end
 
     # for get user's references detail
