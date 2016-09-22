@@ -438,4 +438,64 @@ QuickMessage.create(text: 'My query for current chapter.', role: 'student')
 QuickMessage.create(text: 'Thank you for help mam/sir.', role: 'student')
 QuickMessage.create(text: 'I will not able to come class tomorrow due to fever.', role: 'student')
 
+UserPercentage.create(id: 'job.resume', value: 40)
+UserPercentage.create(id: 'job.education', value: 10)
+UserPercentage.create(id: 'job.experience', value: 10)
+UserPercentage.create(id: 'job.achievement', value: 10)
+UserPercentage.create(id: 'job.award', value: 5)
+UserPercentage.create(id: 'job.certificate', value: 5)
+UserPercentage.create(id: 'job.extra', value: 10)
+UserPercentage.create(id: 'job.whizquiz', value: 10)
+UserPercentage.create(id: 'job.futuregoal', value: 10)
+UserPercentage.create(id: 'job.workingenv', value: 10)
+UserPercentage.create(id: 'job.references', value: 10)
+
+
+
+UserPercentage.create(id: 'company.info', value: 50)
+UserPercentage.create(id: 'company.corporate', value: 10)
+UserPercentage.create(id: 'company.growth', value: 10)
+UserPercentage.create(id: 'company.evalution', value: 5)
+UserPercentage.create(id: 'company.futuregoal', value: 5)
+UserPercentage.create(id: 'company.tributes', value: 10)
+UserPercentage.create(id: 'company.award', value: 5)
+UserPercentage.create(id: 'company.certificate', value: 5)
+UserPercentage.create(id: 'company.gallery', value: 10)
+UserPercentage.create(id: 'company.workingenv', value: 10)
+
+
+
+UserPercentage.create(id: 'student.info', value: 20)
+UserPercentage.create(id: 'student.educationdetail', value: 40)
+UserPercentage.create(id: 'student.education', value: 15)
+UserPercentage.create(id: 'student.marksheet', value: 15)
+UserPercentage.create(id: 'student.project', value: 10)
+UserPercentage.create(id: 'student.achievement', value: 20)
+UserPercentage.create(id: 'student.award', value: 10)
+UserPercentage.create(id: 'student.certificate', value: 10)
+UserPercentage.create(id: 'student.extra', value: 20)
+
+
+
+UserPercentage.create(id: 'faculty.info', value: 20)
+UserPercentage.create(id: 'faculty.experience', value: 60)
+UserPercentage.create(id: 'faculty.affiliation', value: 10)
+UserPercentage.create(id: 'faculty.workshop', value: 10)
+UserPercentage.create(id: 'faculty.publication', value: 20)
+UserPercentage.create(id: 'faculty.research', value: 20)
+UserPercentage.create(id: 'faculty.achievement', value: 20)
+UserPercentage.create(id: 'faculty.award', value: 10)
+UserPercentage.create(id: 'faculty.certificate', value: 10)
+
+
+
+UserPercentage.create(id: 'site.like', value: 8)
+UserPercentage.create(id: 'site.star', value: 8)
+UserPercentage.create(id: 'site.updatecv', value: 8)
+UserPercentage.create(id: 'site.share', value: 8)
+UserPercentage.create(id: 'site.viewed', value: 8)
+UserPercentage.create(id: 'site.marketIQ', value: 15)
+UserPercentage.create(id: 'site.stockexchange', value: 35)
+UserPercentage.create(id: 'site.profilemeter', value: 10)
+
 
