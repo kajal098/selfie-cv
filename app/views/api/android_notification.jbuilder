@@ -13,6 +13,8 @@ if @user_like
 		json.file User::where(id: @user_like.like_id).first.file.url	 
 	end
 
+	json.count @user_like.like_counts
+
 
 end
 
@@ -28,6 +30,8 @@ if @user_view
 		json.extract! User::where(id: @user_view.view_id).first, :id, :username	 
 		json.file User::where(id: @user_view.view_id).first.file.url	 
 	end
+
+	json.count @user_view.view_counts
 
 
 end
@@ -45,6 +49,7 @@ if @user_share
 		json.file User::where(id: @user_share.share_id).first.file.url	 
 	end
 
+	json.count @user_share.share_counts
 
 end
 
@@ -61,6 +66,7 @@ if @user_favourite
 		json.file User::where(id: @user_favourite.favourite_id).first.file.url	 
 	end
 
+	json.count @user_favourite.favourite_counts
 
 end
 
@@ -76,6 +82,8 @@ if @user_rate
 		json.extract! User::where(id: @user_rate.rate_id).first, :id, :username	 
 		json.file User::where(id: @user_rate.rate_id).first.file.url	 
 	end
+
+	json.count @user_rate.rate_counts
 
 
 end

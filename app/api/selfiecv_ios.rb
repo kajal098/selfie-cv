@@ -2043,7 +2043,7 @@ resources :notifications do
       requires :token, type: String, regexp: UUID_REGEX
       requires :like_id
     end
-    post :like, jbuilder: 'android_notification' do
+    post :like, jbuilder: 'ios_notification' do
       @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
       error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save     
     end
@@ -2054,7 +2054,7 @@ resources :notifications do
       requires :token, type: String, regexp: UUID_REGEX
       requires :view_id
     end
-    post :view, jbuilder: 'android_notification' do
+    post :view, jbuilder: 'ios_notification' do
       @user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
       error! @user_view.errors.full_messages.join(', '),422 unless @user_view.save     
     end
@@ -2066,7 +2066,7 @@ resources :notifications do
       requires :share_id
       requires :share_type
     end
-    post :share, jbuilder: 'android_notification' do
+    post :share, jbuilder: 'ios_notification' do
       @user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
       error! @user_share.errors.full_messages.join(', '),422 unless @user_share.save     
     end
@@ -2077,7 +2077,7 @@ resources :notifications do
       requires :token, type: String, regexp: UUID_REGEX
       requires :favourite_id
     end
-    post :favourite, jbuilder: 'android_notification' do
+    post :favourite, jbuilder: 'ios_notification' do
       @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
       error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
     end
@@ -2090,7 +2090,7 @@ resources :notifications do
       requires :rate_id
       requires :rate_type
     end
-    post :rate, jbuilder: 'android_notification' do
+    post :rate, jbuilder: 'ios_notification' do
       @user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
       error! @user_rate.errors.full_messages.join(', '),422 unless @user_rate.save     
     end
