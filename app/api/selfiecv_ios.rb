@@ -1846,10 +1846,13 @@ resources :group do
         @group = Group.find params[:group_id]  
         if params[:user_id]   
               @user = User.find params[:user_id]   
+              @group_user = GroupUser.find_by_user_id params[:user_id]
               unless @group.deleted_from.include? @user.id
                 @group.deleted_from << @user.id
                 @group.update_column :deleted_from, @group.deleted_from
-              end        
+              end       
+              @group_user.status = 'deleted'
+              @group_user.save 
         else
               if current_user.role == 'Faculty'
                 @group.destroy
