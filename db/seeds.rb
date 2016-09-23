@@ -18,6 +18,10 @@ user = User.create!(email: 'julia@gmail.com', password:'12345678' , username: 'j
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 user = User.create!(email: 'mary@gmail.com', password:'12345678' , username: 'mary' , role: 'Student', first_name: 'mary' ) 
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+user = User.create!(email: 'nicolecross1579@gmail.com', password:'12345678' , username: 'nicole' , role: 'Student', first_name: 'nicole' ) 
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+user = User.create!(email: 'kianstokes@gmail.com', password:'12345678' , username: 'kianstokes' , role: 'Student', first_name: 'kianstokes' ) 
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 
 user = User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'Faculty' )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
@@ -399,30 +403,12 @@ Group.create(name: 'jekkygroup', slug: 'jekkygroup', code: 123456 )
 Group.create(name: 'angelagroup', slug: 'angelagroup', code: 123456 )
 Group.create(name: 'dianagroup', slug: 'dianagroup', code: 123456 )
 
-GroupUser.create(group_id:1, user_id:7 ,admin:true, status: 'joined')
-GroupUser.create(group_id:2, user_id:8 ,admin:true, status: 'joined')
-GroupUser.create(group_id:3, user_id:9 ,admin:true, status: 'joined')
-GroupUser.create(group_id:4, user_id:10 ,admin:true, status: 'joined')
+GroupInvitee.create(group_id:1, email: 'trupti@gmail.com')
+GroupInvitee.create(group_id:2, email: 'julia@gmail.com')
+GroupInvitee.create(group_id:3, email: 'daisy@gmail.com')
+GroupInvitee.create(group_id:4, email: 'jekky@gmail.com')
 
-GroupUser.create(group_id:1, user_id:3 ,admin:false, status: 'joined')
-GroupUser.create(group_id:2, user_id:3 ,admin:false, status: 'joined')
-GroupUser.create(group_id:3, user_id:3 ,admin:false, status: 'joined')
-GroupUser.create(group_id:4, user_id:3 ,admin:false, status: 'joined')
 
-GroupUser.create(group_id:1, user_id:4 ,admin:false, status: 'joined')
-GroupUser.create(group_id:2, user_id:4 ,admin:false, status: 'joined')
-GroupUser.create(group_id:3, user_id:4 ,admin:false, status: 'joined')
-GroupUser.create(group_id:4, user_id:4 ,admin:false, status: 'joined')
-
-GroupUser.create(group_id:1, user_id:5 ,admin:false, status: 'joined')
-GroupUser.create(group_id:2, user_id:5 ,admin:false, status: 'joined')
-GroupUser.create(group_id:3, user_id:5 ,admin:false, status: 'joined')
-GroupUser.create(group_id:4, user_id:5 ,admin:false, status: 'joined')
-
-GroupUser.create(group_id:1, user_id:6 ,admin:false, status: 'joined')
-GroupUser.create(group_id:2, user_id:6 ,admin:false, status: 'joined')
-GroupUser.create(group_id:3, user_id:6 ,admin:false, status: 'joined')
-GroupUser.create(group_id:4, user_id:6 ,admin:false, status: 'joined')
 
 Setting.create(resume_per: 40, achievement_per: 10, curricular_per: 10, whizquiz_per: 10, future_goal_per: 10, working_env_per: 10,reference_per: 10,site_name: 'Selfie Cv', site_email: 'selfiecv@gmailcom',site_phone: 12345678,site_fax: 1234567,facebook_url:'http://www.facebook.com/selfiecv',twitter_url:'http://www.twitter.com/selfiecv',google_plus_url: 'http://www.googleplus.com/selfiecv')
 
