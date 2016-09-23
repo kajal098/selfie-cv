@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922070912) do
+ActiveRecord::Schema.define(version: 20160923100528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,15 @@ ActiveRecord::Schema.define(version: 20160922070912) do
   end
 
   add_index "faculty_workshops", ["user_id"], name: "index_faculty_workshops_on_user_id", using: :btree
+
+  create_table "group_invitees", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "email",      default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "group_invitees", ["group_id"], name: "index_group_invitees_on_group_id", using: :btree
 
   create_table "group_users", force: :cascade do |t|
     t.integer  "group_id",                   null: false
@@ -528,6 +537,7 @@ ActiveRecord::Schema.define(version: 20160922070912) do
   add_foreign_key "faculty_publications", "users", on_delete: :cascade
   add_foreign_key "faculty_researches", "users", on_delete: :cascade
   add_foreign_key "faculty_workshops", "users", on_delete: :cascade
+  add_foreign_key "group_invitees", "groups"
   add_foreign_key "group_users", "groups", on_delete: :cascade
   add_foreign_key "group_users", "users", on_delete: :cascade
   add_foreign_key "student_educations", "users", on_delete: :cascade

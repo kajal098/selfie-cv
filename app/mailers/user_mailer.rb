@@ -16,4 +16,9 @@ class UserMailer < ApplicationMailer
   	mail(to: user.email, subject: "Your A/C delete code")
   end
 
+  def send_group_code(group,email)
+    @group = group
+    mail(to: email, subject: "Invitation")
+  end
+
 end

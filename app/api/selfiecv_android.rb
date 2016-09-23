@@ -1901,7 +1901,27 @@ resources :group do
         { code: 200, :status => "Success" }
       end
 
-# Join group
+    # for invite to community by email
+
+    desc "Email invitation"
+
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+      requires :email_ids, type: Array, default: []
+    end
+
+    post :email_invite do
+      @group = Group.find params[:group_id]
+      params[:email_ids].each do |email|
+        @group_invitee = GroupInvitee.new group_id: params[:group_id], email: email
+        error!({error: @group_invitee.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_invitee.save
+        UserMailer.send_group_code(@group,email).deliver_now
+      end
+      {}
+    end
+
+    # Join group
 
     desc 'Join Group'
     params do
@@ -1911,14 +1931,19 @@ resources :group do
 
     post :join, jbuilder: 'android_group' do
       @group = Group.find_by_code params[:code]
-      error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group      
-      @group_user = @group.users.find_by_user_id(current_user.id)
-      if @group_user.present?
-        error!({error: 'You are already in this group.', status: 'Fail'}, 200)
-      else
+      error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group
+
+      @group_invitee = @group.group_invitees.where(email: current_user.email).first
+      error! "You are unauthorized for this group.", 422 unless @group_invitee
+
+      @group_user = @group.users.where(user_id: current_user.id).first
+      error! "You are already in this group.", 422 unless @group_user
+
+      if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
         error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save      
       end      
+      
     end
 
     # leave group
