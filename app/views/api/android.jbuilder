@@ -9,9 +9,11 @@ if @user
 	if @user.role == 'Jobseeker'
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
 
-		json.profile @user.profile_thumb_url
+		json.profile_thumb @user.profile_thumb_url
+		json.profile @user.profile_pic.url
 
-		json.resume @user.resume_thumb_url
+		json.resume_thumb @user.resume_thumb_url
+		json.resume @user.file.url
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
@@ -34,11 +36,14 @@ if @user
 	elsif @user.role == 'Company'
 		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field
 
-		json.logo @user.logo_thumb_url
+		json.logo_thumb @user.logo_thumb_url
+		json.logo @user.company_logo.url
 
-		json.profile @user.company_profile_thumb_url
+		json.profile_thumb @user.company_profile_thumb_url
+		json.profile @user.company_profile.url
 
-		json.brochure @user.brochure_thumb_url
+		json.brochure_thumb @user.brochure_thumb_url
+		json.brochure @user.company_brochure.url
 
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
@@ -67,9 +72,11 @@ if @user
 	elsif @user.role == 'Student'
 		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
 
-		json.profile @user.profile_thumb_url
+		json.profile_thumb @user.profile_thumb_url
+		json.profile @user.profile_pic.url
 
-		json.file @user.resume_thumb_url
+		json.resume_thumb @user.resume_thumb_url
+		json.resume @user.file.url
 
 		json.student_basic_info_per @user.user_meter.student_basic_info_per.to_i
       	json.student_education_per @user.user_meter.student_education_per.to_i
@@ -89,9 +96,11 @@ if @user
 	elsif @user.role == 'Faculty'
 		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
 
-		json.profile @user.profile_thumb_url
+		json.profile_thumb @user.profile_thumb_url
+		json.profile @user.profile_pic.url
 
-		json.file @user.resume_thumb_url
+		json.resume_thumb @user.resume_thumb_url
+		json.resume @user.file.url
 
 		json.faculty_basic_info_per @user.user_meter.faculty_basic_info_per.to_i
       	json.faculty_experience_per @user.user_meter.faculty_experience_per.to_i
@@ -115,11 +124,14 @@ if @company
 	
 		json.User @company, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
-		json.logo @company.logo_thumb_url		
+		json.logo_thumb @company.logo_thumb_url
+		json.logo @company.company_logo.url		
 
-		json.profile @company.company_profile_thumb_url
+		json.profile_thumb @company.company_profile_thumb_url
+		json.profile @company.company_profile.url
 
-		json.brochure @company.brochure_thumb_url
+		json.brochure_thumb @company.brochure_thumb_url
+		json.brochure @company.company_brochure.url
 
 		json.company_id @company.company ? @company.company_id : ""
 		json.company @company.company ? @company.company.name : ""
@@ -153,9 +165,14 @@ if @users
 		json.users @all_users do |user|
 				if user.role == "Jobseeker"
 						json.extract! user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
-						json.profile user.profile_thumb_url
+
+						json.profile_thumb user.profile_thumb_url
+						json.profile user.profile_pic.url
+
 						json.profile_video user.profile_photo_url
-						json.resume user.resume_thumb_url
+						json.resume_thumb user.resume_thumb_url
+
+						json.resume user.file.url
 						json.created_at user.created_at.to_i
 						json.updated_at user.updated_at.to_i
 						json.skills !user.user_educations.empty? ? user.user_educations.map(&:skill).join(",") : ""
@@ -178,9 +195,16 @@ if @users
 
 				elsif user.role == "Company"
 						json.extract! user, :id, :username, :role, :company_name, :company_establish_from,  :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id,  :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
-						json.logo user.logo_thumb_url
-						json.profile user.company_profile_thumb_url
-						json.brochure user.brochure_thumb_url
+
+						json.logo_thumb user.logo_thumb_url
+						json.logo user.company_logo.url
+
+						json.profile_thumb user.company_profile_thumb_url
+						json.profile user.company_profile.url
+
+						json.brochure_thumb user.brochure_thumb_url
+						json.brochure user.company_brochure.url
+
 						json.created_at user.created_at.to_i
 						json.updated_at user.updated_at.to_i
 
@@ -226,7 +250,8 @@ if @user_experience
 	json.experiences @experiences do |experience|
 		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :text_field, :file_type
 
-		json.file experience.thumb_url
+		json.file_thumb experience.thumb_url
+		json.file experience.file.url
 
 		json.experience_created_at experience.created_at.to_i
 		json.experience_updated_at experience.updated_at.to_i
@@ -248,7 +273,8 @@ if @award
 	json.awards @awards do |award|
 		json.extract! award, :id, :user_id, :name, :description, :text_field, :file_type
 
-		json.file award.thumb_url
+		json.file_thumb award.thumb_url
+		json.file award.file.url
 		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
@@ -260,7 +286,8 @@ if @certificate
 	json.certificates @certificates do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :text_field, :file_type
 
-		json.file certificate.thumb_url
+		json.file_thumb certificate.thumb_url
+		json.file certificate.file.url
 
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
@@ -273,7 +300,8 @@ if @curricular
 	json.curriculars @curriculars do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :text_field, :file_type
 
-		json.file curricular.thumb_url
+		json.file_thumb curricular.thumb_url
+		json.file curricular.file.url
 
 		json.curricular_created_at curricular.created_at.to_i
 		json.curricular_updated_at curricular.updated_at.to_i
@@ -285,7 +313,8 @@ if @future_goal
 	json.future_goals @future_goals do |future_goal|
 		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :text_field, :file_type
 
-		json.file future_goal.thumb_url
+		json.file_thumb future_goal.thumb_url
+		json.file future_goal.file.url
 
 		json.future_goal_created_at future_goal.created_at.to_i
 		json.future_goal_updated_at future_goal.updated_at.to_i
@@ -297,7 +326,8 @@ if @environment
 	json.environments @environments do |environment|
 		json.extract! environment, :id, :user_id, :env_type, :title, :text_field, :file_type, :text_field
 
-		json.file environment.thumb_url
+		json.file_thumb environment.thumb_url
+		json.file environment.file.url
 
 		json.environment_created_at environment.created_at.to_i
 		json.environment_updated_at environment.updated_at.to_i
@@ -310,7 +340,8 @@ if @reference
 	json.references @references do |env|
 		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
 
-		json.file env.thumb_url
+		json.file_thumb env.thumb_url
+		json.file env.file.url
 
 		json.env_created_at env.created_at.to_i
 		json.env_updated_at env.updated_at.to_i
@@ -405,7 +436,8 @@ if @user_certificates
 	json.certificates @certificates do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :text_field, :file_type
 
-		json.file certificate.thumb_url
+		json.file_thumb certificate.thumb_url
+		json.file certificate.file.url
 
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
@@ -418,7 +450,8 @@ if @user_curriculars
 	json.user_curriculars @curriculars do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :text_field, :file_type
 
-		json.file curricular.thumb_url
+		json.file_thumb curricular.thumb_url
+		json.file curricular.file.url
 
 		json.curricular_created_at curricular.created_at.to_i
 		json.curricular_updated_at curricular.updated_at.to_i
@@ -430,7 +463,8 @@ if @user_future_goals
 	json.user_future_goals @future_goals do |future_goal|
 		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :text_field, :file_type
 
-		json.file future_goal.thumb_url
+		json.file_thumb future_goal.thumb_url
+		json.file future_goal.file.url
 
 		json.future_goal_created_at future_goal.created_at.to_i
 		json.future_goal_updated_at future_goal.updated_at.to_i
@@ -442,7 +476,8 @@ if @user_working_environments
 	json.user_working_environments @environments do |environment|
 		json.extract! environment, :id, :user_id, :env_type, :title, :text_field, :file_type, :text_field
 
-		json.file environment.thumb_url
+		json.file_thumb environment.thumb_url
+		json.file environment.file.url
 
 		json.environment_created_at environment.created_at.to_i
 		json.environment_updated_at environment.updated_at.to_i
@@ -455,7 +490,8 @@ if @user_references
 	json.user_references @references do |env|
 		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
 
-		json.file env.thumb_url
+		json.file_thumb env.thumb_url
+		json.file env.file.url
 
 		json.env_created_at env.created_at.to_i
 		json.env_updated_at env.updated_at.to_i
@@ -474,7 +510,8 @@ end
 if @update_user_experience
 	json.extract! @update_user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :text_field, :file_type
 
-	json.file @update_user_experience.thumb_url
+	json.file_thumb @update_user_experience.thumb_url
+	json.file @update_user_experience.file.url
 
 	json.created_at @update_user_experience.created_at.to_i
 	json.updated_at @update_user_experience.updated_at.to_i
@@ -496,7 +533,8 @@ end
 if @update_user_certificate
 	json.extract! @update_user_certificate, :id, :user_id, :certificate_type, :name, :year, :text_field, :file_type
 
-		json.file @update_user_certificate.thumb_url
+		json.file_thumb @update_user_certificate.thumb_url
+		json.file @update_user_certificate.file.url
 
 		json.created_at @update_user_certificate.created_at.to_i
 		json.updated_at @update_user_certificate.updated_at.to_i
@@ -505,7 +543,8 @@ end
 if @update_user_curricular
 	json.extract! @update_user_curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :text_field, :file_type
 
-		json.file @update_user_curricular.thumb_url
+		json.file_thumb @update_user_curricular.thumb_url
+		json.file @update_user_curricular.file.url
 
 		json.created_at @update_user_curricular.created_at.to_i
 		json.updated_at @update_user_curricular.updated_at.to_i
@@ -514,7 +553,8 @@ end
 if @update_user_future_goal
 	json.extract! @update_user_future_goal, :id, :user_id, :goal_type, :title, :term_type, :text_field, :file_type
 
-		json.file @update_user_future_goal.thumb_url
+		json.file_thumb @update_user_future_goal.thumb_url
+		json.file @update_user_future_goal.file.url
 
 		json.created_at @update_user_future_goal.created_at.to_i
 		json.updated_at @update_user_future_goal.updated_at.to_i
@@ -523,7 +563,8 @@ end
 if @update_user_environment
 	json.extract! @update_user_environment, :id, :user_id, :env_type, :title, :text_field, :file_type, :text_field
 
-		json.file @update_user_environment.thumb_url
+		json.file_thumb @update_user_environment.thumb_url
+		json.file @update_user_environment.file.url
 
 		json.created_at @update_user_environment.created_at.to_i
 		json.updated_at @update_user_environment.updated_at.to_i
@@ -533,7 +574,8 @@ end
 if @update_user_reference
 	json.extract! @update_user_reference, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
 
-		json.file @update_user_reference.thumb_url
+		json.file_thumb @update_user_reference.thumb_url
+		json.file @update_user_reference.file.url
 
 		json.created_at @update_user_reference.created_at.to_i
 		json.updated_at @update_user_reference.updated_at.to_i
@@ -542,7 +584,8 @@ end
 if @basic_info
 json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
 
-		json.file @basic_info.resume_thumb_url
+		json.file_thumb @basic_info.resume_thumb_url
+		json.file @basic_info.file.url
 
 		json.created_at @basic_info.created_at.to_i
 		json.updated_at @basic_info.updated_at.to_i
@@ -693,6 +736,7 @@ if @faculty_publication
 	json.faculty_publications @publications do |publication|
 		json.extract! publication, :id, :user_id, :title, :description
 		
+		json.file_thumb publication.thumb_url
 		json.file publication.file.url
 
 		json.edu_created_at publication.created_at.to_i
@@ -703,6 +747,7 @@ end
 if @update_faculty_publication
 	json.extract! @update_faculty_publication, :id, :user_id, :title, :description
 
+	json.file_thumb @update_faculty_publication.thumb_url
 	json.file @update_faculty_publication.file.url
 
 	json.edu_created_at @update_faculty_publication.created_at.to_i
@@ -714,6 +759,7 @@ if @faculty_publications
 	json.faculty_publications @publications do |publication|
 	json.extract! publication, :id, :user_id, :title, :description
 
+	json.file_thumb publication.thumb_url
 	json.file publication.file.url
 
 	json.edu_created_at publication.created_at.to_i
@@ -726,6 +772,7 @@ if @faculty_research
 	json.faculty_researches @researches do |research|
 		json.extract! research, :id, :user_id, :title, :description
 
+		json.file_thumb research.thumb_url
 		json.file research.file.url
 		
 
@@ -737,6 +784,7 @@ end
 if @update_faculty_research
 	json.extract! @update_faculty_research, :id, :user_id, :title, :description
 
+	json.file_thumb @update_faculty_research.thumb_url
 	json.file @update_faculty_research.file.url
 
 	json.edu_created_at @update_faculty_research.created_at.to_i
@@ -748,6 +796,7 @@ if @faculty_researches
 	json.faculty_researches @researches do |research|
 	json.extract! research, :id, :user_id, :title, :description
 
+	json.file_thumb research.thumb_url
 	json.file research.file.url
 
 	json.edu_created_at research.created_at.to_i
