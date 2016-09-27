@@ -1205,7 +1205,7 @@ resources :data do
   before { authenticate! }
 
     # for dropdown data
-    desc 'Company Information'
+    desc 'Dropdown Data'
     params do
       requires :token, type: String, regexp: UUID_REGEX
     end
@@ -1216,8 +1216,8 @@ resources :data do
       @industries = Industry.all
     end
 
-    # for update student education
-    desc 'Update Student Education'
+    # for update image
+    desc 'Update Image'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
