@@ -2037,7 +2037,6 @@ resources :messages do
         @chat.file = params[:file] if params[:file]
         error! @chat.errors.full_messages.join(', '), 422 unless @chat.save
       end
-      {}
     end
   
 
