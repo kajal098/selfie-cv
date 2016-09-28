@@ -1268,8 +1268,8 @@ resources :student do
       @user
     end
 
-    # for update user's education
-    desc 'Update User Education'
+    # for update student basic info
+    desc 'Update Student Basic Info'
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
