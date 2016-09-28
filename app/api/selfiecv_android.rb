@@ -2095,14 +2095,13 @@ resources :messages do
       optional :file
       optional :file_type
     end
-    post :send_file_to_groups do
+    post :send_file_to_groups, jbuilder: 'android_message' do
       params[:group_ids].each do |group_id|
         @a = Chat.new sender_id: current_user.id, group_id: group_id
         @a.file_type = params[:file_type] if params[:file_type]
         @a.file = params[:file] if params[:file]
         error!({error: @a.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @a.save
       end
-      @groups = current_user.groups
     end
   
 
