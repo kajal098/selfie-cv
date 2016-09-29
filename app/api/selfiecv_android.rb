@@ -2126,10 +2126,15 @@ resources :notifications do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :like_id
+      requires :is_liked
     end
     post :like, jbuilder: 'android_notification' do
-      @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
-      error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
+      if params[:is_liked] == 'false'
+        @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
+        error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
+      else
+        'You already like this profile!'
+      end
     end
 
     # for view profile of user
