@@ -8,8 +8,8 @@
       <div class="panel-body">
   <%= simple_form_for [:admin, @user_percentage], url: admin_user_percentages_path, html: { class: 'form-horizontal' } do |f| %>
   <h4 class="text_decoration"><b> Percentage Setting </b></h4>
-    <%= f.hidden_field :ptype, name: "ptype", value: "job" %>
-  <% UserPercentage.fetch("job").each do |u| %>
+    <%= f.hidden_field :ptype, name: "ptype", value: "params[:ptype]" %>
+  <% UserPercentage.fetch(params[:ptype]).each do |u| %>
     <% if u.parent_id %>
       <div class="col-lg-offset-2">
       <%= f.input :id, label: u.key.capitalize, input_html: { name: "user_percentage["+u.parent_id.to_s+"]["+u.key+"]", value: u.value, type: "number" } %>
