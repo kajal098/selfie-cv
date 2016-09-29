@@ -2131,9 +2131,10 @@ resources :notifications do
     post :like, jbuilder: 'android_notification' do
       if params[:is_liked] == 'false'
         @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
+        @user_like.is_liked = 'true'
         error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
-      else
-        'You already like this profile!'
+      else        
+        error!({error: 'You already like this profile!', status: 'Fail'}, 200)
       end
     end
 
@@ -2165,10 +2166,16 @@ resources :notifications do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :favourite_id
+      requires :is_favourited
     end
     post :favourite, jbuilder: 'android_notification' do
+      if params[:is_favourited] == 'false'
       @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
+      @user_like.is_favourited = 'true'
       error!({error: @user_favourite.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_favourite.save     
+      else        
+        error!({error: 'You already favourite this profile!', status: 'Fail'}, 200)
+      end
     end
 
 

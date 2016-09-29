@@ -2059,10 +2059,16 @@ resources :notifications do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :like_id
+      requires :is_liked
     end
     post :like, jbuilder: 'ios_notification' do
+      if params[:is_liked] == 'false'
       @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
-      error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save     
+      @user_like.is_liked = 'true'
+      error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save    
+      else        
+        error! 'You already like this profile!',422
+      end 
     end
 
     # for view profile of user
@@ -2093,10 +2099,16 @@ resources :notifications do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :favourite_id
+      requires :is_favourited
     end
     post :favourite, jbuilder: 'ios_notification' do
-      @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
-      error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
+      if params[:is_favourited] == 'false'
+        @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
+        @user_like.is_favourited = 'true'
+        error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
+      else        
+        error! 'You already favourite this profile!',422
+      end
     end
 
 
