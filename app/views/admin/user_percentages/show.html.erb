@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-lg-offset-1 col-lg-10">
+    <div class="panel panel-default">
+      <div class="panel-heading">        
+        
+        <h3 class="panel-title">Setting</h3>
+      </div>
+      <div class="panel-body">
+  <%= simple_form_for [:admin, @user_percentage], url: admin_user_percentages_path, html: { class: 'form-horizontal' } do |f| %>
+  <h4 class="text_decoration"><b> Percentage Setting </b></h4>
+    <%= f.hidden_field :ptype, name: "ptype", value: "job" %>
+  <% UserPercentage.fetch("job").each do |u| %>
+    <% if u.parent_id %>
+      <div class="col-lg-offset-2">
+      <%= f.input :id, label: u.key.capitalize, input_html: { name: "user_percentage["+u.parent_id.to_s+"]["+u.key+"]", value: u.value, type: "number" } %>
+      </div>
+    <% else %>
+      <%= f.input :id, label: u.key.capitalize,  input_html: { name: "user_percentage["+u.key+"]", value: u.value, type: "number" } %>
+    <% end %>
+  <% end %>
+<%= f.submit :save, class: 'btn btn-primary btn-sm', style: "margin-left:300px;" %>
+<% end %>
+</div>
+  </div>
+</div>
+</div>

@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-09-27'
-    t.date     "join_till",    default: '2016-09-27'
+    t.date     "join_from",    default: '2016-09-28'
+    t.date     "join_till",    default: '2016-09-28'
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -245,7 +245,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-09-27'
+    t.date     "date",            default: '2016-09-28'
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
@@ -290,7 +290,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-09-27'
+    t.date     "start_from",      default: '2016-09-28'
     t.string   "working_till",    default: "",           null: false
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
@@ -382,12 +382,16 @@ ActiveRecord::Schema.define(version: 20160923100528) do
 
   add_index "user_meters", ["user_id"], name: "index_user_meters_on_user_id", using: :btree
 
-  create_table "user_percentages", id: false, force: :cascade do |t|
-    t.string   "id",         default: "", null: false
+  create_table "user_percentages", force: :cascade do |t|
+    t.integer  "parent_id"
+    t.string   "ptype",      default: "", null: false
+    t.string   "key",        default: "", null: false
     t.string   "value",      default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  add_index "user_percentages", ["parent_id"], name: "index_user_percentages_on_parent_id", using: :btree
 
   create_table "user_preferred_works", force: :cascade do |t|
     t.integer  "user_id"
@@ -432,7 +436,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-09-27'
+    t.date     "date",       default: '2016-09-28'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "text_field", default: "",           null: false
@@ -473,7 +477,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-09-27"
+    t.string   "date_of_birth",                                 default: "2016-09-28"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -487,7 +491,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-09-27"
+    t.string   "faculty_join_from",                             default: "2016-09-28"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -556,6 +560,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
   add_foreign_key "user_likes", "users", on_delete: :cascade
   add_foreign_key "user_marksheets", "users", on_delete: :cascade
   add_foreign_key "user_meters", "users", on_delete: :cascade
+  add_foreign_key "user_percentages", "user_percentages", column: "parent_id", on_delete: :cascade
   add_foreign_key "user_preferred_works", "users", on_delete: :cascade
   add_foreign_key "user_projects", "users", on_delete: :cascade
   add_foreign_key "user_rates", "users", column: "rate_id", on_delete: :cascade
