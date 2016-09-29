@@ -2095,14 +2095,13 @@ resources :messages do
       optional :file
       optional :file_type
     end
-    post :send_file_to_groups do
+    post :send_file_to_groups, jbuilder: 'android_message' do
       params[:group_ids].each do |group_id|
         @a = Chat.new sender_id: current_user.id, group_id: group_id
         @a.file_type = params[:file_type] if params[:file_type]
         @a.file = params[:file] if params[:file]
         error!({error: @a.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @a.save
       end
-      @groups = current_user.groups
     end
   
 
@@ -2127,10 +2126,15 @@ resources :notifications do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :like_id
+      requires :is_liked
     end
     post :like, jbuilder: 'android_notification' do
-      @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
-      error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
+      if params[:is_liked] == 'false'
+        @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
+        error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
+      else
+        'You already like this profile!'
+      end
     end
 
     # for view profile of user

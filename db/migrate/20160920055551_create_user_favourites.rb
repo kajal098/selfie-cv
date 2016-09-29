@@ -3,6 +3,7 @@ class CreateUserFavourites < ActiveRecord::Migration
     create_table :user_favourites do |t|
       t.integer :user_id
       t.integer :favourite_id
+      t.boolean :is_favourited, default:false
 
       t.timestamps null: false
     end
