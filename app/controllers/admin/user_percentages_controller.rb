@@ -37,9 +37,9 @@ class Admin::UserPercentagesController < Admin::ApplicationController
 	    		end
 	    	end
 	    end
-      	redirect_to admin_user_percentages_path, notice: "Percentage updated successfully."
+      	redirect_to admin_user_percentages_path('ptype' => params[:ptype]), notice: "Percentage updated successfully."
 	else	
-    	redirect_to admin_user_percentages_path, alert: "Please enter valid percentage value."
+    	redirect_to admin_user_percentages_path('ptype' => params[:ptype]), alert: "Please enter valid percentage value."
   	end
   end
 
