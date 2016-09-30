@@ -77,8 +77,8 @@ if @user_stuff
 		json.user_resume_per @user_stuff.user_meter.resume_per.to_i
 		json.user_achievement_per @user_stuff.user_meter.achievement_per.to_i
 		json.user_curricular_per @user_stuff.user_meter.curri_per.to_i
-		json.user_lifegoal_per @user_stuff.user_meter.lifegoal_per.to_i
-		json.user_working_environment_per @user_stuff.user_meter.working_per.to_i
+		json.user_future_goal_per @user_stuff.user_meter.future_goal_per.to_i
+		json.user_working_environment_per @user_stuff.user_meter.working_env_per.to_i
 		json.user_reference_per @user_stuff.user_meter.ref_per.to_i
 		json.user_whizquiz_per @user_stuff.user_meter.whizquiz_per.to_i
 		json.user_total_per @user_stuff.user_meter.total_per.to_i
@@ -132,7 +132,7 @@ if @user_stuff
 		json.company_info_per @user_stuff.user_meter.company_info_per.to_i
 		json.company_corporate_identity_per @user_stuff.user_meter.corporate_identity_per.to_i
 		json.company_growth_and_goal_per @user_stuff.user_meter.growth_and_goal_per.to_i
-		json.company_tribute_per @user_stuff.user_meter.company_tribute_per.to_i
+		json.achievement_per @user_stuff.user_meter.achievement_per.to_i
 		json.company_gallery_per @user_stuff.user_meter.galery_per.to_i
 		json.company_working_env_per @user_stuff.user_meter.working_env_per.to_i
 		json.user_total_per @user_stuff.user_meter.total_per.to_i
@@ -152,8 +152,8 @@ if @user_stuff
 
 		json.student_basic_info_per @user_stuff.user_meter.student_basic_info_per.to_i
       	json.student_education_per @user_stuff.user_meter.student_education_per.to_i
-      	json.student_achievement_per @user_stuff.user_meter.student_achievement_per.to_i
-      	json.student_extra_curri_per @user_stuff.user_meter.student_extra_curri_per.to_i
+      	json.achievement_per @user_stuff.user_meter.achievement_per.to_i
+      	json.curri_per @user_stuff.user_meter.curri_per.to_i
       	json.user_total_per @user_stuff.user_meter.total_per.to_i
 
       	json.created_at @user_stuff.created_at.to_i
@@ -202,8 +202,8 @@ if @user_stuff
 		json.file @user_stuff.resume_thumb_url
 
 		json.faculty_basic_info_per @user_stuff.user_meter.faculty_basic_info_per.to_i
-      	json.faculty_experience_per @user_stuff.user_meter.faculty_experience_per.to_i
-      	json.faculty_achievement_per @user_stuff.user_meter.faculty_achievement_per.to_i
+      	json.experience_per @user_stuff.user_meter.experience_per.to_i
+      	json.achievement_per @user_stuff.user_meter.achievement_per.to_i
       	json.user_total_per @user_stuff.user_meter.total_per.to_i
 
 

@@ -21,8 +21,8 @@ if @user
 		json.resume_per @user.user_meter ? @user.user_meter.resume_per.to_i : ""
 		json.achievement_per @user.user_meter ? @user.user_meter.achievement_per.to_i : ""
 		json.curri_per @user.user_meter ? @user.user_meter.curri_per.to_i : ""
-		json.lifegoal_per @user.user_meter ? @user.user_meter.lifegoal_per.to_i : ""
-		json.working_per @user.user_meter ? @user.user_meter.working_per.to_i : ""
+		json.future_goal_per @user.user_meter ? @user.user_meter.future_goal_per.to_i : ""
+		json.working_env_per @user.user_meter ? @user.user_meter.working_env_per.to_i : ""
 		json.ref_per @user.user_meter ? @user.user_meter.ref_per.to_i : ""
 		json.whizquiz_per @user.user_meter ? @user.user_meter.whizquiz_per.to_i : ""
 		json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : ""
@@ -60,7 +60,7 @@ if @user
 	json.company_info_per @user.user_meter ? @user.user_meter.company_info_per.to_i : ""
 	json.corporate_identity_per @user.user_meter ? @user.user_meter.corporate_identity_per.to_i : ""
 	json.growth_and_goal_per @user.user_meter ? @user.user_meter.growth_and_goal_per.to_i : ""
-	json.company_tribute_per @user.user_meter ? @user.user_meter.company_tribute_per.to_i : ""
+	json.achievement_per @user.user_meter ? @user.user_meter.achievement_per.to_i : ""
 	json.galery_per @user.user_meter ? @user.user_meter.galery_per.to_i : ""
 	json.working_env_per @user.user_meter ? @user.user_meter.working_env_per.to_i : ""
 	json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : ""
@@ -82,8 +82,8 @@ if @user
 
 	json.student_basic_info_per @user.user_meter ? @user.user_meter.student_basic_info_per.to_i : ""
 	json.student_education_per @user.user_meter ? @user.user_meter.student_education_per.to_i : ""
-	json.student_achievement_per @user.user_meter ? @user.user_meter.student_achievement_per.to_i : ""
-	json.student_extra_curri_per @user.user_meter ? @user.user_meter.student_extra_curri_per.to_i : ""
+	json.achievement_per @user.user_meter ? @user.user_meter.achievement_per.to_i : ""
+	json.curri_per @user.user_meter ? @user.user_meter.curri_per.to_i : ""
 	json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : ""
 
       
@@ -106,8 +106,8 @@ if @user
 		json.resume @user.file.url
 
 		json.faculty_basic_info_per @user.user_meter ?  @user.user_meter.faculty_basic_info_per.to_i : ""
-      	json.faculty_experience_per @user.user_meter ?  @user.user_meter.faculty_experience_per.to_i : ""
-      	json.faculty_achievement_per @user.user_meter ?  @user.user_meter.faculty_achievement_per.to_i : ""
+      	json.experience_per @user.user_meter ?  @user.user_meter.experience_per.to_i : ""
+      	json.achievement_per @user.user_meter ?  @user.user_meter.achievement_per.to_i : ""
       	json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : ""
 
 
@@ -148,7 +148,7 @@ if @company
 	json.company_info_per @company.user_meter ? @company.user_meter.company_info_per.to_i : ""
 	json.corporate_identity_per @company.user_meter ? @company.user_meter.corporate_identity_per.to_i : ""
 	json.growth_and_goal_per @company.user_meter ? @company.user_meter.growth_and_goal_per.to_i : ""
-	json.company_tribute_per @company.user_meter ? @company.user_meter.company_tribute_per.to_i : ""
+	json.achievement_per @company.user_meter ? @company.user_meter.achievement_per.to_i : ""
 	json.galery_per @company.user_meter ? @company.user_meter.galery_per.to_i : ""
 	json.working_env_per @company.user_meter ? @company.user_meter.working_env_per.to_i : ""
 	json.total_per @company.user_meter ? @company.user_meter.total_per.to_i : ""
@@ -184,8 +184,8 @@ if @users
 					json.resume_per user.user_meter ? user.user_meter.resume_per.to_i : ""
 					json.achievement_per user.user_meter ? user.user_meter.achievement_per.to_i : ""
 					json.curri_per user.user_meter ? user.user_meter.curri_per.to_i : ""
-					json.lifegoal_per user.user_meter ? user.user_meter.lifegoal_per.to_i : ""
-					json.working_per user.user_meter ? user.user_meter.working_per.to_i : ""
+					json.future_goal_per user.user_meter ? user.user_meter.future_goal_per.to_i : ""
+					json.working_env_per user.user_meter ? user.user_meter.working_env_per.to_i : ""
 					json.ref_per user.user_meter ? user.user_meter.ref_per.to_i : ""
 					json.whizquiz_per user.user_meter ? user.user_meter.whizquiz_per.to_i : ""
 					json.total_per user.user_meter ? user.user_meter.total_per.to_i : ""
@@ -220,7 +220,7 @@ if @users
 			json.company_info_per user.user_meter ? user.user_meter.company_info_per.to_i : ""
 			json.corporate_identity_per user.user_meter ? user.user_meter.corporate_identity_per.to_i : ""
 			json.growth_and_goal_per user.user_meter ? user.user_meter.growth_and_goal_per.to_i : ""
-			json.company_tribute_per user.user_meter ? user.user_meter.company_tribute_per.to_i : ""
+			json.achievement_per user.user_meter ? user.user_meter.achievement_per.to_i : ""
 			json.galery_per user.user_meter ? user.user_meter.galery_per.to_i : ""
 			json.working_env_per user.user_meter ? user.user_meter.working_env_per.to_i : ""
 			json.total_per user.user_meter ? user.user_meter.total_per.to_i : ""

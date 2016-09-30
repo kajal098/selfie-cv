@@ -117,5 +117,30 @@ def self.to_csv(options = {})
     end
 end
 
+    def percent_of_certi()
+        certi_per = 0
+        if self.user_certificates.count > 0            
+                if 
+                    self.user_certificates.first.file_type = "image"
+                    certi_per = 100
+                elsif 
+                    self.user_certificates.first.file_type = "doc"
+                    certi_per = 100
+                else
+                    certi_per = 50
+                end
+        end            
+    end
+
+    def percent_of_award()
+        certi_per = 0
+        if self.user_awards.count > 0
+            certi_per = 50
+        elsif 
+            self.user_awards.first.file_type = "image"
+            certi_per = 100
+        end            
+    end
+
 
 end

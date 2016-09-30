@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-09-29'
-    t.date     "join_till",    default: '2016-09-29'
+    t.date     "join_from",    default: '2016-09-30'
+    t.date     "join_till",    default: '2016-09-30'
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -245,7 +245,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-09-29'
+    t.date     "date",            default: '2016-09-30'
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
@@ -290,7 +290,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-09-29'
+    t.date     "start_from",      default: '2016-09-30'
     t.string   "working_till",    default: "",           null: false
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
@@ -357,29 +357,36 @@ ActiveRecord::Schema.define(version: 20160923100528) do
 
   create_table "user_meters", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "resume_per",              default: 0, null: false
-    t.integer  "achievement_per",         default: 0, null: false
-    t.integer  "curri_per",               default: 0, null: false
-    t.integer  "lifegoal_per",            default: 0, null: false
-    t.integer  "working_per",             default: 0, null: false
-    t.integer  "ref_per",                 default: 0, null: false
-    t.integer  "whizquiz_per",            default: 0, null: false
-    t.integer  "company_info_per",        default: 0, null: false
-    t.integer  "corporate_identity_per",  default: 0, null: false
-    t.integer  "growth_and_goal_per",     default: 0, null: false
-    t.integer  "company_tribute_per",     default: 0, null: false
-    t.integer  "galery_per",              default: 0, null: false
-    t.integer  "working_env_per",         default: 0, null: false
-    t.integer  "student_basic_info_per",  default: 0, null: false
-    t.integer  "student_education_per",   default: 0, null: false
-    t.integer  "student_achievement_per", default: 0, null: false
-    t.integer  "student_extra_curri_per", default: 0, null: false
-    t.integer  "faculty_basic_info_per",  default: 0, null: false
-    t.integer  "faculty_experience_per",  default: 0, null: false
-    t.integer  "faculty_achievement_per", default: 0, null: false
-    t.integer  "total_per",               default: 0, null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.integer  "resume_per",                 default: 0, null: false
+    t.integer  "resume_info_per",            default: 0, null: false
+    t.integer  "education_per",              default: 0, null: false
+    t.integer  "experience_per",             default: 0, null: false
+    t.integer  "achievement_per",            default: 0, null: false
+    t.integer  "award_per",                  default: 0, null: false
+    t.integer  "certificate_per",            default: 0, null: false
+    t.integer  "curri_per",                  default: 0, null: false
+    t.integer  "whizquiz_per",               default: 0, null: false
+    t.integer  "future_goal_per",            default: 0, null: false
+    t.integer  "working_env_per",            default: 0, null: false
+    t.integer  "ref_per",                    default: 0, null: false
+    t.integer  "company_info_per",           default: 0, null: false
+    t.integer  "corporate_identity_per",     default: 0, null: false
+    t.integer  "growth_and_goal_per",        default: 0, null: false
+    t.integer  "evalution_per",              default: 0, null: false
+    t.integer  "galery_per",                 default: 0, null: false
+    t.integer  "student_basic_info_per",     default: 0, null: false
+    t.integer  "student_education_per",      default: 0, null: false
+    t.integer  "student_education_info_per", default: 0, null: false
+    t.integer  "student_marksheet_per",      default: 0, null: false
+    t.integer  "student_project_per",        default: 0, null: false
+    t.integer  "faculty_basic_info_per",     default: 0, null: false
+    t.integer  "faculty_affiliation_per",    default: 0, null: false
+    t.integer  "faculty_workshop_per",       default: 0, null: false
+    t.integer  "faculty_publication_per",    default: 0, null: false
+    t.integer  "faculty_research_per",       default: 0, null: false
+    t.integer  "total_per",                  default: 0, null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "user_meters", ["user_id"], name: "index_user_meters_on_user_id", using: :btree
@@ -438,7 +445,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-09-29'
+    t.date     "date",       default: '2016-09-30'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "text_field", default: "",           null: false
@@ -479,7 +486,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-09-29"
+    t.string   "date_of_birth",                                 default: "2016-09-30"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -493,7 +500,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-09-29"
+    t.string   "faculty_join_from",                             default: "2016-09-30"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"

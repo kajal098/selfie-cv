@@ -425,7 +425,7 @@ resources :member do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user_experience = UserExperience.new user_id: @user.id
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :current_company)
+      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :current_company, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user_experience.text_field = params[:text_field] if params[:text_field]
       else
@@ -453,7 +453,7 @@ resources :member do
       @update_user_experience = UserExperience.find params[:experience_id]
       error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @update_user_experience
       @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
-        :designation, :description)
+        :designation, :description, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_user_experience.text_field = params[:text_field] if params[:text_field]
       else
@@ -578,7 +578,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:name] || params[:descrption] )
         @award = UserAward.new user_id: @user.id
-        @award.attributes = clean_params(params).permit(:name, :description)
+        @award.attributes = clean_params(params).permit(:name, :description, :file_type, :text_field)
         if (params[:file_type] == 'text')
         @award.text_field = params[:text_field] if params[:text_field]
       else
@@ -604,7 +604,7 @@ resources :member do
       authenticate!
       @update_user_award = UserAward.find params[:award_id]
       error!({error: 'User Award not found', status: 'Fail'}, 200) unless @update_user_award
-      @update_user_award.attributes = clean_params(params).permit(:name, :description)
+      @update_user_award.attributes = clean_params(params).permit(:name, :description, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_user_award.text_field = params[:text_field] if params[:text_field]
       else
@@ -658,7 +658,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:name] || params[:year] || params[:certificate_type] )
         @certificate = UserCertificate.new user_id: @user.id
-        @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+        @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type, :text_field)
         if (params[:file_type] == 'text')
         @certificate.text_field = params[:text_field] if params[:text_field]
       else
@@ -684,7 +684,7 @@ resources :member do
       authenticate!
       @update_user_certificate = UserCertificate.find params[:certificate_id]
       error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @update_user_certificate
-      @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type)
+      @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_user_certificate.text_field = params[:text_field] if params[:text_field]
       else
@@ -740,7 +740,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
         @curricular = UserCurricular.new user_id: @user.id
-        @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+        @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
         if (params[:file_type] == 'text')
         @curricular.text_field = params[:text_field] if params[:text_field]
       else
@@ -768,7 +768,7 @@ resources :member do
       authenticate!
       @update_user_curricular = UserCurricular.find params[:curricular_id]
       error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @update_user_curricular
-      @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date)
+      @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_user_curricular.text_field = params[:text_field] if params[:text_field]
       else
@@ -822,7 +822,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:goal_type] || params[:title] || params[:term_type] )
         @future_goal = UserFutureGoal.new user_id: @user.id
-        @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
+        @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
         if (params[:file_type] == 'text')
         @future_goal.text_field = params[:text_field] if params[:text_field]
       else
@@ -848,7 +848,7 @@ resources :member do
       authenticate!
       @update_future_goal = UserFutureGoal.find params[:update_future_goal_id]
       error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @update_future_goal
-      @update_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type)
+      @update_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_future_goal.text_field = params[:text_field] if params[:text_field]
       else
@@ -901,7 +901,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:env_type] || params[:title] )
         @environment = UserEnvironment.new user_id: @user.id
-        @environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
+        @environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
         if (params[:file_type] == 'text')
         @environment.text_field = params[:text_field] if params[:text_field]
       else
@@ -926,7 +926,7 @@ resources :member do
       authenticate!
       @update_user_environment = UserEnvironment.find params[:environment_id]
       error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_user_environment
-      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type)
+      @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_user_environment.text_field = params[:text_field] if params[:text_field]
       else
@@ -984,7 +984,7 @@ resources :member do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @reference = UserReference.new user_id: @user.id
       if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
-        @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
+        @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
         if (params[:file_type] == 'text')
         @reference.text_field = params[:text_field] if params[:text_field]
       else
@@ -1014,7 +1014,7 @@ resources :member do
       authenticate!
       @update_user_reference = UserReference.find params[:reference_id]
       error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @update_user_reference
-      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type)
+      @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_user_reference.text_field = params[:text_field] if params[:text_field]
       else
@@ -1293,7 +1293,7 @@ resources :student do
       @basic_info = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
       @basic_info.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type, :text_field)
       @basic_info.file = params[:file] if params[:file]
       error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       
@@ -1321,7 +1321,7 @@ resources :student do
       @basic_info = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
       @basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type)
+        :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field)
       @basic_info.file = params[:file] if params[:file]
       error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       @basic_info
@@ -1404,7 +1404,7 @@ resources :student do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if (params[:school_name] || params[:standard] || params[:grade] || params[:year] )
         @student_marksheet = UserMarksheet.new user_id: @user.id
-        @student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
+        @student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
         @student_marksheet.file = params[:file] if params[:file]
         error!({error: @student_marksheet.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @student_marksheet.save
       end          
@@ -1425,7 +1425,7 @@ resources :student do
     post :update_student_marksheet, jbuilder: 'android' do
       @update_student_marksheet = UserMarksheet.find params[:marksheet_id]
       error!({error: 'Student marksheet not found', status: 'Fail'}, 200) unless @update_student_marksheet
-      @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
+      @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
       @update_student_marksheet.file = params[:file] if params[:file]
       error!({error: @update_student_marksheet.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_marksheet.save
       @update_student_marksheet
