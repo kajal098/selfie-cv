@@ -20,8 +20,7 @@ class FacultyResearch < ActiveRecord::Base
         if user.faculty_researches.count > 0  
         	research_per = 0
         	user.faculty_researches.each do |research|   
-        	   		if 
-	                    research.file_type = "doc"
+        	   		if research.file_type == "doc"
 	                    research_per = 100
 	                    break
 	                else

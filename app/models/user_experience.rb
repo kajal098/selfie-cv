@@ -17,8 +17,7 @@ class UserExperience < ActiveRecord::Base
         if user.user_experiences.count > 0  
         	exp_per = 0
         	user.user_experiences.each do |exp|   
-        	   		if 
-	                    exp.file_type = "doc"
+        	   		if exp.file_type == "doc"
 	                    exp_per = 100
 	                    break
 	                else

@@ -20,8 +20,7 @@ class FacultyPublication < ActiveRecord::Base
         if user.faculty_publications.count > 0  
         	publication_per = 0
         	user.faculty_publications.each do |publication|   
-        	   		if 
-	                    publication.file_type = "doc"
+        	   		if publication.file_type == "doc"
 	                    publication_per = 100
 	                    break
 	                else

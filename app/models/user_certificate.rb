@@ -27,12 +27,10 @@ class UserCertificate < ActiveRecord::Base
         if user.user_certificates.count > 0  
         	certi_per = 0
         	user.user_certificates.each do |certi|   
-        	   		if 
-	                    certi.file_type = "image"
+        	   		if certi.file_type == "image"
 	                    certi_per = 100
 	                    break
-	                elsif 
-	                    certi.file_type = "doc"
+	                elsif certi.file_type == "doc"
 	                    certi_per = 100
 	                    break
 	                else

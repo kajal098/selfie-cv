@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
 # Include default devise modules. Others available are:
 # :confirmable, :lockable, :timeoutable and :omniauthable
 
-after_save :percent_of_resume
 
 
 
@@ -119,54 +118,5 @@ def self.to_csv(options = {})
         end
     end
 end
-
-
-
-
-
-
-
-
-
-def percent_of_resume()
-    if self.user_meter.present?
-        user_meter = self.user_meter
-    else
-        user_meter = UserMeter.create(:user_id=>self.id)
-    end
-        if self.file_type.present?  
-            resume_info_per = 0
-            if 
-                self.file_type = "doc"
-                resume_info_per = 50
-            elsif 
-                self.file_type = "image"
-                resume_info_per = 50
-            elsif 
-                self.file_type = "audio"
-                resume_info_per = 70
-            elsif 
-                self.file_type = "video"
-                resume_info_per = 100
-            else
-                resume_info_per = 30
-            end
-        end 
-        self.user_meter.update_column('resume_info_per' ,resume_info_per)
-        return true
-    
-end
-
-
-
-
-
-
-
-
-
-
-
-
 
 end

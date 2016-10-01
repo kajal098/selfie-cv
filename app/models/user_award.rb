@@ -17,8 +17,7 @@ class UserAward < ActiveRecord::Base
         award_per = 0
         if user.user_awards.count > 0  
         	user.user_awards.each do |award|   
-        	   		if 
-	                    award.file_type = "image"
+        	   		if award.file_type == "image"
 	                    award_per = 100
 	                    break
 	                else

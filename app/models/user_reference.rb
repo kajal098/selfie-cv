@@ -19,16 +19,13 @@ class UserReference < ActiveRecord::Base
         if user.user_references.count > 0  
         	ref_per = 0
         	user.user_references.each do |ref|   
-        	   		if 
-	                    ref.file_type = "image"
+        	   		if ref.file_type == "image"
 	                    ref_per = 50
 	                    break
-	                elsif 
-	                    ref.file_type = "audio"
+	                elsif ref.file_type == "audio"
 	                    ref_per = 70
 	                    break
-	                elsif 
-	                    ref.file_type = "video"
+	                elsif ref.file_type == "video"
 	                    ref_per = 100
 	                    break
 	                else

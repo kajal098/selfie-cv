@@ -20,12 +20,10 @@ class UserCurricular < ActiveRecord::Base
         curri_per = 0
         if user.user_curriculars.count > 0  
         	user.user_curriculars.each do |curri|   
-        	   		if 
-	                    curri.file_type = "image"
+        	   		if curri.file_type == "image"
 	                    curri_per = 100
 	                    break
-	                elsif 
-	                    curri.file_type = "video"
+	                elsif curri.file_type == "video"
 	                    curri_per = 100
 	                    break
 	                else
