@@ -10,15 +10,19 @@ class UserEducation < ActiveRecord::Base
 
 	def percent_of_education()
     	user = self.user
-        education_per = 0
-        if user.user_educations.count > 0  
-        	
-	                    education_per = 100
-	        
+        
+        if user.user_references.count > 0  
+        	education_per = 0
+        	setting_per = UserPercentage.where(key: 'education').where(ptype: user.role)
+        	user.user_references.each do |edu|          	   		
+	                    education_per = setting_per * 1	                
+        	end
+            user.user_meter.update_column('education_per' ,education_per)
         end 
-        return education_per  
-        user.user_meter.update_column('education_per' ,education_per)
+        
+        return true
     end
+
 
 	
 end

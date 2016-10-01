@@ -13,20 +13,20 @@ class UserExperience < ActiveRecord::Base
 
     def percent_of_exp()
     	user = self.user
-        
         if user.user_experiences.count > 0  
         	exp_per = 0
+            setting_per = UserPercentage.find_by_key('experience')
         	user.user_experiences.each do |exp|   
         	   		if exp.file_type == "doc"
-	                    exp_per = 100
+	                    exp_per = setting_per.value * 1
 	                    break
 	                else
-	                    exp_per = 50
+	                    exp_per = setting_per.value * 0.5
 	                end
         		       	
         	end
-        end 
         user.user_meter.update_column('working_exp_per' ,exp_per)
+        end 
         return true
     end
 

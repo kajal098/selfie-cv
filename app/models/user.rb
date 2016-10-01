@@ -2,15 +2,6 @@
 
 class User < ActiveRecord::Base
 
-    #include Elasticsearch::Model
-    #include Elasticsearch::Model::Callbacks
-    
-# Include default devise modules. Others available are:
-# :confirmable, :lockable, :timeoutable and :omniauthable
-
-
-
-
 extend Enumerize
 enum role: { Admin: 0, Student: 1, Faculty: 2, Jobseeker:3, Company:4 }
 
@@ -22,6 +13,8 @@ scope :for_roles, ->(values) do
 
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
+
+after_save :percent_of_resume
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -72,13 +65,6 @@ has_many    :user_rates
 has_many    :rate_counts, class_name: 'UserRate',foreign_key: "rate_id"
 
 mount_uploader :file, FileUploader
-    # def resume_thumb_url
-    # 	if(file.identifier.blank?)
-    # 		ActionController::Base.helpers.asset_url("cv.png")
-    # 	else	
-    #  		file.url(:thumb)
-    #  	end
-    # end
 def resume_thumb_url; file.url(:thumb); end
 def resume_photo_url; file.url; end
 
@@ -87,27 +73,15 @@ def profile_thumb_url; profile_pic.url(:thumb); end
 def profile_photo_url; profile_pic.url; end
 
 mount_uploader :company_logo, FileUploader
-def logo_thumb_url
-          
-            company_logo.url(:thumb)
-        
-    end
+def logo_thumb_url; company_logo.url(:thumb); end
 def logo_photo_url; company_logo.url; end
 
 mount_uploader :company_profile, FileUploader
-def company_profile_thumb_url
-           
-            company_profile.url(:thumb)
-        
-    end
+def company_profile_thumb_url; company_profile.url(:thumb); end
 def company_profile_photo_url; company_profile.url; end
 
 mount_uploader :company_brochure, FileUploader
-def brochure_thumb_url
-          
-            company_brochure.url(:thumb)
-        
-    end
+def brochure_thumb_url; company_brochure.url(:thumb); end
 def brochure_photo_url; company_brochure.url; end
 
 def self.to_csv(options = {})
@@ -118,5 +92,98 @@ def self.to_csv(options = {})
         end
     end
 end
+
+def percent_of_resume()
+
+    if self.user_meter.blank?
+        user_meter = UserMeter.create(:user_id=>self.id)
+    else
+        user_meter = self.user_meter
+    end
+        if self.file_type.present?  
+            resume_info_per = 0
+            setting_per = UserPercentage.find_by_key('resume_info')
+            if self.file_type == "doc"
+                resume_info_per = setting_per.value.to_i * 0.5
+            elsif self.file_type == "image"
+                resume_info_per = setting_per.value.to_i * 0.5
+            elsif self.file_type == "audio"
+                resume_info_per = setting_per.value.to_i * 0.7
+            elsif self.file_type == "video"
+                resume_info_per = setting_per.value.to_i * 1
+            else
+                resume_info_per = setting_per.value.to_i * 0.3
+            end
+        user_meter.update_column('resume_info_per' ,resume_info_per)
+        end 
+        return true
+end
+
+def profile_meter_total()
+    if self.role == "Jobseeker"
+        setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
+        resume_per = self.user_meter.resume_info_per + self.user_meter.education_per + self.user_meter.experience_per
+        resume_per = (resume_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('resume_per' ,resume_per)
+
+        setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Jobseeker").first
+        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        
+        total = self.user_meter.resume_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.whizquiz_per + self.user_meter.future_goal_per + self.user_meter.working_env_per + self.user_meter.ref_per
+        self.user_meter.update_column('total_per' ,total)  
+    
+    elsif self.role == "Company"
+
+        setting_per = UserPercentage.where(key: 'growth').where(ptype: "Company").first
+        growth_and_goal_per = self.user_meter.evalution_per + self.user_meter.future_goal_per
+        growth_and_goal_per = (growth_and_goal_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('growth_and_goal_per' ,growth_and_goal_per)
+
+        setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Company").first
+        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        
+        total = self.user_meter.company_info_per + self.user_meter.corporate_identity_per + self.user_meter.growth_and_goal_per + self.user_meter.achievement_per + self.user_meter.galery_per + self.user_meter.working_env_per
+        self.user_meter.update_column('total_per' ,total)  
+
+    elsif self.role == "Student"
+
+        setting_per = UserPercentage.where(key: 'education').where(ptype: "Student").first
+        student_education_per = self.user_meter.student_education_info_per + self.user_meter.student_marksheet_per + self.user_meter.student_project_per
+        student_education_per = (student_education_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('student_education_per' ,student_education_per)
+
+        setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Student").first
+        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        
+        total = self.user_meter.student_basic_info_per + self.user_meter.student_education_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.future_goal_per
+        self.user_meter.update_column('total_per' ,total)
+
+    elsif self.role == "Faculty"
+
+        setting_per = UserPercentage.where(key: 'experience').where(ptype: "Faculty").first
+        experience_per = self.user_meter.faculty_affiliation_per + self.user_meter.faculty_workshop_per + self.user_meter.faculty_publication_per + self.user_meter.faculty_research_per
+        experience_per = (experience_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('experience_per' ,experience_per)
+
+        setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Faculty").first
+        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        
+        total = self.user_meter.faculty_basic_info_per + self.user_meter.achievement_per + self.user_meter.experience_per
+        self.user_meter.update_column('total_per' ,total)
+    
+    end
+    return true
+end
+
+
+
 
 end

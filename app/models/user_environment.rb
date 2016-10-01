@@ -16,20 +16,22 @@ class UserEnvironment < ActiveRecord::Base
         
         if user.user_environments.count > 0  
         	env_per = 0
+            setting_per = UserPercentage.find_by_key('workingenv')
         	user.user_environments.each do |env|   
         	   		if env.file_type == "audio"
-	                    env_per = 70
+	                    env_per = setting_per * 0.7
 	                    break
 	                elsif env.file_type == "video"
-	                    env_per = 100
+	                    env_per = setting_per * 1
 	                    break
 	                else
-	                    env_per = 50
+	                    env_per = setting_per * 0.5
 	                end
         		       	
         	end
+             user.user_meter.update_column('working_env_per' ,env_per)
         end 
-        user.user_meter.update_column('working_env_per' ,env_per)
+       
         return true
     end
 
