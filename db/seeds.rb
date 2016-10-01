@@ -182,3 +182,4 @@ UserPercentage.create(ptype: 'site', key: 'stockexchange', value: 35)
 UserPercentage.create(ptype: 'site', key: 'profilemeter', value: 10)
 
 
+

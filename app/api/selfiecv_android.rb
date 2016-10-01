@@ -83,6 +83,8 @@ resources :member do
       error!({error: 'Device not registered', status: 'Fail'}, 200) unless current_device
       error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
+      @user_meter = UserMeter.new user_id: @user.id
+      error!({error: @user_meter.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_meter.save
     end
 
     # for user login
@@ -251,7 +253,7 @@ resources :member do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user.text_field = params[:text_field] if params[:text_field]
       else
@@ -299,7 +301,7 @@ resources :member do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user.text_field = params[:text_field] if params[:text_field]
       else
