@@ -83,8 +83,8 @@ resources :member do
       error!({error: 'Device not registered', status: 'Fail'}, 200) unless current_device
       error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-      @user_meter = UserMeter.new user_id: @user.id
-      error!({error: @user_meter.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_meter.save
+      # @user_meter = UserMeter.new user_id: @user.id
+      # error!({error: @user_meter.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_meter.save
     end
 
     # for user login
@@ -248,7 +248,7 @@ resources :member do
       optional :text_field
       optional :file_type
     end
-    post :resume, jbuilder: 'android' do
+    post :resume do
       authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
@@ -260,19 +260,6 @@ resources :member do
         @user.file = params[:file] if params[:file]
       end
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-      if(params[:file_type] == 'video')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 100
-      elsif(params[:file_type] == 'audio')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 70
-      elsif(params[:file_type] == 'file')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 50
-      elsif(params[:file_type] == 'text')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 30
-      end
       @user
     end
 
@@ -308,20 +295,6 @@ resources :member do
         @user.file = params[:file] if params[:file]
       end
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-      if(params[:file_type] == 'video')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 100
-      elsif(params[:file_type] == 'audio')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 70
-      elsif(params[:file_type] == 'file')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 50
-      elsif(params[:file_type] == 'text')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 30
-      end
-      @user
     end
 
     # for get user resume

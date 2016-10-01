@@ -8,10 +8,6 @@ class User < ActiveRecord::Base
 # Include default devise modules. Others available are:
 # :confirmable, :lockable, :timeoutable and :omniauthable
 
-after_save :percent_of_resume
-
-
-
 extend Enumerize
 enum role: { Admin: 0, Student: 1, Faculty: 2, Jobseeker:3, Company:4 }
 
@@ -23,6 +19,8 @@ scope :for_roles, ->(values) do
 
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
+
+after_save :percent_of_resume
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -121,40 +119,29 @@ def self.to_csv(options = {})
 end
 
 
-
-
-
-
-
-
-
 def percent_of_resume()
-    if self.user_meter.present?
-        user_meter = self.user_meter
-    else
+
+    if self.user_meter.blank?
         user_meter = UserMeter.create(:user_id=>self.id)
+    else
+        user_meter = self.user_meter
     end
         if self.file_type.present?  
             resume_info_per = 0
-            if 
-                self.file_type = "doc"
+            if self.file_type == "doc"
                 resume_info_per = 50
-            elsif 
-                self.file_type = "image"
+            elsif self.file_type == "image"
                 resume_info_per = 50
-            elsif 
-                self.file_type = "audio"
+            elsif self.file_type == "audio"
                 resume_info_per = 70
-            elsif 
-                self.file_type = "video"
+            elsif self.file_type == "video"
                 resume_info_per = 100
             else
                 resume_info_per = 30
             end
+        user_meter.update_column('resume_info_per' ,resume_info_per)
         end 
-        self.user_meter.update_column('resume_info_per' ,resume_info_per)
         return true
-    
 end
 
 
