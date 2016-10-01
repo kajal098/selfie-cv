@@ -74,9 +74,6 @@ resources :member do
       error! 'Device not registered',422 unless current_device
       error! 'password not matched', 200 if params[:password] != params[:password_confirmation]
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
-      @user_meter = UserMeter.new user_id: @user.id
-      error! @user_meter.errors.full_messages.join(', '), 422 unless @user_meter.save
-      
     end
 
     # for user login

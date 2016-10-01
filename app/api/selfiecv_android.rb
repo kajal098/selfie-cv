@@ -83,8 +83,6 @@ resources :member do
       error!({error: 'Device not registered', status: 'Fail'}, 200) unless current_device
       error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-      @user_meter = UserMeter.new user_id: @user.id
-      error!({error: @user_meter.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_meter.save
     end
 
     # for user login

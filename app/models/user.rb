@@ -8,6 +8,12 @@ class User < ActiveRecord::Base
 # Include default devise modules. Others available are:
 # :confirmable, :lockable, :timeoutable and :omniauthable
 
+after_save :user_meter_entry
+
+def user_meter_entry
+    UserMeter.create(user_id: self.id)
+end
+
 
 extend Enumerize
 enum role: { Admin: 0, Student: 1, Faculty: 2, Jobseeker:3, Company:4 }
