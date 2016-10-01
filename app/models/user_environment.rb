@@ -1,4 +1,5 @@
 class UserEnvironment < ActiveRecord::Base
+    belongs_to :user
 	validates :env_type,:title, presence: true
 	mount_uploader :file, FileUploader	
     def thumb_url
