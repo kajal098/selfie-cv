@@ -1183,7 +1183,7 @@ resources :company do
       requires :user_id
       requires :files, type: Array, default: []
     end
-    post :company_galery, jbuilder: 'k' do
+    post :company_galery, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       params[:files].each do |file|
