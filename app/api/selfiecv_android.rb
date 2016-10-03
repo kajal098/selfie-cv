@@ -1900,7 +1900,7 @@ resources :group do
         error!({error: @group_invitee.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_invitee.save
         UserMailer.send_group_code(@group,email).deliver_now
       end
-      {}
+      { :status => "Success" }
     end
 
     # Join group
