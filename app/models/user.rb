@@ -14,7 +14,7 @@ scope :for_roles, ->(values) do
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-#after_save :percent_of_resume
+after_save :percent_of_resume
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -54,15 +54,19 @@ has_many    :groups, class_name: 'GroupUser',foreign_key: "user_id"
 has_many    :all_groups, -> (user) { where("#{user.id} != ALL (deleted_from)") }, through: :groups, class_name: 'Group', source: :group
 
 has_many    :user_likes
-has_many    :like_counts, class_name: 'UserLike',foreign_key: "like_id"
+has_many    :likes, class_name: 'UserLike',foreign_key: "like_id"
 has_many    :user_views
-has_many    :view_counts, class_name: 'UserView',foreign_key: "view_id"
+has_many    :views, class_name: 'UserView',foreign_key: "view_id"
 has_many    :user_shares
-has_many    :share_counts, class_name: 'UserShare',foreign_key: "share_id"
+has_many    :shares, class_name: 'UserShare',foreign_key: "share_id"
 has_many    :user_favourites
-has_many    :favourite_counts, class_name: 'UserFavourite',foreign_key: "favourite_id"
+has_many    :favourites, class_name: 'UserFavourite',foreign_key: "favourite_id"
 has_many    :user_rates
-has_many    :rate_counts, class_name: 'UserRate',foreign_key: "rate_id"
+has_many    :rates, class_name: 'UserRate',foreign_key: "rate_id"
+has_many    :bronze_rates, -> {where(rate_type: "bronze") }, class_name: 'UserRate',foreign_key: "rate_id"
+has_many    :silver_rates, -> {where(rate_type: "silver")}, class_name: 'UserRate',foreign_key: "rate_id"
+has_many    :gold_rates, -> {where(rate_type: "gold") }, class_name: 'UserRate',foreign_key: "rate_id"
+
 
 mount_uploader :file, FileUploader
 def resume_thumb_url; file.url(:thumb); end
@@ -93,31 +97,31 @@ def self.to_csv(options = {})
     end
 end
 
-# def percent_of_resume()
+def percent_of_resume()
 
-#     if self.user_meter.blank?
-#         user_meter = UserMeter.create(:user_id=>self.id)
-#     else
-#         user_meter = self.user_meter
-#     end
-#         if self.file_type.present?  
-#             resume_info_per = 0
-#             setting_per = UserPercentage.find_by_key('resume_info')
-#             if self.file_type == "doc"
-#                 resume_info_per = setting_per.value.to_i * 0.5
-#             elsif self.file_type == "image"
-#                 resume_info_per = setting_per.value.to_i * 0.5
-#             elsif self.file_type == "audio"
-#                 resume_info_per = setting_per.value.to_i * 0.7
-#             elsif self.file_type == "video"
-#                 resume_info_per = setting_per.value.to_i * 1
-#             else
-#                 resume_info_per = setting_per.value.to_i * 0.3
-#             end
-#         user_meter.update_column('resume_info_per' ,resume_info_per)
-#         end 
-#         return true
-# end
+    if self.user_meter.blank?
+        user_meter = UserMeter.create(:user_id=>self.id)
+    else
+        user_meter = self.user_meter
+    end
+        if self.file_type.present?  
+            resume_info_per = 0
+            setting_per = UserPercentage.find_by_key('resume_info')
+            if self.file_type == "doc"
+                resume_info_per = setting_per.value.to_i * 0.5
+            elsif self.file_type == "image"
+                resume_info_per = setting_per.value.to_i * 0.5
+            elsif self.file_type == "audio"
+                resume_info_per = setting_per.value.to_i * 0.7
+            elsif self.file_type == "video"
+                resume_info_per = setting_per.value.to_i * 1
+            else
+                resume_info_per = setting_per.value.to_i * 0.3
+            end
+        user_meter.update_column('resume_info_per' ,resume_info_per)
+        end 
+        return true
+end
 
 def profile_meter_total()
     if self.role == "Jobseeker"
@@ -184,21 +188,88 @@ def profile_meter_total()
 end
 
 def like_per
-        @count = self.like_counts.count
-        @per = 0
-        if (" @count >= 1 AND  @count <= 10")
-            @per = 100
-        elsif (" @count >= 10 AND  @count <= 100")
-            @per = 200
+        @count = self.likes.count
+        setting_per = UserPercentage.find_by_key('like')
+        @like_per = 0
+        if @count >= 100 && @count <= 300
+            @like_per = setting_per * 0.3
+        elsif @count >= 300 &&  @count <= 500
+            @like_per = setting_per * 0.5
+        elsif @count >= 500
+            @like_per = setting_per * 1
         end
-        return @per
-        
+        return @like_per        
 end
 
-def profile_meter_total()
-        total = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8
+def view_per
+        @count = self.views.count
+        setting_per = UserPercentage.find_by_key('viewed')
+        @view_per = 0
+        if @count >= 100 && @count <= 300
+            @view_per = setting_per * 0.5
+        elsif @count >= 300
+            @view_per = setting_per * 1
+        end
+        return @view_per        
+end
+
+def share_per
+        @count = self.shares.count
+        setting_per = UserPercentage.find_by_key('share')
+        @share_per = 0
+        if @count >= 100 && @count <= 300
+            @share_per = setting_per * 0.5
+        elsif @count >= 300
+            @share_per = setting_per * 1
+        end
+        return @share_per        
+end
+
+def bronze_per
+        @count = self.bronze_rates.count
+        setting_per = UserPercentage.find_by_key('star')
+        @bronze_per = 0
+        if @count >= 100 && @count <= 300
+            @bronze_per = setting_per * 0.1
+        elsif @count >= 300
+            @bronze_per = setting_per * 0.2
+        end
+        return @bronze_per        
+end
+def silver_per
+        @count = self.silver_rates.count
+        setting_per = UserPercentage.find_by_key('star')
+        @silver_per = 0
+        if @count >= 100 && @count <= 300
+            @silver_per = setting_per * 0.3
+        elsif @count >= 300
+            @silver_per = setting_per * 0.5
+        end
+        return @silver_per        
+end
+def gold_per
+        @count = self.gold_rates.count
+        setting_per = UserPercentage.find_by_key('star')
+        @gold_per = 0
+        if @count >= 100 && @count <= 300
+            @gold_per = setting_per * 0.7
+        elsif @count >= 300
+            @gold_per = setting_per * 1
+        end
+        return @gold_per        
+end
+def rate_per
+        total = @bronze_per + @silver_per + @gold_per
+        return @rate_per        
+end
+
+
+
+
+def total_per()
+        total = @like_per + @view_per + @share_per + @rate_per + self.user_meter.profile_meter_per + 0 + 0 + 0
         self.user_meter.update_column('total_per' ,total)          
-        self..update_column('total_per' ,total)     
+        self.update_column('total_per' ,total)     
     return true
 end
 

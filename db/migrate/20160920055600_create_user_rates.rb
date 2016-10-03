@@ -3,7 +3,7 @@ class CreateUserRates < ActiveRecord::Migration
     create_table :user_rates do |t|
       t.integer :user_id
       t.integer :rate_id
-      t.string  :rate_type
+      t.integer  :rate_type,              null: false, default: 0
 
       t.timestamps null: false
     end

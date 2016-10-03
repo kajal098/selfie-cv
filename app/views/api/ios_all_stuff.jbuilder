@@ -81,11 +81,11 @@ if @user_stuff
 		json.user_whizquiz_per @user_stuff.user_meter.whizquiz_per.to_i
 		json.user_total_per @user_stuff.user_meter.total_per.to_i
 
-		json.likes @user_stuff.like_counts.count
-		json.views @user_stuff.view_counts.count
-		json.shares @user_stuff.share_counts.count
-		json.favourites @user_stuff.favourite_counts.count
-		json.rates @user_stuff.rate_counts.count
+		json.likes @user_stuff.likes.count
+		json.views @user_stuff.views.count
+		json.shares @user_stuff.shares.count
+		json.favourites @user_stuff.favourites.count
+		json.rates @user_stuff.rates.count
 		
 	elsif @user_stuff.role == 'Company'
 		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field
@@ -135,11 +135,11 @@ if @user_stuff
 		json.company_working_env_per @user_stuff.user_meter.working_env_per.to_i
 		json.user_total_per @user_stuff.user_meter.total_per.to_i
 
-		json.likes @user_stuff.like_counts.count
-		json.views @user_stuff.view_counts.count
-		json.shares @user_stuff.share_counts.count
-		json.favourites @user_stuff.favourite_counts.count
-		json.rates @user_stuff.rate_counts.count
+		json.likes @user_stuff.likes.count
+		json.views @user_stuff.views.count
+		json.shares @user_stuff.shares.count
+		json.favourites @user_stuff.favourites.count
+		json.rates @user_stuff.rates.count
 
 	elsif @user_stuff.role == 'Student'
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
@@ -184,11 +184,11 @@ if @user_stuff
 		json.curricular_updated_at curricular.updated_at.to_i
 		end
 
-		json.likes @user_stuff.like_counts.count
-		json.views @user_stuff.view_counts.count
-		json.shares @user_stuff.share_counts.count
-		json.favourites @user_stuff.favourite_counts.count
-		json.rates @user_stuff.rate_counts.count
+		json.likes @user_stuff.likes.count
+		json.views @user_stuff.views.count
+		json.shares @user_stuff.shares.count
+		json.favourites @user_stuff.favourites.count
+		json.rates @user_stuff.rates.count
 
 		
 
@@ -222,11 +222,11 @@ if @user_stuff
 		json.certificate_updated_at certificate.updated_at.to_i
 		end
 
-		json.likes @user_stuff.like_counts.count
-		json.views @user_stuff.view_counts.count
-		json.shares @user_stuff.share_counts.count
-		json.favourites @user_stuff.favourite_counts.count
-		json.rates @user_stuff.rate_counts.count
+		json.likes @user_stuff.likes.count
+		json.views @user_stuff.views.count
+		json.shares @user_stuff.shares.count
+		json.favourites @user_stuff.favourites.count
+		json.rates @user_stuff.rates.count
 		
 	end
 end

@@ -432,9 +432,9 @@ ActiveRecord::Schema.define(version: 20160923100528) do
   create_table "user_rates", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "rate_id"
-    t.string   "rate_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "rate_type",  default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "user_rates", ["user_id", "rate_id"], name: "index_user_rates_on_user_id_and_rate_id", using: :btree
