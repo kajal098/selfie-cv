@@ -626,7 +626,7 @@ end
 if @student_marksheet
 	@marksheets = @user.user_marksheets.order('created_at DESC')
 	json.student_marksheets @marksheets do |marksheet|
-		json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
+		json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	, :file_type
 
 		json.file_thumb marksheet.thumb_url
 		json.file marksheet.file.url
@@ -637,7 +637,7 @@ if @student_marksheet
 end
 
 if @update_student_marksheet
-	json.extract! @update_student_marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
+	json.extract! @update_student_marksheet, :id, :user_id, :school_name, :standard, :grade, :year	, :file_type
 
 	json.file_thumb @update_student_marksheet.thumb_url
 	json.file @update_student_marksheet.file.url
@@ -649,7 +649,7 @@ end
 if @student_marksheets
 @marksheets = @user.user_marksheets.order('created_at DESC')
 	json.student_marksheets @marksheets do |marksheet|
-	json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
+	json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	, :file_type
 
 	json.file_thumb marksheet.thumb_url
 	json.file marksheet.file.url	

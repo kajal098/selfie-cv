@@ -2081,7 +2081,7 @@ end
 
 #--------------------------------message end----------------------------------#
 
-#--------------------------------notification end----------------------------------#
+#--------------------------------notification start----------------------------------#
 
 resources :notifications do
 
@@ -2171,5 +2171,31 @@ resources :notifications do
 end
 
   #--------------------------------notification end----------------------------------#
+
+
+  #--------------------------------top user start----------------------------------#
+
+resources :top_user do
+
+
+  before { authenticate! }
+
+  # for listing top users
+    desc "Listing Top Users"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :role
+    end
+    post :listing do
+      @users = User.where(role: params[:role]).order("user.user_meter.total_per DESC").all
+      
+      @users         
+    end
+
+  end
+
+  #--------------------------------top user end----------------------------------#
+
+
 
 end
