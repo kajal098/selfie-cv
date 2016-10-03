@@ -14,7 +14,7 @@ scope :for_roles, ->(values) do
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-after_save :percent_of_resume
+#after_save :percent_of_resume
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -93,31 +93,31 @@ def self.to_csv(options = {})
     end
 end
 
-def percent_of_resume()
+# def percent_of_resume()
 
-    if self.user_meter.blank?
-        user_meter = UserMeter.create(:user_id=>self.id)
-    else
-        user_meter = self.user_meter
-    end
-        if self.file_type.present?  
-            resume_info_per = 0
-            setting_per = UserPercentage.find_by_key('resume_info')
-            if self.file_type == "doc"
-                resume_info_per = setting_per.value.to_i * 0.5
-            elsif self.file_type == "image"
-                resume_info_per = setting_per.value.to_i * 0.5
-            elsif self.file_type == "audio"
-                resume_info_per = setting_per.value.to_i * 0.7
-            elsif self.file_type == "video"
-                resume_info_per = setting_per.value.to_i * 1
-            else
-                resume_info_per = setting_per.value.to_i * 0.3
-            end
-        user_meter.update_column('resume_info_per' ,resume_info_per)
-        end 
-        return true
-end
+#     if self.user_meter.blank?
+#         user_meter = UserMeter.create(:user_id=>self.id)
+#     else
+#         user_meter = self.user_meter
+#     end
+#         if self.file_type.present?  
+#             resume_info_per = 0
+#             setting_per = UserPercentage.find_by_key('resume_info')
+#             if self.file_type == "doc"
+#                 resume_info_per = setting_per.value.to_i * 0.5
+#             elsif self.file_type == "image"
+#                 resume_info_per = setting_per.value.to_i * 0.5
+#             elsif self.file_type == "audio"
+#                 resume_info_per = setting_per.value.to_i * 0.7
+#             elsif self.file_type == "video"
+#                 resume_info_per = setting_per.value.to_i * 1
+#             else
+#                 resume_info_per = setting_per.value.to_i * 0.3
+#             end
+#         user_meter.update_column('resume_info_per' ,resume_info_per)
+#         end 
+#         return true
+# end
 
 def profile_meter_total()
     if self.role == "Jobseeker"
@@ -182,25 +182,6 @@ def profile_meter_total()
     end
     return true
 end
-
-def total__percentage()
-    
-        setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
-        resume_per = self.user_meter.resume_info_per + self.user_meter.education_per + self.user_meter.experience_per
-        resume_per = (resume_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('resume_per' ,resume_per)
-
-        setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Jobseeker").first
-        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
-        achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('achievement_per' ,achievement_per)  
-        
-        total = self.user_meter.resume_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.whizquiz_per + self.user_meter.future_goal_per + self.user_meter.working_env_per + self.user_meter.ref_per
-        self.user_meter.update_column('total_per' ,total)  
-   
-    return true
-end
-
 
 
 

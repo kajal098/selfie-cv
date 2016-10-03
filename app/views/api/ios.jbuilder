@@ -651,8 +651,8 @@ if @student_marksheets
 	json.student_marksheets @marksheets do |marksheet|
 	json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
 
-	json.file_thumb education.thumb_url
-	json.file education.file.url	
+	json.file_thumb marksheet.thumb_url
+	json.file marksheet.file.url	
 
 	json.marksheet_created_at marksheet.created_at.to_i
 	json.marksheet_updated_at marksheet.updated_at.to_i
