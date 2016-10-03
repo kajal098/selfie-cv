@@ -2,7 +2,7 @@ json.status "Success"
 
 if @galleries
 	@user.company_galeries.each do |galery|
-		json.User galery, :id, user_id
+		json.User galery, :id
 		json.File galery.file.url
 	end
 end
