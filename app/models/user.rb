@@ -132,7 +132,7 @@ def profile_meter_total()
         self.user_meter.update_column('achievement_per' ,achievement_per)  
         
         total = self.user_meter.resume_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.whizquiz_per + self.user_meter.future_goal_per + self.user_meter.working_env_per + self.user_meter.ref_per
-        self.user_meter.update_column('total_per' ,total)  
+        self.user_meter.update_column('profile_meter_per' ,total)  
     
     elsif self.role == "Company"
 
@@ -147,7 +147,7 @@ def profile_meter_total()
         self.user_meter.update_column('achievement_per' ,achievement_per)  
         
         total = self.user_meter.company_info_per + self.user_meter.corporate_identity_per + self.user_meter.growth_and_goal_per + self.user_meter.achievement_per + self.user_meter.galery_per + self.user_meter.working_env_per
-        self.user_meter.update_column('total_per' ,total)  
+        self.user_meter.update_column('profile_meter_per' ,total)  
 
     elsif self.role == "Student"
 
@@ -162,7 +162,7 @@ def profile_meter_total()
         self.user_meter.update_column('achievement_per' ,achievement_per)  
         
         total = self.user_meter.student_basic_info_per + self.user_meter.student_education_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.future_goal_per
-        self.user_meter.update_column('total_per' ,total)
+        self.user_meter.update_column('profile_meter_per' ,total)
 
     elsif self.role == "Faculty"
 
@@ -177,9 +177,27 @@ def profile_meter_total()
         self.user_meter.update_column('achievement_per' ,achievement_per)  
         
         total = self.user_meter.faculty_basic_info_per + self.user_meter.achievement_per + self.user_meter.experience_per
-        self.user_meter.update_column('total_per' ,total)
+        self.user_meter.update_column('profile_meter_per' ,total)
     
     end
+    return true
+end
+
+def total__percentage()
+    
+        setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
+        resume_per = self.user_meter.resume_info_per + self.user_meter.education_per + self.user_meter.experience_per
+        resume_per = (resume_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('resume_per' ,resume_per)
+
+        setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Jobseeker").first
+        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
+        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        
+        total = self.user_meter.resume_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.whizquiz_per + self.user_meter.future_goal_per + self.user_meter.working_env_per + self.user_meter.ref_per
+        self.user_meter.update_column('total_per' ,total)  
+   
     return true
 end
 

@@ -265,20 +265,6 @@ resources :member_profile do
         @user.file = params[:file] if params[:file]
       end
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
-      if(params[:file_type] == 'video')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 100
-      elsif(params[:file_type] == 'audio')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 70
-      elsif(params[:file_type] == 'file')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 50
-      elsif(params[:file_type] == 'text')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 30
-      end
-      @user
     end
 
     # for update user resume

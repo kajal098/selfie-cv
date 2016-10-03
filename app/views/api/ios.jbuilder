@@ -410,8 +410,8 @@ if @user_experiences
 	json.user_experiences @experiences do |experience|
 	json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :text_field, :file_type
 
-	json.edu_created_at experience.created_at.to_i
-	json.edu_updated_at experience.updated_at.to_i
+	json.exp_created_at experience.created_at.to_i
+	json.exp_updated_at experience.updated_at.to_i
 end
 end
 
@@ -618,7 +618,6 @@ if @student_educations
 	json.student_educations @educations do |education|
 	json.extract! education, :id, :user_id, :standard, :school, :year
 
-	
 	json.edu_created_at education.created_at.to_i
 	json.edu_updated_at education.updated_at.to_i
 end
@@ -626,19 +625,25 @@ end
 
 if @student_marksheet
 	@marksheets = @user.user_marksheets.order('created_at DESC')
-	json.student_marksheets @marksheets do |education|
-		json.extract! education, :id, :user_id, :school_name, :standard, :grade, :year		
+	json.student_marksheets @marksheets do |marksheet|
+		json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
 
-		json.edu_created_at education.created_at.to_i
-		json.edu_updated_at education.updated_at.to_i
+		json.file_thumb marksheet.thumb_url
+		json.file marksheet.file.url
+	
+		json.marksheet_created_at marksheet.created_at.to_i
+		json.marksheet_updated_at marksheet.updated_at.to_i
 	end
 end
 
 if @update_student_marksheet
 	json.extract! @update_student_marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
 
-	json.edu_created_at @update_student_marksheet.created_at.to_i
-	json.edu_updated_at @update_student_marksheet.updated_at.to_i
+	json.file_thumb @update_student_marksheet.thumb_url
+	json.file @update_student_marksheet.file.url
+
+	json.marksheet_created_at @update_student_marksheet.created_at.to_i
+	json.marksheet_updated_at @update_student_marksheet.updated_at.to_i
 end
 
 if @student_marksheets
@@ -646,8 +651,11 @@ if @student_marksheets
 	json.student_marksheets @marksheets do |marksheet|
 	json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	
 
-	json.edu_created_at marksheet.created_at.to_i
-	json.edu_updated_at marksheet.updated_at.to_i
+	json.file_thumb education.thumb_url
+	json.file education.file.url	
+
+	json.marksheet_created_at marksheet.created_at.to_i
+	json.marksheet_updated_at marksheet.updated_at.to_i
 end
 end
 
@@ -657,16 +665,16 @@ if @student_project
 		json.extract! project, :id, :user_id, :title, :description
 		
 
-		json.edu_created_at project.created_at.to_i
-		json.edu_updated_at project.updated_at.to_i
+		json.project_created_at project.created_at.to_i
+		json.project_updated_at project.updated_at.to_i
 	end
 end
 
 if @update_student_project
 	json.extract! @update_student_project, :id, :user_id, :title, :description
 
-	json.edu_created_at @update_student_project.created_at.to_i
-	json.edu_updated_at @update_student_project.updated_at.to_i
+	json.project_created_at @update_student_project.created_at.to_i
+	json.project_updated_at @update_student_project.updated_at.to_i
 end
 
 if @student_projects
@@ -674,8 +682,8 @@ if @student_projects
 	json.student_projects @projects do |project|
 	json.extract! project, :id, :user_id, :title, :description
 
-	json.edu_created_at project.created_at.to_i
-	json.edu_updated_at project.updated_at.to_i
+	json.project_created_at project.created_at.to_i
+	json.project_updated_at project.updated_at.to_i
 end
 end
 
@@ -685,16 +693,16 @@ if @faculty_affiliation
 		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till
 		
 
-		json.created_at affiliation.created_at.to_i
-		json.updated_at affiliation.updated_at.to_i
+		json.affiliation_created_at affiliation.created_at.to_i
+		json.affiliation_updated_at affiliation.updated_at.to_i
 	end
 end
 
 if @update_faculty_affiliation
 	json.extract! @update_faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till
 
-	json.edu_created_at @update_faculty_affiliation.created_at.to_i
-	json.edu_updated_at @update_faculty_affiliation.updated_at.to_i
+	json.affiliation_created_at @update_faculty_affiliation.created_at.to_i
+	json.affiliation_updated_at @update_faculty_affiliation.updated_at.to_i
 end
 
 if @faculty_affiliations
@@ -703,8 +711,8 @@ if @faculty_affiliations
 	json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till
 
 
-	json.edu_created_at affiliation.created_at.to_i
-	json.edu_updated_at affiliation.updated_at.to_i
+	json.affiliation_created_at affiliation.created_at.to_i
+	json.affiliation_updated_at affiliation.updated_at.to_i
 	end
 end
 
@@ -714,16 +722,16 @@ if @faculty_workshop
 		json.extract! workshop, :id, :user_id, :description
 		
 
-		json.edu_created_at workshop.created_at.to_i
-		json.edu_updated_at workshop.updated_at.to_i
+		json.workshop_created_at workshop.created_at.to_i
+		json.workshop_updated_at workshop.updated_at.to_i
 	end
 end
 
 if @update_faculty_workshop
 	json.extract! @update_faculty_workshop, :id, :user_id, :description
 
-	json.edu_created_at @update_faculty_workshop.created_at.to_i
-	json.edu_updated_at @update_faculty_workshop.updated_at.to_i
+	json.workshop_created_at @update_faculty_workshop.created_at.to_i
+	json.workshop_updated_at @update_faculty_workshop.updated_at.to_i
 end
 
 if @faculty_workshops
@@ -731,8 +739,8 @@ if @faculty_workshops
 	json.faculty_workshops @workshops do |workshop|
 	json.extract! workshop, :id, :user_id, :description
 
-	json.edu_created_at workshop.created_at.to_i
-	json.edu_updated_at workshop.updated_at.to_i
+	json.workshop_created_at workshop.created_at.to_i
+	json.workshop_updated_at workshop.updated_at.to_i
 	end
 end
 
@@ -744,8 +752,8 @@ if @faculty_publication
 		json.file_thumb publication.thumb_url
 		json.file publication.file.url
 
-		json.edu_created_at publication.created_at.to_i
-		json.edu_updated_at publication.updated_at.to_i
+		json.publication_created_at publication.created_at.to_i
+		json.publication_updated_at publication.updated_at.to_i
 	end
 end
 
@@ -755,8 +763,8 @@ if @update_faculty_publication
 	json.file_thumb @update_faculty_publication.thumb_url
 	json.file @update_faculty_publication.file.url
 
-	json.edu_created_at @update_faculty_publication.created_at.to_i
-	json.edu_updated_at @update_faculty_publication.updated_at.to_i
+	json.publication_created_at @update_faculty_publication.created_at.to_i
+	json.publication_updated_at @update_faculty_publication.updated_at.to_i
 end
 
 if @faculty_publications
@@ -767,8 +775,8 @@ if @faculty_publications
 	json.file_thumb publication.thumb_url
 	json.file publication.file.url
 
-	json.edu_created_at publication.created_at.to_i
-	json.edu_updated_at publication.updated_at.to_i
+	json.publication_created_at publication.created_at.to_i
+	json.publication_updated_at publication.updated_at.to_i
 	end
 end
 
@@ -781,8 +789,8 @@ if @faculty_research
 		json.file research.file.url
 		
 
-		json.edu_created_at research.created_at.to_i
-		json.edu_updated_at research.updated_at.to_i
+		json.research_created_at research.created_at.to_i
+		json.research_updated_at research.updated_at.to_i
 	end
 end
 
@@ -792,8 +800,8 @@ if @update_faculty_research
 	json.file_thumb @update_faculty_research.thumb_url
 	json.file @update_faculty_research.file.url
 
-	json.edu_created_at @update_faculty_research.created_at.to_i
-	json.edu_updated_at @update_faculty_research.updated_at.to_i
+	json.research_created_at @update_faculty_research.created_at.to_i
+	json.research_updated_at @update_faculty_research.updated_at.to_i
 end
 
 if @faculty_researches
@@ -804,7 +812,7 @@ if @faculty_researches
 	json.file_thumb research.thumb_url
 	json.file research.file.url
 
-	json.edu_created_at research.created_at.to_i
-	json.edu_updated_at research.updated_at.to_i
+	json.research_created_at research.created_at.to_i
+	json.research_updated_at research.updated_at.to_i
 	end
 end

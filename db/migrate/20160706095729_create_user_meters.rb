@@ -35,6 +35,7 @@ class CreateUserMeters < ActiveRecord::Migration
       t.integer :faculty_publication_per,        null:false, default: 0
       t.integer :faculty_research_per,        null:false, default: 0
 
+      t.integer :profile_meter_per,        null:false, default: 0
       t.integer :total_per,        null:false, default: 0
 
       t.timestamps null: false
