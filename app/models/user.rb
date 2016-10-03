@@ -41,7 +41,7 @@ has_many    :user_curriculars
 has_many    :user_future_goals
 has_many    :user_environments
 has_many    :user_references
-has_many    :company_galeries
+has_many    :company_galeries, class_name: 'CompanyGalery',foreign_key: "user_id"
 has_many    :user_marksheets
 has_one     :user_meter
 has_many    :user_projects
