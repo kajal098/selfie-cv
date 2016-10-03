@@ -526,6 +526,7 @@ ActiveRecord::Schema.define(version: 20160923100528) do
     t.string   "company_future_new_venture_location",           default: "",           null: false
     t.string   "company_future_outlet",                         default: "",           null: false
     t.string   "delete_code",                                   default: "",           null: false
+    t.integer  "total_per",                                     default: 0,            null: false
     t.string   "encrypted_password",                            default: "",           null: false
     t.string   "reset_code",                          limit: 6
     t.string   "reset_password_token"

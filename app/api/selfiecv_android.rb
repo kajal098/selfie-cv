@@ -2186,10 +2186,12 @@ resources :top_user do
       requires :token, type: String, regexp: UUID_REGEX
       requires :role
     end
-    post :listing do
-      @users = User.where(role: params[:role]).order("user.user_meter.total_per DESC").all
-      
-      @users         
+    post :listing, jbuilder: 'android_top' do
+      if (params[:role] == 'Company')
+        @top_users = User.where(role: 3).order("total_per DESC").all
+      elsif (params[:role] == 'Jobseeker')
+        @top_users = User.where(role: 4).order("total_per DESC").all
+      end
     end
 
   end

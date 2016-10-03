@@ -133,7 +133,7 @@ def profile_meter_total()
         
         total = self.user_meter.resume_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.whizquiz_per + self.user_meter.future_goal_per + self.user_meter.working_env_per + self.user_meter.ref_per
         self.user_meter.update_column('profile_meter_per' ,total)  
-    
+        
     elsif self.role == "Company"
 
         setting_per = UserPercentage.where(key: 'growth').where(ptype: "Company").first
@@ -148,7 +148,7 @@ def profile_meter_total()
         
         total = self.user_meter.company_info_per + self.user_meter.corporate_identity_per + self.user_meter.growth_and_goal_per + self.user_meter.achievement_per + self.user_meter.galery_per + self.user_meter.working_env_per
         self.user_meter.update_column('profile_meter_per' ,total)  
-
+        
     elsif self.role == "Student"
 
         setting_per = UserPercentage.where(key: 'education').where(ptype: "Student").first
@@ -163,7 +163,7 @@ def profile_meter_total()
         
         total = self.user_meter.student_basic_info_per + self.user_meter.student_education_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.future_goal_per
         self.user_meter.update_column('profile_meter_per' ,total)
-
+        
     elsif self.role == "Faculty"
 
         setting_per = UserPercentage.where(key: 'experience').where(ptype: "Faculty").first
@@ -178,8 +178,27 @@ def profile_meter_total()
         
         total = self.user_meter.faculty_basic_info_per + self.user_meter.achievement_per + self.user_meter.experience_per
         self.user_meter.update_column('profile_meter_per' ,total)
-    
+        
     end
+    return true
+end
+
+def like_per
+        @count = self.like_counts.count
+        @per = 0
+        if (" @count >= 1 AND  @count <= 10")
+            @per = 100
+        elsif (" @count >= 10 AND  @count <= 100")
+            @per = 200
+        end
+        return @per
+        
+end
+
+def profile_meter_total()
+        total = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8
+        self.user_meter.update_column('total_per' ,total)          
+        self..update_column('total_per' ,total)     
     return true
 end
 

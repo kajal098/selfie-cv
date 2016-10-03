@@ -1354,7 +1354,7 @@ resources :student do
       error! 'User not found',422 unless @user
       if (params[:school_name] || params[:standard] || params[:grade] || params[:year] )
         @student_marksheet = UserMarksheet.new user_id: @user.id
-        @student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
+        @student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
         @student_marksheet.file = params[:file] if params[:file]
         error! @student_marksheet.errors.full_messages.join(', '),422 unless @student_marksheet.save
       end          
@@ -1375,7 +1375,7 @@ resources :student do
     post :update_student_marksheet, jbuilder: 'ios' do
       @update_student_marksheet = UserMarksheet.find params[:marksheet_id]
       error! 'Student marksheet not found',422 unless @update_student_marksheet
-      @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year)
+      @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
       @update_student_marksheet.file = params[:file] if params[:file]
       error! @update_student_marksheet.errors.full_messages.join(', '),422 unless @update_student_marksheet.save
       @update_student_marksheet
@@ -2117,5 +2117,30 @@ resources :notifications do
 end
 
   #--------------------------------notification end----------------------------------#
+
+  #--------------------------------top user start----------------------------------#
+
+resources :top_user do
+
+
+  before { authenticate! }
+
+  # for listing top users
+    desc "Listing Top Users"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :role
+    end
+    post :listing, jbuilder: 'ios_top' do
+      if (params[:role] == 'Company')
+        @top_users = User.where(role: 3).order("total_per DESC").all
+      elsif (params[:role] == 'Jobseeker')
+        @top_users = User.where(role: 4).order("total_per DESC").all
+      end
+    end
+
+  end
+
+  #--------------------------------top user end----------------------------------#
 
 end
