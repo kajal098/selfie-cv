@@ -1187,11 +1187,11 @@ resources :company do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       params[:files].each do |file|
-        @galleries = CompanyGalery.new user_id: params[:user_id]
-        @galleries.file = file
-        error!({error: @galleries.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @galleries.save
-      end
-      {}
+        @galery = CompanyGalery.new user_id: params[:user_id]
+        @galery.file = file
+        error!({error: @galery.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @galery.save
+        @galeries = @user.company_galeries
+      end      
     end
 
 end
