@@ -1166,15 +1166,15 @@ resources :company do
       requires :user_id
       requires :files, type: Array, default: []
     end
-    post :company_galery, jbuilder: 'galery' do
+    post :company_galery, jbuilder: 'ios_galery' do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       params[:files].each do |file|
-        @galleries = CompanyGalery.new user_id: params[:user_id]
-        @galleries.file = file
-        error! @galleries.errors.full_messages.join(', '), 422 unless @galleries.save
-      end
-      {}
+        @galery = CompanyGalery.new user_id: params[:user_id]
+        @galery.file = file
+        error! @galery.errors.full_messages.join(', '), 422 unless @galery.save
+        @galeries = @user.company_galeries
+      end      
     end
 
 end
