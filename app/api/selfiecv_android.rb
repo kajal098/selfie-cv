@@ -1183,7 +1183,7 @@ resources :company do
       requires :user_id
       requires :files, type: Array, default: []
     end
-    post :company_galery, jbuilder: 'android_galery' do
+    post :galery, jbuilder: 'android_galery' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       params[:files].each do |file|
@@ -1192,6 +1192,18 @@ resources :company do
         error!({error: @galery.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @galery.save
         @galeries = @user.company_galeries
       end      
+    end
+
+    # for company galery listing
+    desc 'Company Galery Listing'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :galery_listing, jbuilder: 'android_galery' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      @galeries = @user.company_galeries
     end
 
 end
