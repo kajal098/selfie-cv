@@ -1,12 +1,5 @@
 json.status "Success"
 
-if @galleries
-	@user.company_galeries.each do |galery|
-		json.User galery, :id
-		json.File galery.file.url
-	end
-end
-
 if @update_image
 	json.profile_thumb @update_image.profile_thumb_url
 	json.profile @update_image.profile_photo_url
