@@ -230,9 +230,9 @@ def bronze_per
         setting_per = UserPercentage.find_by_key('star').value
         bronze_setting_per = setting_per.to_f * 0.2
         @bronze_per = 0
-        if @count >= 1 && @count <= 3
+        if @count >= 100 && @count <= 300
             @bronze_per = @count * bronze_setting_per * 0.004
-        elsif @count >= 3
+        elsif @count >= 300
             @bronze_per = bronze_setting_per * 1
         end
         return @bronze_per       
@@ -242,9 +242,9 @@ def silver_per
         setting_per = UserPercentage.find_by_key('star').value
         silver_setting_per = setting_per.to_f * 0.3
         @silver_per = 0
-        if @count >= 1 && @count <= 3
+        if @count >= 100 && @count <= 300
             @silver_per = @count * silver_setting_per * 0.004
-        elsif @count >= 3
+        elsif @count >= 300
             @silver_per = silver_setting_per * 1
         end
         return @silver_per        
@@ -254,9 +254,9 @@ def gold_per
         setting_per = UserPercentage.find_by_key('star').value
         gold_setting_per = setting_per.to_f * 0.5
         @gold_per = 0
-        if @count >= 1 && @count <= 3
+        if @count >= 100 && @count <= 300
             @gold_per = @count * gold_setting_per * 0.004
-        elsif @count >= 3
+        elsif @count >= 300
             @gold_per = silver_setting_per * 1
         end
         return @gold_per        
