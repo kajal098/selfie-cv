@@ -13,9 +13,9 @@ class UserEducation < ActiveRecord::Base
         
         if user.user_references.count > 0  
         	education_per = 0
-        	setting_per = UserPercentage.where(key: 'education').where(ptype: user.role)
+        	setting_per = UserPercentage.where(key: 'education').where(ptype: user.role).first
         	user.user_references.each do |edu|          	   		
-	                    education_per = setting_per * 1	                
+	                    education_per = setting_per.value.to_i * 1	                
         	end
             user.user_meter.update_column('education_per' ,education_per)
         end 

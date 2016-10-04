@@ -15,14 +15,14 @@ class UserAward < ActiveRecord::Base
     def percent_of_award()
     	user = self.user
         award_per = 0
-        setting_per = UserPercentage.where(key: 'award').where(ptype: user.role)
+        setting_per = UserPercentage.where(key: 'award').where(ptype: user.role).first
         if user.user_awards.count > 0  
         	user.user_awards.each do |award|   
         	   		if award.file_type == "image"
-	                    award_per = setting_per * 1
+	                    award_per = setting_per.value.to_i * 1
 	                    break
 	                else
-	                    award_per = setting_per * 0.5
+	                    award_per = setting_per.value.to_i * 0.5
 	                end
         		       	
         	end
