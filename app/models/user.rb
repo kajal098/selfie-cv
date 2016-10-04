@@ -228,7 +228,7 @@ end
 def bronze_per
         @count = self.bronze_rates.count
         setting_per = UserPercentage.find_by_key('star').value
-        bronze_setting_per = setting_per.to_i * 0.2
+        bronze_setting_per = setting_per.to_f * 0.2
         @bronze_per = 0
         if @count >= 1 && @count <= 3
             @bronze_per = @count * bronze_setting_per * 0.004
@@ -240,7 +240,7 @@ end
 def silver_per
         @count = self.silver_rates.count
         setting_per = UserPercentage.find_by_key('star').value
-        silver_setting_per = setting_per.to_i * 0.3
+        silver_setting_per = setting_per.to_f * 0.3
         @silver_per = 0
         if @count >= 1 && @count <= 3
             @silver_per = @count * silver_setting_per * 0.004
@@ -252,7 +252,7 @@ end
 def gold_per
         @count = self.gold_rates.count
         setting_per = UserPercentage.find_by_key('star').value
-        gold_setting_per = setting_per.to_i * 0.5
+        gold_setting_per = setting_per.to_f * 0.5
         @gold_per = 0
         if @count >= 1 && @count <= 3
             @gold_per = @count * gold_setting_per * 0.004
@@ -262,14 +262,14 @@ def gold_per
         return @gold_per        
 end
 def rate_per
-        total = self.bronze_per + self.silver_per + self.gold_per
+        total = (self.bronze_per + self.silver_per + self.gold_per).round(2)
         return total     
 end
 
 
 
 
-def total_per()
+def total_per
         total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + 0 + 0 + 0
         self.user_meter.update_column('total_per' ,total)          
         self.update_column('total_per' ,total)     
