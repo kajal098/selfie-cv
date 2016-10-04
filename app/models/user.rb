@@ -98,7 +98,7 @@ def self.to_csv(options = {})
     end
 end
 
-def percent_of_resume()
+def percent_of_resume
 
     if self.user_meter.blank?
         user_meter = UserMeter.create(:user_id=>self.id)
@@ -107,19 +107,27 @@ def percent_of_resume()
     end
         if self.file_type.present?  
             resume_info_per = 0
-            setting_per = UserPercentage.find_by_key('resume_info')
+            setting_per = UserPercentage.find_by_key('resume_info').value
             if self.file_type == "doc"
-                resume_info_per = setting_per.value.to_i * 0.5
+                resume_info_per = setting_per.to_i * 0.5
             elsif self.file_type == "image"
-                resume_info_per = setting_per.value.to_i * 0.5
+                resume_info_per = setting_per.to_i * 0.5
             elsif self.file_type == "audio"
-                resume_info_per = setting_per.value.to_i * 0.7
+                resume_info_per = setting_per.to_i * 0.7
             elsif self.file_type == "video"
-                resume_info_per = setting_per.value.to_i * 1
+                resume_info_per = setting_per.to_i * 1
             else
-                resume_info_per = setting_per.value.to_i * 0.3
+                resume_info_per = setting_per.to_i * 0.3
             end
-        user_meter.update_column('resume_info_per' ,resume_info_per)
+                            if self.role == 'Jobseeker'
+                                user_meter.update_column('resume_info_per' ,resume_info_per)
+                            elsif self.role == 'Student'
+                                user_meter.update_column('student_basic_info_per' ,resume_info_per)
+                            elsif self.role == 'Company'
+                                user_meter.update_column('company_info_per' ,resume_info_per)
+                            elsif self.role == 'Faculty'
+                                user_meter.update_column('faculty_basic_info_per' ,resume_info_per)
+                            end
         end 
         return true
 end
