@@ -53,7 +53,7 @@ private
   end
 
   def course_params
-    if params[:action] == "update" and params[:course] and params[:course][:password].blank?
+    if params[:action] == "update" and params[:course]
       params.require(:course).permit( :name, :email, :phone_number)
     else
       params.require(:course).permit!

@@ -21,16 +21,16 @@ class UserReference < ActiveRecord::Base
             setting_per = UserPercentage.find_by_key('references').value
         	user.user_references.each do |ref|   
         	   		if ref.file_type == "image"
-	                    ref_per = setting_per * 0.5
+	                    ref_per = setting_per.to_i * 0.5
 	                    break
 	                elsif ref.file_type == "audio"
-	                    ref_per = setting_per * 0.7
+	                    ref_per = setting_per.to_i * 0.7
 	                    break
 	                elsif ref.file_type == "video"
-	                    ref_per = setting_per * 1
+	                    ref_per = setting_per.to_i * 1
 	                    break
 	                else
-	                    ref_per = setting_per * 0.3
+	                    ref_per = setting_per.to_i * 0.3
 	                end
         		       	
         	end

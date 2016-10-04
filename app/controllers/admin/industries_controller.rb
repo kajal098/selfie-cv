@@ -53,7 +53,7 @@ private
   end
 
   def industry_params
-    if params[:action] == "update" and params[:industry] and params[:industry][:password].blank?
+    if params[:action] == "update" and params[:industry]
       params.require(:industry).permit( :name, :email, :phone_number)
     else
       params.require(:industry).permit!

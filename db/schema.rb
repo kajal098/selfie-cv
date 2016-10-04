@@ -559,7 +559,7 @@ ActiveRecord::Schema.define(version: 20161004072847) do
   create_table "whizquizzes", force: :cascade do |t|
     t.string   "question",   default: "",    null: false
     t.string   "answer",     default: "",    null: false
-    t.boolean  "active",     default: false
+    t.boolean  "status",     default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

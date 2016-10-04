@@ -22,13 +22,13 @@ class UserCurricular < ActiveRecord::Base
         if user.user_curriculars.count > 0  
         	user.user_curriculars.each do |curri|   
         	   		if curri.file_type == "image"
-	                    curri_per = setting_per * 1
+	                    curri_per = setting_per.to_i * 1
 	                    break
 	                elsif curri.file_type == "video"
-	                    curri_per = setting_per * 1
+	                    curri_per = setting_per.to_i * 1
 	                    break
 	                else
-	                    curri_per = setting_per * 0.3
+	                    curri_per = setting_per.to_i * 0.3
 	                end
         		       	
         	end

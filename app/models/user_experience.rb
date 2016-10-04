@@ -18,10 +18,10 @@ class UserExperience < ActiveRecord::Base
             setting_per = UserPercentage.find_by_key('experience').value
         	user.user_experiences.each do |exp|   
         	   		if exp.file_type == "doc"
-	                    exp_per = setting_per.value * 1
+	                    exp_per = setting_per.to_i.value * 1
 	                    break
 	                else
-	                    exp_per = setting_per.value * 0.5
+	                    exp_per = setting_per.to_i.value * 0.5
 	                end
         		       	
         	end

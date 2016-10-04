@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   root to: redirect('/admin')
   namespace :admin do
     root 'dashboard#index'
-    resources :devices, :courses, :companies, :chats, :groups, :quick_messages, :group_users, :industries, :standards, :users, :specializations, :user_meters, :user_educations, :user_experiences,  :user_preffered_works, :user_awards,   :user_certificates, :user_curriculars, :user_future_goals, :user_environments, :user_references
+    resources :devices, :courses, :companies, :chats, :groups, :quick_messages, :group_users, :industries, :standards, :users, :specializations, :user_meters, :user_educations, :user_experiences,  :user_preffered_works, :user_awards,   :user_certificates, :user_curriculars, :user_future_goals, :user_environments, :user_references, :whizquizzes, :user_whizquizzes
     resource  :settings, only: [:show, :create, :update]
     resource  :user_percentages, only: [:show, :create, :update]
+    get 'whizquiz/dis' => 'whizquizzes#dis'
+    post 'whizquiz' => 'whizquizzes#dispost'
   end
   mount SelfiecvAndroid => '/'
   mount SelfiecvIos => '/'

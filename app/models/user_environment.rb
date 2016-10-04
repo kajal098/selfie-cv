@@ -19,13 +19,13 @@ class UserEnvironment < ActiveRecord::Base
             setting_per = UserPercentage.find_by_key('workingenv').value
         	user.user_environments.each do |env|   
         	   		if env.file_type == "audio"
-	                    env_per = setting_per * 0.7
+	                    env_per = setting_per.to_i * 0.7
 	                    break
 	                elsif env.file_type == "video"
-	                    env_per = setting_per * 1
+	                    env_per = setting_per.to_i * 1
 	                    break
 	                else
-	                    env_per = setting_per * 0.5
+	                    env_per = setting_per.to_i * 0.5
 	                end
         		       	
         	end
