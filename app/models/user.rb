@@ -63,9 +63,9 @@ has_many    :user_favourites
 has_many    :favourites, class_name: 'UserFavourite',foreign_key: "favourite_id"
 has_many    :user_rates
 has_many    :rates, class_name: 'UserRate',foreign_key: "rate_id"
-has_many    :bronze_rates, -> {where(rate_type: "bronze") }, class_name: 'UserRate',foreign_key: "rate_id"
-has_many    :silver_rates, -> {where(rate_type: "silver")}, class_name: 'UserRate',foreign_key: "rate_id"
-has_many    :gold_rates, -> {where(rate_type: "gold") }, class_name: 'UserRate',foreign_key: "rate_id"
+has_many    :bronze_rates, -> {where(rate_type: 0) }, class_name: 'UserRate',foreign_key: "rate_id"
+has_many    :silver_rates, -> {where(rate_type: 1)}, class_name: 'UserRate',foreign_key: "rate_id"
+has_many    :gold_rates, -> {where(rate_type: 2) }, class_name: 'UserRate',foreign_key: "rate_id"
 
 
 mount_uploader :file, FileUploader
@@ -189,7 +189,7 @@ end
 
 def like_per
         @count = self.likes.count
-        setting_per = UserPercentage.find_by_key('like')
+        setting_per = UserPercentage.find_by_key('like').value
         @like_per = 0
         if @count >= 100 && @count <= 300
             @like_per = setting_per * 0.3
@@ -203,7 +203,7 @@ end
 
 def view_per
         @count = self.views.count
-        setting_per = UserPercentage.find_by_key('viewed')
+        setting_per = UserPercentage.find_by_key('viewed').value
         @view_per = 0
         if @count >= 100 && @count <= 300
             @view_per = setting_per * 0.5
@@ -215,7 +215,7 @@ end
 
 def share_per
         @count = self.shares.count
-        setting_per = UserPercentage.find_by_key('share')
+        setting_per = UserPercentage.find_by_key('share').value
         @share_per = 0
         if @count >= 100 && @count <= 300
             @share_per = setting_per * 0.5
@@ -227,50 +227,53 @@ end
 
 def bronze_per
         @count = self.bronze_rates.count
-        setting_per = UserPercentage.find_by_key('star')
+        setting_per = UserPercentage.find_by_key('star').value
+        bronze_setting_per = setting_per.to_i * 0.2
         @bronze_per = 0
-        if @count >= 100 && @count <= 300
-            @bronze_per = setting_per * 0.1
-        elsif @count >= 300
-            @bronze_per = setting_per * 0.2
+        if @count >= 1 && @count <= 3
+            @bronze_per = @count * bronze_setting_per * 0.004
+        elsif @count >= 3
+            @bronze_per = bronze_setting_per * 1
         end
-        return @bronze_per        
+        return @bronze_per       
 end
 def silver_per
         @count = self.silver_rates.count
-        setting_per = UserPercentage.find_by_key('star')
+        setting_per = UserPercentage.find_by_key('star').value
+        silver_setting_per = setting_per.to_i * 0.3
         @silver_per = 0
-        if @count >= 100 && @count <= 300
-            @silver_per = setting_per * 0.3
-        elsif @count >= 300
-            @silver_per = setting_per * 0.5
+        if @count >= 1 && @count <= 3
+            @silver_per = @count * silver_setting_per * 0.004
+        elsif @count >= 3
+            @silver_per = silver_setting_per * 1
         end
         return @silver_per        
 end
 def gold_per
         @count = self.gold_rates.count
-        setting_per = UserPercentage.find_by_key('star')
+        setting_per = UserPercentage.find_by_key('star').value
+        gold_setting_per = setting_per.to_i * 0.5
         @gold_per = 0
-        if @count >= 100 && @count <= 300
-            @gold_per = setting_per * 0.7
-        elsif @count >= 300
-            @gold_per = setting_per * 1
+        if @count >= 1 && @count <= 3
+            @gold_per = @count * gold_setting_per * 0.004
+        elsif @count >= 3
+            @gold_per = silver_setting_per * 1
         end
         return @gold_per        
 end
 def rate_per
-        total = @bronze_per + @silver_per + @gold_per
-        return @rate_per        
+        total = self.bronze_per + self.silver_per + self.gold_per
+        return total     
 end
 
 
 
 
 def total_per()
-        total = @like_per + @view_per + @share_per + @rate_per + self.user_meter.profile_meter_per + 0 + 0 + 0
+        total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + 0 + 0 + 0
         self.user_meter.update_column('total_per' ,total)          
         self.update_column('total_per' ,total)     
-    return true
+    return total
 end
 
 
