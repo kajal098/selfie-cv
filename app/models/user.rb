@@ -163,11 +163,11 @@ def percent_of_company_galery
         setting_per = UserPercentage.find_by_key('gallery').value
         @galery_per = 0
         if @count >= 10 && @count <= 30
-            @galery_per = setting_per * 0.3
+            @galery_per = setting_per.to_i * 0.3
         elsif @count >= 30 &&  @count <= 50
-            @galery_per = setting_per * 0.5
+            @galery_per = setting_per.to_i * 0.5
         elsif @count >= 50
-            @galery_per = setting_per * 1
+            @galery_per = setting_per.to_i * 1
         end
         return @galery_per        
 end
