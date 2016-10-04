@@ -148,6 +148,30 @@ def percent_of_company_info
         return true
 end
 
+def percent_of_company_corporate_identity
+        if self.company_logo_type.present? && self.role == 'Company'   
+            corporate_identity_per = 0
+            setting_per = UserPercentage.where(key: 'corporate').where(ptype: "Company").first            
+            corporate_identity_per = setting_per.value.to_i * 1            
+            user_meter.update_column('corporate_identity_per' ,corporate_identity_per)                            
+        end 
+        return true
+end
+
+def percent_of_company_galery
+        @count = self.company_galeries.count
+        setting_per = UserPercentage.find_by_key('gallery').value
+        @galery_per = 0
+        if @count >= 10 && @count <= 30
+            @galery_per = setting_per * 0.3
+        elsif @count >= 30 &&  @count <= 50
+            @galery_per = setting_per * 0.5
+        elsif @count >= 50
+            @galery_per = setting_per * 1
+        end
+        return @galery_per        
+end
+
 def percent_of_faculty_basic_info
         if self.first_name.present? && self.role == 'Faculty'  
             faculty_basic_info_per = 0

@@ -1064,7 +1064,8 @@ resources :company do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
-      optional :company_logo
+      requires :company_logo
+      requires :company_logo_type
       optional :company_profile
       optional :company_brochure        
       requires :company_website
@@ -1074,7 +1075,7 @@ resources :company do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link)
+        @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type)
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
         @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
