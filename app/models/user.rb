@@ -169,7 +169,8 @@ def percent_of_company_galery
         elsif @count >= 50
             @galery_per = setting_per * 1
         end
-        return @galery_per.to_i        
+        user_meter.update_column('galery_per' ,@galery_per.to_i)
+        return true        
 end
 
 def percent_of_faculty_basic_info
