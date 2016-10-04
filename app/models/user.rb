@@ -169,7 +169,7 @@ def percent_of_company_galery
         elsif @count >= 50
             @galery_per = setting_per * 1
         end
-        return @galery_per        
+        return @galery_per.to_i        
 end
 
 def percent_of_faculty_basic_info
