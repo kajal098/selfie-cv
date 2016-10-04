@@ -660,9 +660,9 @@ resources :member_profile do
       error! 'User Certificate not found',422 unless @update_user_certificate
       @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type, :text_field)
       if (params[:file_type] == 'text')
-        @certificate.text_field = params[:text_field]
+        @update_user_certificate.text_field = params[:text_field]
       else
-        @certificate.file = params[:file] if params[:file]
+        @update_user_certificate.file = params[:file] if params[:file]
       end
       error! @update_user_certificate.errors.full_messages.join(', '), 422 unless @update_user_certificate.save
       @update_user_certificate
