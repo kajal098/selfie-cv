@@ -49,6 +49,7 @@ has_many    :faculty_affiliations
 has_many    :faculty_workshops
 has_many    :faculty_publications
 has_many    :faculty_researches
+has_many    :user_whizquizzes
 
 has_many    :groups, class_name: 'GroupUser',foreign_key: "user_id"
 has_many    :all_groups, -> (user) { where("#{user.id} != ALL (deleted_from)") }, through: :groups, class_name: 'Group', source: :group
