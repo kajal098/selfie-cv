@@ -18,7 +18,7 @@ class UserReference < ActiveRecord::Base
         
         if user.user_references.count > 0  
         	ref_per = 0
-            setting_per = UserPercentage.find_by_key('references')
+            setting_per = UserPercentage.find_by_key('references').value
         	user.user_references.each do |ref|   
         	   		if ref.file_type == "image"
 	                    ref_per = setting_per * 0.5

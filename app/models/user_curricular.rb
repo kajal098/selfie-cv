@@ -18,7 +18,7 @@ class UserCurricular < ActiveRecord::Base
     def percent_of_curri()
     	user = self.user
         curri_per = 0
-        setting_per = UserPercentage.find_by_key('extra')
+        setting_per = UserPercentage.find_by_key('extra').value
         if user.user_curriculars.count > 0  
         	user.user_curriculars.each do |curri|   
         	   		if curri.file_type == "image"
