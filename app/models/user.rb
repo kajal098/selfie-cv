@@ -14,7 +14,7 @@ scope :for_roles, ->(values) do
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-after_save :percent_of_resume
+after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info, :percent_of_faculty_basic_info
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -98,13 +98,16 @@ def self.to_csv(options = {})
     end
 end
 
-def percent_of_resume
-
+def create_user_meter
     if self.user_meter.blank?
         user_meter = UserMeter.create(:user_id=>self.id)
     else
         user_meter = self.user_meter
     end
+    return true
+end
+
+def percent_of_resume
         if self.file_type.present?  
             resume_info_per = 0
             setting_per = UserPercentage.find_by_key('resume_info').value
@@ -119,15 +122,39 @@ def percent_of_resume
             else
                 resume_info_per = setting_per.to_i * 0.3
             end
-                            if self.role == 'Jobseeker'
+                            
                                 user_meter.update_column('resume_info_per' ,resume_info_per)
-                            elsif self.role == 'Student'
-                                user_meter.update_column('student_basic_info_per' ,resume_info_per)
-                            elsif self.role == 'Company'
-                                user_meter.update_column('company_info_per' ,resume_info_per)
-                            elsif self.role == 'Faculty'
-                                user_meter.update_column('faculty_basic_info_per' ,resume_info_per)
-                            end
+                            
+        end 
+        return true
+end
+
+def percent_of_student_basic_info
+        if self.first_name.present? && self.role == 'Student'
+            student_basic_info_per = 0
+            setting_per = UserPercentage.where(key: 'info').where(ptype: "Student").first
+            student_basic_info_per = setting_per.value.to_i * 1
+            user_meter.update_column('student_basic_info_per' ,student_basic_info_per)
+        end 
+        return true
+end
+
+def percent_of_company_info
+        if self.company_name.present? && self.role == 'Company'   
+            company_info_per = 0
+            setting_per = UserPercentage.where(key: 'info').where(ptype: "Company").first            
+            company_info_per = setting_per.value.to_i * 1            
+            user_meter.update_column('company_info_per' ,company_info_per)                            
+        end 
+        return true
+end
+
+def percent_of_faculty_basic_info
+        if self.first_name.present? && self.role == 'Faculty'  
+            faculty_basic_info_per = 0
+            setting_per = UserPercentage.where(key: 'info').where(ptype: "Faculty").first
+            faculty_basic_info_per = setting_per.value.to_i * 1
+            user_meter.update_column('faculty_basic_info_per' ,faculty_basic_info_per)
         end 
         return true
 end
