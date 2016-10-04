@@ -14,7 +14,7 @@ scope :for_roles, ->(values) do
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info, :percent_of_faculty_basic_info
+after_save :create_user_meter, :percent_of_resume, :percent_of_company_info, :percent_of_faculty_basic_info
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -122,15 +122,14 @@ def percent_of_resume
             else
                 resume_info_per = setting_per.to_i * 0.3
             end
-                            
-                                user_meter.update_column('resume_info_per' ,resume_info_per)
+                user_meter.update_column('resume_info_per' ,resume_info_per)
                             
         end 
         return true
 end
 
 def percent_of_student_basic_info
-        if self.first_name.present? && self.role == 'Student'
+        if self.role == 'Student' && self.first_name.present?
             student_basic_info_per = 0
             setting_per = UserPercentage.where(key: 'info').where(ptype: "Student").first
             student_basic_info_per = setting_per.value.to_i * 1
