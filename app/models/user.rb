@@ -124,7 +124,7 @@ def percent_of_resume()
         return true
 end
 
-def profile_meter_total()
+def profile_meter_total
     if self.role == "Jobseeker"
         setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
         resume_per = self.user_meter.resume_info_per + self.user_meter.education_per + self.user_meter.experience_per
@@ -267,10 +267,7 @@ def rate_per
         return total     
 end
 
-
-
-
-def total_per
+def cal_total_per
         total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + 0 + 0 + 0
         self.user_meter.update_column('total_per' ,total)          
         self.update_column('total_per' ,total)     

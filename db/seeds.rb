@@ -5,6 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
 user = User.create(email: 'admin@example.com', password: '12345678' , username: 'admin' , role: 'Admin', total_per:10 )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 user = User.create(email: 'michel@example.com', password: '12345678' , username: 'michel' , role: 'Admin', total_per:20 )
@@ -170,8 +171,6 @@ UserPercentage.create(ptype: 'Faculty', key: 'achievement', value: 20)
 UserPercentage.create(parent_id: 39, ptype: 'Faculty', key: 'award', value: 50)
 UserPercentage.create(parent_id: 39, ptype: 'Faculty', key: 'certificate', value: 50)
 
-
-
 UserPercentage.create(ptype: 'site', key: 'like', value: 8)
 UserPercentage.create(ptype: 'site', key: 'star', value: 8)
 UserPercentage.create(ptype: 'site', key: 'updatecv', value: 8)
@@ -180,3 +179,10 @@ UserPercentage.create(ptype: 'site', key: 'viewed', value: 8)
 UserPercentage.create(ptype: 'site', key: 'marketIQ', value: 15)
 UserPercentage.create(ptype: 'site', key: 'stockexchange', value: 35)
 UserPercentage.create(ptype: 'site', key: 'profilemeter', value: 10)
+
+
+
+
+
+
+
