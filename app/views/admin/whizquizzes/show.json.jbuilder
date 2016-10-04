@@ -1,0 +1,1 @@
+json.extract! @whizquiz, :question, :created_at, :updated_at
