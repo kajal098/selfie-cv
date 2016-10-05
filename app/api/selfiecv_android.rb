@@ -1067,7 +1067,9 @@ resources :company do
       requires :company_logo
       requires :company_logo_type
       optional :company_profile
+      requires :company_profile_type
       optional :company_brochure        
+      requires :company_brochure_type
       requires :company_website
       requires :company_facebook_link
     end
@@ -1075,7 +1077,7 @@ resources :company do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type)
+        @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type, :company_profile_type, :company_brochure_type)
         @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
@@ -1155,8 +1157,11 @@ resources :company do
       optional :company_skype_id
       optional :company_id
       optional :company_logo
+      optional :company_logo_type
       optional :company_profile
+      optional :company_profile_type
       optional :company_brochure        
+      optional :company_brochure_type    
       optional :company_website
       optional :company_facebook_link
       optional :company_turnover
@@ -1171,7 +1176,7 @@ resources :company do
       @company = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @company
       @company.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id,
-       :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+       :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :company_logo_type, :company_profile_type, :company_brochure_type)
       @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]

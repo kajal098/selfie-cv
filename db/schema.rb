@@ -528,7 +528,9 @@ ActiveRecord::Schema.define(version: 20161004072847) do
     t.string   "company_logo",                                  default: ""
     t.string   "company_logo_type",                             default: "",           null: false
     t.string   "company_profile",                               default: ""
+    t.string   "company_profile_type",                          default: "",           null: false
     t.string   "company_brochure",                              default: ""
+    t.string   "company_brochure_type",                         default: "",           null: false
     t.string   "company_website",                               default: "",           null: false
     t.string   "company_facebook_link",                         default: "",           null: false
     t.string   "company_turnover",                              default: "",           null: false
