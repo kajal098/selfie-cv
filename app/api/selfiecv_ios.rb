@@ -1201,7 +1201,7 @@ resources :company do
       requires :token, type: String, regexp: UUID_REGEX
       requires :delete_ids, type: Array, default: []
     end
-    post :galery, jbuilder: 'android_galery' do
+    post :delete_photos, jbuilder: 'android_galery' do
       params[:delete_ids].each do |delete_id|
         @galery = CompanyGalery.find delete_id
         error! 'Something went wrong.Please try again.!',422 unless @galery.destroy
