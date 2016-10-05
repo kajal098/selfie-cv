@@ -1061,7 +1061,7 @@ resources :company do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       if @user.role == 'Company'
-        @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type :company_profile_type, :company_brochure_type)
+        @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type ,:company_profile_type, :company_brochure_type)
         @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
