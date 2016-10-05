@@ -2248,19 +2248,13 @@ resources :whizquiz do
       requires :question_ids, type: Array, default: []
       requires :reviews, type: Array, default: []
     end
-    post :answer_of_questions do
+    post :answer_of_questions, jbuilder: 'android_whiz_quiz' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @question_ids.zip(@reviews).each do |question_id, answer|
-        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: question_id, review: answer, status: false
-        error!({error: @user_whizquiz.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_whizquiz
+      params[:question_ids].count.times do |i|
+        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review: params[:reviews][i], status: false
+        error!({error: @user_whizquiz.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_whizquiz.save
       end
-
-      # params[:question_ids].each do |question_id|
-      #   @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: question_id, review: params[:reviews], status: false
-      #   error!({error: @user_whizquiz.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_whizquiz.save
-      # end
-
     end
 
 
