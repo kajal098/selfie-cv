@@ -2208,7 +2208,7 @@ resources :top_user do
     post :listing, jbuilder: 'android_top' do
       if (params[:role] == 'Company')
        # @top_users = User.where(role: 3).order("total_per DESC").all
-        @top_users = User.includes(:user_meter).order("user_meter.total_per DESC")
+        @top_users = User.includes(:user_meter).order("total_per DESC")
 
       elsif (params[:role] == 'Jobseeker')
         @top_users = User.where(role: 4).order("total_per DESC").all
