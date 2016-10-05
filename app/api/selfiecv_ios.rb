@@ -2188,13 +2188,20 @@ resources :whizquiz do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
       requires :question_ids, type: Array, default: []
+      requires :review_types, type: Array, default: []
       requires :reviews, type: Array, default: []
+      requires :text_fields, type: Array, default: []
     end
-    post :answer_of_questions, jbuilder: 'ios_whiz_quiz' do
+    post :answer_of_questions, jbuilder: 'android_whiz_quiz' do
       @user = User.find params[:user_id]
-      error! 'User not found', 422 unless @user
+      error! 'User not found',422 unless @user
       params[:question_ids].count.times do |i|
-        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review: params[:reviews][i], status: false
+        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review_type: params[:review_types][i] , review: params[:reviews][i], status: false
+        if (params[:review_types][i] == 'text')
+          @user_whizquiz.text_field = params[:text_fields][i] if params[:text_fields][i]
+        else
+          @user_whizquiz.review = params[:reviews][i] if params[:reviews][i]
+        end
         error! @user_whizquiz.errors.full_messages.join(', '),422 unless @user_whizquiz.save
       end
     end
