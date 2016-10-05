@@ -480,7 +480,9 @@ ActiveRecord::Schema.define(version: 20161004072847) do
   create_table "user_whizquizzes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "whizquiz_id"
-    t.string   "review",      default: "",    null: false
+    t.string   "text_field",  default: "",    null: false
+    t.string   "review_type", default: "",    null: false
+    t.string   "review",      default: ""
     t.boolean  "status",      default: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false

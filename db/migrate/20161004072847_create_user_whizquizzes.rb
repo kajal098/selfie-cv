@@ -3,7 +3,9 @@ class CreateUserWhizquizzes < ActiveRecord::Migration
     create_table :user_whizquizzes do |t|
     	t.integer :user_id
     	t.integer :whizquiz_id
-    	t.string  :review,              null:false, default: ""
+      t.string  :text_field,              null:false, default: ""
+    	t.string  :review_type,              null:false, default: ""
+      t.string  :review,              default: ''
     	t.boolean :status,            default: false
     	
 
