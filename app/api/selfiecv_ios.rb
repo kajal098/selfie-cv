@@ -1195,6 +1195,20 @@ resources :company do
       @galeries = @user.company_galeries
     end
 
+    # for company galery delete multiple photos
+    desc 'Company Galery  Delete Multiple Photos'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :delete_ids, type: Array, default: []
+    end
+    post :galery, jbuilder: 'android_galery' do
+      params[:delete_ids].each do |delete_id|
+        @galery = CompanyGalery.find: delete_id
+        error! 'Something went wrong.Please try again.!',422 unless @galery.destroy
+      end   
+      status 200  
+    end
+
 end
 
 #--------------------------------company end----------------------------------#
