@@ -2167,7 +2167,6 @@ resources :whizquiz do
     desc "Send random 10 question to Users"
     params do
       requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
     end
     post :send_questions, jbuilder: 'ios_whiz_quiz' do
       @user = User.find params[:user_id]
