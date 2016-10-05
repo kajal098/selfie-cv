@@ -1076,10 +1076,11 @@ resources :company do
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       if @user.role == 'Company'
         @user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type)
-        error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
         @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
+                error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
+
       else
         error!({error: 'Record not found', status: 'Fail'}, 200)
       end
