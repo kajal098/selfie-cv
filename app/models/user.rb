@@ -14,7 +14,7 @@ scope :for_roles, ->(values) do
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-after_save :create_user_meter, :percent_of_resume, :percent_of_company_info, :percent_of_faculty_basic_info
+after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info, :percent_of_faculty_basic_info
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -100,9 +100,9 @@ end
 
 def create_user_meter
     if self.user_meter.blank?
-        user_meter = UserMeter.create(:user_id=>self.id)
+        @user_meter = UserMeter.create(:user_id=>self.id)
     else
-        user_meter = self.user_meter
+        @user_meter = self.user_meter
     end
     return true
 end
@@ -122,7 +122,7 @@ def percent_of_resume
             else
                 resume_info_per = setting_per.to_i * 0.3
             end
-                user_meter.update_column('resume_info_per' ,resume_info_per)
+                @user_meter.update_column('resume_info_per' ,resume_info_per)
                             
         end 
         return true
@@ -133,7 +133,7 @@ def percent_of_student_basic_info
             student_basic_info_per = 0
             setting_per = UserPercentage.where(key: 'info').where(ptype: "Student").first
             student_basic_info_per = setting_per.value.to_i * 1
-            user_meter.update_column('student_basic_info_per' ,student_basic_info_per)
+            @user_meter.update_column('student_basic_info_per' ,student_basic_info_per)
         end 
         return true
 end
@@ -143,7 +143,7 @@ def percent_of_company_info
             company_info_per = 0
             setting_per = UserPercentage.where(key: 'info').where(ptype: "Company").first            
             company_info_per = setting_per.value.to_i * 1            
-            user_meter.update_column('company_info_per' ,company_info_per)                            
+            @user_meter.update_column('company_info_per' ,company_info_per)                            
         end 
         return true
 end
@@ -153,7 +153,7 @@ def percent_of_company_corporate_identity
             corporate_identity_per = 0
             setting_per = UserPercentage.where(key: 'corporate').where(ptype: "Company").first            
             corporate_identity_per = setting_per.value.to_i * 1            
-            user_meter.update_column('corporate_identity_per' ,corporate_identity_per)                            
+            @user_meter.update_column('corporate_identity_per' ,corporate_identity_per)                            
         end 
         return true
 end
@@ -169,7 +169,7 @@ def percent_of_company_galery
         elsif @count >= 50
             @galery_per = setting_per * 1
         end
-        user_meter.update_column('galery_per' ,@galery_per.to_i)
+        @user_meter.update_column('galery_per' ,@galery_per.to_i)
         return true        
 end
 
@@ -178,7 +178,7 @@ def percent_of_faculty_basic_info
             faculty_basic_info_per = 0
             setting_per = UserPercentage.where(key: 'info').where(ptype: "Faculty").first
             faculty_basic_info_per = setting_per.value.to_i * 1
-            user_meter.update_column('faculty_basic_info_per' ,faculty_basic_info_per)
+            @user_meter.update_column('faculty_basic_info_per' ,faculty_basic_info_per)
         end 
         return true
 end
