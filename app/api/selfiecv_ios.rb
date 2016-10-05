@@ -2156,4 +2156,55 @@ resources :top_user do
 
   #--------------------------------top user end----------------------------------#
 
+  #--------------------------------whizquiz start----------------------------------#
+
+resources :whizquiz do
+
+
+  before { authenticate! }
+
+  # for send random 10 question to users
+    desc "Send random 10 question to Users"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :send_questions, jbuilder: 'ios_whiz_quiz' do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      @questions = Whizquiz.where(status: true).order("RANDOM()").limit(2)
+      #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:question)
+      #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:id, :question)
+
+    end
+
+    # for answer
+    desc "Answer"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      requires :question_ids, type: Array, default: []
+      requires :reviews, type: Array, default: []
+    end
+    post :answer_of_questions do
+      @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
+      @question_ids.zip(@reviews).each do |question_id, answer|
+        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: question_id, review: answer, status: false
+        error! @user_whizquiz.errors.full_messages.join(', '),422 unless @user_whizquiz
+      end
+
+      # params[:question_ids].each do |question_id|
+      #   @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: question_id, review: params[:reviews], status: false
+      #   error!({error: @user_whizquiz.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_whizquiz.save
+      # end
+
+    end
+
+
+
+  end
+
+  #--------------------------------whizquiz end----------------------------------#
+
 end

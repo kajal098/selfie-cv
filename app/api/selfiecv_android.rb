@@ -2227,6 +2227,8 @@ resources :whizquiz do
       requires :user_id
     end
     post :send_questions, jbuilder: 'android_whiz_quiz' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @questions = Whizquiz.where(status: true).order("RANDOM()").limit(2)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:question)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:id, :question)
@@ -2242,6 +2244,8 @@ resources :whizquiz do
       requires :reviews, type: Array, default: []
     end
     post :answer_of_questions do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @question_ids.zip(@reviews).each do |question_id, answer|
         @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: question_id, review: answer, status: false
         error!({error: @user_whizquiz.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_whizquiz
