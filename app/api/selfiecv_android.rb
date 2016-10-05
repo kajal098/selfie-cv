@@ -1221,7 +1221,7 @@ resources :company do
     end
     post :galery, jbuilder: 'android_galery' do
       params[:delete_ids].each do |delete_id|
-        @galery = CompanyGalery.find: delete_id
+        @galery = CompanyGalery.find delete_id
         error!({error: 'Something went wrong.Please try again.!', status: 'Fail'}, 200) unless @galery.destroy
       end   
       { code: 200, :status => "Success" }  
