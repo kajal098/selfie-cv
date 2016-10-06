@@ -27,6 +27,7 @@ validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 paginates_per 10
 
 has_many    :devices
+has_many    :active_devices, -> { where.not(registration_id: nil) }, class_name: 'Device'
 has_many    :courses
 has_many    :specializations
 belongs_to  :company
