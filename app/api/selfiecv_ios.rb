@@ -2140,7 +2140,14 @@ resources :notifications do
     end
 
 
-
+    # for notification list
+    desc  "LIST Of NOTIFICATION"
+    params  do
+      requires :token, type: String, regexp: UUID_REGEX
+    end
+    get :list, jbuilder: "notification_list"  do
+      @notifications = Rpush::Apns::Notification.where(device_token: current_device.id).order(created_at: "desc").pluck
+    end
 
 
 

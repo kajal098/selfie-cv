@@ -2194,7 +2194,14 @@ resources :notifications do
       error!({error: @user_rate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_rate.save     
     end
 
-
+    # for notification list
+    desc  "LIST Of NOTIFICATION"
+    params  do
+      requires :token, type: String, regexp: UUID_REGEX
+    end
+    get :list, jbuilder: "notification_list"  do
+      @notifications = Rpush::Gcm::Notification.where(device_token: current_device.id).order(created_at: "desc").pluck
+    end
 
 
 
