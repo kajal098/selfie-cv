@@ -14,15 +14,15 @@ unless Rpush::Gcm::App.any?
   app.save!
 end
 
-unless Rpush::Apns::App.any?
-  app = Rpush::Apns::App.new
-  app.name = "ios"
-  app.certificate = File.read Rails.root.join('docs','sandbox.pem')
-  app.environment = "sandbox" # APNs environment.
-  app.password = ENV['APNS_PASSWORD']
-  app.connections = 1
-  app.save!
-end
+# unless Rpush::Apns::App.any?
+#   app = Rpush::Apns::App.new
+#   app.name = "ios"
+#   app.certificate = File.read Rails.root.join('docs','sandbox.pem')
+#   app.environment = "sandbox" # APNs environment.
+#   app.password = ENV['APNS_PASSWORD']
+#   app.connections = 1
+#   app.save!
+# end
 
 UserPercentage.create(ptype: 'Jobseeker', key: 'resume', value: 40)
 UserPercentage.create(parent_id: 1, ptype: 'Jobseeker', key: 'resume_info', value: 50)
