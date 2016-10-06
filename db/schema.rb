@@ -30,12 +30,13 @@ ActiveRecord::Schema.define(version: 20161006051129) do
   create_table "chats", force: :cascade do |t|
     t.integer  "sender_id"
     t.integer  "group_id"
-    t.string   "quick_msg",  default: "", null: false
+    t.string   "quick_msg",  default: "",    null: false
+    t.boolean  "active",     default: false
     t.string   "file",       default: ""
-    t.string   "file_type",  default: "", null: false
-    t.integer  "user_ids",   default: [],              array: true
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "file_type",  default: "",    null: false
+    t.integer  "user_ids",   default: [],                 array: true
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "chats", ["group_id"], name: "index_chats_on_group_id", using: :btree

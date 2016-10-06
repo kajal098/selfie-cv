@@ -1826,6 +1826,12 @@ resources :group do
       error!({error: @group.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group.save
       @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id, admin: true , status: 'joined' 
       error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save
+      @chat = Chat.new
+      @chat.sender_id = current_user.id
+      @chat.group_id = @group.id
+      @chat.activity = "true"
+      @chat.quick_msg = "created"
+      @chat.save
       end
 
   # for listing groups of current user
