@@ -2195,8 +2195,6 @@ resources :whizquiz do
       requires :token, type: String, regexp: UUID_REGEX
     end
     post :send_questions, jbuilder: 'ios_whiz_quiz' do
-      @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
       @questions = Whizquiz.where(status: true).order("RANDOM()").limit(2)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:question)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:id, :question)
