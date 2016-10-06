@@ -1,6 +1,6 @@
 if @questions
 json.time_for_ans 10
-@all_questions = @questions.order('created_at ASC')
+@all_questions = @questions.sort_by(&:created_at)
 	json.questions @all_questions do |question|
 		json.extract! question, :id, :question
 		json.created_at question.created_at.to_i
