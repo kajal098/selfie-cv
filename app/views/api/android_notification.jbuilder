@@ -1,5 +1,9 @@
 json.status "Success"
 
+if @user_like
+	json.count UserLike::where(like_id: @user_like.like_id).count	 	
+end
+
 json.notifications @notifications.count.times do |n|
 
 	data =  JSON.parse(@notifications[n][5])
