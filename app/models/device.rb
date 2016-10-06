@@ -18,7 +18,7 @@ class Device < ActiveRecord::Base
     self.class.where(registration_id: registration_id).where.not(id: id).update_all(registration_id: nil)
   end
 
-  def self.notify(devices, data={})
+  def self.android_notify(devices, data={})
       alert = data.delete(:alert).to_s[0..40] if data[:alert]
       sound = data.delete(:sound) if data[:sound]
       devices.each do |device|
@@ -34,7 +34,7 @@ class Device < ActiveRecord::Base
       end
   end
 
-  def self.notification(devices, data={})
+  def self.ios_notify(devices, data={})
     alert = data.delete(:alert).to_s[0..40] if data[:alert]
     sound = data.delete(:sound) if data[:sound]
     devices.each do |device|

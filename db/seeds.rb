@@ -6,6 +6,24 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+unless Rpush::Gcm::App.any?
+  app = Rpush::Gcm::App.new
+  app.name = "android_app"
+  app.auth_key = "AIzaSyDvovMZRqsuEeN8KwuZ0qwLIwh1A16MxSs"
+  app.connections = 1
+  app.save!
+end
+
+unless Rpush::Apns::App.any?
+  app = Rpush::Apns::App.new
+  app.name = "ios"
+  app.certificate = File.read Rails.root.join('docs','sandbox.pem')
+  app.environment = "sandbox" # APNs environment.
+  app.password = ENV['APNS_PASSWORD']
+  app.connections = 1
+  app.save!
+end
+
 UserPercentage.create(ptype: 'Jobseeker', key: 'resume', value: 40)
 UserPercentage.create(parent_id: 1, ptype: 'Jobseeker', key: 'resume_info', value: 50)
 UserPercentage.create(parent_id: 1, ptype: 'Jobseeker', key: 'education', value: 25)
