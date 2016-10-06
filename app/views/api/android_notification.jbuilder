@@ -1,7 +1,5 @@
 json.status "Success"
 
-
-
 json.notifications @notifications.count.times do |n|
 
 	data =  JSON.parse(@notifications[n][5])

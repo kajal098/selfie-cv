@@ -2131,12 +2131,12 @@ resources :notifications do
       requires :like_id
       requires :is_liked
     end
-    post :like, jbuilder: 'android_notification' do
+    post :like do
       if params[:is_liked] == 'false'
         @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
         @user_like.is_liked = 'true'
         error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
-        Device.android_notify User.where(id: params[:like_id]).active_devices, { alert: "#{current_user.username} has liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        Device.android_notify User.where(id: params[:like_id]).first.active_devices, { alert: "#{current_user.username} has liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
       else        
         error!({error: 'You already like this profile!', status: 'Fail'}, 200)
       end
@@ -2203,7 +2203,7 @@ resources :notifications do
     params  do
       requires :token, type: String, regexp: UUID_REGEX
     end
-    post :list  do
+    get :list  do
       @notifications = Rpush::Gcm::Notification.where(device_token: current_device.id).order(created_at: "desc").pluck
     end
 
