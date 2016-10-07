@@ -1897,14 +1897,32 @@ resources :group do
               end   
               @group_user.status = 'deleted'
               @group_user.save
+              @chat = Chat.new
+              @chat.sender_id = current_user.id
+              @chat.group_id = @group.id
+              @chat.activity = "true"
+              @chat.quick_msg = "removed"
+              @chat.save
         else
               if current_user.role == 'Faculty'
                 @group.destroy
+                @chat = Chat.new
+                @chat.sender_id = current_user.id
+                @chat.group_id = @group.id
+                @chat.activity = "true"
+                @chat.quick_msg = "deleted"
+                @chat.save
               else
                   unless @group.deleted_from.include? current_user.id
                     @group.deleted_from << current_user.id
                     @group.update_column :deleted_from, @group.deleted_from
                   end
+                  @chat = Chat.new
+                  @chat.sender_id = current_user.id
+                  @chat.group_id = @group.id
+                  @chat.activity = "true"
+                  @chat.quick_msg = "left"
+                  @chat.save
               end
         end
         { code: 200, :status => "Success" }
@@ -1943,14 +1961,23 @@ resources :group do
       error!({error: 'Group not found or wrong code', status: 'Fail'}, 200) unless @group
 
       @group_invitee = @group.group_invitees.where(email: current_user.email).first
-      error! "You are unauthorized for this group.", 422 unless @group_invitee
+      error!({error: 'You are unauthorized for this group.', status: 'Fail'}, 200) unless @group_invitee
 
       @group_user = @group.users.where(user_id: current_user.id).first
-      error! "You are already in this group.", 422 unless @group_user
+      error!({error: 'You are already in this group.', status: 'Fail'}, 200) unless @group_user
 
       if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
         error!({error: @group_user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_user.save      
+              @chat = Chat.new
+              @chat.sender_id = current_user.id
+              @chat.group_id = @group.id
+              @chat.activity = "true"
+              @chat.quick_msg = "joined"
+              @chat.save
+        @group.accepted_users.each do |group_user|
+            Device.android_notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        end
       end      
       
     end
@@ -1969,6 +1996,15 @@ resources :group do
         @group_user.status = "leaved"          
         @group_user.deleted_at = Time.now
         @group_user.save
+        @chat = Chat.new
+        @chat.sender_id = current_user.id
+        @chat.group_id = @group.id
+        @chat.activity = "true"
+        @chat.quick_msg = "letf"
+        @chat.save
+        @group.accepted_users.each do |group_user|
+            Device.android_notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        end
     end
 
     # quick message listing

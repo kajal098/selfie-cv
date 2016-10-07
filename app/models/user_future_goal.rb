@@ -17,11 +17,11 @@ class UserFutureGoal < ActiveRecord::Base
         if user.user_future_goals.count > 0  
         	goal_per = 0
         	user.user_future_goals.each do |goal|   
-        	   		if goal.file_type == "audio"
-	                    goal_per = 70
-	                    break
-	                elsif goal.file_type == "video"
+        	   		if goal.file_type == "video"
 	                    goal_per = 100
+	                    break
+	                elsif goal.file_type == "audio"
+	                    goal_per = 70
 	                    break
 	                else
 	                    goal_per = 50

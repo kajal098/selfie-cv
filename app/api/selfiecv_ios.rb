@@ -1804,7 +1804,12 @@ resources :group do
         error! @group.errors.full_messages.join(', '), 422 unless @group.save
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id, admin: true , status: 'joined' 
         error! @group_user.errors.full_messages.join(', '), 422 unless @group_user.save
-        #Device.notify User.where(id: current_user.id).active_devices, alert: "#{current_user} has added you to group #{@group}."
+        @chat = Chat.new
+        @chat.sender_id = current_user.id
+        @chat.group_id = @group.id
+        @chat.activity = "true"
+        @chat.quick_msg = "created"
+        @chat.save
     end
 
     # for listing groups of current user
@@ -1870,14 +1875,32 @@ resources :group do
               end       
               @group_user.status = 'deleted'
               @group_user.save 
+              @chat = Chat.new
+              @chat.sender_id = current_user.id
+              @chat.group_id = @group.id
+              @chat.activity = "true"
+              @chat.quick_msg = "removed"
+              @chat.save
         else
               if current_user.role == 'Faculty'
                 @group.destroy
+                @chat = Chat.new
+                @chat.sender_id = current_user.id
+                @chat.group_id = @group.id
+                @chat.activity = "true"
+                @chat.quick_msg = "deleted"
+                @chat.save
               else
                   unless @group.deleted_from.include? current_user.id
                     @group.deleted_from << current_user.id
                     @group.update_column :deleted_from, @group.deleted_from
                   end
+                  @chat = Chat.new
+                  @chat.sender_id = current_user.id
+                  @chat.group_id = @group.id
+                  @chat.activity = "true"
+                  @chat.quick_msg = "left"
+                  @chat.save
               end
         end
         status 200
@@ -1891,16 +1914,30 @@ resources :group do
       requires :code
     end
 
-    post :join, jbuilder: 'ios_group' do
+    post :join, jbuilder: 'android_group' do
       @group = Group.find_by_code params[:code]
-      error! 'Group not found or wrong code', 422 unless @group
-      @group_user = @group.users.find_by_user_id(current_user.id)
-      if @group_user.present?
-        error! 'You are already in this group.',422
-      else
+      error! 'Group not found or wrong code',422 unless @group
+
+      @group_invitee = @group.group_invitees.where(email: current_user.email).first
+      error! "You are unauthorized for this group.", 422 unless @group_invitee
+
+      @group_user = @group.users.where(user_id: current_user.id).first
+      error! "You are already in this group.", 422 unless @group_user
+
+      if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
         error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save      
-      end    
+              @chat = Chat.new
+              @chat.sender_id = current_user.id
+              @chat.group_id = @group.id
+              @chat.activity = "true"
+              @chat.quick_msg = "joined"
+              @chat.save
+        @group.accepted_users.each do |group_user|
+            Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        end
+      end      
+      
     end
 
     # leave group
@@ -1917,6 +1954,15 @@ resources :group do
         @group_user.status = "leaved"          
         @group_user.deleted_at = Time.now
         @group_user.save
+        @chat = Chat.new
+        @chat.sender_id = current_user.id
+        @chat.group_id = @group.id
+        @chat.activity = "true"
+        @chat.quick_msg = "letf"
+        @chat.save
+        @group.accepted_users.each do |group_user|
+            Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        end
     end
 
     # quick message listing
@@ -2080,7 +2126,8 @@ resources :notifications do
       if params[:is_liked] == 'false'
       @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
       @user_like.is_liked = 'true'
-      error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save    
+      error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save
+      Device.ios_notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }    
       else        
         error! 'You already like this profile!',422
       end 
@@ -2094,7 +2141,8 @@ resources :notifications do
     end
     post :view, jbuilder: 'ios_notification' do
       @user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
-      error! @user_view.errors.full_messages.join(', '),422 unless @user_view.save     
+      error! @user_view.errors.full_messages.join(', '),422 unless @user_view.save
+      Device.ios_notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
     end
 
     # for share profile of user
@@ -2106,7 +2154,8 @@ resources :notifications do
     end
     post :share, jbuilder: 'ios_notification' do
       @user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
-      error! @user_share.errors.full_messages.join(', '),422 unless @user_share.save     
+      error! @user_share.errors.full_messages.join(', '),422 unless @user_share.save
+      Device.ios_notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
     end
 
     # for favourite profile of user
@@ -2137,6 +2186,7 @@ resources :notifications do
     post :rate, jbuilder: 'ios_notification' do
       @user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
       error! @user_rate.errors.full_messages.join(', '),422 unless @user_rate.save     
+      Device.ios_notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
     end
 
 

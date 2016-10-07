@@ -16,7 +16,7 @@ if @group
 		end
 
 		json.group_chat @group.chats do |chat|
-				json.extract! chat, :id, :quick_msg, :sender_id, :file_type	
+				json.extract! chat, :id, :quick_msg, :activity, :sender_id, :file_type	
 				
 				json.file chat.file.url
 				json.chat_created_at chat.created_at.to_i
@@ -30,7 +30,7 @@ if @group
 		 
 		    if(Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).count > 0)
 
-		      json.extract! Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last, :id, :sender_id, :group_id, :quick_msg, :user_ids, :file_type
+		      json.extract! Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last, :id, :sender_id, :group_id, :quick_msg, :activity, :user_ids, :file_type
 
 		      json.file Chat::where(group_id: @group.id).where("created_at >= ?", @group.users.current(current_user).updated_at).last.file.url
 
@@ -65,7 +65,7 @@ if @groups
 		end
 
 		json.group_chat group.chats do |chat|
-				json.extract! chat, :id, :quick_msg, :sender_id, :file_type	
+				json.extract! chat, :id, :quick_msg, :activity, :sender_id, :file_type	
 				
 				json.file chat.file.url
 				json.chat_created_at chat.created_at.to_i
@@ -78,7 +78,7 @@ if @groups
 		 
 		    if(Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).count > 0)
 
-		      json.extract! Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).last, :id, :sender_id, :group_id, :quick_msg, :user_ids, :file_type
+		      json.extract! Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).last, :id, :sender_id, :group_id, :quick_msg, :activity, :user_ids, :file_type
 
 		      json.file Chat::where(group_id: group.id).where("created_at >= ?", group.users.current(current_user).updated_at).last.file.url
 

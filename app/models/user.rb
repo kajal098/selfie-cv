@@ -187,7 +187,7 @@ end
 def profile_meter_total
     if self.role == "Jobseeker"
         setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
-        resume_per = self.user_meter.resume_info_per + self.user_meter.education_per + self.user_meter.experience_per
+        resume_per = self.user_meter.resume_info_per + self.user_meter.education_per + self.user_meter.experience_per + self.user_meter.prework_per
         resume_per = (resume_per.to_i * setting_per.value.to_i) / 100
         self.user_meter.update_column('resume_per' ,resume_per)
 

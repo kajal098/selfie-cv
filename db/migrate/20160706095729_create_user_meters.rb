@@ -8,6 +8,7 @@ class CreateUserMeters < ActiveRecord::Migration
       t.integer :resume_info_per,              null:false, default: 0
       t.integer :education_per,              null:false, default: 0
       t.integer :experience_per,              null:false, default: 0
+      t.integer :prework_per,              null:false, default: 0
       t.integer :achievement_per,              null:false, default: 0
       t.integer :award_per,              null:false, default: 0
       t.integer :certificate_per,              null:false, default: 0

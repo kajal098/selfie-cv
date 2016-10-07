@@ -17,15 +17,14 @@ class UserExperience < ActiveRecord::Base
         	exp_per = 0
             setting_per = UserPercentage.find_by_key('experience').value
         	user.user_experiences.each do |exp|   
-        	   		if exp.file_type == "doc"
+        	   		if exp.exp_type == "experience"
 	                    exp_per = setting_per.to_i.value * 1
 	                    break
-	                else
-	                    exp_per = setting_per.to_i.value * 0.5
-	                end
-        		       	
+	                elsif exp.exp_type == "fresher"
+	                    exp_per = setting_per.to_i.value * 0.4
+	                end        		       	
         	end
-        user.user_meter.update_column('working_exp_per' ,exp_per)
+        user.user_meter.update_column('experience_per' ,exp_per)
         end 
         return true
     end
