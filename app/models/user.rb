@@ -69,6 +69,13 @@ has_many    :bronze_rates, -> {where(rate_type: 0) }, class_name: 'UserRate',for
 has_many    :silver_rates, -> {where(rate_type: 1)}, class_name: 'UserRate',foreign_key: "rate_id"
 has_many    :gold_rates, -> {where(rate_type: 2) }, class_name: 'UserRate',foreign_key: "rate_id"
 
+def self.search(search)
+        if search
+          where(['username ILIKE ?', "%#{search}%"]).where(['first_name ILIKE ?', "%#{search}%"]).where(['middle_name ILIKE ?', "%#{search}%"]).where(['last_name ILIKE ?', "%#{search}%"])
+        else
+          scoped
+        end
+end
 
 mount_uploader :file, FileUploader
 def resume_thumb_url; file.url(:thumb); end

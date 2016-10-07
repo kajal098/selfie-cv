@@ -84,6 +84,7 @@ if @user
 	json.student_education_per @user.user_meter ? @user.user_meter.student_education_per.to_i : ""
 	json.achievement_per @user.user_meter ? @user.user_meter.achievement_per.to_i : ""
 	json.curri_per @user.user_meter ? @user.user_meter.curri_per.to_i : ""
+	json.future_goal_per @user.user_meter ? @user.user_meter.future_goal_per.to_i : ""
 	json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : ""
 
       
