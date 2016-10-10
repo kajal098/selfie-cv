@@ -8,9 +8,9 @@ end
 
 if @chat
 	json.msg @chat, :id, :group_id, :quick_msg, :activity, :file_type
-	json.sender_id chat.user ? chat.sender_id : ""
-   	json.sender_first_name chat.user ? chat.user.first_name : ""
-   	json.sender_last_name chat.user ? chat.user.last_name : ""
+	json.sender_id @chat.user ? @chat.sender_id : ""
+   	json.sender_first_name @chat.user ? @chat.user.first_name : ""
+   	json.sender_last_name @chat.user ? @chat.user.last_name : ""
 	json.file @chat.file.url
 	json.msg_created_at @chat.created_at.to_i
 	json.msg_updated_at @chat.updated_at.to_i

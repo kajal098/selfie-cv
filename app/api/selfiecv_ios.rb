@@ -1832,7 +1832,7 @@ resources :group do
 
     post :info, jbuilder: 'ios_group' do
         @group = Group.find(params[:group_id])
-        error! 'Record not found',422 unless @group
+        error! 'Group not found',422 unless @group
     end
 
     # for update group detail
@@ -1848,6 +1848,7 @@ resources :group do
 
     post :update, jbuilder: 'android_group' do
         @group = Group.find params[:group_id]
+        error! 'Group not found',422 unless @group
         @group.attributes = clean_params(params).permit(:name)
         @group.group_pic = params[:group_pic] if params[:group_pic]
         error! @group.errors.full_messages.join(', '), 422 unless @group.save
@@ -1866,6 +1867,7 @@ resources :group do
 
       post :delete do
         @group = Group.find params[:group_id]  
+        error! 'Group not found',422 unless @group
         if params[:user_id]   
               @user = User.find params[:user_id]   
               @group_user = GroupUser.find_by_user_id params[:user_id]
@@ -2048,6 +2050,7 @@ resources :messages do
     end
     post :listing, jbuilder: 'ios_message' do
         @group = Group.find params[:group_id]
+        error! 'Group not found',422 unless @group
         @chats = @group.chats
         error! @chat.errors.full_messages.join(', '),422 unless @chats  
     end

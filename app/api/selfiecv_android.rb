@@ -1854,7 +1854,7 @@ resources :group do
    
     post :info, jbuilder: 'android_group' do
       @group = Group.find(params[:group_id])      
-      error!({error: 'Record not found', status: 'Fail'}, 200) unless @group
+      error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
     end
 
      # for update group detail
@@ -1870,6 +1870,7 @@ resources :group do
 
     post :update, jbuilder: 'android_group' do
       @group = Group.find params[:group_id]
+      error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
       @group.attributes = clean_params(params).permit(:name)
       @group.group_pic = params[:group_pic] if params[:group_pic]
       error!({error: @group.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group.save
@@ -1888,6 +1889,7 @@ resources :group do
 
       post :delete do
         @group = Group.find params[:group_id]  
+        error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
         if params[:user_id]   
               @user = User.find params[:user_id] 
               @group_user = GroupUser.find_by_user_id params[:user_id]
@@ -1940,6 +1942,7 @@ resources :group do
 
     post :email_invite do
       @group = Group.find params[:group_id]
+      error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
       params[:email_ids].each do |email|
         @group_invitee = GroupInvitee.new group_id: params[:group_id], email: email
         error!({error: @group_invitee.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @group_invitee.save
