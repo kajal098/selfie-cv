@@ -111,6 +111,7 @@ resources :member do
     post :reset_code do
       if
         @user = User.find_by_email(params[:email])
+        error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
     #UserMailer.send_reset_code(@user).deliver_now
     { code: @user.reset_code, :status => "Success" }
@@ -128,6 +129,7 @@ resources :member do
     post :resend_reset_code do
       if
         @user = User.find_by_email(params[:email])
+        error!({error: 'User not found', status: 'Fail'}, 200) unless @user
         @code = @user.reset_code
     #UserMailer.send_reset_code(@user).deliver_now
     { code: @code, :status => "Success" }
@@ -303,6 +305,7 @@ resources :member do
     post :get_user_resume, jbuilder: 'android' do
       authenticate!
       @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
     end
 
     # for fill user's education
@@ -370,6 +373,7 @@ resources :member do
     post :delete_education do
       authenticate!
       @education = UserEducation.find params[:education_id]
+      error!({error: 'User Education not found', status: 'Fail'}, 200) unless @education
       @education.destroy
       { code: 200, :status => "Success" }
     end
@@ -455,6 +459,7 @@ resources :member do
     post :delete_experience do
       authenticate!
       @experience = UserExperience.find params[:experience_id]
+      error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @experience
       @experience.destroy
       { code: 200, :status => "Success" }
     end
@@ -527,6 +532,7 @@ resources :member do
     post :delete_preffered_work do
       authenticate!
       @preffered_work = UserPreferredWork.find params[:preffered_work_id]
+      error!({error: 'User Preffered Work not found', status: 'Fail'}, 200) unless @preffered_work
       @preffered_work.destroy
       { code: 200, :status => "Success" }
     end
@@ -606,6 +612,7 @@ resources :member do
     post :delete_award do
       authenticate!
       @award = UserAward.find params[:award_id]
+      error!({error: 'User Award not found', status: 'Fail'}, 200) unless @award
       @award.destroy
       { code: 200, :status => "Success" }
     end
@@ -686,6 +693,7 @@ resources :member do
     post :delete_certificate do
       authenticate!
       @certificate = UserCertificate.find params[:certificate_id]
+      error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @certificate
       @certificate.destroy
       { code: 200, :status => "Success" }
     end
@@ -770,6 +778,7 @@ resources :member do
     post :delete_curricular do
       authenticate!
       @curricular = UserCurricular.find params[:curricular_id]
+      error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @curricular
       @curricular.destroy
       { code: 200, :status => "Success" }
     end
@@ -850,6 +859,7 @@ resources :member do
     post :delete_future_goal do
       authenticate!
       @future_goal = UserFutureGoal.find params[:future_goal_id]
+      error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @future_goal
       @future_goal.destroy
       { code: 200, :status => "Success" }
     end
@@ -928,6 +938,7 @@ resources :member do
     post :delete_work_env do
       authenticate!
       @work_env = UserEnvironment.find params[:work_env_id]
+      error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @work_env
       @work_env.destroy
       { code: 200, :status => "Success" }
     end
@@ -1016,6 +1027,7 @@ resources :member do
     post :delete_reference do
       authenticate!
       @reference = UserReference.find params[:reference_id]
+      error!({error: 'User References not found', status: 'Fail'}, 200) unless @reference
       @reference.destroy
       { code: 200, :status => "Success" }
     end
@@ -1258,7 +1270,7 @@ resources :data do
     end
     post :update_image, jbuilder: 'android' do
       @update_image = User.find params[:user_id]
-      error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_image
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @update_image
       @update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
       error!({error: @update_image.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_image.save
       @update_image
@@ -1386,6 +1398,7 @@ resources :student do
     end
     post :delete_student_education do
       @student_education = StudentEducation.find params[:education_id]
+      error!({error: 'Student Education not found', status: 'Fail'}, 200) unless @student_education
       @student_education.destroy
       { code: 200, :status => "Success" }
     end
@@ -1441,8 +1454,9 @@ resources :student do
       requires :marksheet_id
     end
     post :delete_student_marksheet do
-      @student_education = UserMarksheet.find params[:marksheet_id]
-      @student_education.destroy
+      @student_marksheet = UserMarksheet.find params[:marksheet_id]
+      error!({error: 'Student Marksheet not found', status: 'Fail'}, 200) unless @student_marksheet
+      @student_marksheet.destroy
       { code: 200, :status => "Success" }
     end
 
@@ -1474,7 +1488,7 @@ resources :student do
     end
     post :update_student_project, jbuilder: 'android' do
       @update_student_project = UserProject.find params[:project_id]
-      error!({error: 'Student project not found', status: 'Fail'}, 200) unless @update_student_project
+      error!({error: 'Student Project not found', status: 'Fail'}, 200) unless @update_student_project
       @update_student_project.attributes = clean_params(params).permit(:title, :description)
       error!({error: @update_student_project.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_project.save
       @update_student_project
@@ -1488,6 +1502,7 @@ resources :student do
     end
     post :delete_student_project do
       @student_project = UserProject.find params[:project_id]
+      error!({error: 'User Project not found', status: 'Fail'}, 200) unless @student_project
       @student_project.destroy
       { code: 200, :status => "Success" }
     end
@@ -1549,20 +1564,6 @@ resources :faculty do
         @user.file = params[:file] if params[:file]
       end
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-      if(params[:file_type] == 'video')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 100
-      elsif(params[:file_type] == 'audio')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 70
-      elsif(params[:file_type] == 'file')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 50
-      elsif(params[:file_type] == 'text')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 30
-      end
-      @user
     end
 
     # for fill faculty affiliation
@@ -1615,6 +1616,7 @@ resources :faculty do
     end
     post :delete_faculty_affiliation do
       @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+      error!({error: 'Faculty Affiliation not found', status: 'Fail'}, 200) unless @faculty_affiliation
       @faculty_affiliation.destroy
       { code: 200, :status => "Success" }
     end
@@ -1659,6 +1661,7 @@ resources :faculty do
     end
     post :delete_faculty_workshop do
       @faculty_workshop = FacultyWorkshop.find params[:workshop_id]
+      error!({error: 'Faculty Workshop not found', status: 'Fail'}, 200) unless @faculty_workshop
       @faculty_workshop.destroy
       { code: 200, :status => "Success" }
     end
@@ -1721,6 +1724,7 @@ resources :faculty do
     end
     post :delete_faculty_publication do
       @faculty_publication = FacultyPublication.find params[:publication_id]
+      error!({error: 'Faculty Publication not found', status: 'Fail'}, 200) unless @faculty_publication
       @faculty_publication.destroy
       { code: 200, :status => "Success" }
     end
@@ -1783,6 +1787,7 @@ resources :faculty do
     end
     post :delete_faculty_research do
       @faculty_research = FacultyResearch.find params[:research_id]
+      error!({error: 'Faculty Research not found', status: 'Fail'}, 200) unless @faculty_research
       @faculty_research.destroy
       { code: 200, :status => "Success" }
     end
@@ -1893,6 +1898,7 @@ resources :group do
         if params[:user_id]   
               @user = User.find params[:user_id] 
               @group_user = GroupUser.find_by_user_id params[:user_id]
+              error!({error: 'Group User not found', status: 'Fail'}, 200) unless @group_user
               unless @group.deleted_from.include? @user.id
                 @group.deleted_from << @user.id
                 @group.update_column :deleted_from, @group.deleted_from
@@ -1995,6 +2001,7 @@ resources :group do
 
     post :leave, jbuilder: 'android_group' do
         @group = Group.find params[:group_id]
+        error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
         @group_user = @group.users.where(user_id: current_user.id).first
         @group_user.status = "leaved"          
         @group_user.deleted_at = Time.now
@@ -2065,6 +2072,7 @@ resources :messages do
       
         if params[:quick_msg_id]
           @msg = QuickMessage.find params[:quick_msg_id]
+          error!({error: 'Quick Message not found', status: 'Fail'}, 200) unless @msg
           @chat.quick_msg = @msg.text
         else
           @chat.quick_msg = params[:text_value] if params[:text_value]
@@ -2080,6 +2088,7 @@ resources :messages do
     end
     post :read , jbuilder: 'android_message' do
       @group = Group.find params[:group_id]
+      error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
       @group.chats.each do |chat|       
         unless chat.user_ids.include? current_user.id
           chat.user_ids << current_user.id
@@ -2097,6 +2106,7 @@ resources :messages do
     end
     post :listing, jbuilder: 'android_message' do
         @group = Group.find params[:group_id]
+        error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
         @chats = @group.chats
         error!({error: @chat.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chats  
     end

@@ -102,6 +102,7 @@ resources :member do
     post :reset_code do
       if
         @user = User.find_by_email(params[:email])
+        error! 'User not found',422 unless @user
         @user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
     #UserMailer.send_reset_code(@user).deliver_now
     @user.reset_code
@@ -119,6 +120,7 @@ resources :member do
     post :resend_reset_code do
       if
         @user = User.find_by_email(params[:email])
+        error! 'User not found',422 unless @user
         @code = @user.reset_code
     #UserMailer.send_reset_code(@user).deliver_now
     @user.reset_code
@@ -299,20 +301,6 @@ resources :member_profile do
         @user.file = params[:file] if params[:file]
       end
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
-      if(params[:file_type] == 'video')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 100
-      elsif(params[:file_type] == 'audio')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 70
-      elsif(params[:file_type] == 'file')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 50
-      elsif(params[:file_type] == 'text')
-        @user_meter = UserMeter.find_by user_id: params[:user_id]
-        @user_meter.update_column :resume_per, 30
-      end
-      @user
     end
 
     # for get user resume
@@ -323,6 +311,7 @@ resources :member_profile do
     end
     post :get_user_resume, jbuilder: 'ios' do
       @user = User.find params[:user_id]
+      error! 'User not found',422 unless @user
     end
 
     # for fill user's education
@@ -386,6 +375,7 @@ resources :member_profile do
     end
     post :delete_education do
       @education = UserEducation.find params[:education_id]
+      error! 'User Education not found',422 unless @education
       @education.destroy
       status 200
     end
@@ -467,6 +457,7 @@ resources :member_profile do
     end
     post :delete_experience do
       @experience = UserExperience.find params[:experience_id]
+      error! 'User Experience not found',422 unless @experience
       @experience.destroy
       status 200
     end
@@ -535,6 +526,7 @@ resources :member_profile do
     end
     post :delete_preffered_work do
       @preffered_work = UserPreferredWork.find params[:preffered_work_id]
+      error! 'User Preffered Work not found',422 unless @preffered_work
       @preffered_work.destroy
       status 200
     end
@@ -612,6 +604,7 @@ resources :member_profile do
     end
     post :delete_award do
       @award = UserAward.find params[:award_id]
+      error! 'User Award not found',422 unless @award
       @award.destroy
       status 200
     end
@@ -688,6 +681,7 @@ resources :member_profile do
     end
     post :delete_certificate do
       @certificate = UserCertificate.find params[:certificate_id]
+      error! 'User Certificate not found',422 unless @certificate
       @certificate.destroy
       status 200
     end
@@ -768,6 +762,7 @@ resources :member_profile do
     end
     post :delete_curricular do
       @curricular = UserCurricular.find params[:curricular_id]
+      error! 'User Curricular not found',422 unless @curricular
       @curricular.destroy
       status 200
     end
@@ -844,6 +839,7 @@ resources :member_profile do
     end
     post :delete_future_goal do
       @future_goal = UserFutureGoal.find params[:future_goal_id]
+      error! 'User Future Goal not found',422 unless @future_goal
       @future_goal.destroy
       status 200
     end
@@ -918,6 +914,7 @@ resources :member_profile do
     end
     post :delete_work_env do
       @work_env = UserEnvironment.find params[:work_env_id]
+      error! 'User Work Environment not found',422 unless @work_env
       @work_env.destroy
       status 200
     end
@@ -1002,6 +999,7 @@ resources :member_profile do
     end
     post :delete_reference do
       @reference = UserReference.find params[:reference_id]
+      error! 'User Reference not found',422 unless @reference
       @reference.destroy
       status 200
     end
@@ -1157,7 +1155,7 @@ resources :company do
     end
     post :edit_company, jbuilder: 'ios' do
       @company = User.find params[:user_id]
-      
+      error! 'User not found',422 unless @company
       @company.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :company_logo_type, :company_profile_type, :company_brochure_type)
       @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
@@ -1365,6 +1363,7 @@ resources :student do
     end
     post :delete_student_education do
       @student_education = StudentEducation.find params[:education_id]
+      error! 'Student Education not found',422 unless @student_education
       @student_education.destroy
       status 200
     end
@@ -1420,8 +1419,9 @@ resources :student do
       requires :marksheet_id
     end
     post :delete_student_marksheet do
-      @student_education = UserMarksheet.find params[:marksheet_id]
-      @student_education.destroy
+      @student_marksheet = UserMarksheet.find params[:marksheet_id]
+      error! 'Student Marksheet not found',422 unless @student_marksheet
+      @student_marksheet.destroy
       status 200
     end
 
@@ -1468,6 +1468,7 @@ resources :student do
     end
     post :delete_student_project do
       @student_project = UserProject.find params[:project_id]
+      error! 'Student Project not found',422 unless @student_project
       @student_project.destroy
       status 200
     end
@@ -1593,6 +1594,7 @@ resources :faculty do
     end
     post :delete_faculty_affiliation do
       @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+      error! 'Faculty Affiliation not found',422 unless @faculty_affiliation
       @faculty_affiliation.destroy
       status 200
     end
@@ -1637,6 +1639,7 @@ resources :faculty do
     end
     post :delete_faculty_workshop do
       @faculty_workshop = FacultyWorkshop.find params[:workshop_id]
+      error! 'Faculty Workshop not found',422 unless @faculty_workshop
       @faculty_workshop.destroy
       status 200
     end
@@ -1699,6 +1702,7 @@ resources :faculty do
     end
     post :delete_faculty_publication do
       @faculty_publication = FacultyPublication.find params[:publication_id]
+      error! 'Faculty Publication not found',422 unless @faculty_publication
       @faculty_publication.destroy
       status 200
     end
@@ -1761,6 +1765,7 @@ resources :faculty do
     end
     post :delete_faculty_research do
       @faculty_research = FacultyResearch.find params[:research_id]
+      error! 'Faculty Research not found',422 unless @faculty_research
       @faculty_research.destroy
       status 200
     end
@@ -1869,8 +1874,10 @@ resources :group do
         @group = Group.find params[:group_id]  
         error! 'Group not found',422 unless @group
         if params[:user_id]   
-              @user = User.find params[:user_id]   
+              @user = User.find params[:user_id] 
+              error! 'User not found',422 unless @user  
               @group_user = GroupUser.find_by_user_id params[:user_id]
+              error! 'Group User not found',422 unless @group_user
               unless @group.deleted_from.include? @user.id
                 @group.deleted_from << @user.id
                 @group.update_column :deleted_from, @group.deleted_from
@@ -1952,6 +1959,7 @@ resources :group do
 
     post :leave, jbuilder: 'ios_group' do
         @group = Group.find params[:group_id]
+        error! 'Group not found',422 unless @group
         @group_user = @group.users.where(user_id: current_user.id).first
         @group_user.status = "leaved"          
         @group_user.deleted_at = Time.now
@@ -2019,6 +2027,7 @@ resources :messages do
         
         if params[:quick_msg_id]
           @msg = QuickMessage.find params[:quick_msg_id]
+          error! 'Quick Message not found',422 unless @msg
           @chat.quick_msg = @msg.text
         else
           @chat.quick_msg = params[:text_value] if params[:text_value]
@@ -2034,6 +2043,7 @@ resources :messages do
     end
     post :read , jbuilder: 'ios_message' do
       @group = Group.find params[:group_id]
+      error! 'Group not found',422 unless @group
       @group.chats.each do |chat|       
         unless chat.user_ids.include? current_user.id
           chat.user_ids << current_user.id
