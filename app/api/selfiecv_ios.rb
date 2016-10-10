@@ -2009,6 +2009,7 @@ resources :messages do
       optional :quick_msg
       optional :file
       optional :file_type
+      optional :text_value
     end
     post :create, jbuilder: 'ios_message' do
         @chat = Chat.new group_id: params[:group_id], sender_id: current_user.id
