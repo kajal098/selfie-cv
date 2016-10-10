@@ -71,7 +71,7 @@ has_many    :gold_rates, -> {where(rate_type: 2) }, class_name: 'UserRate',forei
 
 def self.search(search)
         if search
-          where(['username ILIKE ?', "%#{search}%"]).where(['first_name ILIKE ?', "%#{search}%"]).where(['middle_name ILIKE ?', "%#{search}%"]).where(['last_name ILIKE ?', "%#{search}%"])
+            where("first_name like ? and last_name like ?", "%#{search}%", "%#{search}%")
         else
           scoped
         end

@@ -49,10 +49,12 @@
               <li><%= link_to "Company", admin_user_percentages_path('ptype' => 'Company') %></li>
               <li><%= link_to "Faculty", admin_user_percentages_path('ptype' => 'Faculty') %></li>
               <li><%= link_to "Over All %", admin_user_percentages_path('ptype' => 'site') %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Setting", admin_settings_path %></li>
             </ul>
           </li>
 
-          <!-- <li><%= link_to "Setting", admin_settings_path %></li> -->
+          
         </ul>        
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, 'data-confirm' => 'Are you sure?' %></li>
