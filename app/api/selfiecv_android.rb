@@ -2340,7 +2340,7 @@ resources :whizquiz do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       params[:question_ids].count.times do |i|
-        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review_type: params[:review_types][i] , review: params[:reviews][i], status: false
+        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review_type: params[:review_types][i] , status: false
         if (params[:review_types][i] == 'text')
           @user_whizquiz.text_field = params[:text_fields][i] if params[:text_fields][i]
         else
