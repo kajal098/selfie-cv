@@ -118,17 +118,17 @@ end
 def percent_of_resume
         if self.file_type.present?  
             resume_info_per = 0
-            setting_per = UserPercentage.find_by_key('resume_info').value
+            setting_per = UserPercentage.find_by_key('resume_info').value.to_i
             if self.file_type == "doc"
-                resume_info_per = setting_per.to_i * 0.5
+                resume_info_per = setting_per * 0.5
             elsif self.file_type == "image"
-                resume_info_per = setting_per.to_i * 0.5
+                resume_info_per = setting_per * 0.5
             elsif self.file_type == "audio"
-                resume_info_per = setting_per.to_i * 0.7
+                resume_info_per = setting_per * 0.7
             elsif self.file_type == "video"
-                resume_info_per = setting_per.to_i * 1
+                resume_info_per = setting_per * 1
             else
-                resume_info_per = setting_per.to_i * 0.3
+                resume_info_per = setting_per * 0.3
             end
                 @user_meter.update_column('resume_info_per' ,resume_info_per)
                             
@@ -257,7 +257,7 @@ end
 
 def like_per
         @count = self.likes.count
-        setting_per = UserPercentage.find_by_key('like').value
+        setting_per = UserPercentage.find_by_key('like').value.to_i
         @like_per = 0
         if @count >= 100 && @count <= 300
             @like_per = setting_per * 0.3
@@ -271,7 +271,7 @@ end
 
 def view_per
         @count = self.views.count
-        setting_per = UserPercentage.find_by_key('viewed').value
+        setting_per = UserPercentage.find_by_key('viewed').value.to_i
         @view_per = 0
         if @count >= 100 && @count <= 300
             @view_per = setting_per * 0.5
@@ -283,7 +283,7 @@ end
 
 def share_per
         @count = self.shares.count
-        setting_per = UserPercentage.find_by_key('share').value
+        setting_per = UserPercentage.find_by_key('share').value.to_i
         @share_per = 0
         if @count >= 100 && @count <= 300
             @share_per = setting_per * 0.5
@@ -295,7 +295,7 @@ end
 
 def bronze_per
         @count = self.bronze_rates.count
-        setting_per = UserPercentage.find_by_key('star').value
+        setting_per = UserPercentage.find_by_key('star').value.to_i
         bronze_setting_per = setting_per.to_f * 0.2
         @bronze_per = 0
         if @count >= 100 && @count <= 300
@@ -307,7 +307,7 @@ def bronze_per
 end
 def silver_per
         @count = self.silver_rates.count
-        setting_per = UserPercentage.find_by_key('star').value
+        setting_per = UserPercentage.find_by_key('star').value.to_i
         silver_setting_per = setting_per.to_f * 0.3
         @silver_per = 0
         if @count >= 100 && @count <= 300
@@ -319,7 +319,7 @@ def silver_per
 end
 def gold_per
         @count = self.gold_rates.count
-        setting_per = UserPercentage.find_by_key('star').value
+        setting_per = UserPercentage.find_by_key('star').value.to_i
         gold_setting_per = setting_per.to_f * 0.5
         @gold_per = 0
         if @count >= 100 && @count <= 300
@@ -334,8 +334,22 @@ def rate_per
         return total     
 end
 
+def update_cv_per
+    @count = self.update_cv_count
+    setting_per = UserPercentage.find_by_key('updatecv').value.to_i
+        @info_update_per = 0
+        if @count >= 10 && @count <= 30
+            @info_update_per = setting_per * 0.3
+        elsif @count >= 30 &&  @count <= 50
+            @info_update_per = setting_per * 0.5
+        elsif @count >= 50
+            @info_update_per = setting_per * 1
+        end
+        return @info_update_per  
+end
+
 def cal_total_per
-        total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + 0 + 0 + 0
+        total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + self.info_update_per + 0 + 0
         self.user_meter.update_column('total_per' ,total)          
         self.update_column('total_per' ,total)     
     return total

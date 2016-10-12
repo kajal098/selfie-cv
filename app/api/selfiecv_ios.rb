@@ -300,6 +300,8 @@ resources :member_profile do
       else
         @user.file = params[:file] if params[:file]
       end
+      @user.update_cv_count += 1
+      @user.save
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
     end
 

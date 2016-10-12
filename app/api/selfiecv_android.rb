@@ -286,13 +286,16 @@ resources :member do
       authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type, :text_field)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
+       :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode,
+         :contact_number, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user.text_field = params[:text_field] if params[:text_field]
       else
         @user.file = params[:file] if params[:file]
       end
+      @user.update_cv_count += 1
+      @user.save
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
     end
 
@@ -1192,6 +1195,7 @@ resources :company do
       @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
+        
       error!({error: @company.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @company.save
     end
 
