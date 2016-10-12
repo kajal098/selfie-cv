@@ -11,8 +11,8 @@ class FacultyWorkshop < ActiveRecord::Base
         
         if user.faculty_workshops.count > 0  
         	workshop_per = 0
-        	user.faculty_workshops.each do |workshop|   
-        	   		if workshop.file_type == "doc"
+        	user.faculty_workshops.each do |workshop|  
+            if self.description.present?           	   		
 	                    workshop_per = 100
 	                    break
 	                else

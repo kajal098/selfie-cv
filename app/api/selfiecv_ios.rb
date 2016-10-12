@@ -1917,6 +1917,27 @@ resources :group do
         status 200
       end
 
+    # for invite to community by email
+
+    desc "Email invitation"
+
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+      requires :email_ids, type: Array, default: []
+    end
+
+    post :email_invite do
+      @group = Group.find params[:group_id]
+      error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
+      params[:email_ids].each do |email|
+        @group_invitee = GroupInvitee.new group_id: params[:group_id], email: email
+        error! @group_invitee.errors.full_messages.join(', '),422 unless @group_invitee.save
+        UserMailer.send_group_code(@group,email).deliver_now
+      end
+      {}
+    end
+
     # Join group
 
     desc 'Join Group'

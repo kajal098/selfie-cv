@@ -3,16 +3,44 @@
   <div class="col-lg-offset-1 col-lg-10">
     <div class="panel panel-default" id="user_sections" style="background:#fff;">
       <ul class="tab">
-        <li class="text_color"><a href="#Detail" >Info</a></li>
-        <li class="text_color"><a href="#Education" >Education</a></li>
-        <li class="text_color"><a href="#Experience" >Experience</a></li>
-        <li class="text_color"><a href="#PreferredWork" >Pre Work</a></li>
-        <li class="text_color"><a href="#Awards" >Awards</a></li>
-        <li class="text_color"><a href="#Certificates" >Certi</a></li>
-        <li class="text_color"><a href="#Curricular" >Curricular</a></li>
-        <li class="text_color"><a href="#FutureGoal" >Goal</a></li>
-        <li class="text_color"><a href="#WorkingEnvironment" >Work Env</a></li>
-        <li class="text_color"><a href="#References" >References</a></li>
+      <% if @user.role == 'Jobseeker' %>
+            <li class="text_color"><a href="#Detail" >Info</a></li>
+            <li class="text_color"><a href="#Education" >Education</a></li>
+            <li class="text_color"><a href="#Experience" >Experience</a></li>
+            <li class="text_color"><a href="#PreferredWork" >Pre Work</a></li>
+            <li class="text_color"><a href="#Awards" >Awards</a></li>
+            <li class="text_color"><a href="#Certificates" >Certificates</a></li>
+            <li class="text_color"><a href="#Curricular" >Curricular</a></li>
+            <li class="text_color"><a href="#FutureGoal" >Goal</a></li>
+            <li class="text_color"><a href="#WorkingEnvironment" >Work Env</a></li>
+            <li class="text_color"><a href="#References" >References</a></li>
+        <% elsif @user.role == 'Company' %>
+            <li class="text_color"><a href="#Detail" >Info</a></li>
+            <li class="text_color"><a href="#Corporate" >Corporate Identity</a></li>
+            <li class="text_color"><a href="#Evalution" >Company Evalution</a></li>
+            <li class="text_color"><a href="#FutureGoal" >Future Goal</a></li>
+            <li class="text_color"><a href="#Awards" >Awards</a></li>
+            <li class="text_color"><a href="#Certificates" >Certificates</a></li>
+            <li class="text_color"><a href="#Gallery" >Gallery</a></li>
+            <li class="text_color"><a href="#WorkingEnvironment" >Work Environment</a></li>
+        <% elsif @user.role == 'Faculty' %>
+            <li class="text_color"><a href="#Detail" >Info</a></li>
+            <li class="text_color"><a href="#Affiliation" >Professional Affiliation</a></li>
+            <li class="text_color"><a href="#Workshop" >Workshop</a></li>
+            <li class="text_color"><a href="#Publication" >Publication</a></li>
+            <li class="text_color"><a href="#Research" >Research</a></li>
+            <li class="text_color"><a href="#Awards" >Awards</a></li>
+            <li class="text_color"><a href="#Certificates" >Certificates</a></li>
+        <% elsif @user.role == 'Student' %>
+            <li class="text_color"><a href="#Detail" >Info</a></li>
+            <li class="text_color"><a href="#Education" >Education</a></li>
+            <li class="text_color"><a href="#Marksheet" >Marksheet</a></li>
+            <li class="text_color"><a href="#Project" >Project</a></li>
+            <li class="text_color"><a href="#Awards" >Awards</a></li>
+            <li class="text_color"><a href="#Certificates" >Certificates</a></li>
+            <li class="text_color"><a href="#Curricular" >Curricular</a></li>
+            <li class="text_color"><a href="#FutureGoal" >Future Goal</a></li>
+        <% end %>
       </ul>
       <div class="panel-body" style="background:#fff;">
         <div id="Detail">
