@@ -2331,10 +2331,10 @@ resources :whizquiz do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
-      requires :question_ids, type: Array, default: []
-      requires :review_types, type: Array, default: []
-      optional :reviews, type: Array, default: []
-      optional :text_fields, type: Array, default: []
+      requires :question_ids
+      requires :review_types
+      optional :reviews
+      optional :text_fields
     end
     post :answer_of_questions, jbuilder: 'android_whiz_quiz' do
       @user = User.find params[:user_id]
