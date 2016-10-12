@@ -259,11 +259,11 @@ def like_per
         @count = self.likes.count
         setting_per = UserPercentage.find_by_key('like').value.to_i
         @like_per = 0
-        if @count >= 100 && @count <= 300
+        if @count >= UserPercentage.find_by_key('like_first').value.to_i && @count <= UserPercentage.find_by_key('like_second').value.to_i
             @like_per = setting_per * 0.3
-        elsif @count >= 300 &&  @count <= 500
+        elsif @count >= UserPercentage.find_by_key('like_second').value.to_i &&  @count <= UserPercentage.find_by_key('like_third').value.to_i
             @like_per = setting_per * 0.5
-        elsif @count >= 500
+        elsif @count >= UserPercentage.find_by_key('like_third').value.to_i
             @like_per = setting_per * 1
         end
         return @like_per        
@@ -273,9 +273,9 @@ def view_per
         @count = self.views.count
         setting_per = UserPercentage.find_by_key('viewed').value.to_i
         @view_per = 0
-        if @count >= 100 && @count <= 300
+        if @count >= UserPercentage.find_by_key('view_first').value.to_i && @count <= UserPercentage.find_by_key('view_second').value.to_i
             @view_per = setting_per * 0.5
-        elsif @count >= 300
+        elsif @count >= UserPercentage.find_by_key('view_second').value.to_i
             @view_per = setting_per * 1
         end
         return @view_per        
@@ -285,9 +285,9 @@ def share_per
         @count = self.shares.count
         setting_per = UserPercentage.find_by_key('share').value.to_i
         @share_per = 0
-        if @count >= 100 && @count <= 300
+        if @count >= UserPercentage.find_by_key('share_first').value.to_i && @count <= UserPercentage.find_by_key('share_second').value.to_i
             @share_per = setting_per * 0.5
-        elsif @count >= 300
+        elsif @count >= UserPercentage.find_by_key('share_second').value.to_i
             @share_per = setting_per * 1
         end
         return @share_per        
@@ -298,9 +298,9 @@ def bronze_per
         setting_per = UserPercentage.find_by_key('star').value.to_i
         bronze_setting_per = setting_per.to_f * 0.2
         @bronze_per = 0
-        if @count >= 100 && @count <= 300
+        if @count >= UserPercentage.find_by_key('rate_first').value.to_i && @count <= UserPercentage.find_by_key('rate_second').value.to_i 
             @bronze_per = @count * bronze_setting_per * 0.004
-        elsif @count >= 300
+        elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
             @bronze_per = bronze_setting_per * 1
         end
         return @bronze_per       
@@ -310,9 +310,9 @@ def silver_per
         setting_per = UserPercentage.find_by_key('star').value.to_i
         silver_setting_per = setting_per.to_f * 0.3
         @silver_per = 0
-        if @count >= 100 && @count <= 300
+        if @count >= UserPercentage.find_by_key('rate_first').value.to_i && @count <= UserPercentage.find_by_key('rate_second').value.to_i 
             @silver_per = @count * silver_setting_per * 0.004
-        elsif @count >= 300
+        elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
             @silver_per = silver_setting_per * 1
         end
         return @silver_per        
@@ -322,9 +322,9 @@ def gold_per
         setting_per = UserPercentage.find_by_key('star').value.to_i
         gold_setting_per = setting_per.to_f * 0.5
         @gold_per = 0
-        if @count >= 100 && @count <= 300
+        if @count >= UserPercentage.find_by_key('rate_first').value.to_i && @count <= UserPercentage.find_by_key('rate_second').value.to_i 
             @gold_per = @count * gold_setting_per * 0.004
-        elsif @count >= 300
+        elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
             @gold_per = silver_setting_per * 1
         end
         return @gold_per        
@@ -338,11 +338,11 @@ def update_info_per
     @count = self.update_cv_count
     setting_per = UserPercentage.find_by_key('updateinfo').value.to_i
         @update_info_per = 0
-        if @count >= 10 && @count <= 30
+        if @count >= UserPercentage.find_by_key('update_first').value.to_i && @count <= UserPercentage.find_by_key('update_second').value.to_i 
             @update_info_per = setting_per * 0.3
-        elsif @count >= 30 &&  @count <= 50
+        elsif @count >= UserPercentage.find_by_key('update_second').value.to_i &&  @count <= UserPercentage.find_by_key('update_third').value.to_i 
             @update_info_per = setting_per * 0.5
-        elsif @count >= 50
+        elsif @count >= UserPercentage.find_by_key('update_third').value.to_i 
             @update_info_per = setting_per * 1
         end
         return @update_info_per  
