@@ -31,7 +31,7 @@ if @user
 		json.working_env_per @user.user_meter ? @user.user_meter.working_env_per.to_i : ""
 		json.ref_per @user.user_meter ? @user.user_meter.ref_per.to_i : ""
 		json.whizquiz_per @user.user_meter ? @user.user_meter.whizquiz_per.to_i : ""
-		json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : ""
+		json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : ""
 
 		json.likes @user.likes.count
 		json.views @user.views.count
@@ -69,7 +69,7 @@ if @user
 	json.achievement_per @user.user_meter ? @user.user_meter.achievement_per.to_i : ""
 	json.galery_per @user.user_meter ? @user.user_meter.galery_per.to_i : ""
 	json.working_env_per @user.user_meter ? @user.user_meter.working_env_per.to_i : ""
-	json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : ""
+	json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : ""
 
 		json.likes @user.likes.count
 		json.views @user.views.count
@@ -91,7 +91,7 @@ if @user
 	json.achievement_per @user.user_meter ? @user.user_meter.achievement_per.to_i : ""
 	json.curri_per @user.user_meter ? @user.user_meter.curri_per.to_i : ""
 	json.future_goal_per @user.user_meter ? @user.user_meter.future_goal_per.to_i : ""
-	json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : ""
+	json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : ""
 
       
 		json.created_at @user.created_at.to_i
@@ -115,7 +115,7 @@ if @user
 		json.faculty_basic_info_per @user.user_meter ?  @user.user_meter.faculty_basic_info_per.to_i : ""
       	json.experience_per @user.user_meter ?  @user.user_meter.experience_per.to_i : ""
       	json.achievement_per @user.user_meter ?  @user.user_meter.achievement_per.to_i : ""
-      	json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : ""
+      	json.total_per @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : ""
 
 
 		json.created_at @user.created_at.to_i
@@ -158,7 +158,7 @@ if @company
 	json.achievement_per @company.user_meter ? @company.user_meter.achievement_per.to_i : ""
 	json.galery_per @company.user_meter ? @company.user_meter.galery_per.to_i : ""
 	json.working_env_per @company.user_meter ? @company.user_meter.working_env_per.to_i : ""
-	json.total_per @company.user_meter ? @company.user_meter.total_per.to_i : ""
+	json.total_per @company.user_meter ? @company.user_meter.profile_meter_per.to_i : ""
 
 		json.likes @company.likes.count
 		json.views @company.views.count
@@ -195,7 +195,7 @@ if @users
 					json.working_env_per user.user_meter ? user.user_meter.working_env_per.to_i : ""
 					json.ref_per user.user_meter ? user.user_meter.ref_per.to_i : ""
 					json.whizquiz_per user.user_meter ? user.user_meter.whizquiz_per.to_i : ""
-					json.total_per user.user_meter ? user.user_meter.total_per.to_i : ""
+					json.total_per user.user_meter ? user.user_meter.profile_meter_per.to_i : ""
 
 					json.likes user.likes.count
 					json.views user.views.count
@@ -230,7 +230,7 @@ if @users
 			json.achievement_per user.user_meter ? user.user_meter.achievement_per.to_i : ""
 			json.galery_per user.user_meter ? user.user_meter.galery_per.to_i : ""
 			json.working_env_per user.user_meter ? user.user_meter.working_env_per.to_i : ""
-			json.total_per user.user_meter ? user.user_meter.total_per.to_i : ""
+			json.total_per user.user_meter ? user.user_meter.profile_meter_per.to_i : ""
 
 						
 

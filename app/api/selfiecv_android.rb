@@ -295,7 +295,6 @@ resources :member do
         @user.file = params[:file] if params[:file]
       end
       @user.update_cv_count += 1
-      @user.save
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
     end
 
@@ -1195,7 +1194,7 @@ resources :company do
       @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
-        
+        @user.update_cv_count += 1
       error!({error: @company.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @company.save
     end
 
@@ -1342,6 +1341,7 @@ resources :student do
       @basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
         :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field)
       @basic_info.file = params[:file] if params[:file]
+      @basic_info.update_cv_count += 1
       error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       @basic_info
     end
@@ -1567,6 +1567,7 @@ resources :faculty do
       else
         @user.file = params[:file] if params[:file]
       end
+      @user.update_cv_count += 1
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
     end
 

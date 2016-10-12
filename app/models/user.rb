@@ -334,22 +334,22 @@ def rate_per
         return total     
 end
 
-def update_cv_per
+def update_info_per
     @count = self.update_cv_count
-    setting_per = UserPercentage.find_by_key('updatecv').value.to_i
-        @info_update_per = 0
+    setting_per = UserPercentage.find_by_key('updateinfo').value.to_i
+        @update_info_per = 0
         if @count >= 10 && @count <= 30
-            @info_update_per = setting_per * 0.3
+            @update_info_per = setting_per * 0.3
         elsif @count >= 30 &&  @count <= 50
-            @info_update_per = setting_per * 0.5
+            @update_info_per = setting_per * 0.5
         elsif @count >= 50
-            @info_update_per = setting_per * 1
+            @update_info_per = setting_per * 1
         end
-        return @info_update_per  
+        return @update_info_per  
 end
 
 def cal_total_per
-        total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + self.info_update_per + 0 + 0
+        total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + self.update_info_per + 0 + 0
         self.user_meter.update_column('total_per' ,total)          
         self.update_column('total_per' ,total)     
     return total
