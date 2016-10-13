@@ -2277,7 +2277,7 @@ resources :notifications do
 
 end
 
-  #--------------------------------notification end----------------------------------#
+#--------------------------------notification end----------------------------------#
 
 
 
@@ -2333,7 +2333,6 @@ resources :whizquiz do
       @questions = Whizquiz.where(status: true).order("RANDOM()").limit(2)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:question)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:id, :question)
-
     end
 
     # for answer

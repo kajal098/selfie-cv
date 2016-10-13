@@ -43,8 +43,8 @@
         <% end %>
       </ul>
       <div class="panel-body" style="background:#fff;">
-        <div id="Detail">
-          <% if @user.role == 'Jobseeker' %>
+      <% if @user.role == 'Jobseeker' %>
+        <div id="Detail">          
                   <h4 class="text_decoration"><b> Personal Details </b></h4>
                           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>
                           <p><strong class="text_color" >Email:</strong> <%= @user.email %> </p>
@@ -68,6 +68,107 @@
                           Whizquiz :<%= @user.user_meter.whizquiz_per.to_i %><br>
                           Total :<%= @user.user_meter.total_per.to_i %></p>
                           </div>
+                          <div id="Education">
+            <% @user.user_educations.each do |edu| %>     
+            <tr >
+              <p><strong class="text_color" >Course :</strong> <%= edu.course.name %> </p>
+              <p><strong class="text_color" >Specialization :</strong> <%= edu.specialization.name %> </p>
+              <p><strong class="text_color" >Year :</strong> <%= edu.year %> </p>
+              <p><strong class="text_color" >School :</strong> <%= edu.school %> </p>
+              <p><strong class="text_color" >Skill :</strong> <%= edu.skill %> </p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="Experience">
+            <% @user.user_experiences.each do |exp| %>     
+            <tr >
+              <p><strong class="text_color" >Name :</strong> <%= exp.name %> </p>
+              <p><strong class="text_color" >Exp Type :</strong> <%= exp.exp_type %> </p>
+              <p><strong class="text_color" >Start From :</strong> <%= exp.start_from %> </p>
+              <p><strong class="text_color" >Working Till :</strong> <%= exp.working_till %> </p>
+              <p><strong class="text_color" >Designation :</strong> <%= exp.designation %> </p>
+              <p><strong class="text_color" >File :</strong> <% if exp.file_type == 'video' %><%= video_tag exp.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag exp.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="PreferredWork">
+            <% @user.user_preferred_works.each do |pre_work| %>     
+            <tr >
+              <p><strong class="text_color" >Industry :</strong> <%= pre_work.ind_name %> </p>
+              <p><strong class="text_color" >Functional Name :</strong> <%= pre_work.functional_name %> </p>
+              <p><strong class="text_color" >Preffered Designation :</strong> <%= pre_work.preferred_designation %> </p>
+              <p><strong class="text_color" >Preffered Location :</strong> <%= pre_work.preferred_location %> </p>
+              <p><strong class="text_color" >Current Salary :</strong> <%= pre_work.current_salary %> </p>
+              <p><strong class="text_color" >Expected Salary :</strong> <%= pre_work.expected_salary %> </p>
+              <p><strong class="text_color" >Time Type :</strong> <%= pre_work.time_type %> </p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="Awards">
+            <% @user.user_awards.each do |award| %>     
+            <tr >
+              <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
+              <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
+              <p><strong class="text_color" >Description :</strong> <%= award.description %> </p>
+              <p><strong class="text_color" >File :</strong> <% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="Certificates">
+            <% @user.user_certificates.each do |certi| %>     
+            <tr >
+              <p><strong class="text_color" >Name :</strong> <%= certi.name %> </p>
+              <p><strong class="text_color" >Certificate Type :</strong> <%= certi.certificate_type %> </p>
+              <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p>
+              <p><strong class="text_color" >File :</strong> <% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="Curricular">
+            <% @user.user_curriculars.each do |curri| %>     
+            <tr >
+              <p><strong class="text_color" >Curricular Type :</strong> <%= curri.curricular_type %> </p>
+              <p><strong class="text_color" >Team Type :</strong> <%= curri.team_type %> </p>
+              <p><strong class="text_color" >Location :</strong> <%= curri.location %> </p>
+              <p><strong class="text_color" >Date :</strong> <%= curri.date %> </p>
+              <p><strong class="text_color" >File :</strong> <% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="FutureGoal">
+            <% @user.user_future_goals.each do |future| %>     
+            <tr >
+              <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
+              <p><strong class="text_color" >Goal Type :</strong> <%= future.goal_type %> </p>
+              <p><strong class="text_color" >Title :</strong> <%= future.title %> </p>
+              <p><strong class="text_color" >Term Type :</strong> <%= future.term_type %> </p>
+              <p><strong class="text_color" >File :</strong> <% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="WorkingEnvironment">
+            <% @user.user_environments.each do |work_env| %>     
+            <tr >
+              <p><strong class="text_color" >Env Type :</strong> <%= work_env.env_type %> </p>
+              <p><strong class="text_color" >Title :</strong> <%= work_env.title %> </p>
+              <p><strong class="text_color" >File :</strong> <% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            </tr>
+            <% end %>
+          </div>
+          <div id="References">
+            <% @user.user_references.each do |ref| %>     
+            <tr >
+              <p><strong class="text_color" >Title :</strong> <%= ref.title %> </p>
+              <p><strong class="text_color" >Reference Type :</strong> <%= ref.ref_type %> </p>
+              <p><strong class="text_color" >From :</strong> <%= ref.from %> </p>
+              <p><strong class="text_color" >Email :</strong> <%= ref.email %> </p>
+              <p><strong class="text_color" >Contact :</strong> <%= ref.contact %> </p>
+              <p><strong class="text_color" >Date :</strong> <%= ref.date %> </p>
+              <p><strong class="text_color" >Location :</strong> <%= ref.location %> </p>
+              <p><strong class="text_color" >File :</strong> <% if ref.file_type == 'video' %><%= video_tag ref.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag ref.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            </tr>
+            <% end %>
+          </div>
           <% elsif @user.role == 'Company' %>
                   <h4 class="text_decoration"><b> Company Information </b></h4>          
                           <p><strong class="text_color" >Username:</strong> <%= @user.username %> </p>

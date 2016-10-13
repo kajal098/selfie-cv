@@ -12,7 +12,7 @@ end
 
 if @user_whizquiz
 	json.user_whizquizzes @user.user_whizquizzes do |user_whizquiz|
-		json.extract! user_whizquiz, :id, :user_id, :whizquiz_id
+		json.extract! user_whizquiz, :id, :user_id, :whizquiz_id, :review_type
 		if user_whizquiz.review_type == 'text'
 			json.text_field user_whizquiz.text_field
 		else
