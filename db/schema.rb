@@ -353,7 +353,7 @@ ActiveRecord::Schema.define(version: 20161006051129) do
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
     t.date     "start_from",      default: '2016-10-13'
-    t.string   "working_till",    default: "",           null: false
+    t.date     "working_till",    default: '2016-10-13'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
