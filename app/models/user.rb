@@ -77,6 +77,14 @@ def self.search(search)
         end
 end
 
+def top_joseekers
+    User.all(:select => "users.*, total_per as post_count",
+       :joins => "LEFT JOIN user_meters AS user_meters ON user_meters.user_id = users.id",
+       :group => "user_meters.user_id",
+       :order => "post_count DESC",
+       :limit => 5)
+end
+
 mount_uploader :file, FileUploader
 def resume_thumb_url; file.url(:thumb); end
 def resume_photo_url; file.url; end

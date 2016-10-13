@@ -595,6 +595,14 @@ json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name,
 		json.file_thumb @basic_info.resume_thumb_url
 		json.file @basic_info.file.url
 
+json.student_basic_info_per @basic_info.user_meter ? @basic_info.user_meter.student_basic_info_per.to_i : 0
+json.student_education_per @basic_info.user_meter ? @basic_info.user_meter.student_education_per.to_i : 0
+json.achievement_per @basic_info.user_meter ? @basic_info.user_meter.achievement_per.to_i : 0
+json.curri_per @basic_info.user_meter ? @basic_info.user_meter.curri_per.to_i : 0
+json.future_goal_per @basic_info.user_meter ? @basic_info.user_meter.future_goal_per.to_i : 0
+json.total_per @basic_info.user_meter ? @basic_info.user_meter.profile_meter_per.to_i : 0
+
+
 		json.created_at @basic_info.created_at.to_i
 		json.updated_at @basic_info.updated_at.to_i
 end
