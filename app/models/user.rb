@@ -78,12 +78,21 @@ def self.search(search)
 end
 
 def top_joseekers
-    User.all(:select => "users.*, total_per as post_count",
-       :joins => "LEFT JOIN user_meters AS user_meters ON user_meters.user_id = users.id",
-       :group => "user_meters.user_id",
-       :order => "post_count DESC",
-       :limit => 5)
+    User.joins(:user_meter).where(:users=> { role: 3 }).order("user_meters.total_per DESC").limit(3)
 end
+
+def top_companies
+    User.joins(:user_meter).where(:users=> { role: 4 }).order("user_meters.total_per DESC").limit(3)
+end
+
+def top_students
+    User.joins(:user_meter).where(:users=> { role: 1 }).order("user_meters.total_per DESC").limit(3)
+end
+
+def top_faculties
+    User.joins(:user_meter).where(:users=> { role: 2 }).order("user_meters.total_per DESC").limit(3)
+end
+
 
 mount_uploader :file, FileUploader
 def resume_thumb_url; file.url(:thumb); end

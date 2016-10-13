@@ -2244,9 +2244,15 @@ end
 
   #--------------------------------notification end----------------------------------#
 
-  #--------------------------------top user start----------------------------------#
+
+
+#--------------------------------top user start----------------------------------#
 
 resources :top_user do
+
+
+
+
 
 
   before { authenticate! }
@@ -2259,17 +2265,26 @@ resources :top_user do
     end
     post :listing, jbuilder: 'ios_top' do
       if (params[:role] == 'Company')
-        @top_users = User.where(role: 3).order("total_per DESC").all
+          @top_users  = User.joins(:user_meter).where(:users=> { role: 3 }).order("user_meters.total_per DESC").limit(3)
       elsif (params[:role] == 'Jobseeker')
-        @top_users = User.where(role: 4).order("total_per DESC").all
+          @top_users = User.joins(:user_meter).where(:users=> { role: 4 }).order("user_meters.total_per DESC").limit(3)
       end
     end
 
-  end
 
-  #--------------------------------top user end----------------------------------#
 
-  #--------------------------------whizquiz start----------------------------------#
+
+
+
+
+end
+
+#--------------------------------top user end----------------------------------#
+
+
+
+
+#--------------------------------whizquiz start----------------------------------#
 
 resources :whizquiz do
 
