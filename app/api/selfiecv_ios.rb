@@ -1954,7 +1954,7 @@ resources :group do
       error! "You are unauthorized for this group.", 422 unless @group_invitee
 
       @group_user = @group.users.where(user_id: current_user.id).first
-      error! "You are already in this group.", 422 unless @group_user
+      error! "#{current_user.username}.", 422 unless @group_user
 
       if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
