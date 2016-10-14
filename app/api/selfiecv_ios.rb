@@ -1958,16 +1958,16 @@ resources :group do
 
       if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
-        error! "ok",422 unless @group_user.save      
+        error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save      
               @chat = Chat.new
               @chat.sender_id = current_user.id
               @chat.group_id = @group.id
               @chat.activity = "true"
               @chat.quick_msg = "joined"
               @chat.save
-        @group.accepted_users.each do |group_user|
-            Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
-        end
+        # @group.accepted_users.each do |group_user|
+        #     Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        # end
       end      
       
     end
