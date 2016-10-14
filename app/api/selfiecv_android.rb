@@ -204,17 +204,17 @@ resources :member do
       { code: 200, :status => "Success" }
     end
 
-    # for listing users
-    desc "Listing Users"
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :role
-    end
-    post :listing , jbuilder: 'android' do
-      authenticate!
-      @users = User.where(role: params[:role])
-      @users         
-    end
+    # # for listing users
+    # desc "Listing Users"
+    # params do
+    #   requires :token, type: String, regexp: UUID_REGEX
+    #   requires :role
+    # end
+    # post :listing , jbuilder: 'android' do
+    #   authenticate!
+    #   @users = User.where(role: params[:role])
+    #   @users         
+    # end
 
     # for all stuff
     desc 'All stuff'
@@ -2265,6 +2265,7 @@ resources :notifications do
     desc  "LIST Of NOTIFICATION"
     params  do
       requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
     end
     post :list, jbuilder: 'android_notification' do
       @notifications = Rpush::Gcm::Notification.where(device_token: current_device.id).order(created_at: "desc").pluck

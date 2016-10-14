@@ -197,21 +197,21 @@ resources :member do
       status 200
     end
 
-    # for listing users
-    desc "Listing Users"
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :role
-    end
-    post :listing , jbuilder: 'ios' do
-      authenticate!
-      if params[:role]
-        @users = User.where(role: params[:role])
-      else
-        'No Records Found !'
-      end
-      @users
-    end
+    # # for listing users
+    # desc "Listing Users"
+    # params do
+    #   requires :token, type: String, regexp: UUID_REGEX
+    #   requires :role
+    # end
+    # post :listing , jbuilder: 'ios' do
+    #   authenticate!
+    #   if params[:role]
+    #     @users = User.where(role: params[:role])
+    #   else
+    #     'No Records Found !'
+    #   end
+    #   @users
+    # end
 
     # for all stuff
     desc 'All stuff'
