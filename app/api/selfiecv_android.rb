@@ -2362,13 +2362,41 @@ resources :search do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :q
+      optional :min_experience
+      optional :max_experience
+      optional :min_salary
+      optional :max_salary
+      optional :functional_area_id
+      optional :location
+      optional :preferred_location
+      optional :qualification
     end
    
-    post :jobseeker , jbuilder: 'android_search' do
+    post :jobseeker do
       authenticate!
-      @searched_users =  User.search(params[:q])
+      @searched_users =  User.includes("user_experiences").where("users.username ilike ?","%#{params[:q]}%").where("users.user_experiences.experience")
       @searched_users
     end
+
+
+
+    desc "Search Company"
+    
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      optional :location
+      optional :functional_area_id
+      optional :industry_id
+      optional :company_name
+    end
+   
+    post :company do
+      authenticate!
+      @searched_company =  User.company_search(params)
+      @searched_company
+    end
+
+
 
   end
 

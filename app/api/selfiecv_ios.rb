@@ -2295,4 +2295,30 @@ resources :whizquiz do
 
   #--------------------------------whizquiz end----------------------------------#
 
+
+  #--------------------------------search start----------------------------------#
+
+  resources :search do
+
+    # for search jobseeker
+
+    desc "Search Jobseeker"
+    
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :q
+    end
+   
+    post :jobseeker do
+      authenticate!
+      @searched_users =  User.search(params[:q])
+      @searched_users
+    end
+
+  end
+
+  #--------------------------------search end----------------------------------#
+
+
+
 end

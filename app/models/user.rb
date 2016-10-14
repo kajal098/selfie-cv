@@ -7,9 +7,8 @@ enum role: { Admin: 0, Student: 1, Faculty: 2, Jobseeker:3, Company:4 }
 
 scope :for_roles, ->(values) do
     return all if values.blank?
-
     where(role: roles.values_at(*Array(values)))
-  end
+end
 
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
@@ -35,6 +34,7 @@ belongs_to  :industry
 has_many    :user_educations
 has_many    :student_educations
 has_many    :user_experiences
+has_many    :total_experiences, -> { self.total_experiences.sum }, class_name: 'UserExperience'
 has_many    :user_preferred_works
 has_many    :user_awards
 has_many    :user_certificates
@@ -69,12 +69,36 @@ has_many    :bronze_rates, -> {where(rate_type: 0) }, class_name: 'UserRate',for
 has_many    :silver_rates, -> {where(rate_type: 1)}, class_name: 'UserRate',foreign_key: "rate_id"
 has_many    :gold_rates, -> {where(rate_type: 2) }, class_name: 'UserRate',foreign_key: "rate_id"
 
-def self.search(search)
-        if search
-            where("first_name like ? and last_name like ?", "%#{search}%", "%#{search}%")
-        else
-          scoped
-        end
+def self.company_search(params)
+    conditions = String.new
+    wheres = Array.new
+      conditions << "role = ?"
+      wheres << 4
+    if params.has_key?(:company_name)
+      conditions << " AND " unless conditions.length == 0
+      conditions << "company_name ilike ?"
+      wheres << "%#{params[:company_name]}%"
+    end
+
+    if params.has_key?(:location)
+      conditions << " AND " unless conditions.length == 0
+      conditions << " company_city ilike ?"
+      wheres << "%#{params[:location]}%"
+    end
+
+    if params.has_key?(:industry_id)
+      conditions << " AND " unless conditions.length == 0
+      conditions << " industry_id = ?"
+      wheres << params[:industry_id].to_i
+    end
+    
+    if params.has_key?(:functional_area_id)
+      conditions << " AND " unless conditions.length == 0
+      conditions << " company_id = ?"
+      wheres << params[:functional_area_id].to_i
+    end
+    wheres.insert(0, conditions)
+    return where( wheres )
 end
 
 mount_uploader :file, FileUploader

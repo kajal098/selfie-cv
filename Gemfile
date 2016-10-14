@@ -55,9 +55,8 @@ gem 'groupdate', '~> 2.1.1'
 gem 'active_median', '~> 0.1.0'
 
 # for elastic search
-gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
-gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
-
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 # for Notification
 gem 'rpush'
 
