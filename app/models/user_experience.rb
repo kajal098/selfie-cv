@@ -10,6 +10,8 @@ class UserExperience < ActiveRecord::Base
 
     after_save :percent_of_exp
 
+
+
     def percent_of_exp()
     	user = self.user
         if user.user_experiences.count > 0  
@@ -26,6 +28,16 @@ class UserExperience < ActiveRecord::Base
         user.user_meter.update_column('experience_per' ,exp_per)
         end 
         return true
+    end
+
+
+    def total_experience
+        if self.current_company
+            $month = ((Date.today.to_time - self.start_from.to_time)/1.month.second).round(0)
+        else
+            $month = ((self.working_till.to_time - self.start_from.to_time)/1.month.second).round(0)
+        end
+        return $month
     end
 
 end
