@@ -1958,7 +1958,7 @@ resources :group do
 
       if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
-        error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save      
+        error! "ok",422 unless @group_user.save      
               @chat = Chat.new
               @chat.sender_id = current_user.id
               @chat.group_id = @group.id
