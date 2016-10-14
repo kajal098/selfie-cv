@@ -499,7 +499,7 @@
   <% if @user.company_galeries.count > 0 %>
   <% @user.company_galeries.each do |galery| %>
   <div class="img">
-    <%= image_tag galery.thumb_url, style: "width:180px; height:100px;" %>
+    <%= image_tag galery.thumb_url %>
   </div>
   <% end %>
   <% else %>
@@ -971,7 +971,8 @@ div.img {
     margin: 5px;
     border: 1px solid #ccc;
     float: left;
-    width: 180px;
+    width: 100px;
+    height: 100px;
 }
 
 div.img:hover {
