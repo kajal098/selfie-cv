@@ -1978,7 +1978,7 @@ resources :group do
       error!({error: 'You are unauthorized for this group.', status: 'Fail'}, 200) unless @group_invitee
 
       @group_user = @group.users.where(user_id: current_user.id).first
-      error!({error: 'You are already in this group.', status: 'Fail'}, 200) unless @group_user
+      error!({error: 'You are already in this group.', status: 'Fail'}, 200) if @group_user
 
       if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'

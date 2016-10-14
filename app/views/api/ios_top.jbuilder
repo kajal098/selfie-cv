@@ -2,6 +2,7 @@ if @top_users
 	json.top_users @top_users do |user|
 		if user.role == "Jobseeker"
 			json.extract! user, :id, :username, :first_name, :last_name, :city, :country
+			json.skills !user.user_educations.empty? ? user.user_educations.map(&:skill).join(",") : ""
 			json.total_per user.user_meter.total_per
 			json.profile_thumb user.profile_thumb_url
 			json.profile user.profile_pic.url
