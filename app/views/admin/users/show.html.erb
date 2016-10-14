@@ -75,6 +75,13 @@
           <% if @user.user_educations.count > 0 %>
             <% @user.user_educations.each do |edu| %>     
             <tr >
+              <th>Course</th>
+              <th>Specialization</th>
+              <th>Year</th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr >
               <p><strong class="text_color" >Course :</strong> <%= edu.course.name %> </p>
               <p><strong class="text_color" >Specialization :</strong> <%= edu.specialization.name %> </p>
               <p><strong class="text_color" >Year :</strong> <%= edu.year %> </p>
@@ -165,7 +172,10 @@
                               <p><strong class="text_color" >whizquiz_id :</strong> <%= whizquiz.whizquiz_id %> </p>
                               <p><strong class="text_color" >review_type Type :</strong> <%= whizquiz.review_type %> </p>
                               <p><strong class="text_color" >text_field :</strong> <%= whizquiz.text_field %> </p>
-                              <p><strong class="text_color" >File :</strong> <%= whizquiz.review.url %></p><hr/>
+                              <p><strong class="text_color" >File :</strong> <%= whizquiz.review.url %></p>
+                              <p><strong class="text_color" >Status :</strong> <%= whizquiz.status %> </p>
+                              <p><strong class="text_color" >Change :</strong> <%= link_to admin_user_flop_path(whizquiz.id) %> </p>
+                              <hr/>
                             </tr>
                             <% end %>
             <% else %>

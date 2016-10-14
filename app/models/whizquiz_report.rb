@@ -2,8 +2,7 @@ class WhizquizReport
 
   include Datagrid
 
-  scope { Whizquiz.order(:id) }
-  scope { Whizquiz.all }
+  scope { Whizquiz.order(:updated_at => "desc")}
 
   #filter(:id, :string, header: "Id") {|value| where("name ilike ?", "%#{value}%")}
   
@@ -16,6 +15,7 @@ class WhizquizReport
   column(:actions, header: "Action", html: true  ) do |whizquiz|
     html = link_to "", admin_whizquiz_path(whizquiz), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View whizquiz"
     html += link_to "", edit_admin_whizquiz_path(whizquiz), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-edit", title: "Edit whizquiz"
+    html += link_to "", admin_whizquiz_flop_path(whizquiz), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-plus", title: "Flop whizquiz"
     html
   end
 

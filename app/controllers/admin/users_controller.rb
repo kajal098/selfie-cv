@@ -51,6 +51,13 @@ respond_to :json, :html
     end
   end
 
+  def flop
+    @user_whizquiz = UserWhizquiz.find(params[:user_id])
+    @user_whizquiz.status = !@user_whizquiz.status # flop the status
+    @user_whizquiz.save
+    #redirect_to admin_user_path(@user_whizquiz.user_id)
+  end
+
   
 
 private

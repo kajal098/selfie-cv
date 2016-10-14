@@ -44,6 +44,13 @@ class Admin::WhizquizzesController < Admin::ApplicationController
     end
   end
 
+  def flop
+    @whizquiz = Whizquiz.find(params[:whizquiz_id])
+    @whizquiz.status = !@whizquiz.status # flop the status
+    @whizquiz.save
+    redirect_to admin_whizquizzes_path
+  end
+
   
 
 private
@@ -54,7 +61,7 @@ private
 
   def whizquiz_params
     if params[:action] == "update" and params[:whizquiz]
-      params.require(:whizquiz).permit( :question, :answer, :active)
+      params.require(:whizquiz).permit( :question, :answer, :status)
     else
       params.require(:whizquiz).permit!
     end
