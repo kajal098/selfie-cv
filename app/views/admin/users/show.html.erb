@@ -89,6 +89,7 @@
           <% if @user.user_educations.count > 0 %>
           <table>
             <tr>
+            <th><strong class="text_color" >No</strong></th>
               <th><strong class="text_color" >Course</strong></th>
               <th><strong class="text_color" >Specialization</strong></th>
               <th><strong class="text_color" >Year</strong></th>
@@ -114,6 +115,7 @@
           <% if @user.user_experiences.count > 0 %>
           <table>
             <tr>
+            <th><strong class="text_color" >No</strong></th>
               <th><strong class="text_color" >Name</strong></th>
               <th><strong class="text_color" >Exp Type</strong></th>
               <th><strong class="text_color" >Start From</strong></th>
@@ -123,6 +125,7 @@
             </tr>
             <% @user.user_experiences.each do |exp| %>
             <tr>
+            <td><%= exp.id %></td>
               <td><%= exp.name %></td>
               <td><%= exp.exp_type %></td>
               <td><%= exp.start_from %></td>
@@ -144,6 +147,7 @@
           <% if @user.user_preferred_works.count > 0 %>
                  <table>
             <tr >
+            <th><strong class="text_color" >No</strong></th>
               <th><strong class="text_color" >Industry</strong></th>
               <th><strong class="text_color" >Functional Name</strong></th>
               <th><strong class="text_color" >Preffered Designation</strong></th>
@@ -154,6 +158,7 @@
             </tr>
             <% @user.user_preferred_works.each do |pre_work| %>
             <tr>
+            <td><%= pre_work.id %></td>
               <td><%= pre_work.ind_name %></td>
               <td><%= pre_work.functional_name %></td>
               <td><%= pre_work.preferred_designation %></td>
@@ -174,6 +179,7 @@
           <table>
              
             <tr >
+            <th><strong class="text_color" >No</strong></th>
               <td><strong class="text_color" >Name :</strong></td>
               <td><strong class="text_color" >Award Type :</strong></td>
               <td><strong class="text_color" >Description :</strong></td>
@@ -181,6 +187,7 @@
             </tr>
             <% @user.user_awards.each do |award| %>    
             <tr >
+            <td><%= award.id %></td>
               <td><%= award.name %></td>
               <td><%= award.award_type %></td>
               <td><%= award.description %></td>
@@ -198,6 +205,7 @@
           <table>
                 
             <tr >
+            <th><strong class="text_color" >No</strong></th>
             <th><strong class="text_color" >Name :</strong></th>
               <th><strong class="text_color" >Certificate Type :</strong></th>
               <th><strong class="text_color" >Year :</strong></th>
@@ -207,6 +215,7 @@
             </tr>
             <% @user.user_certificates.each do |certi| %> 
              <tr >
+             <td><%= certi.id %></td>
               <td><%= certi.name %></td>
               <td><%= certi.certificate_type %></td>
               <td><%= certi.year %></td>
@@ -226,6 +235,7 @@
             <% if @user.user_whizquizzes.count > 0 %>
             <table>
             <tr >
+            <th><strong class="text_color" >No</strong></th>
                 <th><strong class="text_color" >whizquiz_id :</strong></th>
                 <th><strong class="text_color" >review_type Type :</strong></th>
                 <th><strong class="text_color" >text_field :</strong></th>
@@ -235,6 +245,7 @@
               </tr>
               <% @user.user_whizquizzes.each do |whizquiz| %>    
               <tr >
+              <td><%= whizquiz.id %></td>
                 <td><%= whizquiz.whizquiz_id %></td>
                 <td><%= whizquiz.review_type %></td>
                 <td><%= whizquiz.text_field %></td>
@@ -254,6 +265,7 @@
           <table>
             
             <tr >
+            <th><strong class="text_color" >No</strong></th>
             <th><strong class="text_color" >Curricular Type :</strong></th>
               <th><strong class="text_color" >Team Type :</strong></th>
               <th><strong class="text_color" >Location :</strong></th>
@@ -263,6 +275,7 @@
             </tr>
             <% @user.user_curriculars.each do |curri| %>    
             <tr >
+            <td><%= curri.id %></td>
               <td><%= curri.curricular_type %></td>
               <td><%= curri.team_type %></td>
               <td><%= curri.location %></td>
@@ -280,6 +293,7 @@
           <% if @user.user_future_goals.count > 0 %>
                  <table>
             <tr >
+            <th><strong class="text_color" >No</strong></th>
               <th><strong class="text_color" >Id :</strong></th>
               <th><strong class="text_color" >Goal Type :</strong></th>
               <th><strong class="text_color" >Title :</strong></th>
@@ -288,6 +302,7 @@
             </tr>
             <% @user.user_future_goals.each do |future| %>
             <tr >
+            <td><%= future.id %></td>
               <td><%= future.id %></td>
               <td><%= future.goal_type %></td>
               <td><%= future.title %></td>
@@ -305,12 +320,14 @@
           <% if @user.user_environments.count > 0 %>
           <table>
             <tr >
+            <th><strong class="text_color" >No</strong></th>
               <th><strong class="text_color" >Env Type :</strong></th>
               <th><strong class="text_color" >Title :</strong></th>
               <th><strong class="text_color" >File :</strong></th>
             </tr>
             <% @user.user_environments.each do |work_env| %>     
             <tr >
+            <td><%= work_env.id %></td>
               <td><%= work_env.env_type %></td>
               <td><%= work_env.title %></td>
               <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></td>
@@ -326,6 +343,7 @@
           <% if @user.user_references.count > 0 %>
             <table>     
             <tr >
+            <th><strong class="text_color" >No</strong></th>
               <th><strong class="text_color" >Title :</strong></th>
               <th><strong class="text_color" >Reference Type :</strong></th>
               <th><strong class="text_color" >From :</strong></th>
@@ -337,6 +355,7 @@
             </tr>
             <% @user.user_references.each do |ref| %>     
             <tr >
+            <td><%= ref.id %></td>
               <td><%= ref.title %></td>
               <td><%= ref.ref_type %></td>
               <td><%= ref.from %></td>
@@ -430,6 +449,7 @@
   <% if @user.user_awards.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Name :</strong></th>
     <th><strong class="text_color" >Award Type :</strong></th>
     <th><strong class="text_color" >Description :</strong></th>
@@ -437,6 +457,7 @@
   </tr>
   <% @user.user_awards.each do |award| %>     
   <tr >
+  <td><%= award.id %></td>
     <td><%= award.name %></td>
     <td><%= award.award_type %></td>
     <td><%= award.description %></td>
@@ -455,11 +476,13 @@
   <% if @user.user_certificates.count > 0 %>
   <table>
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >File Type :</strong></th>
     <th><strong class="text_color" >File :</strong></th>
   </tr>
   <% @user.user_certificates.each do |certi| %>     
   <tr >
+  <td><%= certi.id %></td>
     <td><%= certi.file_type %></td>
     <td><%= image_tag certi.thumb_url, :size => "100x100" %></td>
   </tr>
@@ -476,7 +499,7 @@
   <% if @user.company_galeries.count > 0 %>
   <% @user.company_galeries.each do |galery| %>
   <div class="img">
-    <%= image_tag galery.thumb_url, style: "width:100px; height:100px;" %>
+    <%= image_tag galery.thumb_url, style: "width:180px; height:100px;" %>
   </div>
   <% end %>
   <% else %>
@@ -489,12 +512,14 @@
   <% if @user.user_environments.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Env Type :</strong></th>
     <th><strong class="text_color" >Title :</strong></th>
     <th><strong class="text_color" >File :</strong></th>
   </tr>
   <% @user.user_environments.each do |work_env| %>     
   <tr >
+  <td><%= work_env.id %></td>
     <td><%= work_env.env_type %></td>
     <td><%= work_env.title %></td>
     <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></td>
@@ -542,6 +567,7 @@
   <% if @user.faculty_affiliations.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >University :</strong></th>
     <th><strong class="text_color" >Collage Name :</strong></th>
     <th><strong class="text_color" >Subject :</strong></th>
@@ -551,6 +577,7 @@
   </tr>
   <% @user.faculty_affiliations.each do |affiliation| %>     
   <tr >
+  <td><%= affiliation.id %></td>
     <td><%= affiliation.university %></td>
     <td><%= affiliation.collage_name %></td>
     <td><%= affiliation.subject %></td>
@@ -570,10 +597,12 @@
   <% if @user.faculty_workshops.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Description :</strong></th>
   </tr>
   <% @user.faculty_workshops.each do |workshop| %>     
   <tr >
+  <td><%= workshop.id %></td>
     <td><%= workshop.description %></td>
   </tr>
   <% end %>
@@ -588,6 +617,7 @@
   <% if @user.faculty_publications.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Title :</strong></th>
     <th><strong class="text_color" >Description :</strong></th>
     <th><strong class="text_color" >File Type :</strong></th>
@@ -596,6 +626,7 @@
   </tr>
   <% @user.faculty_publications.each do |publication| %>     
   <tr >
+  <td><%= publication.id %></td>
     <td><%= publication.title %></td>
     <td><%= publication.description %></td>
     <td><%= publication.file_type %></td>
@@ -614,6 +645,7 @@
   <% if @user.faculty_researches.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Title :</strong></th>
     <th><strong class="text_color" >Description :</strong></th>
     <th><strong class="text_color" >File Type :</strong></th>
@@ -622,6 +654,7 @@
   </tr>
   <% @user.faculty_researches.each do |research| %>     
   <tr >
+  <td><%= research.id %></td>
     <td><%= research.title %></td>
     <td><%= research.description %></td>
     <td><%= research.file_type %></td>
@@ -640,6 +673,7 @@
   <% if @user.user_awards.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Name :</strong></th>
     <th><strong class="text_color" >Award Type :</strong></th>
     <th><strong class="text_color" >Description :</strong></th>
@@ -647,6 +681,7 @@
   </tr>
   <% @user.user_awards.each do |award| %>     
   <tr >
+  <td><%= award.id %></td>
     <td><%= award.name %></td>
     <td><%= award.award_type %></td>
     <td><%= award.description %></td>
@@ -664,6 +699,7 @@
   <% if @user.user_certificates.count > 0 %>
   <table>
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Name :</strong></th>
     <th><strong class="text_color" >Certificate Type :</strong></th>
     <th><strong class="text_color" >Year :</strong></th>
@@ -671,6 +707,7 @@
   </tr>
   <% @user.user_certificates.each do |certi| %>     
   <tr >
+  <td><%= certi.id %></td>
     <td><%= certi.name %></td>
     <td><%= certi.certificate_type %></td>
     <td><%= certi.year %></td>
@@ -718,12 +755,14 @@
   <% if @user.student_educations.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >standard :</strong></th>
     <th><strong class="text_color" >School :</strong></th>
     <th><strong class="text_color" >Year :</strong></th>
   </tr>
   <% @user.student_educations.each do |stu_edu| %>     
   <tr >
+  <td><%= stu_edu.id %></td>
     <td><%= stu_edu.standard %></td>
     <td><%= stu_edu.school %></td>
     <td><%= stu_edu.year %></td>
@@ -740,6 +779,7 @@
   <% if @user.user_marksheets.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >School Name :</strong></th>
     <th><strong class="text_color" >Standard :</strong></th>
     <th><strong class="text_color" >Grade :</strong></th>
@@ -749,6 +789,7 @@
   </tr>
   <% @user.user_marksheets.each do |marksheet| %>     
   <tr >
+  <td><%= marksheet.id %></td>
     <td><%= marksheet.school_name %></td>
     <td><%= marksheet.standard %></td>
     <td><%= marksheet.grade %></td>
@@ -768,11 +809,13 @@
   <% if @user.user_projects.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Title :</strong></th>
     <th><strong class="text_color" >Description :</strong></th>
   </tr>
   <% @user.user_projects.each do |project| %>     
   <tr >
+  <td><%= project.id %></td>
     <td><%= project.title %></td>
     <td><%= project.description %></td>
   </tr>
@@ -788,6 +831,7 @@
   <% if @user.user_awards.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Name :</strong></th>
     <th><strong class="text_color" >Award Type :</strong></th>
     <th><strong class="text_color" >Description :</strong></th>
@@ -795,6 +839,7 @@
   </tr>
   <% @user.user_awards.each do |award| %>     
   <tr >
+  <td><%= award.id %></td>
     <td><%= award.name %></td>
     <td><%= award.award_type %></td>
     <td><%= award.description %></td>
@@ -812,6 +857,7 @@
   <% if @user.user_certificates.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Name :</strong></th>
     <th><strong class="text_color" >Certificate Type :</strong></th>
     <th><strong class="text_color" >Year :</strong></th>
@@ -819,6 +865,7 @@
   </tr>
   <% @user.user_certificates.each do |certi| %>     
   <tr >
+  <td><%= certi.id %></td>
     <td><%= certi.name %></td>
     <td><%= certi.certificate_type %></td>
     <td><%= certi.year %></td>
@@ -836,6 +883,7 @@
   <% if @user.user_curriculars.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Curricular Type :</strong></th>
     <th><strong class="text_color" >Team Type :</strong></th>
     <th><strong class="text_color" >Location :</strong></th>
@@ -844,6 +892,7 @@
   </tr>
   <% @user.user_curriculars.each do |curri| %>     
   <tr >
+  <td><%= curri.id %></td>
     <td><%= curri.curricular_type %></td>
     <td><%= curri.team_type %></td>
     <td><%= curri.location %></td>
@@ -862,6 +911,7 @@
   <% if @user.user_future_goals.count > 0 %>
   <table>     
   <tr >
+  <th><strong class="text_color" >No</strong></th>
     <th><strong class="text_color" >Id :</strong></th>
     <th><strong class="text_color" >Goal Type :</strong></th>
     <th><strong class="text_color" >Title :</strong></th>
@@ -870,6 +920,7 @@
   </tr>
   <% @user.user_future_goals.each do |future| %>     
   <tr >
+  <td><%= future.id %></td>
     <td><%= future.id %></td>
     <td><%= future.goal_type %></td>
     <td><%= future.title %></td>
