@@ -13,7 +13,7 @@ class UserPreferredWork < ActiveRecord::Base
             setting_per = UserPercentage.find_by_key('prework').value
         	user.user_preferred_works.each do |prework|   
         	   		if prework.ind_name.present?
-	                    prework_per = setting_per.to_i.value * 1
+	                    prework_per = setting_per.to_i * 1
 	                end        		       	
         	end
         user.user_meter.update_column('prework_per' ,prework_per)

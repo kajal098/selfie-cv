@@ -204,17 +204,17 @@ resources :member do
       { code: 200, :status => "Success" }
     end
 
-    # for listing users
-    desc "Listing Users"
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :role
-    end
-    post :listing , jbuilder: 'android' do
-      authenticate!
-      @users = User.where(role: params[:role])
-      @users         
-    end
+    # # for listing users
+    # desc "Listing Users"
+    # params do
+    #   requires :token, type: String, regexp: UUID_REGEX
+    #   requires :role
+    # end
+    # post :listing , jbuilder: 'android' do
+    #   authenticate!
+    #   @users = User.where(role: params[:role])
+    #   @users         
+    # end
 
     # for all stuff
     desc 'All stuff'
@@ -286,13 +286,15 @@ resources :member do
       authenticate!
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name, :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type, :text_field)
+      @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
+       :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode,
+         :contact_number, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user.text_field = params[:text_field] if params[:text_field]
       else
         @user.file = params[:file] if params[:file]
       end
+      @user.update_cv_count += 1
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
     end
 
@@ -1192,6 +1194,7 @@ resources :company do
       @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
+        @user.update_cv_count += 1
       error!({error: @company.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @company.save
     end
 
@@ -1338,6 +1341,7 @@ resources :student do
       @basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
         :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field)
       @basic_info.file = params[:file] if params[:file]
+      @basic_info.update_cv_count += 1
       error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       @basic_info
     end
@@ -1563,6 +1567,7 @@ resources :faculty do
       else
         @user.file = params[:file] if params[:file]
       end
+      @user.update_cv_count += 1
       error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
     end
 
@@ -1973,7 +1978,7 @@ resources :group do
       error!({error: 'You are unauthorized for this group.', status: 'Fail'}, 200) unless @group_invitee
 
       @group_user = @group.users.where(user_id: current_user.id).first
-      error!({error: 'You are already in this group.', status: 'Fail'}, 200) unless @group_user
+      error!({error: 'You are already in this group.', status: 'Fail'}, 200) if @group_user
 
       if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
@@ -2260,6 +2265,7 @@ resources :notifications do
     desc  "LIST Of NOTIFICATION"
     params  do
       requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
     end
     post :list, jbuilder: 'android_notification' do
       @notifications = Rpush::Gcm::Notification.where(device_token: current_device.id).order(created_at: "desc").pluck
@@ -2272,12 +2278,15 @@ resources :notifications do
 
 end
 
-  #--------------------------------notification end----------------------------------#
+#--------------------------------notification end----------------------------------#
 
 
-  #--------------------------------top user start----------------------------------#
+
+#--------------------------------top user start----------------------------------#
 
 resources :top_user do
+
+
 
 
   before { authenticate! }
@@ -2290,17 +2299,24 @@ resources :top_user do
     end
     post :listing, jbuilder: 'android_top' do
       if (params[:role] == 'Company')
-       # @top_users = User.where(role: 3).order("total_per DESC").all
-        @top_users = User.includes(:user_meter).order("total_per DESC")
-
+          @top_users  = User.joins(:user_meter).where(:users=> { role: 3 }).order("user_meters.total_per DESC").limit(3)
       elsif (params[:role] == 'Jobseeker')
-        @top_users = User.where(role: 4).order("total_per DESC").all
+          @top_users = User.joins(:user_meter).where(:users=> { role: 4 }).order("user_meters.total_per DESC").limit(3)
       end
     end
 
-  end
 
-  #--------------------------------top user end----------------------------------#
+
+
+
+end
+
+#--------------------------------top user end----------------------------------#
+
+
+
+
+
 
   #--------------------------------whizquiz start----------------------------------#
 
@@ -2318,7 +2334,6 @@ resources :whizquiz do
       @questions = Whizquiz.where(status: true).order("RANDOM()").limit(2)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:question)
       #@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2).pluck(:id, :question)
-
     end
 
     # for answer
@@ -2326,16 +2341,16 @@ resources :whizquiz do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
-      requires :question_ids, type: Array, default: []
-      requires :review_types, type: Array, default: []
-      optional :reviews, type: Array, default: []
-      optional :text_fields, type: Array, default: []
+      requires :question_ids
+      requires :review_types
+      optional :reviews
+      optional :text_fields
     end
     post :answer_of_questions, jbuilder: 'android_whiz_quiz' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       params[:question_ids].count.times do |i|
-        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review_type: params[:review_types][i] , review: params[:reviews][i], status: false
+        @user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review_type: params[:review_types][i] , status: false
         if (params[:review_types][i] == 'text')
           @user_whizquiz.text_field = params[:text_fields][i] if params[:text_fields][i]
         else

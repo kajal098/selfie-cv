@@ -81,7 +81,7 @@ if @user_stuff
 		json.user_working_environment_per @user_stuff.user_meter ? @user_stuff.user_meter.working_env_per.to_i : ""
 		json.user_reference_per @user_stuff.user_meter ? @user_stuff.user_meter.ref_per.to_i : ""
 		json.user_whizquiz_per @user_stuff.user_meter ? @user_stuff.user_meter.whizquiz_per.to_i : ""
-		json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : ""
+		json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : ""
 
 		json.likes @user_stuff.likes.count
 		json.views @user_stuff.views.count
@@ -135,7 +135,7 @@ json.company_growth_and_goal_per @user_stuff.user_meter ? @user_stuff.user_meter
 json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.achievement_per.to_i : ""
 json.company_gallery_per @user_stuff.user_meter ? @user_stuff.user_meter.galery_per.to_i : ""
 json.company_working_env_per @user_stuff.user_meter ? @user_stuff.user_meter.working_env_per.to_i : ""
-json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : ""
+json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : ""
 
 		json.likes @user_stuff.likes.count
 		json.views @user_stuff.views.count
@@ -155,7 +155,7 @@ json.student_education_per @user_stuff.user_meter ? @user_stuff.user_meter.stude
 json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.achievement_per.to_i : ""
 json.curri_per @user_stuff.user_meter ? @user_stuff.user_meter.curri_per.to_i : ""
 json.future_goal_per @user.user_meter.future_goal_per.to_i : ""
-json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : ""
+json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : ""
 
       	json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i      	
@@ -205,7 +205,7 @@ json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : 
 		json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.user_meter.faculty_basic_info_per.to_i : ""
       	json.experience_per @user_stuff.user_meter ? @user_stuff.user_meter.experience_per.to_i : ""
       	json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.achievement_per.to_i : ""
-      	json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : ""
+      	json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : ""
 
 
 		json.created_at @user_stuff.created_at.to_i

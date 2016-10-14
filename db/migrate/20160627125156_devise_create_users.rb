@@ -53,7 +53,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :company_future_new_venture_location,              null: false, default: ""
       t.string :company_future_outlet,              null: false, default: ""
       t.string :delete_code,              null: false, default: ""
-      t.integer :total_per,        null:false, default: 0
+      t.integer :user_total_per,        null:false, default: 0
+      t.integer :update_cv_count,        null:false, default: 0
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable

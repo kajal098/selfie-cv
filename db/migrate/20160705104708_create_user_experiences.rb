@@ -5,7 +5,7 @@ class CreateUserExperiences < ActiveRecord::Migration
       t.string :name,              null:false, default: ""
       t.string :exp_type,           null:false, default: ""
       t.date :start_from,              :default=>Date.today
-      t.date :working_till,            :default=>Date.today
+      t.date :working_till,              :default=>Date.today
       t.string :designation,              null:false, default: ""
       t.string :description,              null:false, default: ""
       t.string :file,              default: ''

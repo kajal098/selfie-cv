@@ -1,6 +1,5 @@
 class UserExperience < ActiveRecord::Base
-	#validates_format_of :start_from, :with => /\d{2}\/\d{2}\/\d{4}/
-	#validates_format_of :working_till, :with => /\d{2}\/\d{2}\/\d{4}/
+	belongs_to :user
 	mount_uploader :file, FileUploader
     def thumb_url
            

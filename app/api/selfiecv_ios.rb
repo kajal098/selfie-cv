@@ -197,21 +197,21 @@ resources :member do
       status 200
     end
 
-    # for listing users
-    desc "Listing Users"
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :role
-    end
-    post :listing , jbuilder: 'ios' do
-      authenticate!
-      if params[:role]
-        @users = User.where(role: params[:role])
-      else
-        'No Records Found !'
-      end
-      @users
-    end
+    # # for listing users
+    # desc "Listing Users"
+    # params do
+    #   requires :token, type: String, regexp: UUID_REGEX
+    #   requires :role
+    # end
+    # post :listing , jbuilder: 'ios' do
+    #   authenticate!
+    #   if params[:role]
+    #     @users = User.where(role: params[:role])
+    #   else
+    #     'No Records Found !'
+    #   end
+    #   @users
+    # end
 
     # for all stuff
     desc 'All stuff'
@@ -300,6 +300,8 @@ resources :member_profile do
       else
         @user.file = params[:file] if params[:file]
       end
+      @user.update_cv_count += 1
+      @user.save
       error! @user.errors.full_messages.join(', '), 422 unless @user.save
     end
 
@@ -1915,6 +1917,27 @@ resources :group do
         status 200
       end
 
+    # for invite to community by email
+
+    desc "Email invitation"
+
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :group_id
+      requires :email_ids, type: Array, default: []
+    end
+
+    post :email_invite do
+      @group = Group.find params[:group_id]
+      error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
+      params[:email_ids].each do |email|
+        @group_invitee = GroupInvitee.new group_id: params[:group_id], email: email
+        error! @group_invitee.errors.full_messages.join(', '),422 unless @group_invitee.save
+        UserMailer.send_group_code(@group,email).deliver_now
+      end
+      {}
+    end
+
     # Join group
 
     desc 'Join Group'
@@ -1931,7 +1954,7 @@ resources :group do
       error! "You are unauthorized for this group.", 422 unless @group_invitee
 
       @group_user = @group.users.where(user_id: current_user.id).first
-      error! "You are already in this group.", 422 unless @group_user
+      error! "You are already in this group.", 422 if @group_user
 
       if @group_invitee.present?
         @group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
@@ -1942,9 +1965,9 @@ resources :group do
               @chat.activity = "true"
               @chat.quick_msg = "joined"
               @chat.save
-        @group.accepted_users.each do |group_user|
-            Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
-        end
+        # @group.accepted_users.each do |group_user|
+        #     Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        # end
       end      
       
     end
@@ -2219,11 +2242,17 @@ resources :notifications do
 
 end
 
-  #--------------------------------notification end----------------------------------#
+#--------------------------------notification end----------------------------------#
 
-  #--------------------------------top user start----------------------------------#
+
+
+#--------------------------------top user start----------------------------------#
 
 resources :top_user do
+
+
+
+
 
 
   before { authenticate! }
@@ -2236,17 +2265,26 @@ resources :top_user do
     end
     post :listing, jbuilder: 'ios_top' do
       if (params[:role] == 'Company')
-        @top_users = User.where(role: 3).order("total_per DESC").all
+          @top_users  = User.joins(:user_meter).where(:users=> { role: 3 }).order("user_meters.total_per DESC").limit(3)
       elsif (params[:role] == 'Jobseeker')
-        @top_users = User.where(role: 4).order("total_per DESC").all
+          @top_users = User.joins(:user_meter).where(:users=> { role: 4 }).order("user_meters.total_per DESC").limit(3)
       end
     end
 
-  end
 
-  #--------------------------------top user end----------------------------------#
 
-  #--------------------------------whizquiz start----------------------------------#
+
+
+
+
+end
+
+#--------------------------------top user end----------------------------------#
+
+
+
+
+#--------------------------------whizquiz start----------------------------------#
 
 resources :whizquiz do
 

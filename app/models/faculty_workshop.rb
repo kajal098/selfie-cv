@@ -11,12 +11,14 @@ class FacultyWorkshop < ActiveRecord::Base
         
         if user.faculty_workshops.count > 0  
         	workshop_per = 0
-        	user.faculty_workshops.each do |workshop|   
-        	   		if workshop.file_type == "doc"
-	                    workshop_per = 100
+            setting_per = UserPercentage.find_by_key('project').value.to_i
+        	user.faculty_workshops.each do |workshop| 
+
+                    if workshop.description.present?           	   		
+	                    workshop_per = setting_per * 1
 	                    break
 	                else
-	                    workshop_per = 50
+	                    workshop_per = setting_per * 0.5
 	                end
         		       	
         	end
