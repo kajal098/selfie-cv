@@ -58,72 +58,112 @@
 
                           <p><strong class="text_color" >File URL:</strong> <%= @user.file.url %></p>
 
-                          <p><strong class="text_color" >All Percentage:</strong><br>
-                          <div style="margin-left:50px;">
-                          Resume :<%= @user.user_meter.resume_per.to_i %><br>
-                          Achievement :<%= @user.user_meter.achievement_per.to_i %><br>
-                          Curricular :<%= @user.user_meter.curri_per.to_i %><br>
-                          Life Goal :<%= @user.user_meter.future_goal_per.to_i %><br>
-                          Working Environment :<%= @user.user_meter.working_env_per.to_i %><br>
-                          Reference :<%= @user.user_meter.ref_per.to_i %><br>
-                          Whizquiz :<%= @user.user_meter.whizquiz_per.to_i %><br>
-                          Total :<%= @user.user_meter.total_per.to_i %></p>
+                          <p><strong class="text_color" >All Percentage:</strong></p>
+                         
+                          <table>
+    <tr>
+      <th>Resume</th>
+      <th>Achievement</th>
+      <th>Curricular</th>
+      <th>Life Goal</th>
+      <th>Working Environment</th>
+      <th>Reference</th>
+      <th>Whizquiz</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <td><%= @user.user_meter.resume_per.to_i %></td>
+      <td><%= @user.user_meter.achievement_per.to_i %></td>
+      <td><%= @user.user_meter.curri_per.to_i %></td>
+      <td><%= @user.user_meter.future_goal_per.to_i %></td>
+      <td><%= @user.user_meter.working_env_per.to_i %></td>
+      <td><%= @user.user_meter.ref_per.to_i %></td>
+      <td><%= @user.user_meter.whizquiz_per.to_i %></td>
+      <td><%= @user.user_meter.total_per.to_i %></td>
+    </tr>
+  </table>
                           </div>
         </div>
 
-          <div id="JobseekerEducation">
+        <div id="JobseekerEducation">
           <% if @user.user_educations.count > 0 %>
-            <% @user.user_educations.each do |edu| %>     
-            <tr >
-              <th>Course</th>
-              <th>Specialization</th>
-              <th>Year</th>
-              <th></th>
-              <th></th>
+          <table>
+            <tr>
+              <th><strong class="text_color" >Course</strong></th>
+              <th><strong class="text_color" >Specialization</strong></th>
+              <th><strong class="text_color" >Year</strong></th>
+              <th><strong class="text_color" >School</strong></th>
+              <th><strong class="text_color" >Skill</strong></th>
             </tr>
-            <tr >
-              <p><strong class="text_color" >Course :</strong> <%= edu.course.name %> </p>
-              <p><strong class="text_color" >Specialization :</strong> <%= edu.specialization.name %> </p>
-              <p><strong class="text_color" >Year :</strong> <%= edu.year %> </p>
-              <p><strong class="text_color" >School :</strong> <%= edu.school %> </p>
-              <p><strong class="text_color" >Skill :</strong> <%= edu.skill %> </p><hr/>
+            <% @user.user_educations.each do |edu| %>
+            <tr>
+              <td><%= edu.course.name %></td>
+              <td><%= edu.specialization.name %></td>
+              <td><%= edu.year %></td>
+              <td><%= edu.school %></td>
+              <td><%= edu.skill %></td>
             </tr>
             <% end %>
-            <% else %>
-                            <p><strong class="text_color" >No Records Found.</strong></p>
-            <% end %>
-          </div>
+          </table>
+          <% else %>
+          <p><strong class="text_color" >No Records Found.</strong></p>
+          <% end %>
+        </div>
 
           <div id="JobseekerExperience">
           <% if @user.user_experiences.count > 0 %>
-            <% @user.user_experiences.each do |exp| %>     
-            <tr >
-              <p><strong class="text_color" >Name :</strong> <%= exp.name %> </p>
-              <p><strong class="text_color" >Exp Type :</strong> <%= exp.exp_type %> </p>
-              <p><strong class="text_color" >Start From :</strong> <%= exp.start_from %> </p>
-              <p><strong class="text_color" >Working Till :</strong> <%= exp.working_till %> </p>
-              <p><strong class="text_color" >Designation :</strong> <%= exp.designation %> </p>
-              <p><strong class="text_color" >File :</strong> <% if exp.file_type == 'video' %><%= video_tag exp.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag exp.thumb_url, :size => "100x100" %><% end %></p><hr/>
+          <table>
+            <tr>
+              <th><strong class="text_color" >Name</strong></th>
+              <th><strong class="text_color" >Exp Type</strong></th>
+              <th><strong class="text_color" >Start From</strong></th>
+              <th><strong class="text_color" >Working Till</strong></th>
+              <th><strong class="text_color" >Designation</strong></th>
+              <th><strong class="text_color" >File</strong></th>
+            </tr>
+            <% @user.user_experiences.each do |exp| %>
+            <tr>
+              <td><%= exp.name %></td>
+              <td><%= exp.exp_type %></td>
+              <td><%= exp.start_from %></td>
+              <td><%= exp.working_till %></td>
+              <td><%= exp.designation %></td>
+              <td><% if exp.file_type == 'video' %><%= video_tag exp.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag exp.thumb_url, :size => "100x100" %><% end %></td>
             </tr>
             <% end %>
-            <% else %>
-                            <p><strong class="text_color" >No Records Found.</strong></p>
-            <% end %>
+          </table>
+          <% else %>
+          <p><strong class="text_color" >No Records Found.</strong></p>
+          <% end %>
+
+
+        
           </div>
 
           <div id="JobseekerPreferredWork">
           <% if @user.user_preferred_works.count > 0 %>
-            <% @user.user_preferred_works.each do |pre_work| %>     
+                 <table>
             <tr >
-              <p><strong class="text_color" >Industry :</strong> <%= pre_work.ind_name %> </p>
-              <p><strong class="text_color" >Functional Name :</strong> <%= pre_work.functional_name %> </p>
-              <p><strong class="text_color" >Preffered Designation :</strong> <%= pre_work.preferred_designation %> </p>
-              <p><strong class="text_color" >Preffered Location :</strong> <%= pre_work.preferred_location %> </p>
-              <p><strong class="text_color" >Current Salary :</strong> <%= pre_work.current_salary %> </p>
-              <p><strong class="text_color" >Expected Salary :</strong> <%= pre_work.expected_salary %> </p>
-              <p><strong class="text_color" >Time Type :</strong> <%= pre_work.time_type %> </p><hr/>
+              <th><strong class="text_color" >Industry</strong></th>
+              <th><strong class="text_color" >Functional Name</strong></th>
+              <th><strong class="text_color" >Preffered Designation</strong></th>
+              <th><strong class="text_color" >Preffered Location</strong></th>
+              <th><strong class="text_color" >Current Salary</strong></th>
+              <th><strong class="text_color" >Expected Salary</strong></th>
+              <th><strong class="text_color" >Time Type</strong></th>
+            </tr>
+            <% @user.user_preferred_works.each do |pre_work| %>
+            <tr>
+              <td><%= pre_work.ind_name %></td>
+              <td><%= pre_work.functional_name %></td>
+              <td><%= pre_work.preferred_designation %></td>
+              <td><%= pre_work.preferred_location %></td>
+              <td><%= pre_work.current_salary %></td>
+              <td><%= pre_work.expected_salary %></td>
+              <td><%= pre_work.time_type %></td>            
             </tr>
             <% end %>
+             </table>
             <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -131,14 +171,23 @@
           
           <div id="JobseekerAwards">
           <% if @user.user_awards.count > 0 %>
-            <% @user.user_awards.each do |award| %>     
+          <table>
+             
             <tr >
-              <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
-              <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
-              <p><strong class="text_color" >Description :</strong> <%= award.description %> </p>
-              <p><strong class="text_color" >File :</strong> <% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></p><hr/>
+              <td><strong class="text_color" >Name :</strong></td>
+              <td><strong class="text_color" >Award Type :</strong></td>
+              <td><strong class="text_color" >Description :</strong></td>
+              <td><strong class="text_color" >File :</strong></td>
+            </tr>
+            <% @user.user_awards.each do |award| %>    
+            <tr >
+              <td><%= award.name %></td>
+              <td><%= award.award_type %></td>
+              <td><%= award.description %></td>
+              <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></td>
             </tr>
             <% end %>
+            </table>
             <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -146,54 +195,82 @@
 
           <div id="JobseekerCertificates">
           <% if @user.user_certificates.count > 0 %>
-            <% @user.user_certificates.each do |certi| %>     
+          <table>
+                
             <tr >
-              <p><strong class="text_color" >Name :</strong> <%= certi.name %> </p>
-              <p><strong class="text_color" >Certificate Type :</strong> <%= certi.certificate_type %> </p>
-              <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p>
-              <p><strong class="text_color" >File :</strong> <% if certi.file_type == 'video' %>
+            <th><strong class="text_color" >Name :</strong></th>
+              <th><strong class="text_color" >Certificate Type :</strong></th>
+              <th><strong class="text_color" >Year :</strong></th>
+              <th><strong class="text_color" >File :</strong></th>
+              
+              
+            </tr>
+            <% @user.user_certificates.each do |certi| %> 
+             <tr >
+              <td><%= certi.name %></td>
+              <td><%= certi.certificate_type %></td>
+              <td><%= certi.year %></td>
+              <td><% if certi.file_type == 'video' %>
               <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
               <% else %><%= image_tag certi.thumb_url, :size => "100x100" %>
-              <% end %>
-              </p>
-              <hr/>
+              <% end %></td>
             </tr>
             <% end %>
+            </table>
             <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
           </div>
 
           <div id="JobseekerWhizQuiz">
-                  <% if @user.user_whizquizzes.count > 0 %>
-
-                            <% @user.user_whizquizzes.each do |whizquiz| %>     
-                            <tr >
-                              <p><strong class="text_color" >whizquiz_id :</strong> <%= whizquiz.whizquiz_id %> </p>
-                              <p><strong class="text_color" >review_type Type :</strong> <%= whizquiz.review_type %> </p>
-                              <p><strong class="text_color" >text_field :</strong> <%= whizquiz.text_field %> </p>
-                              <p><strong class="text_color" >File :</strong> <%= whizquiz.review.url %></p>
-                              <p><strong class="text_color" >Status :</strong> <%= whizquiz.status %> </p>
-                              <p><strong class="text_color" >Change :</strong> <%= link_to admin_user_flop_path(whizquiz.id) %> </p>
-                              <hr/>
-                            </tr>
-                            <% end %>
+            <% if @user.user_whizquizzes.count > 0 %>
+            <table>
+            <tr >
+                <th><strong class="text_color" >whizquiz_id :</strong></th>
+                <th><strong class="text_color" >review_type Type :</strong></th>
+                <th><strong class="text_color" >text_field :</strong></th>
+                <th><strong class="text_color" >File :</strong></th>
+                <th><strong class="text_color" >Status :</strong></th>
+                <th><strong class="text_color" >Change :</strong></th>
+              </tr>
+              <% @user.user_whizquizzes.each do |whizquiz| %>    
+              <tr >
+                <td><%= whizquiz.whizquiz_id %></td>
+                <td><%= whizquiz.review_type %></td>
+                <td><%= whizquiz.text_field %></td>
+                <td><%= whizquiz.review.url %></td>
+                <td><%= whizquiz.status %></td>
+                <td><%= link_to admin_user_flop_path(whizquiz.id) %></td>
+              </tr> 
+              <% end %>
+            </table>
             <% else %>
-                            <p><strong class="text_color" >No Records Found.</strong></p>
+            <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
           </div>
 
           <div id="JobseekerCurricular">
           <% if @user.user_curriculars.count > 0 %>
-            <% @user.user_curriculars.each do |curri| %>     
+          <table>
+            
             <tr >
-              <p><strong class="text_color" >Curricular Type :</strong> <%= curri.curricular_type %> </p>
-              <p><strong class="text_color" >Team Type :</strong> <%= curri.team_type %> </p>
-              <p><strong class="text_color" >Location :</strong> <%= curri.location %> </p>
-              <p><strong class="text_color" >Date :</strong> <%= curri.date %> </p>
-              <p><strong class="text_color" >File :</strong> <% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "100x100" %><% end %></p><hr/>
+            <th><strong class="text_color" >Curricular Type :</strong></th>
+              <th><strong class="text_color" >Team Type :</strong></th>
+              <th><strong class="text_color" >Location :</strong></th>
+              <th><strong class="text_color" >Date :</strong></th>
+              <th><strong class="text_color" >File :</strong></th>
+              
             </tr>
+            <% @user.user_curriculars.each do |curri| %>    
+            <tr >
+              <td><%= curri.curricular_type %></td>
+              <td><%= curri.team_type %></td>
+              <td><%= curri.location %></td>
+              <td><%= curri.date %></td>
+              <td><% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "100x100" %><% end %></td>
+            </tr> 
             <% end %>
+            </table>
             <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -201,15 +278,24 @@
 
           <div id="JobseekerFutureGoal">
           <% if @user.user_future_goals.count > 0 %>
-            <% @user.user_future_goals.each do |future| %>     
+                 <table>
             <tr >
-              <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
-              <p><strong class="text_color" >Goal Type :</strong> <%= future.goal_type %> </p>
-              <p><strong class="text_color" >Title :</strong> <%= future.title %> </p>
-              <p><strong class="text_color" >Term Type :</strong> <%= future.term_type %> </p>
-              <p><strong class="text_color" >File :</strong> <% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "100x100" %><% end %></p><hr/>
+              <th><strong class="text_color" >Id :</strong></th>
+              <th><strong class="text_color" >Goal Type :</strong></th>
+              <th><strong class="text_color" >Title :</strong></th>
+              <th><strong class="text_color" >Term Type :</strong></th>
+              <th><strong class="text_color" >File :</strong></th>
+            </tr>
+            <% @user.user_future_goals.each do |future| %>
+            <tr >
+              <td><%= future.id %></td>
+              <td><%= future.goal_type %></td>
+              <td><%= future.title %></td>
+              <td><%= future.term_type %></td>
+              <td><% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "100x100" %><% end %></td>
             </tr>
             <% end %>
+            </table>
             <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -217,13 +303,20 @@
 
           <div id="JobseekerWorkingEnvironment">
           <% if @user.user_environments.count > 0 %>
+          <table>
+            <tr >
+              <th><strong class="text_color" >Env Type :</strong></th>
+              <th><strong class="text_color" >Title :</strong></th>
+              <th><strong class="text_color" >File :</strong></th>
+            </tr>
             <% @user.user_environments.each do |work_env| %>     
             <tr >
-              <p><strong class="text_color" >Env Type :</strong> <%= work_env.env_type %> </p>
-              <p><strong class="text_color" >Title :</strong> <%= work_env.title %> </p>
-              <p><strong class="text_color" >File :</strong> <% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></p><hr/>
+              <td><%= work_env.env_type %></td>
+              <td><%= work_env.title %></td>
+              <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></td>
             </tr>
             <% end %>
+            </table>
             <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -231,18 +324,30 @@
 
           <div id="JobseekerReferences">
           <% if @user.user_references.count > 0 %>
+            <table>     
+            <tr >
+              <th><strong class="text_color" >Title :</strong></th>
+              <th><strong class="text_color" >Reference Type :</strong></th>
+              <th><strong class="text_color" >From :</strong></th>
+              <th><strong class="text_color" >Email :</strong></th>
+              <th><strong class="text_color" >Contact :</strong></th>
+              <th><strong class="text_color" >Date :</strong></th>
+              <th><strong class="text_color" >Location :</strong></th>
+              <th><strong class="text_color" >File :</strong></th>
+            </tr>
             <% @user.user_references.each do |ref| %>     
             <tr >
-              <p><strong class="text_color" >Title :</strong> <%= ref.title %> </p>
-              <p><strong class="text_color" >Reference Type :</strong> <%= ref.ref_type %> </p>
-              <p><strong class="text_color" >From :</strong> <%= ref.from %> </p>
-              <p><strong class="text_color" >Email :</strong> <%= ref.email %> </p>
-              <p><strong class="text_color" >Contact :</strong> <%= ref.contact %> </p>
-              <p><strong class="text_color" >Date :</strong> <%= ref.date %> </p>
-              <p><strong class="text_color" >Location :</strong> <%= ref.location %> </p>
-              <p><strong class="text_color" >File :</strong> <% if ref.file_type == 'video' %><%= video_tag ref.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag ref.thumb_url, :size => "100x100" %><% end %></p><hr/>
+              <td><%= ref.title %></td>
+              <td><%= ref.ref_type %></td>
+              <td><%= ref.from %></td>
+              <td><%= ref.email %></td>
+              <td><%= ref.contact %></td>
+              <td><%= ref.date %></td>
+              <td><%= ref.location %></td>
+              <td><% if ref.file_type == 'video' %><%= video_tag ref.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag ref.thumb_url, :size => "100x100" %><% end %></td>
             </tr>
             <% end %>
+            </table>
             <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -264,17 +369,27 @@
 <p><strong class="text_color" >Company Contact:</strong> <%= @user.company_contact %> </p>
 <p><strong class="text_color" >Company Skype Id:</strong> <%= @user.company_skype_id %> </p>
 <p><strong class="text_color" >Company:</strong> <%= @user.company_id %> </p>
-<p><strong class="text_color" >All Percentage:</strong>
-<div style="margin-left:50px;">
-Company Info :<%= @user.user_meter.company_info_per.to_i %></br>
-Corporate Identity :<%= @user.user_meter.corporate_identity_per.to_i %></br>
-Growth And Goal :<%= @user.user_meter.growth_and_goal_per.to_i %></br>
-Company Tribute :<%= @user.user_meter.achievement_per.to_i %></br>
-Gallery :<%= @user.user_meter.galery_per.to_i %></br>
-Working Environment :<%= @user.user_meter.working_env_per.to_i %></br>
-Total :<%= @user.user_meter.total_per.to_i %>
-</div>
-</p>
+<p><strong class="text_color" >All Percentage:</strong></p>
+<table>
+    <tr>
+      <th>Company Info</th>
+      <th>Corporate Identity</th>
+      <th>Growth And Goal</th>
+      <th>Company Tribute</th>
+      <th>Gallery</th>
+      <th>Working Environment</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <td><%= @user.user_meter.company_info_per.to_i %></td>
+      <td><%= @user.user_meter.corporate_identity_per.to_i %></td>
+      <td><%= @user.user_meter.growth_and_goal_per.to_i %></td>
+      <td><%= @user.user_meter.achievement_per.to_i %></td>
+      <td><%= @user.user_meter.galery_per.to_i %></td>
+      <td><%= @user.user_meter.working_env_per.to_i %></td>
+      <td><%= @user.user_meter.total_per.to_i %></td>
+    </tr>
+  </table>
 </div>
 
 <div id="CompanyCorporate">          
@@ -313,15 +428,22 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="CompanyAwards">          
   <h4 class="text_decoration"><b> Company Awards </b></h4>
   <% if @user.user_awards.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Name :</strong></th>
+    <th><strong class="text_color" >Award Type :</strong></th>
+    <th><strong class="text_color" >Description :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_awards.each do |award| %>     
   <tr >
-    <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
-    <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
-    <p><strong class="text_color" >Description :</strong> <%= award.description %> </p>
-    <p><strong class="text_color" >File :</strong> <% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= award.name %></td>
+    <td><%= award.award_type %></td>
+    <td><%= award.description %></td>
+    <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
-
+</table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -331,13 +453,18 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="CompanyCertificates">          
   <h4 class="text_decoration"><b> Company Certificates </b></h4>
   <% if @user.user_certificates.count > 0 %>
+  <table>
+  <tr >
+    <th><strong class="text_color" >File Type :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_certificates.each do |certi| %>     
   <tr >
-    <p><strong class="text_color" >File Type :</strong> <%= certi.file_type %> </p>
-    <p><strong class="text_color" >File :</strong> <%= image_tag certi.thumb_url, :size => "100x100" %></p><hr/>
+    <td><%= certi.file_type %></td>
+    <td><%= image_tag certi.thumb_url, :size => "100x100" %></td>
   </tr>
   <% end %>
-
+</table>     
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -347,28 +474,34 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="CompanyGallery">          
   <h4 class="text_decoration"><b> Company Gallery </b></h4>
   <% if @user.company_galeries.count > 0 %>
-  <% @user.company_galeries.each do |galery| %>     
-  <tr >
-    <p><strong class="text_color" >Env Type :</strong> <%= galery.env_type %> </p>
-    <p><strong class="text_color" >Title :</strong> <%= galery.title %> </p>
-    <p><strong class="text_color" >File :</strong> <% if galery.file_type == 'video' %><%= video_tag galery.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag galery.thumb_url, :size => "100x100" %><% end %></p><hr/>
-  </tr>
+  <% @user.company_galeries.each do |galery| %>
+  <div class="img">
+    <%= image_tag galery.thumb_url, :size => "100x100" %>
+    <div class="desc">Add a description of the image here</div>
+  </div>
   <% end %>
   <% else %>
-                            <p><strong class="text_color" >No Records Found.</strong></p>
-            <% end %>
+  <p><strong class="text_color" >No Records Found.</strong></p>
+  <% end %>
 </div>
 
 <div id="CompanyWorkingEnvironment">          
   <h4 class="text_decoration"><b> Company Working Environment </b></h4>
   <% if @user.user_environments.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Env Type :</strong></th>
+    <th><strong class="text_color" >Title :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_environments.each do |work_env| %>     
   <tr >
-    <p><strong class="text_color" >Env Type :</strong> <%= work_env.env_type %> </p>
-    <p><strong class="text_color" >Title :</strong> <%= work_env.title %> </p>
-    <p><strong class="text_color" >File :</strong> <% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= work_env.env_type %></td>
+    <td><%= work_env.title %></td>
+    <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -386,29 +519,48 @@ Total :<%= @user.user_meter.total_per.to_i %>
   <p><strong class="text_color" >Join From:</strong> <%= @user.faculty_join_from %> </p>
   <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "100x100" %><% end %></p>
   <p><strong class="text_color" >File URL:</strong> <%= @user.file.url %></p>
-  <p><strong class="text_color" >All Percentage:</strong>
-    <div style="margin-left:50px;">
-      Basic Info :<%= @user.user_meter.faculty_basic_info_per.to_i %></br>
-      Experience :<%= @user.user_meter.experience_per.to_i %></br>
-      Achievement :<%= @user.user_meter.achievement_per.to_i %></br>
-      Total :<%= @user.user_meter.total_per.to_i %>         
-    </div>    
-  </p>
+  <p><strong class="text_color" >All Percentage:</strong></p>
+  <table>
+    <tr>
+      <th>Basic Info</th>
+      <th>Experience</th>
+      <th>Achievement</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <td><%= @user.user_meter.faculty_basic_info_per.to_i %></td>
+      <td><%= @user.user_meter.experience_per.to_i %></td>
+      <td><%= @user.user_meter.achievement_per.to_i %></td>
+      <td><%= @user.user_meter.total_per.to_i %></td>
+    </tr>
+  </table>
+      
+  
 </div>
 
 <div id="FacultyAffiliation">          
   <h4 class="text_decoration"><b> Faculty Affiliation </b></h4>
   <% if @user.faculty_affiliations.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >University :</strong></th>
+    <th><strong class="text_color" >Collage Name :</strong></th>
+    <th><strong class="text_color" >Subject :</strong></th>
+    <th><strong class="text_color" >Designation :</strong></th>
+    <th><strong class="text_color" >Join From :</strong></th>
+    <th><strong class="text_color" >Join Till :</strong></th>
+  </tr>
   <% @user.faculty_affiliations.each do |affiliation| %>     
   <tr >
-    <p><strong class="text_color" >University :</strong> <%= affiliation.university %> </p>
-    <p><strong class="text_color" >Collage Name :</strong> <%= affiliation.collage_name %> </p>
-    <p><strong class="text_color" >Subject :</strong> <%= affiliation.subject %> </p>
-    <p><strong class="text_color" >Designation :</strong> <%= affiliation.designation %> </p>
-    <p><strong class="text_color" >Join From :</strong> <%= affiliation.join_from %> </p>
-    <p><strong class="text_color" >Join Till :</strong> <%= affiliation.join_till %> </p>
+    <td><%= affiliation.university %></td>
+    <td><%= affiliation.collage_name %></td>
+    <td><%= affiliation.subject %></td>
+    <td><%= affiliation.designation %></td>
+    <td><%= affiliation.join_from %></td>
+    <td><%= affiliation.join_till %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -417,11 +569,16 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="FacultyWorkshop">          
   <h4 class="text_decoration"><b> Faculty Workshop </b></h4>
   <% if @user.faculty_workshops.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Description :</strong></th>
+  </tr>
   <% @user.faculty_workshops.each do |workshop| %>     
   <tr >
-    <p><strong class="text_color" >Description :</strong> <%= workshop.description %> </p>
+    <td><%= workshop.description %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -430,15 +587,24 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="FacultyPublication">          
   <h4 class="text_decoration"><b> Faculty Publication </b></h4>
   <% if @user.faculty_publications.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Title :</strong></th>
+    <th><strong class="text_color" >Description :</strong></th>
+    <th><strong class="text_color" >File Type :</strong></th>
+    <th><strong class="text_color" >Text Field :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.faculty_publications.each do |publication| %>     
   <tr >
-    <p><strong class="text_color" >Title :</strong> <%= publication.title %> </p>
-    <p><strong class="text_color" >Description :</strong> <%= publication.description %> </p>
-    <p><strong class="text_color" >File Type :</strong> <%= publication.file_type %> </p>
-    <p><strong class="text_color" >Text Field :</strong> <%= publication.text_field %> </p>
-    <p><strong class="text_color" >File :</strong> <% publication.file.url %> </p><hr/>
+    <td><%= publication.title %></td>
+    <td><%= publication.description %></td>
+    <td><%= publication.file_type %></td>
+    <td><%= publication.text_field %></td>
+    <td><% publication.file.url %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -447,15 +613,24 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="FacultyResearch">          
   <h4 class="text_decoration"><b> Faculty Research </b></h4>
   <% if @user.faculty_researches.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Title :</strong></th>
+    <th><strong class="text_color" >Description :</strong></th>
+    <th><strong class="text_color" >File Type :</strong></th>
+    <th><strong class="text_color" >Text Field :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.faculty_researches.each do |research| %>     
   <tr >
-    <p><strong class="text_color" >Title :</strong> <%= research.title %> </p>
-    <p><strong class="text_color" >Description :</strong> <%= research.description %> </p>
-    <p><strong class="text_color" >File Type :</strong> <%= research.file_type %> </p>
-    <p><strong class="text_color" >Text Field :</strong> <%= research.text_field %> </p>
-    <p><strong class="text_color" >File :</strong> <% research.file.url %> </p><hr/>
+    <td><%= research.title %></td>
+    <td><%= research.description %></td>
+    <td><%= research.file_type %></td>
+    <td><%= research.text_field %></td>
+    <td><% research.file.url %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -464,14 +639,22 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="FacultyAwards">          
   <h4 class="text_decoration"><b> Faculty Awards </b></h4>
   <% if @user.user_awards.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Name :</strong></th>
+    <th><strong class="text_color" >Award Type :</strong></th>
+    <th><strong class="text_color" >Description :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_awards.each do |award| %>     
   <tr >
-    <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
-    <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
-    <p><strong class="text_color" >Description :</strong> <%= award.description %> </p>
-    <p><strong class="text_color" >File :</strong> <% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= award.name %></td>
+    <td><%= award.award_type %></td>
+    <td><%= award.description %></td>
+    <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -480,14 +663,22 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="FacultyCertificates">          
   <h4 class="text_decoration"><b> Faculty Certificates </b></h4>
   <% if @user.user_certificates.count > 0 %>
+  <table>
+  <tr >
+    <th><strong class="text_color" >Name :</strong></th>
+    <th><strong class="text_color" >Certificate Type :</strong></th>
+    <th><strong class="text_color" >Year :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_certificates.each do |certi| %>     
   <tr >
-    <p><strong class="text_color" >Name :</strong> <%= certi.name %> </p>
-    <p><strong class="text_color" >Certificate Type :</strong> <%= certi.certificate_type %> </p>
-    <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p>
-    <p><strong class="text_color" >File :</strong> <% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= certi.name %></td>
+    <td><%= certi.certificate_type %></td>
+    <td><%= certi.year %></td>
+    <td><% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -501,27 +692,45 @@ Total :<%= @user.user_meter.total_per.to_i %>
   <p><strong class="text_color" >First Name:</strong> <%= @user.first_name %> </p>
   <p><strong class="text_color" >File:</strong> <% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "100x100" %><% end %></p>
   <p><strong class="text_color" >File URL:</strong> <%= @user.file.url %></p>
-  <p><strong class="text_color" >All Percentage:</strong>
-    <div style="margin-left:50px;">
-      Basic Info :<%= @user.user_meter.student_basic_info_per.to_i %></br>
-      Education :<%= @user.user_meter.student_education_per.to_i %></br>
-      Achievement :<%= @user.user_meter.achievement_per.to_i %></br>
-      Extra Curricular :<%= @user.user_meter.curri_per.to_i %></br>
-      Total :<%= @user.user_meter.total_per.to_i %>    
+  <p><strong class="text_color" >All Percentage:</strong></p>  
+ <table>
+    <tr>
+      <th>Basic Info</th>
+      <th>Education</th>
+      <th>Achievement</th>
+      <th>Extra Curricular</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <td><%= @user.user_meter.student_basic_info_per.to_i %></td>
+      <td><%= @user.user_meter.student_education_per.to_i %></td>
+      <td><%= @user.user_meter.achievement_per.to_i %></td>
+      <td><%= @user.user_meter.curri_per.to_i %></td>
+      <td><%= @user.user_meter.total_per.to_i %></td>
+    </tr>
+  </table>
+
+
     </div>
-  </p>  
 </div>
 
 <div id="StudentEducation">          
   <h4 class="text_decoration"><b> Student Education </b></h4>
   <% if @user.student_educations.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >standard :</strong></th>
+    <th><strong class="text_color" >School :</strong></th>
+    <th><strong class="text_color" >Year :</strong></th>
+  </tr>
   <% @user.student_educations.each do |stu_edu| %>     
   <tr >
-    <p><strong class="text_color" >standard :</strong> <%= stu_edu.standard %> </p>
-    <p><strong class="text_color" >School :</strong> <%= stu_edu.school %> </p>
-    <p><strong class="text_color" >Year :</strong> <%= stu_edu.year %> </p>
+    <td><%= stu_edu.standard %></td>
+    <td><%= stu_edu.school %></td>
+    <td><%= stu_edu.year %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -530,16 +739,26 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="StudentMarksheet">          
   <h4 class="text_decoration"><b> Student Marksheet </b></h4>
   <% if @user.user_marksheets.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >School Name :</strong></th>
+    <th><strong class="text_color" >Standard :</strong></th>
+    <th><strong class="text_color" >Grade :</strong></th>
+    <th><strong class="text_color" >Year :</strong></th>
+    <th><strong class="text_color" >File Type :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_marksheets.each do |marksheet| %>     
   <tr >
-    <p><strong class="text_color" >School Name :</strong> <%= marksheet.school_name %> </p>
-    <p><strong class="text_color" >Standard :</strong> <%= marksheet.standard %> </p>
-    <p><strong class="text_color" >Grade :</strong> <%= marksheet.grade %> </p>
-    <p><strong class="text_color" >Year :</strong> <%= marksheet.year %> </p>
-    <p><strong class="text_color" >File Type :</strong> <%= marksheet.file_type %></p>
-    <p><strong class="text_color" >File :</strong> <%= marksheet.file.url %></p><hr/>
+    <td><%= marksheet.school_name %></td>
+    <td><%= marksheet.standard %></td>
+    <td><%= marksheet.grade %></td>
+    <td><%= marksheet.year %></td>
+    <td><%= marksheet.file_type %></td>
+    <td><%= marksheet.file.url %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -548,12 +767,18 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="StudentProject">          
   <h4 class="text_decoration"><b> Student Project </b></h4>
   <% if @user.user_projects.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Title :</strong></th>
+    <th><strong class="text_color" >Description :</strong></th>
+  </tr>
   <% @user.user_projects.each do |project| %>     
   <tr >
-    <p><strong class="text_color" >Title :</strong> <%= project.title %> </p>
-    <p><strong class="text_color" >Description :</strong> <%= project.description %> </p>
+    <td><%= project.title %></td>
+    <td><%= project.description %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -562,14 +787,22 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="StudentAwards">          
   <h4 class="text_decoration"><b> Student Awards </b></h4>
   <% if @user.user_awards.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Name :</strong></th>
+    <th><strong class="text_color" >Award Type :</strong></th>
+    <th><strong class="text_color" >Description :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_awards.each do |award| %>     
   <tr >
-    <p><strong class="text_color" >Name :</strong> <%= award.name %> </p>
-    <p><strong class="text_color" >Award Type :</strong> <%= award.award_type %> </p>
-    <p><strong class="text_color" >Description :</strong> <%= award.description %> </p>
-    <p><strong class="text_color" >File :</strong> <% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= award.name %></td>
+    <td><%= award.award_type %></td>
+    <td><%= award.description %></td>
+    <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -578,14 +811,22 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="StudentCertificates">          
   <h4 class="text_decoration"><b> Student Certificates </b></h4>
   <% if @user.user_certificates.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Name :</strong></th>
+    <th><strong class="text_color" >Certificate Type :</strong></th>
+    <th><strong class="text_color" >Year :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_certificates.each do |certi| %>     
   <tr >
-    <p><strong class="text_color" >Name :</strong> <%= certi.name %> </p>
-    <p><strong class="text_color" >Certificate Type :</strong> <%= certi.certificate_type %> </p>
-    <p><strong class="text_color" >Year :</strong> <%= certi.year %> </p>
-    <p><strong class="text_color" >File :</strong> <% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= certi.name %></td>
+    <td><%= certi.certificate_type %></td>
+    <td><%= certi.year %></td>
+    <td><% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -594,15 +835,24 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="StudentCurricular">          
   <h4 class="text_decoration"><b> Student Curricular </b></h4>
   <% if @user.user_curriculars.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Curricular Type :</strong></th>
+    <th><strong class="text_color" >Team Type :</strong></th>
+    <th><strong class="text_color" >Location :</strong></th>
+    <th><strong class="text_color" >Date :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_curriculars.each do |curri| %>     
   <tr >
-    <p><strong class="text_color" >Curricular Type :</strong> <%= curri.curricular_type %> </p>
-    <p><strong class="text_color" >Team Type :</strong> <%= curri.team_type %> </p>
-    <p><strong class="text_color" >Location :</strong> <%= curri.location %> </p>
-    <p><strong class="text_color" >Date :</strong> <%= curri.date %> </p>
-    <p><strong class="text_color" >File :</strong> <% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= curri.curricular_type %></td>
+    <td><%= curri.team_type %></td>
+    <td><%= curri.location %></td>
+    <td><%= curri.date %></td>
+    <td><% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -611,15 +861,24 @@ Total :<%= @user.user_meter.total_per.to_i %>
 <div id="StudentFutureGoal">          
   <h4 class="text_decoration"><b> Student FutureGoal </b></h4>
   <% if @user.user_future_goals.count > 0 %>
+  <table>     
+  <tr >
+    <th><strong class="text_color" >Id :</strong></th>
+    <th><strong class="text_color" >Goal Type :</strong></th>
+    <th><strong class="text_color" >Title :</strong></th>
+    <th><strong class="text_color" >Term Type :</strong></th>
+    <th><strong class="text_color" >File :</strong></th>
+  </tr>
   <% @user.user_future_goals.each do |future| %>     
   <tr >
-    <p><strong class="text_color" >Id :</strong> <%= future.id %> </p>
-    <p><strong class="text_color" >Goal Type :</strong> <%= future.goal_type %> </p>
-    <p><strong class="text_color" >Title :</strong> <%= future.title %> </p>
-    <p><strong class="text_color" >Term Type :</strong> <%= future.term_type %> </p>
-    <p><strong class="text_color" >File :</strong> <% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "100x100" %><% end %></p><hr/>
+    <td><%= future.id %></td>
+    <td><%= future.goal_type %></td>
+    <td><%= future.title %></td>
+    <td><%= future.term_type %></td>
+    <td><% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "100x100" %><% end %></td>
   </tr>
   <% end %>
+  </table>
   <% else %>
                             <p><strong class="text_color" >No Records Found.</strong></p>
             <% end %>
@@ -640,3 +899,43 @@ Total :<%= @user.user_meter.total_per.to_i %>
     </div>
   </div>
 </div>
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+div.img {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+}
+
+div.img:hover {
+    border: 1px solid #777;
+}
+
+div.img img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+</style>
