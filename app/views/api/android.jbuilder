@@ -34,7 +34,8 @@ if @user
 		json.rates @user.rates.count
 		
 	elsif @user.role == 'Company'
-		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field
+		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type
+      
 
 		json.logo_thumb @user.logo_thumb_url
 		json.logo @user.company_logo.url		
@@ -126,7 +127,7 @@ end
 
 if @company
 	
-		json.User @company, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
+		json.User @company, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type
 
 		json.logo_thumb @company.logo_thumb_url
 		json.logo @company.company_logo.url		
@@ -198,7 +199,7 @@ if @users
 					json.rates user.rates.count
 
 				elsif user.role == "Company"
-						json.extract! user, :id, :username, :role, :company_name, :company_establish_from,  :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id,  :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
+						json.extract! user, :id, :username, :role, :company_name, :company_establish_from,  :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id,  :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type
 
 						json.logo_thumb user.logo_thumb_url
 						json.logo user.company_logo.url

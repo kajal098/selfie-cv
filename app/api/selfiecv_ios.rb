@@ -1051,9 +1051,9 @@ resources :company do
       requires :company_logo
       requires :company_logo_type
       optional :company_profile
-      requires :company_profile_type
+      optional :company_profile_type
       optional :company_brochure        
-      requires :company_brochure_type  
+      optional :company_brochure_type  
       optional :company_website
       optional :company_facebook_link
     end
