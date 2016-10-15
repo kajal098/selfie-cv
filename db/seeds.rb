@@ -111,8 +111,6 @@ UserPercentage.create(ptype: 'site', key: 'profilemeter', value: 10)
 
 user = User.create(email: 'admin@example.com', password: '12345678' , username: 'admin' , role: 'Admin', user_total_per:10 )
 user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
-user = User.create(email: 'michel@example.com', password: '12345678' , username: 'michel' , role: 'Admin', user_total_per:20 )
-user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
 
 # user = User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student', first_name: 'trupti' , user_total_per:30) 
 # user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
@@ -423,16 +421,6 @@ Specialization.create(name: "mining")
 # UserReference.create(user_id: 20, title: 'own ref', ref_type: 'company', from: 'miss.anna', email: 'one@gmail.com', contact: '1234567890', date: '30/11/2011', location: 'zawer')
 # UserReference.create(user_id: 21, title: 'own ref', ref_type: 'company', from: 'miss.anna', email: 'one@gmail.com', contact: '1234567890', date: '30/11/2011', location: 'zawer')
 # UserReference.create(user_id: 22, title: 'own ref', ref_type: 'company', from: 'miss.anna', email: 'one@gmail.com', contact: '1234567890', date: '30/11/2011', location: 'zawer')
-
-
-# StudentEducation.create(user_id:3, standard:'wwww', year:2011, school:'gggg')
-# StudentEducation.create(user_id:3, standard:'wwww', year:2011, school:'gggg')
-# StudentEducation.create(user_id:4, standard:'gggg', year:2011, school:'ssss')
-# StudentEducation.create(user_id:4, standard:'gggg', year:2011, school:'ssss')
-# StudentEducation.create(user_id:5, standard:'wwww', year:2011, school:'gggg')
-# StudentEducation.create(user_id:5, standard:'wwww', year:2011, school:'gggg')
-# StudentEducation.create(user_id:6, standard:'gggg', year:2011, school:'ssss')
-# StudentEducation.create(user_id:6, standard:'gggg', year:2011, school:'ssss')
 
 # UserMarksheet.create(user_id: 7,school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)
 # UserMarksheet.create(user_id: 8,school_name: 'qwertyu', standard: 'third', grade: 'C', year: 2011)
