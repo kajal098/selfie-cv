@@ -13,7 +13,9 @@ end
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info, :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total
+after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
+ :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
+ :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -221,62 +223,62 @@ end
 def profile_meter_total
     if self.role == "Jobseeker"
         setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
-        resume_per = self.user_meter.resume_info_per + self.user_meter.education_per + self.user_meter.experience_per + self.user_meter.prework_per
+        resume_per = @user_meter.resume_info_per + @user_meter.education_per + @user_meter.experience_per + @user_meter.prework_per
         resume_per = (resume_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('resume_per' ,resume_per)
+        @user_meter.update_column('resume_per' ,resume_per)
 
         setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Jobseeker").first
-        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = @user_meter.award_per + @user_meter.certificate_per
         achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        @user_meter.update_column('achievement_per' ,achievement_per)  
         
-        total = self.user_meter.resume_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.whizquiz_per + self.user_meter.future_goal_per + self.user_meter.working_env_per + self.user_meter.ref_per
-        self.user_meter.update_column('profile_meter_per' ,total)  
+        total = @user_meter.resume_per + @user_meter.achievement_per + @user_meter.curri_per + @user_meter.whizquiz_per + @user_meter.future_goal_per + @user_meter.working_env_per + @user_meter.ref_per
+        @user_meter.update_column('profile_meter_per' ,total)  
         
     elsif self.role == "Company"
 
         setting_per = UserPercentage.where(key: 'growth').where(ptype: "Company").first
-        growth_and_goal_per = self.user_meter.evalution_per + self.user_meter.future_goal_per
+        growth_and_goal_per = @user_meter.evalution_per + @user_meter.future_goal_per
         growth_and_goal_per = (growth_and_goal_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('growth_and_goal_per' ,growth_and_goal_per)
+        @user_meter.update_column('growth_and_goal_per' ,growth_and_goal_per)
 
         setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Company").first
-        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = @user_meter.award_per + @user_meter.certificate_per
         achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        @user_meter.update_column('achievement_per' ,achievement_per)  
         
-        total = self.user_meter.company_info_per + self.user_meter.corporate_identity_per + self.user_meter.growth_and_goal_per + self.user_meter.achievement_per + self.user_meter.galery_per + self.user_meter.working_env_per
-        self.user_meter.update_column('profile_meter_per' ,total)  
+        total = @user_meter.company_info_per + @user_meter.corporate_identity_per + @user_meter.growth_and_goal_per + @user_meter.achievement_per + @user_meter.galery_per + @user_meter.working_env_per
+        @user_meter.update_column('profile_meter_per' ,total)  
         
     elsif self.role == "Student"
 
         setting_per = UserPercentage.where(key: 'education').where(ptype: "Student").first
-        student_education_per = self.user_meter.student_education_info_per + self.user_meter.student_marksheet_per + self.user_meter.student_project_per
+        student_education_per = @user_meter.student_education_info_per + @user_meter.student_marksheet_per + @user_meter.student_project_per
         student_education_per = (student_education_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('student_education_per' ,student_education_per)
+        @user_meter.update_column('student_education_per' ,student_education_per)
 
         setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Student").first
-        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = @user_meter.award_per + @user_meter.certificate_per
         achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        @user_meter.update_column('achievement_per' ,achievement_per)  
         
-        total = self.user_meter.student_basic_info_per + self.user_meter.student_education_per + self.user_meter.achievement_per + self.user_meter.curri_per + self.user_meter.future_goal_per
-        self.user_meter.update_column('profile_meter_per' ,total)
+        total = @user_meter.student_basic_info_per + @user_meter.student_education_per + @user_meter.achievement_per + @user_meter.curri_per + @user_meter.future_goal_per
+        @user_meter.update_column('profile_meter_per' ,total)
         
     elsif self.role == "Faculty"
 
         setting_per = UserPercentage.where(key: 'experience').where(ptype: "Faculty").first
-        experience_per = self.user_meter.faculty_affiliation_per + self.user_meter.faculty_workshop_per + self.user_meter.faculty_publication_per + self.user_meter.faculty_research_per
+        experience_per = @user_meter.faculty_affiliation_per + @user_meter.faculty_workshop_per + @user_meter.faculty_publication_per + @user_meter.faculty_research_per
         experience_per = (experience_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('experience_per' ,experience_per)
+        @user_meter.update_column('experience_per' ,experience_per)
 
         setting_per = UserPercentage.where(key: 'achievement').where(ptype: "Faculty").first
-        achievement_per = self.user_meter.award_per + self.user_meter.certificate_per
+        achievement_per = @user_meter.award_per + @user_meter.certificate_per
         achievement_per = (achievement_per.to_i * setting_per.value.to_i) / 100
-        self.user_meter.update_column('achievement_per' ,achievement_per)  
+        @user_meter.update_column('achievement_per' ,achievement_per)  
         
-        total = self.user_meter.faculty_basic_info_per + self.user_meter.achievement_per + self.user_meter.experience_per
-        self.user_meter.update_column('profile_meter_per' ,total)
+        total = @user_meter.faculty_basic_info_per + @user_meter.achievement_per + @user_meter.experience_per
+        @user_meter.update_column('profile_meter_per' ,total)
         
     end
     return true
@@ -293,7 +295,7 @@ def like_per
         elsif @count >= UserPercentage.find_by_key('like_third').value.to_i
             @like_per = setting_per * 1
         end
-        self.user_meter.update_column('like_per' ,@like_per)    
+        @user_meter.update_column('like_per' ,@like_per)    
 end
 
 def view_per
@@ -305,7 +307,7 @@ def view_per
         elsif @count >= UserPercentage.find_by_key('view_second').value.to_i
             @view_per = setting_per * 1
         end
-        self.user_meter.update_column('view_per' ,@view_per)            
+        @user_meter.update_column('view_per' ,@view_per)            
 end
 
 def share_per
@@ -317,7 +319,7 @@ def share_per
         elsif @count >= UserPercentage.find_by_key('share_second').value.to_i
             @share_per = setting_per * 1
         end
-        self.user_meter.update_column('share_per' ,@share_per)    
+        @user_meter.update_column('share_per' ,@share_per)    
 end
 
 def bronze_per
@@ -325,40 +327,40 @@ def bronze_per
         setting_per = UserPercentage.find_by_key('star').value.to_i
         bronze_setting_per = setting_per.to_f * 0.2
         @bronze_per = 0
-        if @count >= UserPercentage.find_by_key('rate_first').value.to_i && @count <= UserPercentage.find_by_key('rate_second').value.to_i 
+        if @count >= UserPercentage.find_by_key('star_first').value.to_i && @count <= UserPercentage.find_by_key('star_second').value.to_i 
             @bronze_per = @count * bronze_setting_per * 0.004
-        elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
+        elsif @count >= UserPercentage.find_by_key('star_second').value.to_i 
             @bronze_per = bronze_setting_per * 1
         end
-        self.user_meter.update_column('bronze_per' ,@bronze_per)    
+        @user_meter.update_column('bronze_per' ,@bronze_per)    
 end
 def silver_per
         @count = self.silver_rates.count
         setting_per = UserPercentage.find_by_key('star').value.to_i
         silver_setting_per = setting_per.to_f * 0.3
         @silver_per = 0
-        if @count >= UserPercentage.find_by_key('rate_first').value.to_i && @count <= UserPercentage.find_by_key('rate_second').value.to_i 
+        if @count >= UserPercentage.find_by_key('star_first').value.to_i && @count <= UserPercentage.find_by_key('star_second').value.to_i 
             @silver_per = @count * silver_setting_per * 0.004
-        elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
+        elsif @count >= UserPercentage.find_by_key('star_second').value.to_i 
             @silver_per = silver_setting_per * 1
         end
-        self.user_meter.update_column('silver_per' ,@silver_per)    
+        @user_meter.update_column('silver_per' ,@silver_per)    
 end
 def gold_per
         @count = self.gold_rates.count
         setting_per = UserPercentage.find_by_key('star').value.to_i
         gold_setting_per = setting_per.to_f * 0.5
         @gold_per = 0
-        if @count >= UserPercentage.find_by_key('rate_first').value.to_i && @count <= UserPercentage.find_by_key('rate_second').value.to_i 
+        if @count >= UserPercentage.find_by_key('star_first').value.to_i && @count <= UserPercentage.find_by_key('star_second').value.to_i 
             @gold_per = @count * gold_setting_per * 0.004
-        elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
+        elsif @count >= UserPercentage.find_by_key('star_second').value.to_i 
             @gold_per = silver_setting_per * 1
         end
-        self.user_meter.update_column('gold_per' ,@gold_per)    
+        @user_meter.update_column('gold_per' ,@gold_per)    
 end
 def rate_per
-        @rate_per = (self.bronze_per + self.silver_per + self.gold_per).round(2)
-        self.user_meter.update_column('rate_per' ,@rate_per)    
+        @rate_per = (@user_meter.bronze_per + @user_meter.silver_per + @user_meter.gold_per).round(2)
+        @user_meter.update_column('rate_per' ,@rate_per)    
 end
 
 def update_info_per
@@ -372,12 +374,12 @@ def update_info_per
         elsif @count >= UserPercentage.find_by_key('update_third').value.to_i 
             @update_info_per = setting_per * 1
         end
-        self.user_meter.update_column('update_info_per' ,@update_info_per)    
+        @user_meter.update_column('update_info_per' ,@update_info_per)    
 end
 
 def cal_total_per
-        total_per = self.user_meter.like_per + self.user_meter.view_per + self.user_meter.share_per + self.user_meter.rate_per + self.user_meter.profile_meter_per + self.user_meter.update_info_per + 0 + 0
-        self.user_meter.update_column('total_per' ,total_per)          
+        total_per = @user_meter.like_per + @user_meter.view_per + @user_meter.share_per + @user_meter.rate_per + @user_meter.profile_meter_per + @user_meter.update_info_per + 0 + 0
+        @user_meter.update_column('total_per' ,total_per)          
     return true
 end
 
