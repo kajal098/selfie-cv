@@ -251,8 +251,6 @@ UserCertificate.create(user_id: 21,name:'mno', certificate_type:'jkl', year:2011
 UserCertificate.create(user_id: 22,name:'mno', certificate_type:'jkl', year:2011)
 
 
-UserCurricular.create(user_id: 1, curricular_type:'xyz', team_type:'abc', location:'jamnagar', date:'22/11/2011')
-UserCurricular.create(user_id: 2, curricular_type:'vcd', team_type:'cds', location:'junagadh', date:'22/11/2011')
 UserCurricular.create(user_id: 3, curricular_type:'vcd', team_type:'cds', location:'junagadh', date:'22/11/2011')
 UserCurricular.create(user_id: 4, curricular_type:'xyz', team_type:'abc', location:'jamnagar', date:'22/11/2011')
 UserCurricular.create(user_id: 5, curricular_type:'xyz', team_type:'abc', location:'jamnagar', date:'22/11/2011')
@@ -274,8 +272,6 @@ UserCurricular.create(user_id: 20, curricular_type:'vcd', team_type:'cds', locat
 UserCurricular.create(user_id: 21, curricular_type:'xyz', team_type:'abc', location:'jamnagar', date:'22/11/2011')
 UserCurricular.create(user_id: 22, curricular_type:'vcd', team_type:'cds', location:'junagadh', date:'22/11/2011')
 
-UserEducation.create(user_id: 1, course_id:1, specialization_id:1,  year:2011, school: 'modi', skill: 'singing')
-UserEducation.create(user_id: 2, course_id:2, specialization_id:2,  year:2011, school: 'vivekanand', skill: 'dancing')
 UserEducation.create(user_id: 3, course_id:3, specialization_id:3,  year:2011, school: 'modi', skill: 'singing')
 UserEducation.create(user_id: 4, course_id:4, specialization_id:4,  year:2011, school: 'vivekanand', skill: 'dancing')
 UserEducation.create(user_id: 5, course_id:5, specialization_id:5,  year:2011, school: 'vivekanand', skill: 'dancing')
@@ -319,8 +315,6 @@ StudentEducation.create(user_id: 8, standard: 'abcdefg',  year:2011, school: 'vi
 
 
 
-UserEnvironment.create(user_id: 1, env_type: 'qwert', title: 'title')
-UserEnvironment.create(user_id: 2, env_type: 'cvfds', title: 'dfgtr')
 UserEnvironment.create(user_id: 3, env_type: 'qwert', title: 'title')
 UserEnvironment.create(user_id: 4, env_type: 'qwert', title: 'title')
 UserEnvironment.create(user_id: 5, env_type: 'qwert', title: 'title')
@@ -343,8 +337,6 @@ UserEnvironment.create(user_id: 21, env_type: 'cvfds', title: 'dfgtr')
 UserEnvironment.create(user_id: 22, env_type: 'cvfds', title: 'dfgtr')
 
 
-UserExperience.create(user_id: 1, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
-UserExperience.create(user_id: 2, name: 'sade', start_from: '22/10/2012', working_till: '22/11/2011', designation:'dev')
 UserExperience.create(user_id: 3, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
 UserExperience.create(user_id: 4, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
 UserExperience.create(user_id: 5, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
@@ -367,18 +359,16 @@ UserExperience.create(user_id: 21, name: 'sade', start_from: '22/10/2012', worki
 UserExperience.create(user_id: 22, name: 'sade', start_from: '22/10/2012', working_till: '22/11/2011', designation:'dev')
 
 
-UserFutureGoal.create(user_id: 1, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-UserFutureGoal.create(user_id: 2, goal_type: 'asdf', title: 'fgtr', term_type: 'ghyt')
 UserFutureGoal.create(user_id: 3, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
 UserFutureGoal.create(user_id: 4, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
 UserFutureGoal.create(user_id: 5, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
 UserFutureGoal.create(user_id: 6, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
 UserFutureGoal.create(user_id: 7, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
 UserFutureGoal.create(user_id: 8, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-UserFutureGoal.create(user_id: 9, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-UserFutureGoal.create(user_id: 10, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-UserFutureGoal.create(user_id: 11, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-UserFutureGoal.create(user_id: 12, goal_type: 'asdf', title: 'fgtr', term_type: 'ghyt')
+# UserFutureGoal.create(user_id: 9, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
+# UserFutureGoal.create(user_id: 10, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
+# UserFutureGoal.create(user_id: 11, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
+# UserFutureGoal.create(user_id: 12, goal_type: 'asdf', title: 'fgtr', term_type: 'ghyt')
 UserFutureGoal.create(user_id: 13, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
 UserFutureGoal.create(user_id: 14, goal_type: 'asdf', title: 'fgtr', term_type: 'ghyt')
 UserFutureGoal.create(user_id: 15, goal_type: 'asdf', title: 'fgtr', term_type: 'ghyt')
@@ -391,8 +381,6 @@ UserFutureGoal.create(user_id: 21, goal_type: 'asdf', title: 'fgtr', term_type: 
 UserFutureGoal.create(user_id: 22, goal_type: 'asdf', title: 'fgtr', term_type: 'ghyt')
 
 
-UserPreferredWork.create(user_id: 1, ind_name: 'Krishaweb', functional_name: 'backend',  preferred_designation: 'developer', preferred_location: 'ahmedabad', current_salary: '10000', expected_salary: '20000', time_type: 'fulltime')
-UserPreferredWork.create(user_id: 2, ind_name: 'Transenergy', functional_name: 'frontend',  preferred_designation: 'hr', preferred_location: 'rajkot', current_salary: '20000', expected_salary: '30000', time_type: 'fulltime')
 UserPreferredWork.create(user_id: 3, ind_name: 'Krishaweb', functional_name: 'backend',  preferred_designation: 'developer', preferred_location: 'ahmedabad', current_salary: '10000', expected_salary: '20000', time_type: 'fulltime')
 UserPreferredWork.create(user_id: 4, ind_name: 'Infosys', functional_name: 'backend',  preferred_designation: 'developer', preferred_location: 'ahmedabad', current_salary: '10000', expected_salary: '20000', time_type: 'fulltime')
 UserPreferredWork.create(user_id: 5, ind_name: 'Krishaweb', functional_name: 'backend',  preferred_designation: 'developer', preferred_location: 'ahmedabad', current_salary: '10000', expected_salary: '20000', time_type: 'fulltime')
@@ -415,8 +403,6 @@ UserPreferredWork.create(user_id: 21, ind_name: 'Transenergy', functional_name: 
 UserPreferredWork.create(user_id: 22, ind_name: 'Transenergy', functional_name: 'frontend',  preferred_designation: 'hr', preferred_location: 'rajkot', current_salary: '20000', expected_salary: '30000', time_type: 'fulltime')
 
 
-UserReference.create(user_id: 1, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
-UserReference.create(user_id: 2, title: 'own ref', ref_type: 'company', from: 'miss.anna', email: 'one@gmail.com', contact: '1234567890', date: '30/11/2011', location: 'zawer')
 UserReference.create(user_id: 3, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
 UserReference.create(user_id: 4, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
 UserReference.create(user_id: 5, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')

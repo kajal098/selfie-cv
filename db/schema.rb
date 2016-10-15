@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20161006051129) do
 
   create_table "devices", force: :cascade do |t|
     t.integer  "user_id"
-    t.uuid     "uuid"
+    t.string   "uuid"
     t.string   "registration_id"
     t.uuid     "token"
     t.datetime "created_at",      null: false
