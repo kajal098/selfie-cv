@@ -36,6 +36,13 @@ class CreateUserMeters < ActiveRecord::Migration
       t.integer :faculty_publication_per,        null:false, default: 0
       t.integer :faculty_research_per,        null:false, default: 0
 
+      t.integer :like_per,        null:false, default: 0
+      t.integer :rate_per,        null:false, default: 0
+      t.integer :update_info_per,        null:false, default: 0
+      t.integer :share_per,        null:false, default: 0 
+      t.integer :view_per,        null:false, default: 0
+      t.integer :market_iq_per,        null:false, default: 0
+      t.integer :stock_exchange_per,        null:false, default: 0
       t.integer :profile_meter_per,        null:false, default: 0
       t.integer :total_per,        null:false, default: 0
 
