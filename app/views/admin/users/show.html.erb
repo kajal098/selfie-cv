@@ -98,6 +98,7 @@
             </tr>
             <% @user.user_educations.each do |edu| %>
             <tr>
+            <td><%= edu.id %></td>
               <td><%= edu.course.name %></td>
               <td><%= edu.specialization.name %></td>
               <td><%= edu.year %></td>

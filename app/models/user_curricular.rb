@@ -18,17 +18,17 @@ class UserCurricular < ActiveRecord::Base
     def percent_of_curri()
     	user = self.user
         curri_per = 0
-        setting_per = UserPercentage.find_by_key('extra').value
+        setting_per = UserPercentage.where(key: 'extra').where(ptype: user.role).first
         if user.user_curriculars.count > 0  
         	user.user_curriculars.each do |curri|   
-        	   		if curri.file_type == "image"
-	                    curri_per = setting_per.to_i * 1
+        	   		if curri.file_type == "video"
+	                    curri_per = setting_per.value.to_i * 1
 	                    break
-	                elsif curri.file_type == "video"
-	                    curri_per = setting_per.to_i * 1
+	                elsif curri.file_type == "image"
+	                    curri_per = setting_per.value.to_i * 0.7
 	                    break
 	                else
-	                    curri_per = setting_per.to_i * 0.3
+	                    curri_per = setting_per.value.to_i * 0.3
 	                end
         		       	
         	end

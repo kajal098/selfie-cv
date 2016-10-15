@@ -209,21 +209,6 @@ def percent_of_company_corporate_identity
         return true
 end
 
-def percent_of_company_galery
-        @count = self.company_galeries.count
-        setting_per = UserPercentage.find_by_key('gallery').value.to_i
-        @galery_per = 0
-        if @count >= 10 && @count <= 30
-            @galery_per = setting_per * 0.3
-        elsif @count >= 30 &&  @count <= 50
-            @galery_per = setting_per * 0.5
-        elsif @count >= 50
-            @galery_per = setting_per * 1
-        end
-        @user_meter.update_column('galery_per' ,@galery_per.to_i)
-        return true        
-end
-
 def percent_of_faculty_basic_info
         if self.first_name.present? && self.role == 'Faculty'  
             faculty_basic_info_per = 0

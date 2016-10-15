@@ -2373,7 +2373,7 @@ resources :search do
       optional :company_name
     end
    
-    post :company do
+    post :company, jbuilder: 'ios_search'  do
       authenticate!
       @searched_company =  User.company_search(params)
       @searched_company
