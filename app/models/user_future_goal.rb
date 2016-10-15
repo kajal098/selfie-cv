@@ -15,22 +15,28 @@ class UserFutureGoal < ActiveRecord::Base
     	user = self.user
         
         if user.user_future_goals.count > 0  
-        	goal_per = 0
+        	future_goal_per = 0
+            setting_per = UserPercentage.where(key: 'futuregoal').where(ptype: user.role).first
         	user.user_future_goals.each do |goal|   
         	   		if goal.file_type == "video"
-	                    goal_per = 100
+	                    future_goal_per = setting_per.value.to_i * 1
 	                    break
 	                elsif goal.file_type == "audio"
-	                    goal_per = 70
+	                    future_goal_per = setting_per.value.to_i * 0.7
 	                    break
 	                else
-	                    goal_per = 50
+	                    future_goal_per = setting_per.value.to_i * 0.5
 	                end
         		       	
         	end
         end 
-        user.user_meter.update_column('future_goal_per' ,goal_per)
+        user.user_meter.update_column('future_goal_per' ,future_goal_per)
         return true
     end
+
+
+    
+
+
 
 end

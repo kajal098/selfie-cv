@@ -38,7 +38,7 @@ resources :devices do
 
   desc 'Register device after notification service subscription'
   params do
-    requires :uuid, type: String, regexp: UUID_REGEX
+    requires :uuid, type: String
     requires :registration_id, type: String
   end
   post :register do
