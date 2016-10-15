@@ -38,6 +38,9 @@ class CreateUserMeters < ActiveRecord::Migration
 
       t.integer :like_per,        null:false, default: 0
       t.integer :rate_per,        null:false, default: 0
+      t.integer :bronze_per,        null:false, default: 0
+      t.integer :silver_per,        null:false, default: 0
+      t.integer :gold_per,        null:false, default: 0
       t.integer :update_info_per,        null:false, default: 0
       t.integer :share_per,        null:false, default: 0 
       t.integer :view_per,        null:false, default: 0

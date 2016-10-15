@@ -13,7 +13,7 @@ end
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info, :percent_of_faculty_basic_info, :cal_total_per
+after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info, :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -293,7 +293,7 @@ def like_per
         elsif @count >= UserPercentage.find_by_key('like_third').value.to_i
             @like_per = setting_per * 1
         end
-        return @like_per        
+        self.user_meter.update_column('like_per' ,@like_per)    
 end
 
 def view_per
@@ -305,7 +305,7 @@ def view_per
         elsif @count >= UserPercentage.find_by_key('view_second').value.to_i
             @view_per = setting_per * 1
         end
-        return @view_per        
+        self.user_meter.update_column('view_per' ,@view_per)            
 end
 
 def share_per
@@ -317,7 +317,7 @@ def share_per
         elsif @count >= UserPercentage.find_by_key('share_second').value.to_i
             @share_per = setting_per * 1
         end
-        return @share_per        
+        self.user_meter.update_column('share_per' ,@share_per)    
 end
 
 def bronze_per
@@ -330,7 +330,7 @@ def bronze_per
         elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
             @bronze_per = bronze_setting_per * 1
         end
-        return @bronze_per       
+        self.user_meter.update_column('bronze_per' ,@bronze_per)    
 end
 def silver_per
         @count = self.silver_rates.count
@@ -342,7 +342,7 @@ def silver_per
         elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
             @silver_per = silver_setting_per * 1
         end
-        return @silver_per        
+        self.user_meter.update_column('silver_per' ,@silver_per)    
 end
 def gold_per
         @count = self.gold_rates.count
@@ -354,11 +354,11 @@ def gold_per
         elsif @count >= UserPercentage.find_by_key('rate_second').value.to_i 
             @gold_per = silver_setting_per * 1
         end
-        return @gold_per        
+        self.user_meter.update_column('gold_per' ,@gold_per)    
 end
 def rate_per
-        total = (self.bronze_per + self.silver_per + self.gold_per).round(2)
-        return total     
+        @rate_per = (self.bronze_per + self.silver_per + self.gold_per).round(2)
+        self.user_meter.update_column('rate_per' ,@rate_per)    
 end
 
 def update_info_per
@@ -372,14 +372,13 @@ def update_info_per
         elsif @count >= UserPercentage.find_by_key('update_third').value.to_i 
             @update_info_per = setting_per * 1
         end
-        return @update_info_per  
+        self.user_meter.update_column('update_info_per' ,@update_info_per)    
 end
 
 def cal_total_per
-        total = self.like_per + self.view_per + self.share_per + self.rate_per + self.user_meter.profile_meter_per + self.update_info_per + 0 + 0
-        self.user_meter.update_column('total_per' ,total)          
-        self.update_column('total_per' ,total)     
-    return total
+        total_per = self.user_meter.like_per + self.user_meter.view_per + self.user_meter.share_per + self.user_meter.rate_per + self.user_meter.profile_meter_per + self.user_meter.update_info_per + 0 + 0
+        self.user_meter.update_column('total_per' ,total_per)          
+    return true
 end
 
 

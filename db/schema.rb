@@ -447,6 +447,16 @@ ActiveRecord::Schema.define(version: 20161006051129) do
     t.integer  "faculty_workshop_per",       default: 0, null: false
     t.integer  "faculty_publication_per",    default: 0, null: false
     t.integer  "faculty_research_per",       default: 0, null: false
+    t.integer  "like_per",                   default: 0, null: false
+    t.integer  "rate_per",                   default: 0, null: false
+    t.integer  "bronze_per",                 default: 0, null: false
+    t.integer  "silver_per",                 default: 0, null: false
+    t.integer  "gold_per",                   default: 0, null: false
+    t.integer  "update_info_per",            default: 0, null: false
+    t.integer  "share_per",                  default: 0, null: false
+    t.integer  "view_per",                   default: 0, null: false
+    t.integer  "market_iq_per",              default: 0, null: false
+    t.integer  "stock_exchange_per",         default: 0, null: false
     t.integer  "profile_meter_per",          default: 0, null: false
     t.integer  "total_per",                  default: 0, null: false
     t.datetime "created_at",                             null: false
