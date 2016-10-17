@@ -234,7 +234,7 @@ resources :member do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
       requires :title
-      optional :first_name
+      requires :first_name
       optional :middle_name
       requires :last_name
       requires :gender  
@@ -1295,7 +1295,7 @@ resources :student do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
-      optional :first_name
+      requires :first_name
       optional :last_name
       optional :gender  
       optional :date_of_birth 
@@ -1542,7 +1542,7 @@ resources :faculty do
     params do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
-      optional :first_name
+      requires :first_name
       optional :middle_name
       optional :last_name
       optional :gender  
@@ -1558,6 +1558,40 @@ resources :faculty do
       optional :file_type
     end
     post :basic_info, jbuilder: 'android' do
+      @user = User.find params[:user_id]
+      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+      @user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
+        :date_of_birth, :nationality, :address, :city, :country, :zipcode,  :contact_number, :file_type)
+      if (params[:file_type] == 'text')
+        @user.text_field = params[:text_field] if params[:text_field]
+      else
+        @user.file = params[:file] if params[:file]
+      end
+      @user.update_cv_count += 1
+      error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
+    end
+
+    # for fill faculty resume
+    desc 'Faculty Resume'
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+      optional :first_name
+      optional :middle_name
+      optional :last_name
+      optional :gender  
+      optional :date_of_birth 
+      optional :nationality 
+      optional :address 
+      optional :city
+      optional :country
+      optional :zipcode
+      optional :contact_number
+      optional :file
+      optional :text_field
+      optional :file_type
+    end
+    post :edit_basic_info, jbuilder: 'android' do
       @user = User.find params[:user_id]
       error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       @user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,

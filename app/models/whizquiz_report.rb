@@ -15,7 +15,7 @@ class WhizquizReport
   column(:actions, header: "Action", html: true  ) do |whizquiz|
     html = link_to "", admin_whizquiz_path(whizquiz), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View whizquiz"
     html += link_to "", edit_admin_whizquiz_path(whizquiz), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-edit", title: "Edit whizquiz"
-    html += link_to "", admin_whizquiz_flop_path(whizquiz), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-plus", title: "Flop whizquiz"
+    html += link_to "", admin_whizquiz_flop_path(whizquiz), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop whizquiz"
     html
   end
 

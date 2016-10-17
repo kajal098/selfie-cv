@@ -36,8 +36,8 @@ namespace :import do
 	UserCurricular.create(user_id: 6, curricular_type:'vcd', team_type:'cds', location:'junagadh', date:'22/11/2011')
 	UserCurricular.create(user_id: 7, curricular_type:'xyz', team_type:'abc', location:'jamnagar', date:'22/11/2011')
 	
-	UserEducation.create(user_id: 2, course_id:3, specialization_id:3,  year:2011, school: 'modi', skill: 'singing')
-	UserEducation.create(user_id: 3, course_id:4, specialization_id:4,  year:2011, school: 'vivekanand', skill: 'dancing')
+	UserEducation.create(user_id: 6, course_id:3, specialization_id:3,  year:2011, school: 'modi', skill: 'singing')
+	UserEducation.create(user_id: 7, course_id:4, specialization_id:4,  year:2011, school: 'vivekanand', skill: 'dancing')
 	
 	UserEnvironment.create(user_id: 6, env_type: 'qwert', title: 'title')
 	UserEnvironment.create(user_id: 7, env_type: 'qwert', title: 'title')
