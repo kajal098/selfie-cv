@@ -164,6 +164,17 @@ ActiveRecord::Schema.define(version: 20161017112038) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "marketiqs", force: :cascade do |t|
+    t.string   "question",   default: "", null: false
+    t.string   "option_a",   default: "", null: false
+    t.string   "option_b",   default: "", null: false
+    t.string   "option_c",   default: "", null: false
+    t.string   "option_d",   default: "", null: false
+    t.string   "answer",     default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "quick_messages", force: :cascade do |t|
     t.string   "text",       default: "",    null: false
     t.boolean  "role",       default: false
@@ -401,17 +412,6 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   end
 
   add_index "user_likes", ["user_id", "like_id"], name: "index_user_likes_on_user_id_and_like_id", using: :btree
-
-  create_table "user_marketiqs", force: :cascade do |t|
-    t.string   "question",   default: "", null: false
-    t.string   "option_a",   default: "", null: false
-    t.string   "option_b",   default: "", null: false
-    t.string   "option_c",   default: "", null: false
-    t.string   "option_d",   default: "", null: false
-    t.string   "answer",     default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
 
   create_table "user_marksheets", force: :cascade do |t|
     t.integer  "user_id"

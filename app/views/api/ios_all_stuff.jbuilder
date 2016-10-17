@@ -154,7 +154,7 @@ json.student_basic_info_per @user_stuff.user_meter ? @user_stuff.user_meter.stud
 json.student_education_per @user_stuff.user_meter ? @user_stuff.user_meter.student_education_per.to_i : 0
 json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.achievement_per.to_i : 0
 json.curri_per @user_stuff.user_meter ? @user_stuff.user_meter.curri_per.to_i : 0
-json.future_goal_per @user.user_meter.future_goal_per.to_i : 0
+json.future_goal_per @user.user_meter ? @user_stuff.user_meter.future_goal_per.to_i : 0
 json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : 0
 
       	json.created_at @user_stuff.created_at.to_i
