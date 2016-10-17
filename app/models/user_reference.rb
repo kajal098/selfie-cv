@@ -1,8 +1,13 @@
 class UserReference < ActiveRecord::Base
+
 	belongs_to :user
+
 	validates :title, :ref_type, :from, :email, :contact, :date, :location, presence: true
+
 	validates :contact, :numericality => true, :allow_nil => true
 	#validates_format_of :date, :with => /\d{2}\/\d{2}\/\d{4}/
+    validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+    
 	mount_uploader :file, FileUploader
     def thumb_url
           

@@ -19,6 +19,10 @@ after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_inf
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+validates :zipcode, :numericality => true, :allow_nil => true
+validates :contact_number, :numericality => true, :allow_nil => true
+validates :company_zipcode, :numericality => true, :allow_nil => true
+validates :company_contact, :numericality => true, :allow_nil => true
 
 #validates :username, length: { minimum: 6 }
 #validates :username, length: { maximum: 20 }
