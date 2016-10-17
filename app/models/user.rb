@@ -23,6 +23,7 @@ validates :zipcode, :numericality => true, :allow_nil => true
 validates :contact_number, :numericality => true, :allow_nil => true
 validates :company_zipcode, :numericality => true, :allow_nil => true
 validates :company_contact, :numericality => true, :allow_nil => true
+#validates_format_of :join_from, :with => /\d{2}\/\d{2}\/\d{4}/
 
 #validates :username, length: { minimum: 6 }
 #validates :username, length: { maximum: 20 }
