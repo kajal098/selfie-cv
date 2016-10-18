@@ -56,7 +56,14 @@ json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0
 		json.industry @user.industry ? @user.industry.name : ""
 		
 
-		
+json.company_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.company_info_per.to_i, "info") : 0
+json.corporate_identity_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.corporate_identity_per.to_i, "corporate") : 0
+json.growth_and_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.growth_and_goal_per.to_i, "growth") : 0
+json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
+json.galery_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.galery_per.to_i, "gallery") : 0
+json.working_env_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0
+json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0
+
 
 	json.company_info_per @user.user_meter ? @user.user_meter.company_info_per.to_i : 0
 	json.corporate_identity_per @user.user_meter ? @user.user_meter.corporate_identity_per.to_i : 0
