@@ -13,7 +13,7 @@ class UserExperience < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_exp
-
+    after_destroy :percent_of_exp
 
 
     def percent_of_exp()

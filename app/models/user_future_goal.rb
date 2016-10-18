@@ -10,6 +10,7 @@ class UserFutureGoal < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_goal
+    after_destroy :percent_of_goal
 
     def percent_of_goal()
         user = self.user

@@ -3,11 +3,12 @@ class UserEducation < ActiveRecord::Base
 	belongs_to :course
 	belongs_to :specialization
 
-	after_save :percent_of_education
-	
 	validates :course_id, :specialization_id,  :year, :school, :skill, presence: true
 	validates :year, :numericality => true, :allow_nil => true
 
+	after_save :percent_of_education
+	after_destroy :percent_of_education
+	
 	def percent_of_education()
     	user = self.user
         

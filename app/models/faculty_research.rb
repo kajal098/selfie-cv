@@ -13,6 +13,7 @@ class FacultyResearch < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_research
+    after_destroy :percent_of_research
 
     def percent_of_research()
     	user = self.user

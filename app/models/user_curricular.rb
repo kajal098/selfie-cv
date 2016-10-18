@@ -4,16 +4,14 @@ class UserCurricular < ActiveRecord::Base
 	validates :curricular_type,:team_type,:location,:date, presence: true
 	#validates_format_of :date, :with => /\d{2}\/\d{2}\/\d{4}/
 
-	after_save :percent_of_curri
-
 	mount_uploader :file, FileUploader
-    def thumb_url
-          
-            file.url(:thumb)
-        
+    def thumb_url          
+            file.url(:thumb)        
     end
-
     def photo_url; file.url; end
+
+    after_save :percent_of_curri
+    after_destroy :percent_of_curri
 
     def percent_of_curri()
     	user = self.user

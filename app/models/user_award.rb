@@ -2,8 +2,6 @@ class UserAward < ActiveRecord::Base
 	belongs_to :user
 	validates :name,:award_type,:description, presence: true
 
-	after_save :percent_of_award
-	
 	mount_uploader :file, FileUploader
     def thumb_url
          
@@ -11,6 +9,9 @@ class UserAward < ActiveRecord::Base
     end
 
     def photo_url; file.url; end
+
+    after_save :percent_of_award
+    after_destroy :percent_of_award
 
     def percent_of_award()
     	user = self.user

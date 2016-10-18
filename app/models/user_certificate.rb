@@ -4,21 +4,16 @@ class UserCertificate < ActiveRecord::Base
 	validates :name, :certificate_type, :year, presence: true
 	validates :year, :numericality => true, :allow_nil => true
 
-	after_save :percent_of_certi
-	
 
 	mount_uploader :file, FileUploader
-    def thumb_url
-          
-            file.url(:thumb)
-        
+    def thumb_url          
+            file.url(:thumb)        
     end
     def photo_url; file.url; end
 
 
-
-
-
+    after_save :percent_of_certi
+    after_destroy :percent_of_certi
 
 
     def percent_of_certi()
