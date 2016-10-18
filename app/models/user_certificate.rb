@@ -40,6 +40,7 @@ class UserCertificate < ActiveRecord::Base
         		       	
         	end
             user.user_meter.update_column('certificate_per' ,certi_per)
+            user.profile_meter_total
         end 
         
         return true

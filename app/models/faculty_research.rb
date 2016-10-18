@@ -30,6 +30,7 @@ class FacultyResearch < ActiveRecord::Base
         	end
         end 
         user.user_meter.update_column('faculty_research_per' ,research_per)
+        user.profile_meter_total
         return true
     end
 

@@ -24,6 +24,7 @@ class FacultyWorkshop < ActiveRecord::Base
         	end
         end 
         user.user_meter.update_column('faculty_workshop_per' ,workshop_per)
+        user.profile_meter_total
         return true
     end
 

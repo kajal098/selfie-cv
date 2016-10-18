@@ -28,6 +28,7 @@ class UserAward < ActiveRecord::Base
         	end
         end 
         user.user_meter.update_column('award_per' ,award_per)
+        user.profile_meter_total
         return true
     end
 

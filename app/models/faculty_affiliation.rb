@@ -20,6 +20,7 @@ class FacultyAffiliation < ActiveRecord::Base
         	end
         end 
         user.user_meter.update_column('faculty_affiliation_per' ,affiliation_per)
+        user.profile_meter_total
         return true
     end
 

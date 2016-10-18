@@ -34,6 +34,7 @@ class UserMarksheet < ActiveRecord::Base
         	end
         end 
         user.user_meter.update_column('student_marksheet_per' ,student_marksheet_per)
+        user.profile_meter_total
         return true
     end
     

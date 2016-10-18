@@ -25,6 +25,7 @@ class UserProject < ActiveRecord::Base
         	end
         end 
         user.user_meter.update_column('student_project_per' ,student_project_per)
+        user.profile_meter_total
         return true
     end
 

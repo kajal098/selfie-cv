@@ -17,6 +17,7 @@ class UserPreferredWork < ActiveRecord::Base
 	                end        		       	
         	end
         user.user_meter.update_column('prework_per' ,prework_per)
+        user.profile_meter_total
         end 
         return true
     end

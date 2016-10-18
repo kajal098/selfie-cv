@@ -44,10 +44,10 @@ namespace :import do
 	UserEnvironment.create(user_id: 8, env_type: 'qwert', title: 'title')
 	UserEnvironment.create(user_id: 9, env_type: 'qwert', title: 'title')
 
-	UserExperience.create(user_id: 4, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
-	UserExperience.create(user_id: 5, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
-	UserExperience.create(user_id: 6, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
-	UserExperience.create(user_id: 7, name: 'zxcvb', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
+	UserExperience.create(user_id: 4, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
+	UserExperience.create(user_id: 5, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
+	UserExperience.create(user_id: 6, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
+	UserExperience.create(user_id: 7, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
 	
 	UserFutureGoal.create(user_id: 2, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
 	UserFutureGoal.create(user_id: 3, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')

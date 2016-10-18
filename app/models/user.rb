@@ -227,6 +227,7 @@ def percent_of_faculty_basic_info
 end
 
 def profile_meter_total
+    self.create_user_meter
     if self.role == "Jobseeker"
         setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
         resume_per = @user_meter.resume_info_per + @user_meter.education_per + @user_meter.experience_per + @user_meter.prework_per
