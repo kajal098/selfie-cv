@@ -1,5 +1,14 @@
 <%= simple_form_for [:admin, @marketiq], html: { class: 'form-horizontal' } do |f| %>
   
+
+  <div class="form-group string required marketiq_question">
+  <label class="string required col-sm-3 control-label" for="marketiq_question">
+  <abbr title="required">*</abbr> Category </label>
+  <div class="col-sm-9">
+  <%= f.collection_select :category_id, Category.order(:name),:id,:name, include_blank: true %>
+  </div>
+  </div>
+
   <%= f.input :question, label: "Question" %>
   <%= f.input :option_a, label: "Option A" %>
   <%= f.input :option_b, label: "Option B" %>

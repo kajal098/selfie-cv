@@ -16,6 +16,12 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "chat_schedules", force: :cascade do |t|
     t.string   "name",        default: "", null: false
     t.date     "date",        default: [],              array: true
@@ -165,15 +171,18 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   end
 
   create_table "marketiqs", force: :cascade do |t|
-    t.string   "question",   default: "", null: false
-    t.string   "option_a",   default: "", null: false
-    t.string   "option_b",   default: "", null: false
-    t.string   "option_c",   default: "", null: false
-    t.string   "option_d",   default: "", null: false
-    t.string   "answer",     default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "category_id"
+    t.string   "question",    default: "", null: false
+    t.string   "option_a",    default: "", null: false
+    t.string   "option_b",    default: "", null: false
+    t.string   "option_c",    default: "", null: false
+    t.string   "option_d",    default: "", null: false
+    t.string   "answer",      default: "", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
+
+  add_index "marketiqs", ["category_id"], name: "index_marketiqs_on_category_id", using: :btree
 
   create_table "quick_messages", force: :cascade do |t|
     t.string   "text",       default: "",    null: false
@@ -665,6 +674,7 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   add_foreign_key "group_invitees", "groups"
   add_foreign_key "group_users", "groups", on_delete: :cascade
   add_foreign_key "group_users", "users", on_delete: :cascade
+  add_foreign_key "marketiqs", "categories", on_delete: :cascade
   add_foreign_key "student_educations", "users", on_delete: :cascade
   add_foreign_key "user_awards", "users", on_delete: :cascade
   add_foreign_key "user_certificates", "users", on_delete: :cascade

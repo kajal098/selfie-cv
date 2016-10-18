@@ -390,5 +390,12 @@ def cal_total_per
 end
 
 
+def cal_preview_per(user_per ,per_type)
+    setting_per = UserPercentage.where(key: per_type).where(ptype: self.role).first
+    @preview_per = ((user_per * 100) / setting_per.value.to_i)
+    return @preview_per
+
+end    
+
 
 end

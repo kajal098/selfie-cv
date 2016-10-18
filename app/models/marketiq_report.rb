@@ -7,6 +7,9 @@ class MarketiqReport
 
   #filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
+  column(:category_id, header: "Category") do |model|
+    model.category.name
+  end
   column(:question, header: "Question", :order => "marketiqs.question")
   column(:option_a, header: "option_a", :order => "marketiqs.option_a")
   column(:option_b, header: "option_b", :order => "marketiqs.option_b")

@@ -4,4 +4,6 @@ class Marketiq < ActiveRecord::Base
 
 	paginates_per 10
 
+	belongs_to :category, class_name: "Category", foreign_key: "category_id"
+
 end

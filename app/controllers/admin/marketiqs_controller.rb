@@ -60,11 +60,7 @@ private
   end
 
   def marketiq_params
-    if params[:action] == "update" and params[:marketiq]
-      params.require(:marketiq).permit( :question, :answer, :status)
-    else
-      params.require(:marketiq).permit!
-    end
+    params.require(:marketiq).permit!
   end
 
 end
