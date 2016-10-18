@@ -79,7 +79,7 @@ json.future_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_
 json.working_env_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.working_env_per.to_i, "workingenv") : 0
 json.ref_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.ref_per.to_i, "references") : 0
 json.whizquiz_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.whizquiz_per.to_i, "whizquiz") : 0
-json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : 0
+json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : 0
 
 
 		json.likes @user_stuff.likes.count
@@ -134,7 +134,7 @@ json.growth_and_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@u
 json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
 json.galery_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.galery_per.to_i, "gallery") : 0
 json.working_env_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.working_env_per.to_i, "workingenv") : 0
-json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : 0
+json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : 0
 
 
 		json.likes @user_stuff.likes.count
@@ -156,7 +156,7 @@ json.student_education_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(
 json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
 json.curri_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.curri_per.to_i, "extra") : 0
 json.future_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.future_goal_per.to_i, "futuregoal") : 0
-json.total_per @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0
+json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
 
       	json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i      	
@@ -206,7 +206,7 @@ json.total_per @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0
 json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.faculty_basic_info_per.to_i, "info") : 0
 json.experience_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.experience_per.to_i, "experience") : 0
 json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
-json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.profile_meter_per.to_i : 0
+json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.total_per.to_i : 0
 
 
 
