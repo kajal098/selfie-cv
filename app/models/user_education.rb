@@ -7,7 +7,6 @@ class UserEducation < ActiveRecord::Base
 	validates :year, :numericality => true, :allow_nil => true
 
 	after_save :percent_of_education
-	after_destroy :percent_of_education
 	
 	def percent_of_education()
     	user = self.user

@@ -7,7 +7,6 @@ class FacultyAffiliation < ActiveRecord::Base
     #validates_format_of :join_till, :with => /\d{2}\/\d{2}\/\d{4}/
 	
 	after_save :percent_of_affiliation
-    after_destroy :percent_of_affiliation
 
     def percent_of_affiliation()
     	user = self.user

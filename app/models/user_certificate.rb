@@ -13,7 +13,6 @@ class UserCertificate < ActiveRecord::Base
 
 
     after_save :percent_of_certi
-    after_destroy :percent_of_certi
 
 
     def percent_of_certi()

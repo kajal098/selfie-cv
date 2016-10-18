@@ -6,7 +6,6 @@ class UserProject < ActiveRecord::Base
 	validates :title, :description, presence: true
 
 	after_save :percent_of_project
-    after_destroy :percent_of_project
 
     def percent_of_project()
     	user = self.user

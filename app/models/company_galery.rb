@@ -6,7 +6,6 @@ class CompanyGalery < ActiveRecord::Base
   def photo_url; file.url; end
 
   after_save :percent_of_company_galery
-  after_destroy :percent_of_company_galery
 
   	def percent_of_company_galery
       user = self.user

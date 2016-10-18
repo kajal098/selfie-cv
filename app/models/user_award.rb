@@ -11,7 +11,6 @@ class UserAward < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_award
-    after_destroy :percent_of_award
 
     def percent_of_award()
     	user = self.user

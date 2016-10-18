@@ -17,14 +17,6 @@ after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_inf
  :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
  :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
 
-after_destroy :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
- :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
- :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
-
-after_update :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
- :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
- :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
-
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 # validates :zipcode, :numericality => true, :allow_nil => true

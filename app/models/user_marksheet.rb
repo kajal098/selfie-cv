@@ -15,7 +15,6 @@ class UserMarksheet < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_marksheet
-    after_destroy :percent_of_marksheet
 
     def percent_of_marksheet()
     	user = self.user

@@ -17,7 +17,6 @@ class UserReference < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_ref
-    after_destroy :percent_of_ref
 
     def percent_of_ref()
     	user = self.user

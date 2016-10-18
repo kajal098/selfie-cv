@@ -11,7 +11,6 @@ class UserCurricular < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_curri
-    after_destroy :percent_of_curri
 
     def percent_of_curri()
     	user = self.user

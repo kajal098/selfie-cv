@@ -5,7 +5,6 @@ class FacultyWorkshop < ActiveRecord::Base
 	validates :description, presence: true
 
 	after_save :percent_of_workshop
-    after_destroy :percent_of_workshop
 
     def percent_of_workshop()
     	user = self.user

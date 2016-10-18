@@ -10,7 +10,6 @@ class UserEnvironment < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_env
-    after_destroy :percent_of_env
 
     def percent_of_env()
     	user = self.user

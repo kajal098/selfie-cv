@@ -5,7 +5,6 @@ class UserPreferredWork < ActiveRecord::Base
 	validates :expected_salary, :numericality => true, :allow_nil => true
 
 	after_save :percent_of_prework
-    after_destroy :percent_of_prework
 
 	def percent_of_prework()
     	user = self.user

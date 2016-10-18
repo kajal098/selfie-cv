@@ -13,7 +13,6 @@ class UserExperience < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_exp
-    after_destroy :percent_of_exp
 
 
     def percent_of_exp()
@@ -21,9 +20,9 @@ class UserExperience < ActiveRecord::Base
         
         if user.user_experiences.count > 0  
             exp_per = 0
-            setting_per = UserPercentage.where(key: 'experience').where(ptype: user.role).first
+            setting_per = UserPercentage.where(key: 'experience').where(ptype: 'Jobseeker').first
             user.user_experiences.each do |exp|                      
-                        if exp.exp_type == "experience"
+                    if exp.exp_type == "experience"
                         exp_per = setting_per.value.to_i * 1
                         break
                     elsif exp.exp_type == "fresher"
