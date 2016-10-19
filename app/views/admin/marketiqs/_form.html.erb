@@ -1,23 +1,66 @@
 <%= simple_form_for [:admin, @marketiq], html: { class: 'form-horizontal' } do |f| %>
   
-
-  <div class="form-group string required marketiq_question">
-  <label class="string required col-sm-3 control-label" for="marketiq_question">
-  <abbr title="required">*</abbr> Category </label>
-  <div class="col-sm-9">
-  <%= f.collection_select :category_id, Category.order(:name),:id,:name, include_blank: true %>
-  </div>
-  </div>
-
   <%= f.input :question, label: "Question" %>
   <%= f.input :option_a, label: "Option A" %>
   <%= f.input :option_b, label: "Option B" %>
   <%= f.input :option_c, label: "Option C" %>
   <%= f.input :option_d, label: "Option D" %>
   <%= f.input :answer, label: "Answer" %>
+  
+  <%= f.radio_button(:role, "Jobseeker") %>
+  <%= f.label(:role, "Jobseeker") %>
+  <%= f.radio_button(:role, "Company")%>
+  <%= f.label(:role, "Company") %>
+
+
+
+  <div class="form-group string required marketiq_question" id="spe">
+  <label class="string required col-sm-3 control-label" for="marketiq_question">
+  <abbr title="required">*</abbr> Specialization </label>
+  <div class="col-sm-9">
+  <%= f.collection_select :specialization_id, Specialization.order(:name),:id,:name, include_blank: true %>
+  </div>
+  </div>
+
+
+  <div class="form-group string required marketiq_question" id="ind" style='display:none'>
+  <label class="string required col-sm-3 control-label" for="marketiq_question">
+  <abbr title="required">*</abbr> Industry </label>
+  <div class="col-sm-9">
+  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, include_blank: true %>
+  </div>
+  </div>
+
+
+
+  
+  
+
+
   <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <button type="submit" class="btn btn-primary btn-sm">Save</button> <%= link_to "Back", admin_marketiqs_path, class: "btn btn-default btn-sm" %>
     </div>
   </div>
 <% end %>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+
+   $('input[name="marketiq[role]"]').click(function() {
+           if($(this).val() == 'Jobseeker') {
+                $('#spe').show();    
+                $('#ind').hide();          
+           }
+           else {
+                $('#ind').show();    
+                $('#spe').hide();   
+           }
+       });
+    });
+
+
+
+</script>

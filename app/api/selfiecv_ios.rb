@@ -2404,6 +2404,64 @@ resources :search do
 
   #--------------------------------search end----------------------------------#
 
+#--------------------------------marketiq start----------------------------------#
+
+resources :marketiq do
+
+
+  before { authenticate! }
+
+  # for send random 1 question to users
+    desc "Send random 10 question to Users"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+    end
+    post :send_question, jbuilder: 'ios_marketiq' do
+      if current_user.role == 'Jobseeker'
+          @marketiq = Marketiq.where(role: 'false').order("RANDOM()").first
+      elsif current_user.role == 'Company'        
+          @marketiq = Marketiq.where(role: 'true').order("RANDOM()").first
+      end
+      @user_marketiq = UserMarketiq.new user_id: current_user.id, marketiq_id: @marketiq.id
+      error! @user_marketiq.errors.full_messages.join(', '),422 unless @user_marketiq.save
+    end
+
+
+    # for send answer of marketiq question
+    desc "Send Answer Of Marketiq Question"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_marketiq_id
+      requires :answer
+    end
+    post :send_answer, jbuilder: 'ios_marketiq' do
+      @answer_user_marketiq = UserMarketiq.find params[:user_marketiq_id]
+      @answer_user_marketiq.answer = params[:answer]
+      @answer_user_marketiq.status = true
+      error! @answer_user_marketiq.errors.full_messages.join(', '),422 unless @answer_user_marketiq.save
+    end
+
+    # for user's market iq list
+    desc "Users's Market IQ List"
+    params do
+      requires :token, type: String, regexp: UUID_REGEX
+      requires :user_id
+    end
+    post :list, jbuilder: 'ios_marketiq' do
+      @user = User.find params[:user_id]
+      @user_marketiqs = @user.user_marketiqs
+      error! @user_marketiqs.errors.full_messages.join(', '),422 unless @user_marketiqs
+    end
+
+
+
+
+
+
+  end
+
+#--------------------------------marketiq end----------------------------------#
+
 
 
 end

@@ -8,6 +8,27 @@
       </div>
       <div class="panel-body">
 
+<p>
+  <strong>Role:</strong>
+  <%= @marketiq.role %>
+</p>
+
+
+<% if @marketiq.industry_id.present? %>
+<p>
+  <strong>Industry:</strong>
+  <%= @marketiq.industry.name %>
+</p>
+<% end %>
+
+
+<% if @marketiq.specialization_id.present? %>
+<p>
+  <strong>Specialization:</strong>
+  <%= @marketiq.specialization.name %>
+</p>
+<% end %>
+
 
 <p>
   <strong>Question:</strong>
@@ -41,7 +62,7 @@
 
 <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
-      <%= link_to 'Edit', edit_admin_marketiq_path(@marketiq), class: "btn btn-primary btn-sm" %> <%= link_to "Back", admin_marketiqs_path, class: "btn btn-default btn-sm" %>
+      <%= link_to "Back", admin_marketiqs_path, class: "btn btn-primary btn-sm" %>
     </div>
   </div>
       </div>
