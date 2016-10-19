@@ -173,14 +173,16 @@ end
 def percent_of_resume
             resume_info_per = 0
             setting_per = UserPercentage.find_by_key('resume_info').value.to_i
-            if self.file_type == "video"
-                resume_info_per = setting_per * 1
-            elsif self.file_type == "audio"
-                resume_info_per = setting_per * 0.7
-            elsif self.file_type == "image"
-                resume_info_per = setting_per * 0.5
-            elsif self.file_type == "doc"
-                resume_info_per = setting_per * 0.5
+            if self.file_type.present?
+                if self.file_type == "video"
+                    resume_info_per = setting_per * 1
+                elsif self.file_type == "audio"
+                    resume_info_per = setting_per * 0.7
+                elsif self.file_type == "image"
+                    resume_info_per = setting_per * 0.5
+                elsif self.file_type == "doc"
+                    resume_info_per = setting_per * 0.5
+                end
             else
                 resume_info_per = setting_per * 0.3
             end
@@ -188,11 +190,6 @@ def percent_of_resume
                 self.profile_meter_total
         return true
 end
-
-
-
-
-
 
 def percent_of_student_basic_info
         if self.role == 'Student' && self.first_name.present?
