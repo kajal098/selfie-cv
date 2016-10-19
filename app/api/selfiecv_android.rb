@@ -2469,9 +2469,9 @@ resources :marketiq do
           @marketiq = Marketiq.where(role: 'true').where(industry_id: current_user.industry_id).order("RANDOM()").first
       end
       if @marketiq
-      @user_marketiq = UserMarketiq.new user_id: current_user.id, marketiq_id: @marketiq.id
-      error!({error: @user_marketiq.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_marketiq.save
-    end
+        @user_marketiq = UserMarketiq.new user_id: current_user.id, marketiq_id: @marketiq.id
+        error!({error: @user_marketiq.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_marketiq.save
+      end
     end
 
 
