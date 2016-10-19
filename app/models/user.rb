@@ -13,10 +13,6 @@ end
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable
 
-after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
- :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
- :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
-
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 # validates :zipcode, :numericality => true, :allow_nil => true
@@ -157,6 +153,14 @@ def self.to_csv(options = {})
     end
 end
 
+
+# Start Percentage Module
+
+after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
+ :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
+ :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
+
+
 def create_user_meter
     if self.user_meter.blank?
         @user_meter = UserMeter.create(:user_id=>self.id)
@@ -165,24 +169,25 @@ def create_user_meter
     end
     return true
 end
-
+# Resume Percentage Function
 def percent_of_resume
-        if self.file_type.present?  
             resume_info_per = 0
             setting_per = UserPercentage.find_by_key('resume_info').value.to_i
-            if self.file_type == "video"
-                resume_info_per = setting_per * 1
-            elsif self.file_type == "audio"
-                resume_info_per = setting_per * 0.7
-            elsif self.file_type == "image"
-                resume_info_per = setting_per * 0.5
-            elsif self.file_type == "doc"
-                resume_info_per = setting_per * 0.5
+            if self.file_type.present?
+                if self.file_type == "video"
+                    resume_info_per = setting_per * 1
+                elsif self.file_type == "audio"
+                    resume_info_per = setting_per * 0.7
+                elsif self.file_type == "image"
+                    resume_info_per = setting_per * 0.5
+                elsif self.file_type == "doc"
+                    resume_info_per = setting_per * 0.5
+                end
             else
                 resume_info_per = setting_per * 0.3
             end
                 @user_meter.update_column('resume_info_per' ,resume_info_per)
-        end 
+                self.profile_meter_total
         return true
 end
 

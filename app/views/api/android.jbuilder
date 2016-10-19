@@ -26,7 +26,7 @@ json.future_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.f
 json.working_env_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0
 json.ref_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.ref_per.to_i, "references") : 0
 json.whizquiz_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.whizquiz_per.to_i, "whizquiz") : 0
-json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : 0
+json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0
 
 		json.likes @user.likes.count
 		json.views @user.views.count
