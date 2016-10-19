@@ -2418,14 +2418,16 @@ resources :marketiq do
     params do
       requires :token, type: String, regexp: UUID_REGEX
     end
-    post :send_question, jbuilder: 'ios_marketiq' do
+    post :send_question, jbuilder: 'android_marketiq' do
       if current_user.role == 'Jobseeker'
-          @marketiq = Marketiq.where(role: 'false').order("RANDOM()").first
+          @marketiq = Marketiq.where(role: 'false').where(specialization_id: current_user.user_educations.pluck('specialization_id')).order("RANDOM()").first
       elsif current_user.role == 'Company'        
-          @marketiq = Marketiq.where(role: 'true').order("RANDOM()").first
+          @marketiq = Marketiq.where(role: 'true').where(industry_id: current_user.industry_id).order("RANDOM()").first
       end
+      if @marketiq
       @user_marketiq = UserMarketiq.new user_id: current_user.id, marketiq_id: @marketiq.id
       error! @user_marketiq.errors.full_messages.join(', '),422 unless @user_marketiq.save
+    end
     end
 
 
@@ -2436,7 +2438,7 @@ resources :marketiq do
       requires :user_marketiq_id
       requires :answer
     end
-    post :send_answer, jbuilder: 'ios_marketiq' do
+    post :send_answer, jbuilder: 'android_marketiq' do
       @answer_user_marketiq = UserMarketiq.find params[:user_marketiq_id]
       @answer_user_marketiq.answer = params[:answer]
       @answer_user_marketiq.status = true
@@ -2449,7 +2451,7 @@ resources :marketiq do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :list, jbuilder: 'ios_marketiq' do
+    post :list, jbuilder: 'android_marketiq' do
       @user = User.find params[:user_id]
       @user_marketiqs = @user.user_marketiqs
       error! @user_marketiqs.errors.full_messages.join(', '),422 unless @user_marketiqs
