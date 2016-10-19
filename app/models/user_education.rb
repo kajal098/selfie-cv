@@ -10,7 +10,6 @@ class UserEducation < ActiveRecord::Base
 	
 	def percent_of_education()
     	user = self.user
-        
         if user.user_educations.count > 0  
         	education_per = 0
         	setting_per = UserPercentage.where(key: 'education').where(ptype: user.role).first
