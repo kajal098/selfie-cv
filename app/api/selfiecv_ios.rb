@@ -393,6 +393,7 @@ resources :member_profile do
       optional :working_till
       optional :designation
       optional :description
+      optional :current_company
       optional :file
       optional :text_field
       optional :file_type
@@ -401,7 +402,7 @@ resources :member_profile do
       @user = User.find params[:user_id]
       error! 'User not found',422 unless @user
       @user_experience = UserExperience.new user_id: @user.id
-      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :exp_type, :file_type, :text_field)
+      @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :current_company, :exp_type, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @user_experience.text_field = params[:text_field]
       else
@@ -421,6 +422,7 @@ resources :member_profile do
       optional :working_till
       optional :designation
       optional :description
+      optional :current_company
       optional :file
       optional :text_field
       optional :file_type
@@ -429,7 +431,7 @@ resources :member_profile do
       @update_user_experience = UserExperience.find params[:experience_id]
       error! 'User Experience not found',422 unless @update_user_experience
       @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
-        :designation, :description, :exp_type, :file_type, :text_field)
+        :designation, :description, :current_company :exp_type, :file_type, :text_field)
       if (params[:file_type] == 'text')
         @update_user_experience.text_field = params[:text_field]
       else
