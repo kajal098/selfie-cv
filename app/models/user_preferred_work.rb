@@ -5,20 +5,33 @@ class UserPreferredWork < ActiveRecord::Base
 	validates :expected_salary, :numericality => true, :allow_nil => true
 
 	after_save :percent_of_prework
+    before_destroy :reduce_percentage
 
-	def percent_of_prework()
+	def percent_of_prework
     	user = self.user
         if user.user_preferred_works.count > 0  
         	prework_per = 0
             setting_per = UserPercentage.find_by_key('prework').value
         	user.user_preferred_works.each do |prework|   
-        	   		if prework.ind_name.present?
-	                    prework_per = setting_per.to_i * 1
-	                end        		       	
+        	   	if prework.ind_name.present?
+	                prework_per = setting_per.to_i * 1
+	            end        		       	
         	end
-        user.user_meter.update_column('prework_per' ,prework_per)
-        user.profile_meter_total
+            user.user_meter.update_column('prework_per' ,prework_per)
+            user.profile_meter_total
         end 
         return true
     end
+
+    def reduce_percentage
+        user = self.user
+        if user.user_educations.where.not(id: self.id).count == 0  
+            education_per = 0
+            user.user_meter.update_column('education_per' ,education_per)
+            user.profile_meter_total
+        end
+        return true
+    end
+
+
 end

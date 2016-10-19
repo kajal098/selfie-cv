@@ -13,11 +13,10 @@ class UserExperience < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_exp
-
+    after_destroy :percent_of_exp
 
     def percent_of_exp()
         user = self.user
-        
         if user.user_experiences.count > 0  
             exp_per = 0
             setting_per = UserPercentage.where(key: 'experience').where(ptype: 'Jobseeker').first
@@ -31,8 +30,7 @@ class UserExperience < ActiveRecord::Base
             end
             user.user_meter.update_column('experience_per' ,exp_per)
             user.profile_meter_total
-        end 
-        
+        end
         return true
     end
 
