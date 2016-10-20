@@ -2495,10 +2495,10 @@ resources :marketiq do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :list, jbuilder: 'android_marketiq' do
+    post :list do
       @user = User.find params[:user_id]
       @user_marketiqs = @user.user_marketiqs
-      error!({error: @user_marketiqs.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_marketiqs
+      @user_marketiqs
     end
 
 
