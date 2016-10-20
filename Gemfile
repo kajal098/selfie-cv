@@ -60,6 +60,9 @@ gem 'elasticsearch-rails'
 # for Notification
 gem 'rpush'
 
+# for run cron job
+gem 'whenever', :require => false
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

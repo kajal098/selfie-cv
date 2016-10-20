@@ -33,14 +33,14 @@ if @user_stuff
 		end
 
 		json.jobseeker_awards @user_stuff.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description
+		json.extract! award, :id, :user_id, :name, :description, :file_type
 		json.file award.thumb_url		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 		end
 
 		json.jobseeker_certificates @user_stuff.user_certificates do |certificate|
-		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
+		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
 		json.file certificate.thumb_url
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
@@ -109,14 +109,14 @@ json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : 
 		json.industry @user_stuff.industry ? @user_stuff.industry.name : ""
 
 		json.company_awards @user_stuff.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description
+		json.extract! award, :id, :user_id, :name, :description, :file_type
 		json.file award.thumb_url		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 		end
 
 		json.company_certificates @user_stuff.user_certificates do |certificate|
-		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
+		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
 		json.file certificate.thumb_url
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
@@ -170,14 +170,14 @@ json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
 		end
 
 		json.student_awards @user_stuff.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description
+		json.extract! award, :id, :user_id, :name, :description, :file_type
 		json.file award.thumb_url		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 		end
 
 		json.student_certificates @user_stuff.user_certificates do |certificate|
-		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
+		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
 		json.file certificate.thumb_url
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
@@ -216,14 +216,14 @@ json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.total_per.to_i :
 		json.updated_at @user_stuff.updated_at.to_i
 
 		json.faculty_awards @user_stuff.user_awards do |award|
-		json.extract! award, :id, :user_id, :name, :description
+		json.extract! award, :id, :user_id, :name, :description, :file_type
 		json.file award.thumb_url		
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 		end
 
 		json.faculty_certificates @user_stuff.user_certificates do |certificate|
-		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year
+		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
 		json.file certificate.thumb_url
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
