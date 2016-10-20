@@ -25,7 +25,7 @@ set :environment, "staging"
 set :bundle_command, "/usr/local/bin/bundle exec"
 
 
-every '* 10-16 * * 1-5' do
+every '0-5 10-16 * * 1-5' do
   rake "cronjob:market_iq"
 end
 #
