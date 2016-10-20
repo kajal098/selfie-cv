@@ -1,7 +1,7 @@
 namespace :cronjob do
 
 	desc "This task is called by the Heroku scheduler add-on"
-	task :find_user => :environment do
+	task :market_iq => :environment do
 	  puts "For send marketiq question notification to users..."
 
 
