@@ -40,10 +40,12 @@ resources :devices do
   params do
     requires :uuid, type: String
     requires :registration_id, type: String
+    requires :device_type, type: String
   end
   post :register do
     @device = Device.find_or_initialize_by uuid: params[:uuid]
     @device.registration_id = params[:registration_id]
+    @device.device_type = params[:device_type]
     @device.renew_token
     error! @device.errors.full_messages.join(', '), 200 unless @device.save
     @device.ensure_duplicate_registrations
