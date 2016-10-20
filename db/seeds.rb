@@ -110,7 +110,7 @@ UserPercentage.create(ptype: 'site', key: 'profilemeter', value: 10)
 
 
 user = User.create(email: 'admin@example.com', password: '12345678' , username: 'admin' , role: 'Admin', user_total_per:10 )
-user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
+user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid, device_type: 'android')
 
 # user = User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student', first_name: 'trupti' , user_total_per:30) 
 # user.devices << Device.create!(uuid: SecureRandom.uuid , 	registration_id: SecureRandom.uuid)
