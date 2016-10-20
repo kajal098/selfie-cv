@@ -24,7 +24,8 @@ set :environment, "staging"
 #set :PATH, ENV['PATH']
 set :bundle_command, "/usr/local/bin/bundle exec"
 
-every 1.hours do
+
+every '* 10-16 * * 1-5' do
   rake "cronjob:market_iq"
 end
 #
