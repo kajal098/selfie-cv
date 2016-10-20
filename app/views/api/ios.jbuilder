@@ -758,7 +758,7 @@ end
 if @faculty_publication
 	@publications = @user.faculty_publications.order('created_at DESC')
 	json.faculty_publications @publications do |publication|
-		json.extract! publication, :id, :user_id, :title, :description
+		json.extract! publication, :id, :user_id, :title, :description, :file_type
 		
 		json.file_thumb publication.thumb_url
 		json.file publication.file.url
@@ -769,7 +769,7 @@ if @faculty_publication
 end
 
 if @update_faculty_publication
-	json.extract! @update_faculty_publication, :id, :user_id, :title, :description
+	json.extract! @update_faculty_publication, :id, :user_id, :title, :description, :file_type
 
 	json.file_thumb @update_faculty_publication.thumb_url
 	json.file @update_faculty_publication.file.url
@@ -781,7 +781,7 @@ end
 if @faculty_publications
 	@publications = @user.faculty_publications.order('created_at DESC')
 	json.faculty_publications @publications do |publication|
-	json.extract! publication, :id, :user_id, :title, :description
+	json.extract! publication, :id, :user_id, :title, :description, :file_type
 
 	json.file_thumb publication.thumb_url
 	json.file publication.file.url
@@ -794,7 +794,7 @@ end
 if @faculty_research
 	@researches = @user.faculty_researches.order('created_at DESC')
 	json.faculty_researches @researches do |research|
-		json.extract! research, :id, :user_id, :title, :description
+		json.extract! research, :id, :user_id, :title, :description, :file_type
 
 		json.file_thumb research.thumb_url
 		json.file research.file.url
@@ -806,7 +806,7 @@ if @faculty_research
 end
 
 if @update_faculty_research
-	json.extract! @update_faculty_research, :id, :user_id, :title, :description
+	json.extract! @update_faculty_research, :id, :user_id, :title, :description, :file_type
 
 	json.file_thumb @update_faculty_research.thumb_url
 	json.file @update_faculty_research.file.url
@@ -818,7 +818,7 @@ end
 if @faculty_researches
 	@researches = @user.faculty_researches.order('created_at DESC')
 	json.faculty_researches @researches do |research|
-	json.extract! research, :id, :user_id, :title, :description
+	json.extract! research, :id, :user_id, :title, :description, :file_type
 
 	json.file_thumb research.thumb_url
 	json.file research.file.url

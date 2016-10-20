@@ -221,7 +221,7 @@ resources :member do
       requires :token, type: String, regexp: UUID_REGEX
       requires :user_id
     end
-    post :all_stuff , jbuilder: 'android_all_stuff' do
+    post :all_stuff , jbuilder: 'ios_all_stuff' do
       authenticate!
       @user_stuff = User.find params[:user_id]
       error! 'User not found',422 unless @user_stuff      
@@ -1989,7 +1989,7 @@ resources :group do
               @chat.quick_msg = "joined"
               @chat.save
         # @group.accepted_users.each do |group_user|
-        #     Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        #     Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
         # end
       end      
       
@@ -2017,7 +2017,7 @@ resources :group do
         @chat.quick_msg = "letf"
         @chat.save
         @group.accepted_users.each do |group_user|
-            Device.ios_notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+            Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
         end
     end
 
@@ -2187,7 +2187,7 @@ resources :notifications do
       @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
       @user_like.is_liked = 'true'
       error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save
-      Device.ios_notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }    
+      Device.notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }    
       else        
         error! 'You already like this profile!',422
       end 
@@ -2202,7 +2202,7 @@ resources :notifications do
     post :view, jbuilder: 'ios_notification' do
       @user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
       error! @user_view.errors.full_messages.join(', '),422 unless @user_view.save
-      Device.ios_notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
+      Device.notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
     end
 
     # for share profile of user
@@ -2215,7 +2215,7 @@ resources :notifications do
     post :share, jbuilder: 'ios_notification' do
       @user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
       error! @user_share.errors.full_messages.join(', '),422 unless @user_share.save
-      Device.ios_notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
+      Device.notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
     end
 
     # for favourite profile of user
@@ -2246,7 +2246,7 @@ resources :notifications do
     post :rate, jbuilder: 'ios_notification' do
       @user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
       error! @user_rate.errors.full_messages.join(', '),422 unless @user_rate.save     
-      Device.ios_notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+      Device.notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
     end
 
 

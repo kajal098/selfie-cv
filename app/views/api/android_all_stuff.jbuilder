@@ -229,6 +229,34 @@ json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.total_per.to_i :
 		json.certificate_updated_at certificate.updated_at.to_i
 		end
 
+		json.faculty_affiliations @user_stuff.faculty_affiliations do |affiliation|
+		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till
+		json.affiliation_created_at affiliation.created_at.to_i
+		json.affiliation_updated_at affiliation.updated_at.to_i
+		end
+
+		json.faculty_workshops @user_stuff.faculty_workshops do |workshop|
+		json.extract! workshop, :id, :user_id, :description
+		json.workshop_created_at workshop.created_at.to_i
+		json.workshop_updated_at workshop.updated_at.to_i
+		end
+
+		json.faculty_publications @user_stuff.faculty_publications do |publication|
+		json.extract! publication, :id, :user_id, :title, :description, :file_type
+		json.file_thumb publication.thumb_url
+		json.file publication.file.url
+		json.publication_created_at publication.created_at.to_i
+		json.publication_updated_at publication.updated_at.to_i
+		end
+
+		json.faculty_researches @user_stuff.faculty_researches do |research|
+		json.extract! research, :id, :user_id, :title, :description, :file_type
+		json.file_thumb research.thumb_url
+		json.file research.file.url
+		json.research_created_at research.created_at.to_i
+		json.research_updated_at research.updated_at.to_i
+		end
+		
 		json.likes @user_stuff.likes.count
 		json.views @user_stuff.views.count
 		json.shares @user_stuff.shares.count

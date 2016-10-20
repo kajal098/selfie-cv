@@ -22,7 +22,8 @@ namespace :cronjob do
       end
 
   
-	  	Device.android_notify user.active_devices, { msg: "ok", que_id: @user_marketiq.id, question: @user_marketiq.question, option_a: @user_marketiq.option_a, option_b: @user_marketiq.option_b, option_c: @user_marketiq.option_c, option_d: @user_marketiq.option_d  }
+	  	Device.notify user.active_devices, { msg: "You have new Market IQ question.", type: 'marketiq_que' }
+	  	#Device.notify user.active_devices, alert: "You have new Market IQ question."
 	  end
 	  
 

@@ -19,56 +19,63 @@ class Device < ActiveRecord::Base
   end
 
   def self.notify(devices, data={})
-    if self.device_type == 'android'
-      
-    
-      alert = data.delete(:alert).to_s[0..40] if data[:alert]
-      sound = data.delete(:sound) if data[:sound]
-      devices.each do |device|
-        n = Rpush::Gcm::Notification.new
-        n.app = Rpush::Gcm::App.find_by_name("android_app")
-        n.registration_ids = device.registration_id
-        n.device_token = device.id
-        n.data = data
-        n.priority = 'high'
-        n.save!
-        puts "notification to #{device.registration_id}"
-        puts "#{n}"
-      end
-      end
-  end
-
-  def self.android_notify(devices, data={})
-      alert = data.delete(:alert).to_s[0..40] if data[:alert]
-      sound = data.delete(:sound) if data[:sound]
-      devices.each do |device|
-        n = Rpush::Gcm::Notification.new
-        n.app = Rpush::Gcm::App.find_by_name("android_app")
-        n.registration_ids = device.registration_id
-        n.device_token = device.id
-        n.data = data
-        n.priority = 'high'
-        n.save!
-        puts "notification to #{device.registration_id}"
-        puts "#{n}"
-      end
-  end
-
-  def self.ios_notify(devices, data={})
     alert = data.delete(:alert).to_s[0..40] if data[:alert]
     sound = data.delete(:sound) if data[:sound]
     devices.each do |device|
-      n = Rpush::Apns::Notification.new
-      n.app = Rpush::Apns::App.find_by_name("ios")
-      n.device_token = device.registration_id
-      n.badge = "1"
-      n.alert = alert unless alert.nil?
-      n.sound = sound unless sound.nil?
-      n.data = data
-      n.content_available = !data.blank?
+      if device.device_type == 'android'
+        n = Rpush::Gcm::Notification.new
+        n.app = Rpush::Gcm::App.find_by_name("android_app")
+        n.registration_ids = device.registration_id
+        n.device_token = device.id
+        n.data = data
+        n.priority = 'high'
+      else device.device_type == 'ios'
+        n = Rpush::Apns::Notification.new
+        n.app = Rpush::Apns::App.find_by_name("ios")
+        n.device_token = device.registration_id
+        n.badge = "1"
+        n.alert = alert unless alert.nil?
+        n.sound = sound unless sound.nil?
+        n.data = data
+        n.content_available = !data.blank?
+      end
       n.save!
+      puts "notification to #{device.registration_id}"
+      puts "#{n}"
     end
   end
+
+  # def self.notify(devices, data={})
+  #     alert = data.delete(:alert).to_s[0..40] if data[:alert]
+  #     sound = data.delete(:sound) if data[:sound]
+  #     devices.each do |device|
+  #       n = Rpush::Gcm::Notification.new
+  #       n.app = Rpush::Gcm::App.find_by_name("android_app")
+  #       n.registration_ids = device.registration_id
+  #       n.device_token = device.id
+  #       n.data = data
+  #       n.priority = 'high'
+  #       n.save!
+  #       puts "notification to #{device.registration_id}"
+  #       puts "#{n}"
+  #     end
+  # end
+
+  # def self.notify(devices, data={})
+  #   alert = data.delete(:alert).to_s[0..40] if data[:alert]
+  #   sound = data.delete(:sound) if data[:sound]
+  #   devices.each do |device|
+  #     n = Rpush::Apns::Notification.new
+  #     n.app = Rpush::Apns::App.find_by_name("ios")
+  #     n.device_token = device.registration_id
+  #     n.badge = "1"
+  #     n.alert = alert unless alert.nil?
+  #     n.sound = sound unless sound.nil?
+  #     n.data = data
+  #     n.content_available = !data.blank?
+  #     n.save!
+  #   end
+  # end
 
   
 end
