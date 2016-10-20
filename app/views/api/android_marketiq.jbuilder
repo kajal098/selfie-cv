@@ -2,7 +2,7 @@ json.status "Success"
 
 if @marketiq
 	json.time_for_ans 60
-	json.marketiq.id @user_marketiq.id
+	json.id_for_marketiq @user_marketiq.id
 	json.marketiq @marketiq, :question, :option_a, :option_b, :option_c, :option_d
 	json.created_at @marketiq.created_at.to_i
 	json.updated_at @marketiq.updated_at.to_i
