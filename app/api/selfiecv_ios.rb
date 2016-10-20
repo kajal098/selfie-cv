@@ -1479,20 +1479,6 @@ resources :student do
       status 200
     end
 
-    # for get student stuff
-    desc 'Get Student Stuff'
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
-    end
-    post :get_student_stuff, jbuilder: 'ios' do
-      @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
-      @student_educations = @user.student_educations
-      @student_marksheets = @user.user_marksheets
-      @student_projects = @user.user_projects
-    end
-
 end
 
 #--------------------------------student end----------------------------------#
@@ -1793,21 +1779,6 @@ resources :faculty do
       error! 'Faculty Research not found',422 unless @faculty_research
       @faculty_research.destroy
       status 200
-    end
-
-    # for get faculty stuff
-    desc 'Get Faculty Stuff'
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
-    end
-    post :get_faculty_stuff, jbuilder: 'ios' do
-      @user = User.find params[:user_id]
-      error! 'User not found',422 unless @user
-      @faculty_affiliations = @user.faculty_affiliations
-      @faculty_workshops = @user.faculty_workshops
-      @faculty_publications = @user.faculty_publications
-      @faculty_researches = @user.faculty_researches
     end
 
 end

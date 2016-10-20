@@ -1513,22 +1513,6 @@ resources :student do
       { code: 200, :status => "Success" }
     end
 
-    # for get student stuff
-    desc 'Get Student Stuff'
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
-    end
-    post :get_student_stuff, jbuilder: 'android' do
-      @user = User.find params[:user_id]
-      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @student_educations = @user.student_educations
-      @student_marksheets = @user.user_marksheets
-      @student_projects = @user.user_projects
-    end
-
-    
-
 end
 
 #--------------------------------student end----------------------------------#
@@ -1831,21 +1815,6 @@ resources :faculty do
       error!({error: 'Faculty Research not found', status: 'Fail'}, 200) unless @faculty_research
       @faculty_research.destroy
       { code: 200, :status => "Success" }
-    end
-
-    # for get faculty stuff
-    desc 'Get Faculty Stuff'
-    params do
-      requires :token, type: String, regexp: UUID_REGEX
-      requires :user_id
-    end
-    post :get_faculty_stuff, jbuilder: 'android' do
-      @user = User.find params[:user_id]
-      error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-      @faculty_affiliations = @user.faculty_affiliations
-      @faculty_workshops = @user.faculty_workshops
-      @faculty_publications = @user.faculty_publications
-      @faculty_researches = @user.faculty_researches
     end
 
 end
