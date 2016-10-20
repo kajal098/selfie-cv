@@ -14,9 +14,6 @@ class UserReport
   column(:username, header: "Username", :order => "users.username")
   column(:contact_number, header: "Number",  :order => "users.contact_number")
   column(:updated_at, html: true, header: "Updated At") { |user| content_tag :span, time_ago_in_words(user.updated_at), title: user.updated_at.to_formatted_s(:long) if user.updated_at }
-  column(:file, :html => true, class: 'padding_class',) do |model|
-        image_tag model.resume_thumb_url,  :size => "20x20"
-      end
   column(:actions, header: "Action", html: true  ) do |user|
     html = link_to "", admin_user_path(user), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View User"
     html += link_to "", admin_user_path(user), class: "margin_class btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove User", 'data-confirm' => 'Are you sure?'

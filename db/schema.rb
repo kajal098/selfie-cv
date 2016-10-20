@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017112038) do
+ActiveRecord::Schema.define(version: 20161019085841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 20161017112038) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-10-18'
-    t.date     "join_till",    default: '2016-10-18'
+    t.date     "join_from",    default: '2016-10-19'
+    t.date     "join_till",    default: '2016-10-19'
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -171,18 +171,21 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   end
 
   create_table "marketiqs", force: :cascade do |t|
-    t.integer  "category_id"
-    t.string   "question",    default: "", null: false
-    t.string   "option_a",    default: "", null: false
-    t.string   "option_b",    default: "", null: false
-    t.string   "option_c",    default: "", null: false
-    t.string   "option_d",    default: "", null: false
-    t.string   "answer",      default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "industry_id"
+    t.integer  "specialization_id"
+    t.string   "question",          default: "",    null: false
+    t.string   "option_a",          default: "",    null: false
+    t.string   "option_b",          default: "",    null: false
+    t.string   "option_c",          default: "",    null: false
+    t.string   "option_d",          default: "",    null: false
+    t.string   "answer",            default: "",    null: false
+    t.boolean  "role",              default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
-  add_index "marketiqs", ["category_id"], name: "index_marketiqs_on_category_id", using: :btree
+  add_index "marketiqs", ["industry_id"], name: "index_marketiqs_on_industry_id", using: :btree
+  add_index "marketiqs", ["specialization_id"], name: "index_marketiqs_on_specialization_id", using: :btree
 
   create_table "quick_messages", force: :cascade do |t|
     t.string   "text",       default: "",    null: false
@@ -327,7 +330,7 @@ ActiveRecord::Schema.define(version: 20161017112038) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-10-18'
+    t.date     "date",            default: '2016-10-19'
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
@@ -372,8 +375,8 @@ ActiveRecord::Schema.define(version: 20161017112038) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-10-18'
-    t.date     "working_till",    default: '2016-10-18'
+    t.date     "start_from",      default: '2016-10-19'
+    t.date     "working_till",    default: '2016-10-19'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
@@ -421,6 +424,18 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   end
 
   add_index "user_likes", ["user_id", "like_id"], name: "index_user_likes_on_user_id_and_like_id", using: :btree
+
+  create_table "user_marketiqs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "marketiq_id"
+    t.string   "answer",      default: "",    null: false
+    t.boolean  "status",      default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "user_marketiqs", ["marketiq_id"], name: "index_user_marketiqs_on_marketiq_id", using: :btree
+  add_index "user_marketiqs", ["user_id"], name: "index_user_marketiqs_on_user_id", using: :btree
 
   create_table "user_marksheets", force: :cascade do |t|
     t.integer  "user_id"
@@ -539,7 +554,7 @@ ActiveRecord::Schema.define(version: 20161017112038) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-10-18'
+    t.date     "date",       default: '2016-10-19'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "text_field", default: "",           null: false
@@ -594,7 +609,7 @@ ActiveRecord::Schema.define(version: 20161017112038) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-10-18"
+    t.string   "date_of_birth",                                 default: "2016-10-19"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -608,7 +623,7 @@ ActiveRecord::Schema.define(version: 20161017112038) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-10-18"
+    t.string   "faculty_join_from",                             default: "2016-10-19"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -674,7 +689,8 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   add_foreign_key "group_invitees", "groups"
   add_foreign_key "group_users", "groups", on_delete: :cascade
   add_foreign_key "group_users", "users", on_delete: :cascade
-  add_foreign_key "marketiqs", "categories", on_delete: :cascade
+  add_foreign_key "marketiqs", "industries", on_delete: :cascade
+  add_foreign_key "marketiqs", "specializations", on_delete: :cascade
   add_foreign_key "student_educations", "users", on_delete: :cascade
   add_foreign_key "user_awards", "users", on_delete: :cascade
   add_foreign_key "user_certificates", "users", on_delete: :cascade
@@ -689,6 +705,8 @@ ActiveRecord::Schema.define(version: 20161017112038) do
   add_foreign_key "user_future_goals", "users", on_delete: :cascade
   add_foreign_key "user_likes", "users", column: "like_id", on_delete: :cascade
   add_foreign_key "user_likes", "users", on_delete: :cascade
+  add_foreign_key "user_marketiqs", "marketiqs", on_delete: :cascade
+  add_foreign_key "user_marketiqs", "users", on_delete: :cascade
   add_foreign_key "user_marksheets", "users", on_delete: :cascade
   add_foreign_key "user_meters", "users", on_delete: :cascade
   add_foreign_key "user_percentages", "user_percentages", column: "parent_id", on_delete: :cascade
