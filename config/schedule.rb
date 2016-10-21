@@ -20,12 +20,16 @@
 # Learn more: http://github.com/javan/whenever
 
 set :output, 'log/cron.log'
-set :environment, "staging"
+set :environment, "development"
 #set :PATH, ENV['PATH']
-set :bundle_command, "/usr/local/bin/bundle exec"
+set :bundle_command, "bundle exec"
 
 
-every '0-5 10-16 * * 1-5' do
+# every '0-5 10-16 * * 1-5' do
+#   rake "cronjob:market_iq"
+# end
+
+every 1.minutes do
   rake "cronjob:market_iq"
 end
 #
