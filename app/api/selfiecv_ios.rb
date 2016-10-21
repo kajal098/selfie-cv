@@ -1811,7 +1811,7 @@ error! 'Group not found',422 unless @group
 @chat.sender_id = current_user.id
 @chat.group_id = @group.id
 @chat.activity = "true"
-@chat.quick_msg = "letf"
+@chat.quick_msg = "left"
 @chat.save
 @group.accepted_users.each do |group_user|
 Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
