@@ -2110,7 +2110,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		optional :location
-		optional :functional_area_id
+		optional :functional_area
 		optional :industry_id
 		optional :company_name
 	end
