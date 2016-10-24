@@ -1,29 +1,38 @@
 require 'api_logger'
 class SelfiecvAndroid < Grape::API
+
   use ApiLogger
   version 'android', using: :path
   format :json 
   formatter :json, Grape::Formatter::Jbuilder
+
   # Send Validation Error with 200 status code
   rescue_from :all do |e|
     error!({error: e.message, status: 'Fail'}, 200)
   end
+
   # Default status on 500 Error
   default_error_status 200
+
   helpers do
+
     def clean_params(params)
       ActionController::Parameters.new(params)
     end
+
     def current_device
       Device.find_by token: params[:token]
     end
+
     def current_user
       current_device.try(:user)
     end
+
     def authenticate!
       error!({error: 'Unauthorized', status: 'Fail'}, 200) unless params[:token] =~ UUID_REGEX
       error!({error: 'Unauthorized', status: 'Fail'}, 200) unless current_user
     end
+    
   end
   #--------------------------------devices start----------------------------------#
   resources :devices do

@@ -270,25 +270,17 @@ ActiveRecord::Schema.define(version: 20161024063034) do
   add_index "rpush_notifications", ["delivered", "failed"], name: "index_rpush_notifications_multi", where: "((NOT delivered) AND (NOT failed))", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.string   "resume_per",      default: "40",                         null: false
-    t.string   "achievement_per", default: "10",                         null: false
-    t.string   "curricular_per",  default: "10",                         null: false
-    t.string   "whizquiz_per",    default: "10",                         null: false
-    t.string   "future_goal_per", default: "10",                         null: false
-    t.string   "working_env_per", default: "10",                         null: false
-    t.string   "reference_per",   default: "10",                         null: false
-    t.string   "site_name",       default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "site_email",      default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "site_phone",      default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "site_fax",        default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "facebook_url",    default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "twitter_url",     default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "google_plus_url", default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "bronze",          default: "2",                          null: false
-    t.string   "silver",          default: "3",                          null: false
-    t.string   "gold",            default: "5",                          null: false
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.string   "site_name",       default: "Selfiecv.com",              null: false
+    t.string   "site_email",      default: "selfiecv2016@gmail.com",    null: false
+    t.string   "site_phone",      default: "9988776655",                null: false
+    t.string   "site_fax",        default: "432456",                    null: false
+    t.string   "facebook_url",    default: "www.facebook.com/Selfiecv", null: false
+    t.string   "twitter_url",     default: "www.twitter.com/Selfiecv",  null: false
+    t.string   "google_plus_url", default: "www.google.com/Selfiecv",   null: false
+    t.string   "whizquiz_time",   default: "0"
+    t.string   "marketiq_time",   default: "0"
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
   end
 
   create_table "specializations", force: :cascade do |t|
