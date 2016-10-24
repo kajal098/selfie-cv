@@ -1,14 +1,14 @@
 namespace :import do
   desc "TODO"
   task users: :environment do
-  	User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student' ) 
-	User.create!(email: 'anni@gmail.com', password:'12345678' , username: 'anni' , role: 'Student' ) 
-	User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'Faculty' )
-	User.create!(email: 'jekky@gmail.com', password: '12345678' , username: 'jekky' , role: 'Faculty' )
-	User.create!(email: 'thomas@gmail.com', password: '12345678' , username: 'thomas' , role: 'Jobseeker' )
-	User.create!(email: 'victor@gmail.com', password: '12345678' , username: 'victor' , role: 'Jobseeker' )
-	User.create!(email: 'parnel@gmail.com', password: '12345678' , username: 'parnel' , role: 'Company' )
-	User.create!(email: 'kriya@gmail.com', password: '12345678' , username: 'kriya' , role: 'Company' )
+  	User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student' , first_name: 'ghghg') 
+	User.create!(email: 'anni@gmail.com', password:'12345678' , username: 'anni' , role: 'Student' , first_name: 'ghghg') 
+	User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'Faculty', first_name: 'ghghg' )
+	User.create!(email: 'jekky@gmail.com', password: '12345678' , username: 'jekky' , role: 'Faculty', first_name: 'ghghg' )
+	User.create!(email: 'thomas@gmail.com', password: '12345678' , username: 'thomas' , role: 'Jobseeker', first_name: 'ghghg' )
+	User.create!(email: 'victor@gmail.com', password: '12345678' , username: 'victor' , role: 'Jobseeker', first_name: 'ghghg' )
+	User.create!(email: 'parnel@gmail.com', password: '12345678' , username: 'parnel' , role: 'Company', first_name: 'ghghg' )
+	User.create!(email: 'kriya@gmail.com', password: '12345678' , username: 'kriya' , role: 'Company', first_name: 'ghghg' )
   end
 
   desc "TODO"
@@ -31,30 +31,30 @@ namespace :import do
 	UserCertificate.create(user_id: 8,name:'mno', certificate_type:'jkl', year:2011)
 	UserCertificate.create(user_id: 9,name:'mno', certificate_type:'jkl', year:2011)
 
-	UserCurricular.create(user_id: 2, curricular_type:'vcd', team_type:'cds', location:'junagadh', date:'22/11/2011')
-	UserCurricular.create(user_id: 3, curricular_type:'vcd', team_type:'cds', location:'junagadh', date:'22/11/2011')
-	UserCurricular.create(user_id: 6, curricular_type:'vcd', team_type:'cds', location:'junagadh', date:'22/11/2011')
-	UserCurricular.create(user_id: 7, curricular_type:'xyz', team_type:'abc', location:'jamnagar', date:'22/11/2011')
+	UserCurricular.create(user_id: 2, curricular_type:'talent', team_type:'individual', location:'junagadh', date:'22/11/2011')
+	UserCurricular.create(user_id: 3, curricular_type:'talent', team_type:'team', location:'junagadh', date:'22/11/2011')
+	UserCurricular.create(user_id: 6, curricular_type:'sports', team_type:'individual', location:'junagadh', date:'22/11/2011')
+	UserCurricular.create(user_id: 7, curricular_type:'sports', team_type:'team', location:'jamnagar', date:'22/11/2011')
 	
 	UserEducation.create(user_id: 6, course_id:3, specialization_id:3,  year:2011, school: 'modi', skill: 'singing')
 	UserEducation.create(user_id: 7, course_id:4, specialization_id:4,  year:2011, school: 'vivekanand', skill: 'dancing')
 	
-	UserEnvironment.create(user_id: 6, env_type: 'qwert', title: 'title')
-	UserEnvironment.create(user_id: 7, env_type: 'qwert', title: 'title')
-	UserEnvironment.create(user_id: 8, env_type: 'qwert', title: 'title')
-	UserEnvironment.create(user_id: 9, env_type: 'qwert', title: 'title')
+	UserEnvironment.create(user_id: 6, env_type: 'like', title: 'title')
+	UserEnvironment.create(user_id: 7, env_type: 'dislike', title: 'title')
+	UserEnvironment.create(user_id: 8, env_type: 'like', title: 'title')
+	UserEnvironment.create(user_id: 9, env_type: 'dislike', title: 'title')
 
 	UserExperience.create(user_id: 4, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
-	UserExperience.create(user_id: 5, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
+	UserExperience.create(user_id: 5, name: 'zxcvb', exp_type: 'fresher', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
 	UserExperience.create(user_id: 6, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
-	UserExperience.create(user_id: 7, name: 'zxcvb', exp_type: 'experience', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
+	UserExperience.create(user_id: 7, name: 'zxcvb', exp_type: 'fresher', start_from: '22/10/2012', working_till: '22/11/2011', designation:'tester')
 	
-	UserFutureGoal.create(user_id: 2, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-	UserFutureGoal.create(user_id: 3, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-	UserFutureGoal.create(user_id: 6, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-	UserFutureGoal.create(user_id: 7, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-	UserFutureGoal.create(user_id: 8, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
-	UserFutureGoal.create(user_id: 9, goal_type: 'zasdew', title: 'hjure', term_type: 'ghjk')
+	UserFutureGoal.create(user_id: 2, goal_type: 'life goal', title: 'hjure', term_type: 'ghjk')
+	UserFutureGoal.create(user_id: 3, goal_type: 'life goal', title: 'hjure', term_type: 'ghjk')
+	UserFutureGoal.create(user_id: 6, goal_type: 'life goal', title: 'hjure', term_type: 'ghjk')
+	UserFutureGoal.create(user_id: 7, goal_type: 'financial goal', title: 'hjure', term_type: 'ghjk')
+	UserFutureGoal.create(user_id: 8, goal_type: 'financial goal', title: 'hjure', term_type: 'ghjk')
+	UserFutureGoal.create(user_id: 9, goal_type: 'financial goal', title: 'hjure', term_type: 'ghjk')
 
 	UserPreferredWork.create(user_id: 6, ind_name: 'Krishaweb', functional_name: 'backend',  preferred_designation: 'developer', preferred_location: 'ahmedabad', current_salary: '10000', expected_salary: '20000', time_type: 'fulltime')
 	UserPreferredWork.create(user_id: 7, ind_name: 'Infosys', functional_name: 'backend',  preferred_designation: 'developer', preferred_location: 'ahmedabad', current_salary: '10000', expected_salary: '20000', time_type: 'fulltime')
@@ -62,11 +62,11 @@ namespace :import do
 	UserReference.create(user_id: 6, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
 	UserReference.create(user_id: 7, title: 'my ref', ref_type: 'individual', from: 'mr.joseph', email: 'jk@gmail.com', contact: '9988776655', date: '22/11/2011', location: 'asxde')
 
-	StudentEducation.create(user_id: 2, standard: 'abcdefg',  year:2011, school: 'modi' )
-	StudentEducation.create(user_id: 3, standard: 'abcdefg',  year:2011, school: 'vivekanand' )
+	StudentEducation.create(user_id: 2, standard: 'first',  year:2011, school: 'modi' )
+	StudentEducation.create(user_id: 3, standard: 'third',  year:2011, school: 'vivekanand' )
 
-	UserMarksheet.create(user_id: 2, school_name: 'sdfgh', standard: 'first', grade: 'A', year: 2011)
-	UserMarksheet.create(user_id: 3, school_name: 'qwertyu', standard: 'third', grade: 'C', year: 2011)
+	UserMarksheet.create(user_id: 2, school_name: 'vivekanand school', standard: 'first', grade: 'A', year: 2011)
+	UserMarksheet.create(user_id: 3, school_name: 'modi school', standard: 'third', grade: 'C', year: 2011)
 
 	UserProject.create(user_id: 2, title: 'sdfgh', description: 'first')
 	UserProject.create(user_id: 3, title: 'qwertyu', description: 'third')
@@ -74,19 +74,24 @@ namespace :import do
 	FacultyAffiliation.create(user_id:4, university:'gtu', collage_name: 'vgec', subject: 'computer', designation: 'chandkheda', join_from: '22/11/2011' )
 	FacultyAffiliation.create(user_id:5, university:'gtu', collage_name: 'vgec', subject: 'computer', designation: 'chandkheda', join_from: '22/11/2011' )
 
-	FacultyPublication.create(user_id:4, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
-	FacultyPublication.create(user_id:5, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+	FacultyPublication.create(user_id:4, title:'first pub', description: 'first pub des' )
+	FacultyPublication.create(user_id:5, title:'second pub', description: 'second pub des' )
 
-	FacultyResearch.create(user_id:4, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
-	FacultyResearch.create(user_id:5, title:'abcdefghijklmnopqrstuvwxyz', description: 'abcdefghijklmnopqrstuvwxyz' )
+	FacultyResearch.create(user_id:4, title:'first res', description: 'first res des' )
+	FacultyResearch.create(user_id:5, title:'second res', description: 'second res des' )
 
-	FacultyWorkshop.create(user_id:4, description:'abcdefghijklmnopqrstuvwxyz' )
-	FacultyWorkshop.create(user_id:5, description:'abcdefghijklmnopqrstuvwxyz' )
+	FacultyWorkshop.create(user_id:4, description:'first workshop des' )
+	FacultyWorkshop.create(user_id:5, description:'second workshop des' )
 
 	Group.create(name: 'daisygroup', slug: 'daisygroup', code: 123456 )
 	Group.create(name: 'jekkygroup', slug: 'jekkygroup', code: 123456 )
-	Group.create(name: 'angelagroup', slug: 'angelagroup', code: 123456 )
-	Group.create(name: 'dianagroup', slug: 'dianagroup', code: 123456 )
+	Group.create(name: 'group3', slug: 'group3', code: 123456 )
+	Group.create(name: 'group4', slug: 'group4', code: 123456 )
+
+	GroupUser.create(group_id: 1, user_id: 5, admin:true, status: 'joined' )
+	GroupUser.create(group_id: 2, user_id: 4, admin:true, status: 'joined' )
+	GroupUser.create(group_id: 3, user_id: 5, admin:true, status: 'joined' )
+	GroupUser.create(group_id: 4, user_id: 4, admin:true, status: 'joined' )
 
   end
 

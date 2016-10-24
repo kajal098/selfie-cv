@@ -170,7 +170,7 @@ json.student_education_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(
 json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
 json.curri_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.curri_per.to_i, "extra") : 0
 json.future_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.future_goal_per.to_i, "futuregoal") : 0
-json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
+json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.total_per.to_i : 0
 
       	json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i      	
