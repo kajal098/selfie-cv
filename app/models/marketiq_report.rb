@@ -7,7 +7,7 @@ class MarketiqReport
 
   #filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
-  column(:industry_id, header: "industry") do |model|
+  column(:industry_id, header: "Industry") do |model|
     model.industry_id ? model.industry.name : "Not Available"
   end
   column(:specialization_id, header: "Specialization") do |model|

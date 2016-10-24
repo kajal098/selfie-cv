@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: redirect('/admin')
   namespace :admin do
     root 'dashboard#index'
-    resources :devices, :marketiqs, :courses, :companies, :company_stocks, :chats, :groups, :quick_messages, :group_users, :industries, :standards, :specializations, :user_meters, :user_educations, :user_experiences,  :user_preffered_works, :user_awards,   :user_certificates, :user_curriculars, :user_future_goals, :user_environments, :user_references
+    resources :devices, :graphs, :marketiqs, :courses, :companies, :company_stocks, :chats, :groups, :quick_messages, :group_users, :industries, :standards, :specializations, :user_meters, :user_educations, :user_experiences,  :user_preffered_works, :user_awards,   :user_certificates, :user_curriculars, :user_future_goals, :user_environments, :user_references
     resource  :settings, only: [:show, :create, :update]
     resource  :user_percentages, only: [:show, :create, :update]
     resources :whizquizzes do

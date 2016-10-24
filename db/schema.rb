@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021054121) do
+ActiveRecord::Schema.define(version: 20161024063034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,17 @@ ActiveRecord::Schema.define(version: 20161021054121) do
   end
 
   add_index "faculty_workshops", ["user_id"], name: "index_faculty_workshops_on_user_id", using: :btree
+
+  create_table "graphs", force: :cascade do |t|
+    t.integer  "company_stock_id"
+    t.integer  "industry_id"
+    t.string   "company_code"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "graphs", ["company_stock_id"], name: "index_graphs_on_company_stock_id", using: :btree
+  add_index "graphs", ["industry_id"], name: "index_graphs_on_industry_id", using: :btree
 
   create_table "group_invitees", force: :cascade do |t|
     t.integer  "group_id"
@@ -689,6 +700,8 @@ ActiveRecord::Schema.define(version: 20161021054121) do
   add_foreign_key "faculty_publications", "users", on_delete: :cascade
   add_foreign_key "faculty_researches", "users", on_delete: :cascade
   add_foreign_key "faculty_workshops", "users", on_delete: :cascade
+  add_foreign_key "graphs", "company_stocks", on_delete: :cascade
+  add_foreign_key "graphs", "industries", on_delete: :cascade
   add_foreign_key "group_invitees", "groups"
   add_foreign_key "group_users", "groups", on_delete: :cascade
   add_foreign_key "group_users", "users", on_delete: :cascade
