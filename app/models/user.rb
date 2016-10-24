@@ -98,10 +98,10 @@ def self.company_search(params)
       wheres << params[:industry_id].to_i
     end
     
-    if params.has_key?(:functional_area_id)
+    if params.has_key?(:functional_area)
       conditions << " AND " unless conditions.length == 0
-      conditions << " company_id = ?"
-      wheres << params[:functional_area_id].to_i
+      conditions << " company_functional_area ilike ?"
+      wheres << "%#{params[:functional_area]}%"
     end
     wheres.insert(0, conditions)
     return where( wheres )
