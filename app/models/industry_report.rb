@@ -7,6 +7,7 @@ class IndustryReport
 
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
+  column(:id, header: "Id", :order => "industries.id")
   column(:name, header: "Name", :order => "industries.name")
   column(:created_at, html: true, header: "Created At") { |industry| content_tag :span, time_ago_in_words(industry.created_at), title: industry.created_at.to_formatted_s(:long) if industry.created_at }
   column(:updated_at, html: true, header: "Updated At") { |industry| content_tag :span, time_ago_in_words(industry.updated_at), title: industry.updated_at.to_formatted_s(:long) if industry.updated_at }

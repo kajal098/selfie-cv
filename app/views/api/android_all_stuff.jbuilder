@@ -89,6 +89,12 @@ json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : 
 		json.shares @user_stuff.shares.count
 		json.favourites @user_stuff.favourites.count
 		json.rates @user_stuff.rates.count
+
+		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
+			json.liked true
+		else
+			json.liked false
+		end
 		
 	elsif @user_stuff.role == 'Company'
 		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type
@@ -145,6 +151,12 @@ json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.total_per.to_i : 
 		json.favourites @user_stuff.favourites.count
 		json.rates @user_stuff.rates.count
 
+		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
+			json.liked true
+		else
+			json.liked false
+		end
+
 	elsif @user_stuff.role == 'Student'
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
 
@@ -195,6 +207,12 @@ json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
 		json.shares @user_stuff.shares.count
 		json.favourites @user_stuff.favourites.count
 		json.rates @user_stuff.rates.count
+
+		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
+			json.liked true
+		else
+			json.liked false
+		end
 
 		
 
@@ -262,6 +280,12 @@ json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.total_per.to_i :
 		json.shares @user_stuff.shares.count
 		json.favourites @user_stuff.favourites.count
 		json.rates @user_stuff.rates.count
+		
+		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
+			json.liked true
+		else
+			json.liked false
+		end
 		
 	end
 end

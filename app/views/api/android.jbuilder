@@ -399,6 +399,17 @@ if @specializations
 	end
 end
 
+if @companystocks
+@all_companystocks = @companystocks.order('created_at DESC')
+	json.companystocks @all_companystocks do |coun|
+		json.id coun.id
+		json.country coun.sensex_co
+
+		json.created_at coun.created_at.to_i
+		json.updated_at coun.updated_at.to_i
+	end
+end
+
 if @user_educations
 @educations = @user.user_educations.order('created_at DESC')
 	json.user_educations @educations do |education|
