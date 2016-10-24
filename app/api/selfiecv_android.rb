@@ -93,7 +93,7 @@ class SelfiecvAndroid < Grape::API
         current_device.update_column :user_id, @user.id
       end
 
-      desc "Send reset password token"
+      desc 'Send reset password token'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :email
@@ -110,7 +110,7 @@ class SelfiecvAndroid < Grape::API
         end
       end
 
-      desc "Resend reset password token"
+      desc 'Resend reset password token'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :email
@@ -127,7 +127,7 @@ class SelfiecvAndroid < Grape::API
         end
       end
 
-      desc "Reset Password"
+      desc 'Reset Password'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :code, type: String
@@ -144,7 +144,7 @@ class SelfiecvAndroid < Grape::API
         { msg: 'Your password has been changed ..!!', :status => "Success" }
       end
 
-      desc "Change Password"
+      desc 'Change Password'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :current_password, type: String
@@ -161,7 +161,7 @@ class SelfiecvAndroid < Grape::API
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       end
 
-      desc "Send Delete Code To User"
+      desc 'Send Delete Code To User'
       params do
         requires :token, type: String, regexp: UUID_REGEX
       end
@@ -173,7 +173,7 @@ class SelfiecvAndroid < Grape::API
         { code: 200, :status => "Success" }
       end
 
-      desc "Delete User Account"
+      desc 'Delete User Account'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :delete_code
@@ -330,7 +330,7 @@ class SelfiecvAndroid < Grape::API
         @user_educations = @user.user_educations
       end
 
-      desc "Delete Education"
+      desc 'Delete Education'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :education_id
@@ -412,7 +412,7 @@ class SelfiecvAndroid < Grape::API
         @user_experiences = @user.user_experiences
       end
 
-      desc "Delete Experience"
+      desc 'Delete Experience'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :experience_id
@@ -481,7 +481,7 @@ class SelfiecvAndroid < Grape::API
         @user_preferred_works = @user.user_preferred_works
       end
 
-      desc "Delete Preffered Work"
+      desc 'Delete Preffered Work'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :preffered_work_id
@@ -556,7 +556,7 @@ class SelfiecvAndroid < Grape::API
         @user_awards = @user.user_awards
       end
 
-      desc "Delete Award"
+      desc 'Delete Award'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :award_id
@@ -632,7 +632,7 @@ class SelfiecvAndroid < Grape::API
         @user_certificates = @user.user_certificates
       end
 
-      desc "Delete Certificate"
+      desc 'Delete Certificate'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :certificate_id
@@ -712,7 +712,7 @@ class SelfiecvAndroid < Grape::API
         @user_curriculars = @user.user_curriculars
       end
 
-      desc "Delete Curricular"
+      desc 'Delete Curricular'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :curricular_id
@@ -789,7 +789,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Future Goal"
+      desc 'Delete Future Goal'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :future_goal_id
@@ -864,7 +864,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Work Environment"
+      desc 'Delete Work Environment'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :work_env_id
@@ -949,7 +949,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete reference"
+      desc 'Delete reference'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :reference_id
@@ -1169,6 +1169,7 @@ class SelfiecvAndroid < Grape::API
         @specializations = Specialization.all
         @companies = Company.all
         @industries = Industry.all
+        @companystocks = CompanyStock.all
       end
 
       desc 'Update Image'
@@ -1286,7 +1287,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Student Education"
+      desc 'Delete Student Education'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :education_id
@@ -1340,7 +1341,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Student Marksheet"
+      desc 'Delete Student Marksheet'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :marksheet_id
@@ -1384,7 +1385,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Student Project"
+      desc 'Delete Student Project'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :project_id
@@ -1507,7 +1508,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Faculty Affiliation"
+      desc 'Delete Faculty Affiliation'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :affiliation_id
@@ -1608,7 +1609,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Faculty Publication"
+      desc 'Delete Faculty Publication'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :publication_id
@@ -1668,7 +1669,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Faculty Research"
+      desc 'Delete Faculty Research'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :research_id
@@ -1685,7 +1686,7 @@ class SelfiecvAndroid < Grape::API
   resources :group do 
   before { authenticate! }
 
-      desc "Create Group"
+      desc 'Create Group'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :name
@@ -1706,7 +1707,7 @@ class SelfiecvAndroid < Grape::API
         @chat.save
       end
 
-      desc "Listing of user's Group"
+      desc 'Listing of users Group'
       params do
         requires :token, type: String, regexp: UUID_REGEX
       end
@@ -1714,7 +1715,7 @@ class SelfiecvAndroid < Grape::API
         @groups = current_user.all_groups(current_user)
       end
 
-      desc "Information of Group"
+      desc 'Information of Group'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :group_id
@@ -1724,7 +1725,7 @@ class SelfiecvAndroid < Grape::API
         error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
       end
 
-      desc "Update Group"
+      desc 'Update Group'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :group_id
@@ -1740,7 +1741,7 @@ class SelfiecvAndroid < Grape::API
       end
       
 
-      desc "Delete Group"
+      desc 'Delete Group'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :group_id
@@ -1763,7 +1764,7 @@ class SelfiecvAndroid < Grape::API
             @chat.sender_id = current_user.id
             @chat.group_id = @group.id
             @chat.activity = "true"
-            @chat.quick_msg = "removed"
+            @chat.quick_msg = "removed #{@user.username}"
             @chat.save
         else
             if current_user.role == 'Faculty'
@@ -1790,7 +1791,7 @@ class SelfiecvAndroid < Grape::API
         { code: 200, :status => "Success" }
       end
 
-      desc "Email invitation"
+      desc 'Email invitation'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :group_id
@@ -1850,7 +1851,7 @@ class SelfiecvAndroid < Grape::API
         @chat.sender_id = current_user.id
         @chat.group_id = @group.id
         @chat.activity = "true"
-        @chat.quick_msg = "letf"
+        @chat.quick_msg = "left"
         @chat.save
         @group.accepted_users.each do |group_user|
         Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
@@ -1866,7 +1867,7 @@ class SelfiecvAndroid < Grape::API
         @messages = QuickMessage.where(role: QuickMessage::ROLES[params[:role]])
       end
 
-      desc "Search Group Of Current User"
+      desc 'Search Group Of Current User'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :q
@@ -2071,7 +2072,7 @@ class SelfiecvAndroid < Grape::API
   resources :top_user do
   before { authenticate! }
 
-      desc "Listing Top Users"
+      desc 'Listing Top Users'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :role
@@ -2090,7 +2091,7 @@ class SelfiecvAndroid < Grape::API
   resources :whizquiz do
   before { authenticate! }
 
-      desc "Send random 10 question to Users"
+      desc 'Send random 10 question to Users'
       params do
         requires :token, type: String, regexp: UUID_REGEX
       end
@@ -2098,7 +2099,7 @@ class SelfiecvAndroid < Grape::API
         @questions = Whizquiz.where(status: true).order("RANDOM()").limit(2)
       end
 
-      desc "Answer"
+      desc 'Answer'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
@@ -2126,7 +2127,7 @@ class SelfiecvAndroid < Grape::API
   resources :search do
   before { authenticate! }
 
-      desc "Search Jobseeker"
+      desc 'Search Jobseeker'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :q
@@ -2139,13 +2140,12 @@ class SelfiecvAndroid < Grape::API
         optional :preferred_location
         optional :qualification
       end
-      post :jobseeker do
+      post :jobseeker, jbuilder: 'android_search'  do
         authenticate!
         @searched_users =  User.includes("user_experiences").where("users.username ilike ?","%#{params[:q]}%").where("users.user_experiences.experience")
-        @searched_users
       end
 
-      desc "Search Company"
+      desc 'Search Company'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         optional :location
@@ -2164,7 +2164,7 @@ class SelfiecvAndroid < Grape::API
   resources :marketiq do
   before { authenticate! }
 
-      desc "Send random 10 question to Users"
+      desc 'Send random 10 question to Users'
       params do
         requires :token, type: String, regexp: UUID_REGEX
       end
@@ -2180,7 +2180,7 @@ class SelfiecvAndroid < Grape::API
           end
       end
 
-      desc "Send Answer Of Marketiq Question"
+      desc 'Send Answer Of Marketiq Question'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_marketiq_id
@@ -2193,7 +2193,7 @@ class SelfiecvAndroid < Grape::API
         error!({error: @answer_user_marketiq.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @answer_user_marketiq.save
       end
 
-      desc "Users's Market IQ List"
+      desc 'Users Market IQ List'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id

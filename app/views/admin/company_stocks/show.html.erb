@@ -4,14 +4,18 @@
   <div class="col-lg-6 col-lg-offset-3">
     <div class="panel panel-default">
       <div class="panel-heading">        
-        <h3 class="panel-title" style="color: #000000"><b><%= @company_stock.name.capitalize %></b></h3>
+        <h3 class="panel-title" style="color: #000000"><b><%= @company_stock.sensex_co.capitalize %></b></h3>
       </div>
       <div class="panel-body">
 
 
 <p>
-  <strong>Name:</strong>
-  <%= @company_stock.name %>
+  <strong>Sensex:</strong>
+  <%= @company_stock.sensex %>
+</p>
+<p>
+  <strong>Currency:</strong>
+  <%= @company_stock.currency %>
 </p>
 <p>
   <strong>Created At:</strong>

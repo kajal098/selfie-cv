@@ -6,9 +6,11 @@
     <div class="panel panel-default">
       <div class="panel-heading">        
         
-        <h3 class="panel-title">Users</h3>
+        <h3 class="panel-title" , style="color:#000000;" ><b>Users</b></h3>
         <p>
-          <%= link_to '', admin_users_path(format: "csv"), class: "btn btn-primary btn-sm glyphicon glyphicon-download-alt pull-right", title: "Export all users from here.", style: "color:#FFF;margin-top:-20px;" %>
+          <% if @assets.count > 0 %>
+            <%= link_to '', admin_users_path(format: "csv"), class: "btn btn-primary btn-sm glyphicon glyphicon-download-alt pull-right", title: "Export all users from here.", style: "color:#FFF;margin-top:-20px;" %>
+          <% end %>
         </p>
       </div>
       <div class="panel-body">

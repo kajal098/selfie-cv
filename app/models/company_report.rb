@@ -7,6 +7,7 @@ class CompanyReport
 
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
+  column(:id, header: "Id", :order => "companies.id")
   column(:name, header: "Name", :order => "companies.name")
   column(:created_at, html: true, header: "Created At") { |company| content_tag :span, time_ago_in_words(company.created_at), title: company.created_at.to_formatted_s(:long) if company.created_at }
   column(:updated_at, html: true, header: "Updated At") { |company| content_tag :span, time_ago_in_words(company.updated_at), title: company.updated_at.to_formatted_s(:long) if company.updated_at }

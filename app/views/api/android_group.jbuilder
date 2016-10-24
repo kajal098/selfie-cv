@@ -2,7 +2,7 @@ json.status "Success"
 
 if @group
 	
-		json.Group @group, :id, :name, :code
+		json.Group @group, :id, :name, :code, :deleted_from
 		json.group_pic @group.thumb_url
 		json.group_created_at @group.created_at.to_i
 		json.group_updated_at @group.updated_at.to_i
@@ -50,7 +50,7 @@ end
 
 if @groups
 	json.groups @groups do |group|
-		json.extract! group, :id, :name, :code
+		json.extract! group, :id, :name, :code, :deleted_from
 		json.group_pic group.thumb_url
 		json.group_created_at group.created_at.to_i
 		json.group_updated_at group.updated_at.to_i

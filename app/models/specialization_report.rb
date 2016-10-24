@@ -9,6 +9,7 @@ class SpecializationReport
   #filter(:id, header: "Personeelsnummer")
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
+  column(:id, header: "Id", :order => "specializations.id")
   column(:name, header: "Name", :order => "specializations.name")
   column(:created_at, html: true, header: "Created At") { |specialization| content_tag :span, time_ago_in_words(specialization.created_at), title: specialization.created_at.to_formatted_s(:long) if specialization.created_at }
   column(:updated_at, html: true, header: "Updated At") { |specialization| content_tag :span, time_ago_in_words(specialization.updated_at), title: specialization.updated_at.to_formatted_s(:long) if specialization.updated_at }
