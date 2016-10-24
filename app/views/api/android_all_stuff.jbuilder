@@ -202,6 +202,26 @@ json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.total_per.to_i :
 		json.curricular_updated_at curricular.updated_at.to_i
 		end
 
+		json.student_future_goals @user_stuff.user_future_goals do |future_goal|
+		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
+		json.file future_goal.thumb_url
+		json.future_goal_created_at future_goal.created_at.to_i
+		json.future_goal_updated_at future_goal.updated_at.to_i
+		end
+
+		json.student_marksheets @user_stuff.user_marksheets do |marksheet|
+		json.extract! marksheet, :id, :school_name, :standard, :grade, :year, :file_type
+		json.file marksheet.thumb_url
+		json.marksheet_created_at marksheet.created_at.to_i
+		json.marksheet_updated_at marksheet.updated_at.to_i
+		end
+
+		json.student_projects @user_stuff.user_projects do |project|
+		json.extract! project, :id, :title, :description
+		json.project_created_at project.created_at.to_i
+		json.project_updated_at project.updated_at.to_i
+		end
+
 		json.likes @user_stuff.likes.count
 		json.views @user_stuff.views.count
 		json.shares @user_stuff.shares.count

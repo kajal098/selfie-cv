@@ -10,8 +10,7 @@ scope :for_roles, ->(values) do
     where(role: roles.values_at(*Array(values)))
 end
 
-devise :database_authenticatable, :registerable,
-:recoverable, :rememberable, :trackable
+devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -20,11 +19,6 @@ validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 # validates :company_zipcode, :numericality => true, :allow_nil => true
 # validates :company_contact, :numericality => true, :allow_nil => true
 #validates_format_of :join_from, :with => /\d{2}\/\d{2}\/\d{4}/
-
-#validates :username, length: { minimum: 6 }
-#validates :username, length: { maximum: 20 }
-#validates :username, length: { in: 6..20 }
-#validates :username, length: { is: 6 }
 
 paginates_per 10
 
@@ -98,10 +92,10 @@ def self.company_search(params)
       wheres << params[:industry_id].to_i
     end
     
-    if params.has_key?(:functional_area_id)
+    if params.has_key?(:functional_area)
       conditions << " AND " unless conditions.length == 0
-      conditions << " company_id = ?"
-      wheres << params[:functional_area_id].to_i
+      conditions << " company_functional_area ilike ?"
+      wheres << "%#{params[:functional_area]}%"
     end
     wheres.insert(0, conditions)
     return where( wheres )
@@ -121,6 +115,10 @@ end
 
 def top_faculties
     User.joins(:user_meter).where(:users=> { role: 2 }).order("user_meters.total_per DESC").limit(3)
+end
+
+def top_rated
+    User.includes(:user_likes).order("user.user_likes.count DESC").limit(3)
 end
 
 
