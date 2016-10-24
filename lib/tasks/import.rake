@@ -93,6 +93,11 @@ namespace :import do
 	GroupUser.create(group_id: 3, user_id: 5, admin:true, status: 'joined' )
 	GroupUser.create(group_id: 4, user_id: 4, admin:true, status: 'joined' )
 
+	Graph.create(industry_id:1 , company_stock_id:1 , company_code:'ASD')
+	Graph.create(industry_id:2 , company_stock_id:2 , company_code:'QWE')
+	Graph.create(industry_id:3 , company_stock_id:3 , company_code:'FGH')
+	Graph.create(industry_id:4 , company_stock_id:4 , company_code:'CVB')
+
   end
 
 end
