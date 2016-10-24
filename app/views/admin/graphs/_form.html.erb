@@ -1,0 +1,28 @@
+<%= simple_form_for [:admin, @graph], html: { class: 'form-horizontal' } do |f| %>
+  
+  <div class="form-group string" id="country">
+  <label class="string required col-sm-3 control-label" >
+  Country </label>
+  <div class="col-sm-9">
+  <%= f.collection_select :company_stock_id, CompanyStock.order(:sensex_co),:id,:sensex_co, include_blank: true %>
+  </div>
+  </div>
+
+
+  <div class="form-group string" id="ind">
+  <label class="string required col-sm-3 control-label" >
+  Industry </label>
+  <div class="col-sm-9">
+  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, include_blank: true %>
+  </div>
+  </div>
+
+  <%= f.input :company_code, label: "Company Code" %>
+  
+
+  <div class="form-group clearfix">
+    <div class="col-sm-offset-3 col-sm-9">
+      <button type="submit" class="btn btn-primary btn-sm">Save</button> <%= link_to "Back", admin_graphs_path, class: "btn btn-default btn-sm" %>
+    </div>
+  </div>
+<% end %>
