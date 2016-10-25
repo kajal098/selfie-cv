@@ -1778,12 +1778,6 @@ class SelfiecvAndroid < Grape::API
         else
             if current_user.role == 'Faculty'
                 @group.destroy
-                @chat = Chat.new
-                @chat.sender_id = current_user.id
-                @chat.group_id = @group.id
-                @chat.activity = "true"
-                @chat.quick_msg = "deleted"
-                @chat.save
             else
                 unless @group.deleted_from.include? current_user.id
                 @group.deleted_from << current_user.id
@@ -2155,6 +2149,19 @@ class SelfiecvAndroid < Grape::API
       end
 
       desc 'Search Company'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        optional :location
+        optional :functional_area_id
+        optional :industry_id
+        optional :company_name
+      end
+      post :company, jbuilder: 'android_search'  do
+        authenticate!
+        @searched_company =  User.company_search(params)
+      end
+
+      desc 'Search Top User'
       params do
         requires :token, type: String, regexp: UUID_REGEX
         optional :location

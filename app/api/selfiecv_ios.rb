@@ -1719,30 +1719,24 @@ before { authenticate! }
 				@group_user.save 
 				@chat = Chat.new
 				@chat.sender_id = current_user.id
-				@chat.group_id = @group.id
+				@chat.group_id = params[:group_id]
 				@chat.activity = "true"
 				@chat.quick_msg = "removed #{@user.username}"
 				@chat.save
 			else
 				if current_user.role == 'Faculty'
-				@group.destroy
-				@chat = Chat.new
-				@chat.sender_id = current_user.id
-				@chat.group_id = @group.id
-				@chat.activity = "true"
-				@chat.quick_msg = "deleted"
-				@chat.save
+					@group.destroy
 				else
 					unless @group.deleted_from.include? current_user.id
 					@group.deleted_from << current_user.id
 					@group.update_column :deleted_from, @group.deleted_from
 					end
-				@chat = Chat.new
-				@chat.sender_id = current_user.id
-				@chat.group_id = @group.id
-				@chat.activity = "true"
-				@chat.quick_msg = "left"
-				@chat.save
+					@chat = Chat.new
+					@chat.sender_id = current_user.id
+					@chat.group_id = params[:group_id]
+					@chat.activity = "true"
+					@chat.quick_msg = "left"
+					@chat.save
 				end
 			end
 		status 200
