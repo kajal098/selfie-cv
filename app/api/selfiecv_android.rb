@@ -1783,12 +1783,6 @@ class SelfiecvAndroid < Grape::API
                 @group.deleted_from << current_user.id
                 @group.update_column :deleted_from, @group.deleted_from
                 end
-                @chat = Chat.new
-                @chat.sender_id = current_user.id
-                @chat.group_id = @group.id
-                @chat.activity = "true"
-                @chat.quick_msg = "left"
-                @chat.save
             end
         end
         { code: 200, :status => "Success" }

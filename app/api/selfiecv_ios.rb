@@ -1731,12 +1731,6 @@ before { authenticate! }
 					@group.deleted_from << current_user.id
 					@group.update_column :deleted_from, @group.deleted_from
 					end
-					@chat = Chat.new
-					@chat.sender_id = current_user.id
-					@chat.group_id = params[:group_id]
-					@chat.activity = "true"
-					@chat.quick_msg = "left"
-					@chat.save
 				end
 			end
 		status 200
