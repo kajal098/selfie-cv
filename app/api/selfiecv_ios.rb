@@ -1725,7 +1725,6 @@ before { authenticate! }
 				@chat.save
 			else
 				if current_user.role == 'Faculty'
-					@group.group_invitees.delete_all
 					@group.destroy
 				else
 					unless @group.deleted_from.include? current_user.id

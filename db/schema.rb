@@ -694,7 +694,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
   add_foreign_key "faculty_workshops", "users", on_delete: :cascade
   add_foreign_key "graphs", "company_stocks", on_delete: :cascade
   add_foreign_key "graphs", "industries", on_delete: :cascade
-  add_foreign_key "group_invitees", "groups"
+  add_foreign_key "group_invitees", "groups", on_delete: :cascade
   add_foreign_key "group_users", "groups", on_delete: :cascade
   add_foreign_key "group_users", "users", on_delete: :cascade
   add_foreign_key "marketiqs", "industries", on_delete: :cascade

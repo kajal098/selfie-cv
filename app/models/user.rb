@@ -167,7 +167,9 @@ def create_user_meter
     end
     return true
 end
+
 # Resume Percentage Function
+
 def percent_of_resume
             resume_info_per = 0
             setting_per = UserPercentage.find_by_key('resume_info').value.to_i
