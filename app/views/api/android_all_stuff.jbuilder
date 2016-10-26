@@ -214,14 +214,14 @@ json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.total_per.to_i :
 		end
 
 		json.student_curriculars @user_stuff.user_curriculars do |curricular|
-		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
+		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 		json.file curricular.thumb_url
 		json.curricular_created_at curricular.created_at.to_i
 		json.curricular_updated_at curricular.updated_at.to_i
 		end
 
 		json.student_future_goals @user_stuff.user_future_goals do |future_goal|
-		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
+		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
 		json.file future_goal.thumb_url
 		json.future_goal_created_at future_goal.created_at.to_i
 		json.future_goal_updated_at future_goal.updated_at.to_i
