@@ -19,7 +19,7 @@ if @chat
 end
 
 if @chats
-@chats = @chats.order('created_at DESC')
+@chats = @chats.order('created_at ASC')
 json.msgs @chats do |chat|
 	json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
 	json.sender_id chat.user ? chat.sender_id : ""
