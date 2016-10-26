@@ -3,7 +3,7 @@ if @group
 		json.Group @group, :id, :name, :code, :deleted_from
 		json.group_pic @group.thumb_url
 		json.group_created_at @group.created_at.to_i
-		json.group_updated_at @group.updated_at.to_i
+		json.group_updated_at @group.chats.last.created_at.to_i
 
 		json.group_users @group.accepted_users do |group_user|
 			json.extract! group_user, :id, :group_id, :user_id, :admin, :status	, :deleted_at
