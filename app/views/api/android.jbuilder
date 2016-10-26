@@ -64,11 +64,17 @@ json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0
 		
 
 json.company_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.company_info_per.to_i, "info") : 0
+
 json.corporate_identity_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.corporate_identity_per.to_i, "corporate") : 0
+
 json.growth_and_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.growth_and_goal_per.to_i, "growth") : 0
+
 json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
+
 json.galery_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.galery_per.to_i, "gallery") : 0
+
 json.working_env_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0
+
 json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : 0
 
 
@@ -88,10 +94,15 @@ json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : 0
 		json.resume @user.file.url
 
 json.student_basic_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.student_basic_info_per.to_i, "info") : 0
+
 json.student_education_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.student_education_per.to_i, "education") : 0
+
 json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
+
 json.curri_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.curri_per.to_i, "extra") : 0
+
 json.future_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.future_goal_per.to_i, "futuregoal") : 0
+
 json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
       
 		json.created_at @user.created_at.to_i
@@ -113,8 +124,11 @@ json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
 		json.resume @user.file.url
 
 json.faculty_basic_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.faculty_basic_info_per.to_i, "info") : 0
+
 json.experience_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.experience_per.to_i, "experience") : 0
+
 json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
+
 json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
 
 
@@ -153,11 +167,17 @@ if @company
 		json.updated_at @company.updated_at.to_i
 
 json.company_info_per @company.user_meter ? @company.cal_preview_per(@company.user_meter.company_info_per.to_i, "info") : 0
+
 json.corporate_identity_per @company.user_meter ? @company.cal_preview_per(@company.user_meter.corporate_identity_per.to_i, "corporate") : 0
+
 json.growth_and_goal_per @company.user_meter ? @company.cal_preview_per(@company.user_meter.growth_and_goal_per.to_i, "growth") : 0
+
 json.achievement_per @company.user_meter ? @company.cal_preview_per(@company.user_meter.achievement_per.to_i, "achievement") : 0
+
 json.galery_per @company.user_meter ? @company.cal_preview_per(@company.user_meter.galery_per.to_i, "gallery") : 0
+
 json.working_env_per @company.user_meter ? @company.cal_preview_per(@company.user_meter.working_env_per.to_i, "workingenv") : 0
+
 json.total_per @company.user_meter ? @company.user_meter.total_per.to_i : 0
 
 
@@ -190,12 +210,19 @@ if @users
 
 
 json.resume_per user.user_meter ? user.cal_preview_per(user.user_meter.resume_per.to_i, "resume") : 0
+
 json.achievement_per user.user_meter ? user.cal_preview_per(user.user_meter.achievement_per.to_i, "achievement") : 0
+
 json.curri_per user.user_meter ? user.cal_preview_per(user.user_meter.curri_per.to_i, "extra") : 0
+
 json.future_goal_per user.user_meter ? user.cal_preview_per(user.user_meter.future_goal_per.to_i, "futuregoal") : 0
+
 json.working_env_per user.user_meter ? user.cal_preview_per(user.user_meter.working_env_per.to_i, "workingenv") : 0
+
 json.ref_per user.user_meter ? user.cal_preview_per(user.user_meter.ref_per.to_i, "references") : 0
+
 json.whizquiz_per user.user_meter ? user.cal_preview_per(user.user_meter.whizquiz_per.to_i, "whizquiz") : 0
+
 json.total_per user.user_meter ? user.user_meter.total_per.to_i : 0
 
 
@@ -227,11 +254,17 @@ json.total_per user.user_meter ? user.user_meter.total_per.to_i : 0
 						json.industry user.industry ? user.industry.name : ""
 
 json.company_info_per user.user_meter ? user.cal_preview_per(user.user_meter.company_info_per.to_i, "info") : 0
+
 json.corporate_identity_per user.user_meter ? user.cal_preview_per(user.user_meter.corporate_identity_per.to_i, "corporate") : 0
+
 json.growth_and_goal_per user.user_meter ? user.cal_preview_per(user.user_meter.growth_and_goal_per.to_i, "growth") : 0
+
 json.achievement_per user.user_meter ? user.cal_preview_per(user.user_meter.achievement_per.to_i, "achievement") : 0
+
 json.galery_per user.user_meter ? user.cal_preview_per(user.user_meter.galery_per.to_i, "gallery") : 0
+
 json.working_env_per user.user_meter ? user.cal_preview_per(user.user_meter.working_env_per.to_i, "workingenv") : 0
+
 json.total_per user.user_meter ? user.user_meter.total_per.to_i : 0
 
 
