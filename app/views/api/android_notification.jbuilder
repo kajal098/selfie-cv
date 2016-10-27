@@ -89,7 +89,6 @@ end
 if @notifications
 
 json.notifications @notifications.count.times do |n|
-
 	data =  JSON.parse(@notifications[n][5])
 	json.id @notifications[n][0]
 	json.photo data["who_like_photo"]

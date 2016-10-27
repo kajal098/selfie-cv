@@ -1,6 +1,6 @@
 if @questions
-json.time_for_ans Setting.first.whizquiz_time
-@all_questions = @questions.sort_by(&:created_at)
+	json.time_for_ans Setting.first.whizquiz_time
+	@all_questions = @questions.sort_by(&:created_at)
 	json.questions @all_questions do |question|
 		json.extract! question, :id, :question
 		json.created_at question.created_at.to_i
