@@ -1,6 +1,5 @@
 class Chat < ActiveRecord::Base
-	belongs_to :user, class_nam: 'User',foreign_key: "sender_id"
-	belongs_to :group
+	belongs_to :user, class_name: 'User',foreign_key: "sender_id"
 	has_many :chat_schedules
 
 	mount_uploader :file, FileUploader
