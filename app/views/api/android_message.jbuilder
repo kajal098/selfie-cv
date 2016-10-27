@@ -21,7 +21,7 @@ end
 if @chats
 	@chats = @chats.order('created_at ASC')
 	json.msgs @chats do |chat|
-		if chat.user.created_at > chat.created_at
+		if chat.group.user.created_at > chat.created_at
 			json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
 			json.sender_id chat.user ? chat.sender_id : ""
 		   	json.sender_first_name chat.user ? chat.user.first_name : ""
