@@ -774,15 +774,15 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_future_goal, jbuilder: 'android' do
         authenticate!
-        @update_future_goal = UserFutureGoal.find params[:update_future_goal_id]
-        error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @update_future_goal
-        @update_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
+        @future_goal = UserFutureGoal.find params[:update_future_goal_id]
+        error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @future_goal
+        @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
             if (params[:file_type] == 'text')
-                @update_future_goal.text_field = params[:text_field] if params[:text_field]
+                @future_goal.text_field = params[:text_field] if params[:text_field]
             else
-                @update_future_goal.file = params[:file] if params[:file]
+                @future_goal.file = params[:file] if params[:file]
             end
-        error!({error: @update_future_goal.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_future_goal.save
+        error!({error: @future_goal.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @future_goal.save
       end
 
       desc 'Get Users Future Goals Detail'
@@ -1510,10 +1510,10 @@ class SelfiecvAndroid < Grape::API
         optional :join_till
       end
       post :update_faculty_affiliation, jbuilder: 'android' do
-        @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
-        error!({error: 'Faculty affiliation not found', status: 'Fail'}, 200) unless @update_faculty_affiliation
-        @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till)
-        error!({error: @update_faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_affiliation.save
+        @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+        error!({error: 'Faculty affiliation not found', status: 'Fail'}, 200) unless @faculty_affiliation
+        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till)
+        error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
       end
       
 
