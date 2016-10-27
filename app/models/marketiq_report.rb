@@ -5,8 +5,10 @@ class MarketiqReport
   scope { Marketiq.order(:id) }
   #scope { Marketiq.all }
 
-  #filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
-  
+filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) })
+
+filter(:specialization_id, :enum, header: "Specialization", select: ->{ Specialization.pluck(:name, :id) })
+
   column(:industry_id, header: "Industry") do |model|
     model.industry_id ? model.industry.name : "Not Available"
   end
