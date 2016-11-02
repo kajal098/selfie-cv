@@ -17,12 +17,12 @@ class UserReference < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_ref
+    before_destroy :reduce_percentage
 
     def percent_of_ref()
     	user = self.user
-        
+        ref_per = 0
         if user.user_references.count > 0  
-        	ref_per = 0
             setting_per = UserPercentage.find_by_key('references').value
         	user.user_references.each do |ref|   
         	   		if ref.file_type == "video"
@@ -30,19 +30,41 @@ class UserReference < ActiveRecord::Base
 	                    break
 	                elsif ref.file_type == "audio"
 	                    ref_per = setting_per.to_i * 0.7
-	                    break
 	                elsif ref.file_type == "image"
 	                    ref_per = setting_per.to_i * 0.5
-	                    break
 	                else
 	                    ref_per = setting_per.to_i * 0.3
 	                end
-        		       	
         	end
-            user.user_meter.update_column('ref_per' ,ref_per)
         end 
-        
-        return true
+        user.user_meter.update_column('ref_per' ,ref_per)
+        user.profile_meter_total
+        return true 
     end
+
+    def reduce_percentage
+            user = self.user
+            ref_per = 0
+            if user.user_references.where.not(id: self.id).count > 0 
+                setting_per = UserPercentage.find_by_key('references').value
+                user.user_references.where.not(id: self.id).each do |ref|   
+                        if ref.file_type == "video"
+                            ref_per = setting_per.to_i * 1
+                            break
+                        elsif ref.file_type == "audio"
+                            ref_per = setting_per.to_i * 0.7
+                        elsif ref.file_type == "image"
+                            ref_per = setting_per.to_i * 0.5
+                        else
+                            ref_per = setting_per.to_i * 0.3
+                        end
+                end
+            end
+            user.user_meter.update_column('ref_per' ,ref_per)
+            user.profile_meter_total
+            return true 
+        end
+
+
 
 end
