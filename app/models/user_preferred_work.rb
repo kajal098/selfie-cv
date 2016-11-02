@@ -25,9 +25,9 @@ class UserPreferredWork < ActiveRecord::Base
 
     def reduce_percentage
         user = self.user
-        if user.user_educations.where.not(id: self.id).count == 0  
-            education_per = 0
-            user.user_meter.update_column('education_per' ,education_per)
+        if user.user_preferred_works.where.not(id: self.id).count == 0  
+            prework_per = 0
+            user.user_meter.update_column('prework_per' ,prework_per)
             user.profile_meter_total
         end
         return true
