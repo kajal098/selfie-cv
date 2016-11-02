@@ -30,9 +30,9 @@ class UserCurricular < ActiveRecord::Base
 	                end
         		       	
         	end
-            user.user_meter.update_column('curri_per' ,curri_per)
-            user.profile_meter_total
         end 
+        user.user_meter.update_column('curri_per' ,curri_per)
+        user.profile_meter_total
         return true      
     end
 
