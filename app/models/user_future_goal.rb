@@ -23,7 +23,6 @@ class UserFutureGoal < ActiveRecord::Base
                         break
                     elsif future_goal.file_type == "audio"
                         future_goal_per = setting_per.value.to_i * 0.7
-                        break
                     else
                         future_goal_per = setting_per.value.to_i * 0.5
                     end
@@ -31,6 +30,7 @@ class UserFutureGoal < ActiveRecord::Base
             end
         end 
         user.user_meter.update_column('future_goal_per' ,future_goal_per)
+        user.profile_meter_total
         return true
     end
 
@@ -45,7 +45,6 @@ class UserFutureGoal < ActiveRecord::Base
                         break
                     elsif future_goal.file_type == "audio"
                         future_goal_per = setting_per.value.to_i * 0.7
-                        break
                     else
                         future_goal_per = setting_per.value.to_i * 0.5
                     end
