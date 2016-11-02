@@ -13,6 +13,7 @@ class UserCertificate < ActiveRecord::Base
 
 
     after_save :percent_of_certi
+    before_destroy :reduce_percentage
 
 
     def percent_of_certi()
@@ -40,6 +41,16 @@ class UserCertificate < ActiveRecord::Base
         return true
     end
 
+
+    def reduce_percentage
+        user = self.user
+        if user.user_certificates.where.not(id: self.id).count == 0  
+            certi_per = 0
+            user.user_meter.update_column('certificate_per' ,certi_per)
+            user.profile_meter_total
+        end
+        return true
+    end
 
 
 

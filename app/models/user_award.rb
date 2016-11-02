@@ -11,6 +11,7 @@ class UserAward < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_award
+    before_destroy :reduce_percentage
 
     def percent_of_award()
     	user = self.user
@@ -32,5 +33,15 @@ class UserAward < ActiveRecord::Base
         return true
     end
 
+
+    def reduce_percentage
+        user = self.user
+        if user.user_awards.where.not(id: self.id).count == 0  
+            award_per = 0
+            user.user_meter.update_column('award_per' ,award_per)
+            user.profile_meter_total
+        end
+        return true
+    end
 
 end
