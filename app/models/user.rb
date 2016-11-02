@@ -157,7 +157,7 @@ end
 # Start Percentage Module
 
 after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
- :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
+ :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :like_per,
  :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
 
 
@@ -187,7 +187,6 @@ def percent_of_resume
                 resume_info_per = setting_per * 0.3
             end
                 @user_meter.update_column('resume_info_per' ,resume_info_per)
-                self.profile_meter_total
         return true
 end
 
@@ -232,7 +231,7 @@ def percent_of_faculty_basic_info
 end
 
 def profile_meter_total
-    self.create_user_meter
+    self.create_user_meter unless @user_meter
     if self.role == "Jobseeker"
         setting_per = UserPercentage.where(key: 'resume').where(ptype: "Jobseeker").first
         resume_per = @user_meter.resume_info_per + @user_meter.education_per + @user_meter.experience_per + @user_meter.prework_per
