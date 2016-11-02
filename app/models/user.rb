@@ -155,7 +155,7 @@ end
 # Start Percentage Module
 
 after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
- :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :like_per,
+ :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
  :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
 
 
