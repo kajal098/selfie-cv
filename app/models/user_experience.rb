@@ -39,7 +39,7 @@ class UserExperience < ActiveRecord::Base
         exp_per = 0
         if user.user_experiences.where.not(id: self.id).count > 0 
             setting_per = UserPercentage.where(key: 'experience').where(ptype: 'Jobseeker').first
-            user.user_experiences.each do |exp|                      
+            user.user_experiences.where.not(id: self.id).each do |exp|                      
                     if exp.exp_type == "experience"
                         exp_per = setting_per.value.to_i * 1
                         break

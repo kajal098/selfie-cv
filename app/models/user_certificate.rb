@@ -47,7 +47,7 @@ class UserCertificate < ActiveRecord::Base
         certi_per = 0
         if user.user_certificates.where.not(id: self.id).count > 0 
             setting_per = UserPercentage.where(key: 'certificate').where(ptype: user.role).first
-            user.user_certificates.each do |certi|   
+            user.user_certificates.where.not(id: self.id).each do |certi|   
                     if certi.file_type == "image"
                         certi_per = setting_per.value.to_i * 1
                         break
