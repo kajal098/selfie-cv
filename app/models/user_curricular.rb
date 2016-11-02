@@ -11,6 +11,7 @@ class UserCurricular < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_curri
+    before_destroy :reduce_percentage
 
     def percent_of_curri()
     	user = self.user
@@ -30,11 +31,33 @@ class UserCurricular < ActiveRecord::Base
         		       	
         	end
             user.user_meter.update_column('curri_per' ,curri_per)
+            user.profile_meter_total
         end 
-        return curri_per  
-        
+        return true      
     end
 
+    def reduce_percentage
+        user = self.user
+        curri_per = 0
+        if user.user_curriculars.where.not(id: self.id).count > 0 
+            setting_per = UserPercentage.where(key: 'extra').where(ptype: user.role).first
+            user.user_curriculars.where.not(id: self.id).each do |curri|   
+                    if curri.file_type == "video"
+                        curri_per = setting_per.value.to_i * 1
+                        break
+                    elsif curri.file_type == "image"
+                        curri_per = setting_per.value.to_i * 0.7
+                        break
+                    else
+                        curri_per = setting_per.value.to_i * 0.3
+                    end
+                        
+            end
+        end
+        user.user_meter.update_column('curri_per' ,curri_per)
+        user.profile_meter_total
+        return true
+    end
 
 
 
