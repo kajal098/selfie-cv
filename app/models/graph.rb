@@ -8,4 +8,6 @@ class Graph < ActiveRecord::Base
 	
 	validates :industry_id, presence: { message: "industry must be filled" }
 
+	validates :company_stock_id, presence: { message: "country must be filled" }
+
 end

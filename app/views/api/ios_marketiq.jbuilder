@@ -1,5 +1,5 @@
 if @marketiq
-	json.time_for_ans 60
+	json.time_for_ans Setting.first.marketiq_time.to_i
 	json.marketiq.id @user_marketiq.id
 	json.marketiq @marketiq, :question, :option_a, :option_b, :option_c, :option_d
 	json.created_at @marketiq.created_at.to_i

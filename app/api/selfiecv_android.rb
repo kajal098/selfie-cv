@@ -1,29 +1,38 @@
 require 'api_logger'
 class SelfiecvAndroid < Grape::API
+
   use ApiLogger
   version 'android', using: :path
   format :json 
   formatter :json, Grape::Formatter::Jbuilder
+
   # Send Validation Error with 200 status code
   rescue_from :all do |e|
     error!({error: e.message, status: 'Fail'}, 200)
   end
+
   # Default status on 500 Error
   default_error_status 200
+
   helpers do
+
     def clean_params(params)
       ActionController::Parameters.new(params)
     end
+
     def current_device
       Device.find_by token: params[:token]
     end
+
     def current_user
       current_device.try(:user)
     end
+
     def authenticate!
       error!({error: 'Unauthorized', status: 'Fail'}, 200) unless params[:token] =~ UUID_REGEX
       error!({error: 'Unauthorized', status: 'Fail'}, 200) unless current_user
     end
+    
   end
   #--------------------------------devices start----------------------------------#
   resources :devices do
@@ -309,12 +318,12 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_education, jbuilder: 'android' do
         authenticate!
-        @update_user_education = UserEducation.find params[:education_id]
-        error!({error: 'User Education not found', status: 'Fail'}, 200) unless @update_user_education
-        @update_user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
+        @user_education = UserEducation.find params[:education_id]
+        error!({error: 'User Education not found', status: 'Fail'}, 200) unless @user_education
+        @user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
         :school, :skill)
-        error!({error: @update_user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_education.save
-        @update_user_education
+        error!({error: @user_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_education.save
+        @user_education
       end
 
 
@@ -387,17 +396,17 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_experience, jbuilder: 'android' do
         authenticate!
-        @update_user_experience = UserExperience.find params[:experience_id]
-        error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @update_user_experience
-        @update_user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
+        @user_experience = UserExperience.find params[:experience_id]
+        error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @user_experience
+        @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
         :designation, :description, :file_type, :text_field)
         if (params[:file_type] == 'text')
-          @update_user_experience.text_field = params[:text_field] if params[:text_field]
+          @user_experience.text_field = params[:text_field] if params[:text_field]
         else
-          @update_user_experience.file = params[:file] if params[:file]
+          @user_experience.file = params[:file] if params[:file]
         end
-        error!({error: @update_user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_experience.save
-        @update_user_experience
+        error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
+        @user_experience
       end
 
       desc 'Get Users Experience Detail'
@@ -462,11 +471,11 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_preferred_work, jbuilder: 'android' do
         authenticate!
-        @update_user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
-        error!({error: 'User Preffered Work not found', status: 'Fail'}, 200) unless @update_user_preferred_work
-        @update_user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
-        error!({error: @update_user_preferred_work.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_preferred_work.save
-        @update_user_preferred_work
+        @user_preferred_work = UserPreferredWork.find params[:preferred_work_id]
+        error!({error: 'User Preffered Work not found', status: 'Fail'}, 200) unless @user_preferred_work
+        @user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+        error!({error: @user_preferred_work.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_preferred_work.save
+        @user_preferred_work
       end
 
       desc 'Get Users Preferred Work'
@@ -533,15 +542,15 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_award, jbuilder: 'android' do
       authenticate!
-        @update_user_award = UserAward.find params[:award_id]
-        error!({error: 'User Award not found', status: 'Fail'}, 200) unless @update_user_award
-        @update_user_award.attributes = clean_params(params).permit(:name, :description, :file_type, :text_field)
+        @award = UserAward.find params[:award_id]
+        error!({error: 'User Award not found', status: 'Fail'}, 200) unless @award
+        @award.attributes = clean_params(params).permit(:name, :description, :file_type, :text_field)
         if (params[:file_type] == 'text')
-        @update_user_award.text_field = params[:text_field] if params[:text_field]
+        @award.text_field = params[:text_field] if params[:text_field]
         else
-        @update_user_award.file = params[:file] if params[:file]
+        @award.file = params[:file] if params[:file]
         end
-        error!({error: @update_user_award.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_award.save
+        error!({error: @award.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @award.save
       end
 
       desc 'Get Users Award'
@@ -609,15 +618,15 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_certificate, jbuilder: 'android' do
         authenticate!
-        @update_user_certificate = UserCertificate.find params[:certificate_id]
-        error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @update_user_certificate
-        @update_user_certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type, :text_field)
+        @certificate = UserCertificate.find params[:certificate_id]
+        error!({error: 'User Certificate not found', status: 'Fail'}, 200) unless @certificate
+        @certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type, :text_field)
             if (params[:file_type] == 'text')
-                @update_user_certificate.text_field = params[:text_field] if params[:text_field]
+                @certificate.text_field = params[:text_field] if params[:text_field]
             else
-                @update_user_certificate.file = params[:file] if params[:file]
+                @certificate.file = params[:file] if params[:file]
             end
-        error!({error: @update_user_certificate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_certificate.save
+        error!({error: @certificate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @certificate.save
       end
 
       desc 'Get Users Certificate Detail'
@@ -689,15 +698,15 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_curricular, jbuilder: 'android' do
         authenticate!
-        @update_user_curricular = UserCurricular.find params[:curricular_id]
-        error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @update_user_curricular
-        @update_user_curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
+        @curricular = UserCurricular.find params[:curricular_id]
+        error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @curricular
+        @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
             if (params[:file_type] == 'text')
-                @update_user_curricular.text_field = params[:text_field] if params[:text_field]
+                @curricular.text_field = params[:text_field] if params[:text_field]
             else
-                @update_user_curricular.file = params[:file] if params[:file]
+                @curricular.file = params[:file] if params[:file]
             end
-        error!({error: @update_user_curricular.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_curricular.save
+        error!({error: @curricular.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @curricular.save
       end
 
       desc 'Get Users Curriculars Detail'
@@ -765,15 +774,15 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_future_goal, jbuilder: 'android' do
         authenticate!
-        @update_future_goal = UserFutureGoal.find params[:update_future_goal_id]
-        error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @update_future_goal
-        @update_future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
+        @future_goal = UserFutureGoal.find params[:update_future_goal_id]
+        error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @future_goal
+        @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
             if (params[:file_type] == 'text')
-                @update_future_goal.text_field = params[:text_field] if params[:text_field]
+                @future_goal.text_field = params[:text_field] if params[:text_field]
             else
-                @update_future_goal.file = params[:file] if params[:file]
+                @future_goal.file = params[:file] if params[:file]
             end
-        error!({error: @update_future_goal.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_future_goal.save
+        error!({error: @future_goal.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @future_goal.save
       end
 
       desc 'Get Users Future Goals Detail'
@@ -840,15 +849,15 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_working_environment, jbuilder: 'android' do
         authenticate!
-        @update_user_environment = UserEnvironment.find params[:environment_id]
-        error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @update_user_environment
-        @update_user_environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
+        @environment = UserEnvironment.find params[:environment_id]
+        error!({error: 'User Environment not found', status: 'Fail'}, 200) unless @environment
+        @environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
             if (params[:file_type] == 'text')
-                @update_user_environment.text_field = params[:text_field] if params[:text_field]
+                @environment.text_field = params[:text_field] if params[:text_field]
             else
-                @update_user_environment.file = params[:file] if params[:file]
+                @environment.file = params[:file] if params[:file]
             end
-        error!({error: @update_user_environment.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_environment.save
+        error!({error: @environment.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @environment.save
       end
 
       desc 'Get Users Working Environments Detail'
@@ -925,15 +934,15 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_references, jbuilder: 'android' do
         authenticate!
-        @update_user_reference = UserReference.find params[:reference_id]
-        error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @update_user_reference
-        @update_user_reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
+        @reference = UserReference.find params[:reference_id]
+        error!({error: 'User Reference not found', status: 'Fail'}, 200) unless @reference
+        @reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
             if (params[:file_type] == 'text')
-                @update_user_reference.text_field = params[:text_field] if params[:text_field]
+                @reference.text_field = params[:text_field] if params[:text_field]
             else
-                @update_user_reference.file = params[:file] if params[:file]
+                @reference.file = params[:file] if params[:file]
             end
-        error!({error: @update_user_reference.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_user_reference.save
+        error!({error: @reference.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @reference.save
       end
 
       desc 'Get Users References Detail'
@@ -1048,8 +1057,8 @@ class SelfiecvAndroid < Grape::API
         requires :company_id
       end
       post :get_company_information, jbuilder: 'android' do
-        @company = User.find params[:company_id]
-        error!({error: 'User not found', status: 'Fail'}, 200) unless @company
+        @user = User.find params[:company_id]
+        error!({error: 'User not found', status: 'Fail'}, 200) unless @user
       end
 
       desc 'Company Future Goal'
@@ -1103,15 +1112,15 @@ class SelfiecvAndroid < Grape::API
         optional :company_future_outlet
       end
       post :edit_company, jbuilder: 'android' do
-        @company = User.find params[:user_id]
-        error!({error: 'User not found', status: 'Fail'}, 200) unless @company
-        @company.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id,
+        @user = User.find params[:user_id]
+        error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+        @user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id,
         :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :company_logo_type, :company_profile_type, :company_brochure_type)
         @user.company_logo = params[:company_logo] if params[:company_logo]
         @user.company_profile = params[:company_profile] if params[:company_profile]
         @user.company_brochure = params[:company_brochure] if params[:company_brochure]
         @user.update_cv_count += 1
-        error!({error: @company.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @company.save
+        error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       end
 
       desc 'Company Galery'
@@ -1279,11 +1288,11 @@ class SelfiecvAndroid < Grape::API
         optional :year
       end
       post :update_student_education, jbuilder: 'android' do
-        @update_student_education = StudentEducation.find params[:education_id]
-        error!({error: 'Student education not found', status: 'Fail'}, 200) unless @update_student_education
-        @update_student_education.attributes = clean_params(params).permit(:standard, :school, :year)
-        @update_student_education.file = params[:file] if params[:file]
-        error!({error: @update_student_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_education.save
+        @student_education = StudentEducation.find params[:education_id]
+        error!({error: 'Student education not found', status: 'Fail'}, 200) unless @student_education
+        @student_education.attributes = clean_params(params).permit(:standard, :school, :year)
+        @student_education.file = params[:file] if params[:file]
+        error!({error: @student_education.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @student_education.save
       end
       
 
@@ -1333,11 +1342,11 @@ class SelfiecvAndroid < Grape::API
         optional :file_type
       end
       post :update_student_marksheet, jbuilder: 'android' do
-        @update_student_marksheet = UserMarksheet.find params[:marksheet_id]
-        error!({error: 'Student marksheet not found', status: 'Fail'}, 200) unless @update_student_marksheet
-        @update_student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
-        @update_student_marksheet.file = params[:file] if params[:file]
-        error!({error: @update_student_marksheet.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_marksheet.save
+        @student_marksheet = UserMarksheet.find params[:marksheet_id]
+        error!({error: 'Student marksheet not found', status: 'Fail'}, 200) unless @student_marksheet
+        @student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
+        @student_marksheet.file = params[:file] if params[:file]
+        error!({error: @student_marksheet.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @student_marksheet.save
       end
       
 
@@ -1378,10 +1387,10 @@ class SelfiecvAndroid < Grape::API
         optional :description
       end
       post :update_student_project, jbuilder: 'android' do
-        @update_student_project = UserProject.find params[:project_id]
-        error!({error: 'Student Project not found', status: 'Fail'}, 200) unless @update_student_project
-        @update_student_project.attributes = clean_params(params).permit(:title, :description)
-        error!({error: @update_student_project.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_student_project.save
+        @student_project = UserProject.find params[:project_id]
+        error!({error: 'Student Project not found', status: 'Fail'}, 200) unless @student_project
+        @student_project.attributes = clean_params(params).permit(:title, :description)
+        error!({error: @student_project.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @student_project.save
       end
       
 
@@ -1501,10 +1510,10 @@ class SelfiecvAndroid < Grape::API
         optional :join_till
       end
       post :update_faculty_affiliation, jbuilder: 'android' do
-        @update_faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
-        error!({error: 'Faculty affiliation not found', status: 'Fail'}, 200) unless @update_faculty_affiliation
-        @update_faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till)
-        error!({error: @update_faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_affiliation.save
+        @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
+        error!({error: 'Faculty affiliation not found', status: 'Fail'}, 200) unless @faculty_affiliation
+        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till)
+        error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
       end
       
 
@@ -1541,10 +1550,10 @@ class SelfiecvAndroid < Grape::API
         optional :description
       end
       post :update_faculty_workshop, jbuilder: 'android' do
-        @update_faculty_workshop = FacultyWorkshop.find params[:workshop_id]
-        error!({error: 'Student workshop not found', status: 'Fail'}, 200) unless @update_faculty_workshop
-        @update_faculty_workshop.attributes = clean_params(params).permit(:description)
-        error!({error: @update_faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_workshop.save
+        @faculty_workshop = FacultyWorkshop.find params[:workshop_id]
+        error!({error: 'Student workshop not found', status: 'Fail'}, 200) unless @faculty_workshop
+        @faculty_workshop.attributes = clean_params(params).permit(:description)
+        error!({error: @faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_workshop.save
       end
       
 
@@ -1597,15 +1606,15 @@ class SelfiecvAndroid < Grape::API
         optional :file_type
       end
       post :update_faculty_publication, jbuilder: 'android' do
-        @update_faculty_publication = FacultyPublication.find params[:publication_id]
-        error!({error: 'Student publication not found', status: 'Fail'}, 200) unless @update_faculty_publication
-        @update_faculty_publication.attributes = clean_params(params).permit(:title, :description)
+        @faculty_publication = FacultyPublication.find params[:publication_id]
+        error!({error: 'Student publication not found', status: 'Fail'}, 200) unless @faculty_publication
+        @faculty_publication.attributes = clean_params(params).permit(:title, :description)
         if (params[:file_type] == 'text')
-            @update_faculty_publication.text_field = params[:text_field] if params[:text_field]
+            @faculty_publication.text_field = params[:text_field] if params[:text_field]
         else
-            @update_faculty_publication.file = params[:file] if params[:file]
+            @faculty_publication.file = params[:file] if params[:file]
         end
-        error!({error: @update_faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_publication.save
+        error!({error: @faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_publication.save
       end
       
 
@@ -1657,15 +1666,15 @@ class SelfiecvAndroid < Grape::API
         optional :file_type
       end
       post :update_faculty_research, jbuilder: 'android' do
-        @update_faculty_research = FacultyResearch.find params[:research_id]
-        error!({error: 'Student research not found', status: 'Fail'}, 200) unless @update_faculty_research
-        @update_faculty_research.attributes = clean_params(params).permit(:title, :description)
+        @faculty_research = FacultyResearch.find params[:research_id]
+        error!({error: 'Student research not found', status: 'Fail'}, 200) unless @faculty_research
+        @faculty_research.attributes = clean_params(params).permit(:title, :description)
         if (params[:file_type] == 'text')
-        @update_faculty_research.text_field = params[:text_field] if params[:text_field]
+        @faculty_research.text_field = params[:text_field] if params[:text_field]
         else
-        @update_faculty_research.file = params[:file] if params[:file]
+        @faculty_research.file = params[:file] if params[:file]
         end
-        error!({error: @update_faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_faculty_research.save
+        error!({error: @faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_research.save
       end
       
 
@@ -1769,23 +1778,11 @@ class SelfiecvAndroid < Grape::API
         else
             if current_user.role == 'Faculty'
                 @group.destroy
-                @chat = Chat.new
-                @chat.sender_id = current_user.id
-                @chat.group_id = @group.id
-                @chat.activity = "true"
-                @chat.quick_msg = "deleted"
-                @chat.save
             else
                 unless @group.deleted_from.include? current_user.id
                 @group.deleted_from << current_user.id
                 @group.update_column :deleted_from, @group.deleted_from
                 end
-                @chat = Chat.new
-                @chat.sender_id = current_user.id
-                @chat.group_id = @group.id
-                @chat.activity = "true"
-                @chat.quick_msg = "left"
-                @chat.save
             end
         end
         { code: 200, :status => "Success" }
@@ -2150,6 +2147,19 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         optional :location
         optional :functional_area
+        optional :industry_id
+        optional :company_name
+      end
+      post :company, jbuilder: 'android_search'  do
+        authenticate!
+        @searched_company =  User.company_search(params)
+      end
+
+      desc 'Search Top User'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        optional :location
+        optional :functional_area_id
         optional :industry_id
         optional :company_name
       end

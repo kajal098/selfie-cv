@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-10-24'
-    t.date     "join_till",    default: '2016-10-24'
+    t.date     "join_from",    default: '2016-10-27'
+    t.date     "join_till",    default: '2016-10-27'
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -270,25 +270,17 @@ ActiveRecord::Schema.define(version: 20161024063034) do
   add_index "rpush_notifications", ["delivered", "failed"], name: "index_rpush_notifications_multi", where: "((NOT delivered) AND (NOT failed))", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.string   "resume_per",      default: "40",                         null: false
-    t.string   "achievement_per", default: "10",                         null: false
-    t.string   "curricular_per",  default: "10",                         null: false
-    t.string   "whizquiz_per",    default: "10",                         null: false
-    t.string   "future_goal_per", default: "10",                         null: false
-    t.string   "working_env_per", default: "10",                         null: false
-    t.string   "reference_per",   default: "10",                         null: false
-    t.string   "site_name",       default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "site_email",      default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "site_phone",      default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "site_fax",        default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "facebook_url",    default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "twitter_url",     default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "google_plus_url", default: "abcdefghigklmnopqrstuvwxyz", null: false
-    t.string   "bronze",          default: "2",                          null: false
-    t.string   "silver",          default: "3",                          null: false
-    t.string   "gold",            default: "5",                          null: false
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.string   "site_name",       default: "Selfiecv.com",              null: false
+    t.string   "site_email",      default: "selfiecv2016@gmail.com",    null: false
+    t.string   "site_phone",      default: "9988776655",                null: false
+    t.string   "site_fax",        default: "432456",                    null: false
+    t.string   "facebook_url",    default: "www.facebook.com/Selfiecv", null: false
+    t.string   "twitter_url",     default: "www.twitter.com/Selfiecv",  null: false
+    t.string   "google_plus_url", default: "www.google.com/Selfiecv",   null: false
+    t.string   "whizquiz_time",   default: "0"
+    t.string   "marketiq_time",   default: "0"
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
   end
 
   create_table "specializations", force: :cascade do |t|
@@ -344,7 +336,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-10-24'
+    t.date     "date",            default: '2016-10-27'
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
@@ -389,8 +381,8 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-10-24'
-    t.date     "working_till",    default: '2016-10-24'
+    t.date     "start_from",      default: '2016-10-27'
+    t.date     "working_till",    default: '2016-10-27'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
@@ -568,7 +560,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-10-24'
+    t.date     "date",       default: '2016-10-27'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "text_field", default: "",           null: false
@@ -623,7 +615,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-10-24"
+    t.string   "date_of_birth",                                 default: "2016-10-27"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -637,7 +629,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-10-24"
+    t.string   "faculty_join_from",                             default: "2016-10-27"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -702,7 +694,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
   add_foreign_key "faculty_workshops", "users", on_delete: :cascade
   add_foreign_key "graphs", "company_stocks", on_delete: :cascade
   add_foreign_key "graphs", "industries", on_delete: :cascade
-  add_foreign_key "group_invitees", "groups"
+  add_foreign_key "group_invitees", "groups", on_delete: :cascade
   add_foreign_key "group_users", "groups", on_delete: :cascade
   add_foreign_key "group_users", "users", on_delete: :cascade
   add_foreign_key "marketiqs", "industries", on_delete: :cascade

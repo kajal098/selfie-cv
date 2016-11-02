@@ -7,6 +7,6 @@ class CreateGroupInvitees < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :group_invitees, [:group_id]
-    add_foreign_key :group_invitees, :groups, dependent: :delete
+    add_foreign_key :group_invitees, :groups, on_delete: :cascade
   end
 end

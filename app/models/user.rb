@@ -10,8 +10,7 @@ scope :for_roles, ->(values) do
     where(role: roles.values_at(*Array(values)))
 end
 
-devise :database_authenticatable, :registerable,
-:recoverable, :rememberable, :trackable
+devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -20,11 +19,6 @@ validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 # validates :company_zipcode, :numericality => true, :allow_nil => true
 # validates :company_contact, :numericality => true, :allow_nil => true
 #validates_format_of :join_from, :with => /\d{2}\/\d{2}\/\d{4}/
-
-#validates :username, length: { minimum: 6 }
-#validates :username, length: { maximum: 20 }
-#validates :username, length: { in: 6..20 }
-#validates :username, length: { is: 6 }
 
 paginates_per 10
 
@@ -123,6 +117,10 @@ def top_faculties
     User.joins(:user_meter).where(:users=> { role: 2 }).order("user_meters.total_per DESC").limit(3)
 end
 
+def top_rated
+    User.includes(:user_likes).order("user.user_likes.count DESC").limit(3)
+end
+
 
 mount_uploader :file, FileUploader
 def resume_thumb_url; file.url(:thumb); end
@@ -169,7 +167,9 @@ def create_user_meter
     end
     return true
 end
+
 # Resume Percentage Function
+
 def percent_of_resume
             resume_info_per = 0
             setting_per = UserPercentage.find_by_key('resume_info').value.to_i

@@ -2,18 +2,20 @@
   
   <div class="form-group string" id="country">
   <label class="string required col-sm-3 control-label" >
-  Country </label>
+  <abbr title="required">*</abbr> Country </label>
   <div class="col-sm-9">
   <%= f.collection_select :company_stock_id, CompanyStock.order(:sensex_co),:id,:sensex_co, include_blank: true %>
+  <%= f.error :company_stock_id %>
   </div>
   </div>
 
 
   <div class="form-group string" id="ind">
   <label class="string required col-sm-3 control-label" >
-  Industry </label>
+  <abbr title="required">*</abbr> Industry </label>
   <div class="col-sm-9">
   <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, include_blank: true %>
+  <%= f.error :industry_id %>
   </div>
   </div>
 
