@@ -3,8 +3,7 @@ class GroupReport
   include Datagrid
 
   scope { Group.order(:id) }
-  scope { Group.all }
-
+  
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:name, header: "Name", :order => "groups.name")

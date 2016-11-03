@@ -3,8 +3,7 @@ class QuickMessageReport
   include Datagrid
 
   scope { QuickMessage.order(:id) }
-  scope { QuickMessage.all }
-
+  
   filter(:text, :string, header: "Text") {|value| where("text ilike ?", "%#{value}%")}
   
   column(:text, header: "Text", :order => "quick_messages.text")

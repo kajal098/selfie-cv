@@ -3,8 +3,7 @@ class GroupUserReport
   include Datagrid
 
   scope { GroupUser.order(:id) }
-  scope { GroupUser.all }
-
+  
   #filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   filter(:user_id, :enum, header: "User", select: ->{ User.pluck(:first_name, :id) })
   filter(:group_id, :enum, header: "Group", select: ->{ Group.pluck(:name, :id) })

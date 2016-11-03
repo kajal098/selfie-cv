@@ -2,7 +2,7 @@ class UserReport
 
   include Datagrid
 
-  scope { User.where.not(role: 0).all }
+  scope { User.where.not(role: 0).order(:id).all }
   
   #filter(:role, :string, header: "Role") {|value| where("CAST(role AS text) ilike ?", "%#{value}%")}
   filter(:username, :string, header: "Username") {|value| where("username ilike ?", "%#{value}%")}

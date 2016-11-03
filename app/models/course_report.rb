@@ -3,8 +3,7 @@ class CourseReport
   include Datagrid
 
   scope { Course.order(:id) }
-  scope { Course.all }
-
+  
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "courses.id")

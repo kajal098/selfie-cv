@@ -3,8 +3,7 @@ class CompanyReport
   include Datagrid
 
   scope { Company.order(:id) }
-  scope { Company.all }
-
+  
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "companies.id")
