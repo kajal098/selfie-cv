@@ -1984,7 +1984,7 @@ before { authenticate! }
 	post :favourite, jbuilder: 'ios_notification' do
 		if params[:is_favourited] == 'false'
 			@user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
-			@user_like.is_favourited = 'true'
+			@user_favourite.is_favourited = 'true'
 			error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
 		else        
 			error! 'You already favourite this profile!',422
