@@ -53,7 +53,7 @@ if @user_share
 end
 
 if @user_favourite
-	json.User @user_favourite, :id, :user_id, :favourite_id
+	json.User @user_favourite, :id, :user_id, :favourite_id, :is_favourited
 
 	json.WhoFavourite do		    
 		json.extract! User::where(id: @user_favourite.user_id).first, :id, :username	
