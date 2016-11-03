@@ -90,4 +90,15 @@ namespace :import do
 
   end
 
+  task many_user: :environment do
+  	10.times do |i|
+	    user = User.new
+	    user.email = "user#{i}@example.com"
+	    user.username = "User #{i}"
+	    user.role = "Jobseeker"
+	    user.password = "12345678"
+	    user.save
+  	end
+  end
+
 end
