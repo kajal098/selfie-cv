@@ -55,16 +55,6 @@ end
 if @user_favourite
 	json.User @user_favourite, :id, :user_id, :favourite_id
 
-	json.WhoFavourite do		    
-		json.extract! User::where(id: @user_favourite.user_id).first, :id, :username	
-		json.file User::where(id: @user_favourite.user_id).first.file.url	 
-	end
-	
-	json.FavouritedUser do	 
-		json.extract! User::where(id: @user_favourite.favourite_id).first, :id, :username	 
-		json.file User::where(id: @user_favourite.favourite_id).first.file.url	 
-	end
-
 	json.count UserFavourite::where(favourite_id: @user_favourite.favourite_id).count
 
 end
