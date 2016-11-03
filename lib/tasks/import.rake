@@ -85,14 +85,18 @@ namespace :import do
 
 	Group.create(name: 'daisygroup', slug: 'daisygroup', code: 123456 )
 	Group.create(name: 'jekkygroup', slug: 'jekkygroup', code: 123456 )
-	Group.create(name: 'group3', slug: 'group3', code: 123456 )
-	Group.create(name: 'group4', slug: 'group4', code: 123456 )
-
+	
+	GroupInvitee.create(group_id: 1, email: 'trupti@gmail.com' )
+	GroupInvitee.create(group_id: 2, email: 'anni@gmail.com' )
+	
 	GroupUser.create(group_id: 1, user_id: 5, admin:true, status: 'joined' )
 	GroupUser.create(group_id: 2, user_id: 4, admin:true, status: 'joined' )
-	GroupUser.create(group_id: 3, user_id: 5, admin:true, status: 'joined' )
-	GroupUser.create(group_id: 4, user_id: 4, admin:true, status: 'joined' )
+	GroupUser.create(group_id: 1, user_id: 2, admin:false, status: 'joined' )
+	GroupUser.create(group_id: 2, user_id: 3, admin:false, status: 'joined' )
 
+	Chat.create(sender_id:5, group_id:1, quick_msg:'created', activity: true)
+	Chat.create(sender_id:4, group_id:2, quick_msg:'created', activity: true)
+	
 	Graph.create(industry_id:1 , company_stock_id:1 , company_code:'ASD')
 	Graph.create(industry_id:2 , company_stock_id:2 , company_code:'QWE')
 	Graph.create(industry_id:3 , company_stock_id:3 , company_code:'FGH')

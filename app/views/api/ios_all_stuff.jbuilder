@@ -95,7 +95,7 @@ if @user_stuff
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
 			json.rate_type current_user.user_rates.last.rate_type
 		else
-			json.rate_type current_user.user_rates.last.rate_type
+			json.rate_type ""
 		end
 
 	elsif @user_stuff.role == 'Company'
@@ -155,7 +155,7 @@ if @user_stuff
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
 			json.rate_type current_user.user_rates.last.rate_type
 		else
-			json.rate_type current_user.user_rates.last.rate_type
+			json.rate_type ""
 		end
 
 	elsif @user_stuff.role == 'Student'
@@ -234,7 +234,7 @@ if @user_stuff
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
 			json.rate_type current_user.user_rates.last.rate_type
 		else
-			json.rate_type current_user.user_rates.last.rate_type
+			json.rate_type ""
 		end
 
 	elsif @user_stuff.role == 'Faculty'
@@ -306,7 +306,7 @@ if @user_stuff
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
 			json.rate_type current_user.user_rates.last.rate_type
 		else
-			json.rate_type current_user.user_rates.last.rate_type
+			json.rate_type ""
 		end
 
 	end

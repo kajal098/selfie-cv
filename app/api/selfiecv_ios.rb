@@ -1775,7 +1775,7 @@ before { authenticate! }
 				@chat.quick_msg = "joined"
 				@chat.save
 				# @group.accepted_users.each do |group_user|
-				#     Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+				#     #Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
 				# end
 			end      
 	end
@@ -1799,7 +1799,7 @@ before { authenticate! }
 		@chat.quick_msg = "left"
 		@chat.save
 			@group.accepted_users.each do |group_user|
-				Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+				#Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
 			end
 	end
 
@@ -1946,7 +1946,7 @@ before { authenticate! }
 			@user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
 			@user_like.is_liked = 'true'
 			error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save
-			Device.notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }    
+			#Device.notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }    
 		else        
 			error! 'You already like this profile!',422
 		end 
@@ -1960,7 +1960,7 @@ before { authenticate! }
 	post :view, jbuilder: 'ios_notification' do
 		@user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
 		error! @user_view.errors.full_messages.join(', '),422 unless @user_view.save
-		#Device.notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
+		##Device.notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
 	end
 
 	desc 'Share Profile'
@@ -1972,7 +1972,7 @@ before { authenticate! }
 	post :share, jbuilder: 'ios_notification' do
 		@user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
 		error! @user_share.errors.full_messages.join(', '),422 unless @user_share.save
-		#Device.notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
+		##Device.notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
 	end
 
 	desc 'Favourite Profile'
@@ -2000,7 +2000,7 @@ before { authenticate! }
 	post :rate, jbuilder: 'ios_notification' do
 		@user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
 		error! @user_rate.errors.full_messages.join(', '),422 unless @user_rate.save     
-		#Device.notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+		##Device.notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
 	end
 
 	desc  "LIST Of NOTIFICATION"
