@@ -223,7 +223,7 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Faculty'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
 		json.profile @user_stuff.profile_thumb_url
 		json.file @user_stuff.resume_thumb_url
 		json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.faculty_basic_info_per.to_i, "info") : 0
