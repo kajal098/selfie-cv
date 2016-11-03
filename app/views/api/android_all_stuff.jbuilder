@@ -94,6 +94,12 @@ if @user_stuff
 			json.liked false
 		end
 
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
+		end
+
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
 			json.rate_type current_user.user_rates.last.rate_type
 		else
@@ -152,6 +158,12 @@ if @user_stuff
 			json.liked true
 		else
 			json.liked false
+		end
+
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
 		end
 
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
@@ -233,6 +245,12 @@ if @user_stuff
 			json.liked false
 		end
 
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
+		end
+
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
 			json.rate_type current_user.user_rates.last.rate_type
 		else
@@ -303,6 +321,12 @@ if @user_stuff
 			json.liked true
 		else
 			json.liked false
+		end
+
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
 		end
 
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
