@@ -1212,7 +1212,7 @@ class SelfiecvAndroid < Grape::API
         optional :address 
         optional :city
         optional :zipcode
-        optional :contact_number
+        requires :contact_number
         optional :file
         optional :file_type
       end
@@ -1425,7 +1425,7 @@ class SelfiecvAndroid < Grape::API
         optional :city
         optional :country
         optional :zipcode
-        optional :contact_number
+        requires :contact_number
         optional :file
         optional :text_field
         optional :file_type
