@@ -152,6 +152,12 @@ if @user_stuff
 			json.liked false
 		end
 
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.last.rate_type
+		else
+			json.rate_type current_user.user_rates.last.rate_type
+		end
+
 	elsif @user_stuff.role == 'Student'
 
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
@@ -225,6 +231,12 @@ if @user_stuff
 			json.liked false
 		end
 
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.last.rate_type
+		else
+			json.rate_type current_user.user_rates.last.rate_type
+		end
+
 	elsif @user_stuff.role == 'Faculty'
 
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
@@ -289,6 +301,12 @@ if @user_stuff
 			json.liked true
 		else
 			json.liked false
+		end
+
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.last.rate_type
+		else
+			json.rate_type current_user.user_rates.last.rate_type
 		end
 
 	end
