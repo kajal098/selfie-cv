@@ -1,4 +1,5 @@
 require 'api_logger'
+
 class SelfiecvAndroid < Grape::API
 
   use ApiLogger
