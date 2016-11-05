@@ -17,11 +17,11 @@ class UserWhizquiz < ActiveRecord::Base
         whizquiz_per = 0
         setting_per = UserPercentage.find_by_key('whizquiz').value.to_i
         if @count > 0  
-        	if @count >= 3 && @count <= 7
+        	if @count >= 1 && @count <= 2
 	            @like_per = setting_per * 0.3
-	        elsif @count >= 7 &&  @count <= 10
+	        elsif @count >= 3 &&  @count <= 5
 	            @like_per = setting_per * 0.5
-	        elsif @count >= 10
+	        elsif @count >= 9
 	            @like_per = setting_per * 1
 	        end
         end 
