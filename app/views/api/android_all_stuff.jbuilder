@@ -244,6 +244,7 @@ if @user_stuff
 			json.future_goal_created_at future_goal.created_at.to_i
 			json.future_goal_updated_at future_goal.updated_at.to_i
 		end
+		
 
 		json.student_marksheets @user_stuff.user_marksheets do |marksheet|
 			json.extract! marksheet, :id, :school_name, :standard, :grade, :year, :file_type
