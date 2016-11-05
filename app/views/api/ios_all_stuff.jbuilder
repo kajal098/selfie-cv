@@ -190,7 +190,7 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Student'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 		json.file_thumb @user_stuff.resume_thumb_url
