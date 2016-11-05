@@ -17,7 +17,7 @@ class UserMarketiq < ActiveRecord::Base
 	            marketiq_per = setting_per * 1
 	        end
         end 
-		user.user_meter.update_column('marketiq_per' ,marketiq_per)
+		user.user_meter.update_column('market_iq_per' ,marketiq_per)
         user.profile_meter_total
         return true
     end
