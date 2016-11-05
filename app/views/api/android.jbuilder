@@ -53,7 +53,7 @@ if @user
 		json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
 		json.galery_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.galery_per.to_i, "gallery") : 0
 		json.working_env_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0
-		json.total_per @user.user_meter ? @user.user_meter.total_per.to_i : 0
+		json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0
 
 		json.likes @user.likes.count
 		json.views @user.views.count
@@ -76,7 +76,7 @@ if @user
 		json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
 		json.curri_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.curri_per.to_i, "extra") : 0
 		json.future_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.future_goal_per.to_i, "futuregoal") : 0
-		json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
+		json.total_per @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0
 		
 		json.likes @user.likes.count
 		json.views @user.views.count
@@ -97,7 +97,7 @@ if @user
 		json.faculty_basic_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.faculty_basic_info_per.to_i, "info") : 0
 		json.experience_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.experience_per.to_i, "experience") : 0
 		json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
-		json.total_per @user.user_meter ?  @user.user_meter.total_per.to_i : 0
+		json.total_per @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0
 		
 		json.likes @user.likes.count
 		json.views @user.views.count
@@ -324,7 +324,7 @@ if @basic_info
 	json.achievement_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.achievement_per.to_i, "achievement") : 0
 	json.curri_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.curri_per.to_i, "extra") : 0
 	json.future_goal_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.future_goal_per.to_i, "futuregoal") : 0
-	json.total_per @basic_info.user_meter ? @basic_info.user_meter.total_per.to_i : 0
+	json.total_per @basic_info.user_meter ? @basic_info.user_meter.profile_meter_per.to_i : 0
 	json.created_at @basic_info.created_at.to_i
 	json.updated_at @basic_info.updated_at.to_i
 end

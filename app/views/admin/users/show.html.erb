@@ -105,7 +105,7 @@
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.ref_per.to_i, "references") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.whizquiz_per.to_i, "whizquiz") : 0 %></td>
-                    <td><%= @user.user_meter ? @user.user_meter.total_per.to_i : 0 %></td>
+                    <td><%= @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0 %></td>
                   </tr>
                 </table>
               </div>
@@ -455,7 +455,7 @@
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.galery_per.to_i, "gallery") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0 %></td>
-                    <td><%= @user.user_meter ? @user.user_meter.total_per.to_i : 0 %></td>
+                    <td><%= @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0 %></td>
                   </tr>
                 </table>
               </div>
@@ -643,7 +643,7 @@
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.curri_per.to_i, "extra") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.future_goal_per.to_i, "futuregoal") : 0 %></td>
-                    <td><%= @user.user_meter ?  @user.user_meter.total_per.to_i : 0 %></td>
+                    <td><%= @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0 %></td>
                   </tr>
                 </table>
               </div>
@@ -882,7 +882,7 @@
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.faculty_basic_info_per.to_i, "info") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.experience_per.to_i, "experience") : 0 %></td>
                     <td><%= @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0 %></td>
-                    <td><%= @user.user_meter ?  @user.user_meter.total_per.to_i : 0 %></td>
+                    <td><%= @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0 %></td>
                   </tr>
                 </table>
               </div>
