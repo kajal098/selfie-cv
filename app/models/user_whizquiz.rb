@@ -8,4 +8,27 @@ class UserWhizquiz < ActiveRecord::Base
         
     end
     def photo_url; review.url; end
+
+    after_save :percent_of_whizquiz
+    before_destroy :percent_of_whizquiz
+
+    def percent_of_whizquiz()
+    	@count = user.user_whizquizzes.count
+        whizquiz_per = 0
+        setting_per = UserPercentage.find_by_key('whizquiz').value.to_i
+        if @count > 0  
+        	if @count >= 3 && @count <= 7
+	            @like_per = setting_per * 0.3
+	        elsif @count >= 7 &&  @count <= 10
+	            @like_per = setting_per * 0.5
+	        elsif @count >= 10
+	            @like_per = setting_per * 1
+	        end
+        end 
+		user.user_meter.update_column('whizquiz_per' ,whizquiz_per)
+        user.profile_meter_total
+        return true
+    end
+
+
 end
