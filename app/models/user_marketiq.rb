@@ -9,11 +9,11 @@ class UserMarketiq < ActiveRecord::Base
         marketiq_per = 0
         setting_per = UserPercentage.find_by_key('marketIQ').value.to_i
         if @count > 0  
-        	if @count >= 1 && @count <= 2
+        	if @count >= UserPercentage.find_by_key('market_first').value.to_i && @count <= UserPercentage.find_by_key('market_second').value.to_i
 	            marketiq_per = setting_per * 0.3
-	        elsif @count >= 3 &&  @count <= 5
+	        elsif @count >= UserPercentage.find_by_key('market_second').value.to_i &&  @count <= UserPercentage.find_by_key('market_third').value.to_i
 	            marketiq_per = setting_per * 0.5
-	        elsif @count >= 9
+	        elsif @count >= UserPercentage.find_by_key('market_third').value.to_i
 	            marketiq_per = setting_per * 1
 	        end
         end 
