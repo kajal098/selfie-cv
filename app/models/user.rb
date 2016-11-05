@@ -389,7 +389,7 @@ def update_info_per
 end
 
 def cal_total_per
-        total_per = @user_meter.like_per + @user_meter.view_per + @user_meter.share_per + @user_meter.rate_per + @user_meter.profile_meter_per + @user_meter.update_info_per + 0 + 0
+        total_per = @user_meter.like_per + @user_meter.rate_per + @user_meter.update_info_per + @user_meter.share_per + @user_meter.view_per + @user_meter.market_iq_per + @user_meter.stock_exchange_per + @user_meter.profile_meter_per
         @user_meter.update_column('total_per' ,total_per)          
     return true
 end
