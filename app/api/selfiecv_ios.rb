@@ -1919,7 +1919,7 @@ before { authenticate! }
 		optional :file
 		optional :file_type
 	end
-	get :send_file_to_groups, jbuilder: 'android_message' do
+	post :send_file_to_groups, jbuilder: 'android_message' do
 		params[:group_ids].each do |group_id|
 			@chat = Chat.new sender_id: current_user.id, group_id: group_id.to_i
 			@chat.file_type = params[:file_type] if params[:file_type]
