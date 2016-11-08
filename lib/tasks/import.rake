@@ -83,21 +83,22 @@ namespace :import do
 	FacultyWorkshop.create(user_id:4, description:'first workshop des' )
 	FacultyWorkshop.create(user_id:5, description:'second workshop des' )
 
-	Group.create(name: 'daisygroup', slug: 'daisygroup', code: 123456 )
-	Group.create(name: 'jekkygroup', slug: 'jekkygroup', code: 123456 )
-	Group.create(name: 'group3', slug: 'group3', code: 123456 )
-	Group.create(name: 'group4', slug: 'group4', code: 123456 )
-
-	GroupUser.create(group_id: 1, user_id: 5, admin:true, status: 'joined' )
-	GroupUser.create(group_id: 2, user_id: 4, admin:true, status: 'joined' )
-	GroupUser.create(group_id: 3, user_id: 5, admin:true, status: 'joined' )
-	GroupUser.create(group_id: 4, user_id: 4, admin:true, status: 'joined' )
-
 	Graph.create(industry_id:1 , company_stock_id:1 , company_code:'ASD')
 	Graph.create(industry_id:2 , company_stock_id:2 , company_code:'QWE')
 	Graph.create(industry_id:3 , company_stock_id:3 , company_code:'FGH')
 	Graph.create(industry_id:4 , company_stock_id:4 , company_code:'CVB')
 
+  end
+
+  task many_user: :environment do
+  	10.times do |i|
+	    user = User.new
+	    user.email = "user#{i}@example.com"
+	    user.username = "User #{i}"
+	    user.role = "Jobseeker"
+	    user.password = "12345678"
+	    user.save
+  	end
   end
 
 end

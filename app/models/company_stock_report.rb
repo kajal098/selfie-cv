@@ -3,8 +3,7 @@ class CompanyStockReport
   include Datagrid
 
   scope { CompanyStock.order(:id) }
-  scope { CompanyStock.all }
-
+  
   filter(:sensex_co, :string, header: "Country") {|value| where("sensex_co ilike ?", "%#{value}%")}
   filter(:sensex, :string, header: "Sensex") {|value| where("sensex ilike ?", "%#{value}%")}
   filter(:currency, :string, header: "Currency") {|value| where("currency ilike ?", "%#{value}%")}

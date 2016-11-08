@@ -3,8 +3,7 @@ class ChatReport
   include Datagrid
 
   scope { Chat.order(:id) }
-  scope { Chat.all }
-
+  
   #filter(:text, :string, header: "Text") {|value| where("text ilike ?", "%#{value}%")}
   
   column(:id, header: "id", :order => "chats.id")

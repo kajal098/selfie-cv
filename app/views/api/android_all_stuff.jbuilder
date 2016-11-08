@@ -5,8 +5,11 @@ if @user_stuff
 	if @user_stuff.role == 'Jobseeker'
 
 		json.User @user_stuff, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
-		json.profile @user_stuff.profile_thumb_url
-		json.resume @user_stuff.resume_thumb_url
+		json.profile_thumb @user_stuff.profile_thumb_url
+		json.profile @user_stuff.profile_pic.url
+		json.resume_thumb @user_stuff.resume_thumb_url
+		json.resume @user_stuff.file.url
+
 		json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i
 
@@ -20,7 +23,8 @@ if @user_stuff
 
 		json.jobseeker_experiences @user_stuff.user_experiences do |experience|
 			json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
-			json.file experience.thumb_url
+			json.file_thumb experience.thumb_url
+			json.file experience.file.url
 			json.experience_created_at experience.created_at.to_i
 			json.experience_updated_at experience.updated_at.to_i
 		end
@@ -33,42 +37,48 @@ if @user_stuff
 
 		json.jobseeker_awards @user_stuff.user_awards do |award|
 			json.extract! award, :id, :user_id, :name, :description, :file_type
-			json.file award.thumb_url		
+			json.file_thumb award.thumb_url		
+			json.file award.file.url
 			json.award_created_at award.created_at.to_i
 			json.award_updated_at award.updated_at.to_i
 		end
 
 		json.jobseeker_certificates @user_stuff.user_certificates do |certificate|
 			json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
-			json.file certificate.thumb_url
+			json.file_thumb certificate.thumb_url
+			json.file certificate.file.url
 			json.certificate_created_at certificate.created_at.to_i
 			json.certificate_updated_at certificate.updated_at.to_i
 		end
 
 		json.jobseeker_curriculars @user_stuff.user_curriculars do |curricular|
 			json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
-			json.file curricular.thumb_url
+			json.file_thumb curricular.thumb_url
+			json.file curricular.file.url
 			json.curricular_created_at curricular.created_at.to_i
 			json.curricular_updated_at curricular.updated_at.to_i
 		end
 
 		json.jobseeker_future_goals @user_stuff.user_future_goals do |future_goal|
 			json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
-			json.file future_goal.thumb_url
+			json.file_thumb future_goal.thumb_url
+			json.file future_goal.file.url
 			json.future_goal_created_at future_goal.created_at.to_i
 			json.future_goal_updated_at future_goal.updated_at.to_i
 		end
 
 		json.jobseeker_environments @user_stuff.user_environments do |environment|
 			json.extract! environment, :id, :user_id, :env_type, :title
-			json.file environment.thumb_url
+			json.file_thumb environment.thumb_url
+			json.file environment.file.url
 			json.environment_created_at environment.created_at.to_i
 			json.environment_updated_at environment.updated_at.to_i
 		end
 
 		json.jobseeker_references @user_stuff.user_references do |env|
 			json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
-			json.file env.thumb_url
+			json.file_thumb env.thumb_url
+			json.file env.file.url
 			json.env_created_at env.created_at.to_i
 			json.env_updated_at env.updated_at.to_i
 		end
@@ -94,12 +104,29 @@ if @user_stuff
 			json.liked false
 		end
 
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
+		end
+
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.last.rate_type
+		else
+			json.rate_type ""
+		end
+
 	elsif @user_stuff.role == 'Company'
 
 		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type
 		json.logo @user_stuff.logo_thumb_url
-		json.profile @user_stuff.company_profile_thumb_url
-		json.brochure @user_stuff.brochure_thumb_url
+		json.logo_thumb @user_stuff.logo_thumb_url
+		json.logo @user_stuff.company_logo.url		
+		json.profile_thumb @user_stuff.company_profile_thumb_url
+		json.profile @user_stuff.company_profile.url
+		json.brochure_thumb @user_stuff.brochure_thumb_url
+		json.brochure @user_stuff.company_brochure.url
+
 		json.company_id @user_stuff.company ? @user_stuff.company_id : ""
 		json.company @user_stuff.company ? @user_stuff.company.name : ""
 		json.industry_id @user_stuff.industry ? @user_stuff.industry_id : ""
@@ -109,21 +136,24 @@ if @user_stuff
 		
 		json.company_awards @user_stuff.user_awards do |award|
 			json.extract! award, :id, :user_id, :name, :description, :file_type
-			json.file award.thumb_url		
+			json.file_thumb award.thumb_url	
+			json.file award.file.url	
 			json.award_created_at award.created_at.to_i
 			json.award_updated_at award.updated_at.to_i
 		end
 
 		json.company_certificates @user_stuff.user_certificates do |certificate|
 			json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
-			json.file certificate.thumb_url
+			json.file_thumb certificate.thumb_url
+			json.file certificate.file.url
 			json.certificate_created_at certificate.created_at.to_i
 			json.certificate_updated_at certificate.updated_at.to_i
 		end
 
 		json.company_environments @user_stuff.user_environments do |environment|
 			json.extract! environment, :id, :user_id, :env_type, :title
-			json.file environment.thumb_url
+			json.file_thumb environment.thumb_url
+			json.file environment.file.url
 			json.environment_created_at environment.created_at.to_i
 			json.environment_updated_at environment.updated_at.to_i
 		end
@@ -148,11 +178,26 @@ if @user_stuff
 			json.liked false
 		end
 
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
+		end
+
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.last.rate_type
+		else
+			json.rate_type ""
+		end
+
 	elsif @user_stuff.role == 'Student'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
-		json.profile @user_stuff.profile_thumb_url
-		json.file @user_stuff.resume_thumb_url
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+		json.profile_thumb @user_stuff.profile_thumb_url
+		json.profile @user_stuff.profile_pic.url
+		json.file_thumb @user_stuff.resume_thumb_url
+		json.file @user_stuff.file.url
+
 		json.student_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_basic_info_per.to_i, "info") : 0
 		json.student_education_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_education_per.to_i, "education") : 0
 		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
@@ -170,35 +215,41 @@ if @user_stuff
 
 		json.student_awards @user_stuff.user_awards do |award|
 			json.extract! award, :id, :user_id, :name, :description, :file_type
-			json.file award.thumb_url		
+			json.file_thumb award.thumb_url		
+			json.file award.file.url
 			json.award_created_at award.created_at.to_i
 			json.award_updated_at award.updated_at.to_i
 		end
 
 		json.student_certificates @user_stuff.user_certificates do |certificate|
 			json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
-			json.file certificate.thumb_url
+			json.file_thumb certificate.thumb_url
+			json.file certificate.file.url
 			json.certificate_created_at certificate.created_at.to_i
 			json.certificate_updated_at certificate.updated_at.to_i
 		end
 
 		json.student_curriculars @user_stuff.user_curriculars do |curricular|
 			json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
-			json.file curricular.thumb_url
+			json.file_thumb curricular.thumb_url
+			json.file curricular.file.url
 			json.curricular_created_at curricular.created_at.to_i
 			json.curricular_updated_at curricular.updated_at.to_i
 		end
 
 		json.student_future_goals @user_stuff.user_future_goals do |future_goal|
 			json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
-			json.file future_goal.thumb_url
+			json.file_thumb future_goal.thumb_url
+			json.file future_goal.file.url
 			json.future_goal_created_at future_goal.created_at.to_i
 			json.future_goal_updated_at future_goal.updated_at.to_i
 		end
 
+
 		json.student_marksheets @user_stuff.user_marksheets do |marksheet|
 			json.extract! marksheet, :id, :school_name, :standard, :grade, :year, :file_type
-			json.file marksheet.thumb_url
+			json.file_thumb marksheet.thumb_url
+			json.file marksheet.file.url
 			json.marksheet_created_at marksheet.created_at.to_i
 			json.marksheet_updated_at marksheet.updated_at.to_i
 		end
@@ -221,11 +272,26 @@ if @user_stuff
 			json.liked false
 		end
 
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
+		end
+
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.last.rate_type
+		else
+			json.rate_type ""
+		end
+
 	elsif @user_stuff.role == 'Faculty'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
-		json.profile @user_stuff.profile_thumb_url
-		json.file @user_stuff.resume_thumb_url
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
+		json.profile_thumb @user_stuff.profile_thumb_url
+		json.profile @user_stuff.profile_pic.url
+		json.resume_thumb @user_stuff.resume_thumb_url
+		json.resume @user_stuff.file.url
+
 		json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.faculty_basic_info_per.to_i, "info") : 0
 		json.experience_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.experience_per.to_i, "experience") : 0
 		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
@@ -235,14 +301,16 @@ if @user_stuff
 
 		json.faculty_awards @user_stuff.user_awards do |award|
 			json.extract! award, :id, :user_id, :name, :description, :file_type
-			json.file award.thumb_url		
+			json.file_thumb award.thumb_url		
+			json.file award.file.url
 			json.award_created_at award.created_at.to_i
 			json.award_updated_at award.updated_at.to_i
 		end
 
 		json.faculty_certificates @user_stuff.user_certificates do |certificate|
 			json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
-			json.file certificate.thumb_url
+			json.file_thumb certificate.thumb_url
+			json.file certificate.file.url
 			json.certificate_created_at certificate.created_at.to_i
 			json.certificate_updated_at certificate.updated_at.to_i
 		end
@@ -285,6 +353,18 @@ if @user_stuff
 			json.liked true
 		else
 			json.liked false
+		end
+
+		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
+			json.favourited true
+		else
+			json.favourited false
+		end
+
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.last.rate_type
+		else
+			json.rate_type ""
 		end
 
 	end

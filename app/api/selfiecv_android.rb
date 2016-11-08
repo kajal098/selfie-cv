@@ -1,4 +1,5 @@
 require 'api_logger'
+
 class SelfiecvAndroid < Grape::API
 
   use ApiLogger
@@ -1212,7 +1213,7 @@ class SelfiecvAndroid < Grape::API
         optional :address 
         optional :city
         optional :zipcode
-        optional :contact_number
+        requires :contact_number
         optional :file
         optional :file_type
       end
@@ -1425,7 +1426,7 @@ class SelfiecvAndroid < Grape::API
         optional :city
         optional :country
         optional :zipcode
-        optional :contact_number
+        requires :contact_number
         optional :file
         optional :text_field
         optional :file_type
@@ -1827,7 +1828,7 @@ class SelfiecvAndroid < Grape::API
             @chat.quick_msg = "joined"
             @chat.save
             @group.accepted_users.each do |group_user|
-            Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+            #Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
             end
         end      
       end
@@ -1851,7 +1852,7 @@ class SelfiecvAndroid < Grape::API
         @chat.quick_msg = "left"
         @chat.save
         @group.accepted_users.each do |group_user|
-        Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        #Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
       end
       end
 
@@ -1876,7 +1877,7 @@ class SelfiecvAndroid < Grape::API
 
   end
   #--------------------------------group end----------------------------------#
-  #--------------------------------message end----------------------------------#
+  #--------------------------------message start----------------------------------#
   resources :messages do
   before { authenticate! }
 
@@ -1995,7 +1996,7 @@ class SelfiecvAndroid < Grape::API
             @user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
             @user_like.is_liked = 'true'
             error!({error: @user_like.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_like.save     
-            Device.notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+            #Device.notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
         else        
             error!({error: 'You already like this profile!', status: 'Fail'}, 200)
         end
@@ -2010,7 +2011,7 @@ class SelfiecvAndroid < Grape::API
       post :view, jbuilder: 'android_notification' do
         @user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
         error!({error: @user_view.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_view.save     
-        Device.notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        #Device.notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
         { code: 200, status: 'Success'}
       end
 
@@ -2023,7 +2024,7 @@ class SelfiecvAndroid < Grape::API
       post :share, jbuilder: 'android_notification' do
         @user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
         error!({error: @user_share.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_share.save     
-        Device.notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        #Device.notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
         { code: 200, status: 'Success'}
       end
 
@@ -2036,7 +2037,7 @@ class SelfiecvAndroid < Grape::API
       post :favourite, jbuilder: 'android_notification' do
           if params[:is_favourited] == 'false'
               @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
-              @user_like.is_favourited = 'true'
+              @user_favourite.is_favourited = 'true'
               error!({error: @user_favourite.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_favourite.save     
           else        
               error!({error: 'You already favourite this profile!', status: 'Fail'}, 200)
@@ -2052,7 +2053,7 @@ class SelfiecvAndroid < Grape::API
       post :rate, jbuilder: 'android_notification' do
         @user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
         error!({error: @user_rate.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_rate.save     
-        Device.notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+        #Device.notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
       end
 
       desc  "LIST Of NOTIFICATION"

@@ -3,8 +3,7 @@ class MarketiqReport
   include Datagrid
 
   scope { Marketiq.order(:id) }
-  #scope { Marketiq.all }
-
+  
 filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) })
 
 filter(:specialization_id, :enum, header: "Specialization", select: ->{ Specialization.pluck(:name, :id) })

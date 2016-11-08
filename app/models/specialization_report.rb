@@ -3,8 +3,7 @@ class SpecializationReport
   include Datagrid
 
   scope { Specialization.order(:id) }
-  scope { Specialization.all }
-
+  
   # filter(:id, header: "Id") {|value| where("id ilike ?", "%#{value}%")}
   #filter(:id, header: "Personeelsnummer")
   filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
