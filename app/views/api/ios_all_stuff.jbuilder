@@ -7,6 +7,7 @@ if @user_stuff
 		json.profile @user_stuff.profile_pic.url
 		json.resume_thumb @user_stuff.resume_thumb_url
 		json.resume @user_stuff.file.url
+		
 
 		json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i
@@ -50,7 +51,7 @@ if @user_stuff
 		end
 
 		json.jobseeker_curriculars @user_stuff.user_curriculars do |curricular|
-			json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date
+			json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 			json.file_thumb curricular.thumb_url
 			json.file curricular.file.url
 			json.curricular_created_at curricular.created_at.to_i
@@ -58,7 +59,7 @@ if @user_stuff
 		end
 
 		json.jobseeker_future_goals @user_stuff.user_future_goals do |future_goal|
-			json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type
+			json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
 			json.file_thumb future_goal.thumb_url
 			json.file future_goal.file.url
 			json.future_goal_created_at future_goal.created_at.to_i
@@ -66,7 +67,7 @@ if @user_stuff
 		end
 
 		json.jobseeker_environments @user_stuff.user_environments do |environment|
-			json.extract! environment, :id, :user_id, :env_type, :title
+			json.extract! environment, :id, :user_id, :env_type, :title, :file_type
 			json.file_thumb environment.thumb_url
 			json.file environment.file.url
 			json.environment_created_at environment.created_at.to_i
@@ -74,7 +75,7 @@ if @user_stuff
 		end
 
 		json.jobseeker_references @user_stuff.user_references do |env|
-			json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location
+			json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :file_type
 			json.file_thumb env.thumb_url
 			json.file env.file.url
 			json.env_created_at env.created_at.to_i
@@ -190,7 +191,7 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Student'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 		json.file_thumb @user_stuff.resume_thumb_url
@@ -242,6 +243,7 @@ if @user_stuff
 			json.future_goal_created_at future_goal.created_at.to_i
 			json.future_goal_updated_at future_goal.updated_at.to_i
 		end
+
 
 		json.student_marksheets @user_stuff.user_marksheets do |marksheet|
 			json.extract! marksheet, :id, :school_name, :standard, :grade, :year, :file_type
