@@ -7,7 +7,6 @@ if @user_stuff
 		json.profile @user_stuff.profile_pic.url
 		json.resume_thumb @user_stuff.resume_thumb_url
 		json.resume @user_stuff.file.url
-		
 
 		json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i
@@ -109,8 +108,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type @user_stuff.user_rates.last.rate_type
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.where(rate_id: @user_stuff.id).last.rate_type
 		else
 			json.rate_type ""
 		end
@@ -183,8 +182,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type @user_stuff.user_rates.last.rate_type
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.where(rate_id: @user_stuff.id).last.rate_type
 		else
 			json.rate_type ""
 		end
@@ -277,8 +276,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type @user_stuff.user_rates.last.rate_type
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.where(rate_id: @user_stuff.id).last.rate_type
 		else
 			json.rate_type ""
 		end
@@ -360,8 +359,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type @user_stuff.user_rates.last.rate_type
+		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type current_user.user_rates.where(rate_id: @user_stuff.id).last.rate_type
 		else
 			json.rate_type ""
 		end
