@@ -1,6 +1,6 @@
 class Chat < ActiveRecord::Base
 	belongs_to :user, class_name: 'User',foreign_key: "sender_id"
-	has_many :chat_schedules
+	belongs_to :chat_schedule, class_name: 'ChatSchedule',foreign_key: "chat_schedule_id"
 
 	mount_uploader :file, FileUploader
     def thumb_url          

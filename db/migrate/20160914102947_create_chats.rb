@@ -3,6 +3,7 @@ class CreateChats < ActiveRecord::Migration
     create_table :chats do |t|
       t.integer :sender_id
       t.integer :group_id
+      t.integer :chat_schedule_id
       t.string :quick_msg,              null: false, default: ""
       t.boolean :activity,            default: false
       t.string :file,              default: ''
@@ -15,5 +16,7 @@ class CreateChats < ActiveRecord::Migration
     add_foreign_key :chats, :users, column: :sender_id, on_delete: :cascade
     add_index :chats, [:group_id]
     add_foreign_key :chats, :groups, on_delete: :cascade
+    add_index :chats, [:chat_schedule_id]
+    add_foreign_key :chats, :chat_schedules, column: :chat_schedule_id, on_delete: :cascade
   end
 end

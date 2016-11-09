@@ -1899,7 +1899,11 @@ before { authenticate! }
 		@chat_schedule.info = params[:info] if params[:info]
 		@chat_schedule.group_id = params[:group_id]
 		error! @chat_schedule.errors.full_messages.join(', '),422 unless @chat_schedule.save
-		@chat_schedule
+		@chat = Chat.new
+		@chat.group_id = params[:group_id]
+		@chat.sender_id = current_user.id
+		@chat.chat_schedule_id = @chat_schedule.id
+		@chat.save
 	end
 
 	desc 'Create schedule'
