@@ -28,19 +28,7 @@ if @chats
 			json.msg_created_at chat.created_at.to_i
 			json.msg_updated_at chat.updated_at.to_i			
 		else
-			json.msg chat.chat_schedule, :id, :name, :info
-			json.date chat.chat_schedule.date.count.times do |i|
-				json.set!("date", chat.chat_schedule.date[i].to_s)
-			end
-			json.my_time chat.chat_schedule.my_time.count.times do |i|
-				json.set!("time", chat.chat_schedule.my_time[i].to_s)
-			end
-			json.description chat.chat_schedule.description.count.times do |i|
-				json.set!("description", chat.chat_schedule.description[i].to_s)
-			end
-			json.group_id chat.chat_schedule.group_id.count.times do |i|
-				json.set!("group", chat.chat_schedule.group_id[i].to_s)
-			end
+			json.chat_schedule chat.chat_schedule, :id, :name
 		end
 	end
 end
