@@ -19,7 +19,15 @@ end
 if @chats
 	@chats = @chats.order('created_at ASC')
 	json.msgs @chats do |chat|
-		if chat.chat_schedule_id.present?
+		if chat.chat_schedule_id.blank?
+			json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
+			json.sender_id chat.user ? chat.sender_id : ""
+		   	json.sender_first_name chat.user ? chat.user.first_name : ""
+		   	json.sender_last_name chat.user ? chat.user.last_name : ""
+			json.file chat.file.url
+			json.msg_created_at chat.created_at.to_i
+			json.msg_updated_at chat.updated_at.to_i			
+		else
 			json.msg chat.chat_schedule, :id, :name, :info
 			json.date chat.chat_schedule.date.count.times do |i|
 				json.set!("date", chat.chat_schedule.date[i].to_s)
@@ -33,14 +41,6 @@ if @chats
 			json.group_id chat.chat_schedule.group_id.count.times do |i|
 				json.set!("group", chat.chat_schedule.group_id[i].to_s)
 			end
-		else
-			json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
-			json.sender_id chat.user ? chat.sender_id : ""
-		   	json.sender_first_name chat.user ? chat.user.first_name : ""
-		   	json.sender_last_name chat.user ? chat.user.last_name : ""
-			json.file chat.file.url
-			json.msg_created_at chat.created_at.to_i
-			json.msg_updated_at chat.updated_at.to_i
 		end
 	end
 end
