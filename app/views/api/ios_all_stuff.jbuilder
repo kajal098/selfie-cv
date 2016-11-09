@@ -109,8 +109,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type current_user.user_rates.last.rate_type
+		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type @user_stuff.user_rates.last.rate_type
 		else
 			json.rate_type ""
 		end
@@ -183,8 +183,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type current_user.user_rates.last.rate_type
+		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type @user_stuff.user_rates.last.rate_type
 		else
 			json.rate_type ""
 		end
@@ -277,8 +277,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type current_user.user_rates.last.rate_type
+		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type @user_stuff.user_rates.last.rate_type
 		else
 			json.rate_type ""
 		end
@@ -360,8 +360,8 @@ if @user_stuff
 			json.favourited false
 		end
 
-		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
-			json.rate_type current_user.user_rates.last.rate_type
+		if ( @user_stuff.user_rates.where(rate_id: @user_stuff.id).count > 0 )
+			json.rate_type @user_stuff.user_rates.last.rate_type
 		else
 			json.rate_type ""
 		end
