@@ -154,9 +154,21 @@ end
 
 # Start Percentage Module
 
-after_save :create_user_meter, :percent_of_resume, :percent_of_student_basic_info, :percent_of_company_info,
- :percent_of_faculty_basic_info, :percent_of_company_corporate_identity, :profile_meter_total, :like_per,
- :view_per, :share_per, :bronze_per, :silver_per, :gold_per, :rate_per, :update_info_per, :cal_total_per
+after_save :create_user_meter,
+:percent_of_resume,
+:percent_of_student_basic_info,
+:percent_of_company_info, 
+:percent_of_company_future_goal, 
+:percent_of_company_evaluation,
+:percent_of_faculty_basic_info, 
+:percent_of_company_corporate_identity, 
+:profile_meter_total, :like_per,
+:view_per, :share_per, :bronze_per, 
+:silver_per, 
+:gold_per, 
+:rate_per, 
+:update_info_per, 
+:cal_total_per
 
 
 def create_user_meter
@@ -216,6 +228,26 @@ def percent_of_company_corporate_identity
             setting_per = UserPercentage.where(key: 'corporate').where(ptype: "Company").first            
             corporate_identity_per = setting_per.value.to_i * 1            
             @user_meter.update_column('corporate_identity_per' ,corporate_identity_per)                            
+        end 
+        return true
+end
+
+def percent_of_company_future_goal
+        if self.company_future_turnover.present? && self.role == 'Company'   
+            future_goal_per = 0
+            setting_per = UserPercentage.where(key: 'info').where(ptype: "Company").first            
+            future_goal_per = setting_per.value.to_i * 1            
+            @user_meter.update_column('future_goal_per' ,future_goal_per)                            
+        end 
+        return true
+end
+
+def percent_of_company_evaluation
+        if self.company_turnover.present? && self.role == 'Company'   
+            evalution_per = 0
+            setting_per = UserPercentage.where(key: 'info').where(ptype: "Company").first            
+            evalution_per = setting_per.value.to_i * 1            
+            @user_meter.update_column('evalution_per' ,evalution_per)                            
         end 
         return true
 end

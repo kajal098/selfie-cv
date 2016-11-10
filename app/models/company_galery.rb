@@ -13,11 +13,11 @@ class CompanyGalery < ActiveRecord::Base
         setting_per = UserPercentage.find_by_key('gallery').value.to_i
         @count = user.company_galeries.count
         if user.company_galeries.count > 0  
-          if @count >= 10 && @count <= 20
+          if @count >= 2 && @count <= 5
               galery_per = setting_per * 0.3
-          elsif @count >= 20 &&  @count <= 30
+          elsif @count >= 5 &&  @count <= 10
               galery_per = setting_per * 0.5
-          elsif @count >= 30
+          elsif @count >= 10
               galery_per = setting_per * 1
           end
         end 
