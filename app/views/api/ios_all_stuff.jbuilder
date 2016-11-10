@@ -156,6 +156,14 @@ if @user_stuff
 			json.environment_updated_at environment.updated_at.to_i
 		end
 
+		json.company_galeries @@user_stuff.company_galeries do |galery|
+			json.extract! galery, :id
+			json.FileThumb galery.thumb_url
+			json.File galery.file.url
+			json.galery_created_at galery.created_at.to_i
+			json.galery_updated_at galery.updated_at.to_i
+		end
+
 		json.company_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.company_info_per.to_i, "info") : 0
 		json.corporate_identity_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.corporate_identity_per.to_i, "corporate") : 0
 		json.growth_and_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.growth_and_goal_per.to_i, "growth") : 0
