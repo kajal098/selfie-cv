@@ -12,7 +12,6 @@ class CompanyGalery < ActiveRecord::Base
         galery_per = 0
         setting_per = UserPercentage.find_by_key('gallery').value.to_i
         @count = user.company_galeries.count
-        if user.company_galeries.count > 0  
           if @count >= 2 && @count <= 5
               galery_per = setting_per * 0.3
           elsif @count >= 5 &&  @count <= 10
@@ -20,7 +19,6 @@ class CompanyGalery < ActiveRecord::Base
           elsif @count >= 10
               galery_per = setting_per * 1
           end
-        end 
         user.user_meter.update_column('galery_per' ,galery_per)
         user.profile_meter_total
         return true
