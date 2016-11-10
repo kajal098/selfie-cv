@@ -156,7 +156,7 @@ if @user_stuff
 			json.environment_updated_at environment.updated_at.to_i
 		end
 
-		json.company_galeries @@user_stuff.company_galeries do |galery|
+		json.company_galeries @user_stuff.company_galeries do |galery|
 			json.extract! galery, :id
 			json.FileThumb galery.thumb_url
 			json.File galery.file.url
