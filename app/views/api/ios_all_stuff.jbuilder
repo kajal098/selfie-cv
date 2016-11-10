@@ -20,7 +20,7 @@ if @user_stuff
 		end
 
 		json.jobseeker_experiences @user_stuff.user_experiences do |experience|
-			json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company
+			json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
 			json.file_thumb experience.thumb_url
 			json.file experience.file.url
 			json.experience_created_at experience.created_at.to_i
