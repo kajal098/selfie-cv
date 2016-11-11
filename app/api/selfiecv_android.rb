@@ -1954,7 +1954,7 @@ class SelfiecvAndroid < Grape::API
         error!({error: @chat_schedule.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @chat_schedule.save
         params[:group_id].each do |q|
           @chat = Chat.new
-          @chat.group_id = params[:group_id]
+          @chat.group_id = q
           @chat.sender_id = current_user.id
           @chat.chat_schedule_id = @chat_schedule.id
           @chat.save
