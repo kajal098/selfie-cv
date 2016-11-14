@@ -13,24 +13,31 @@ class FacultyResearch < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_research
+    before_destroy :reduce_percentage
 
-    def percent_of_research()
-    	user = self.user
-        
+    def percent_of_research
+        user = self.user
         if user.faculty_researches.count > 0  
-        	research_per = 0
-        	user.faculty_researches.each do |research|   
-        	   		if research.file_type == "doc"
-	                    research_per = 100
-	                    break
-	                else
-	                    research_per = 50
-	                end
-        		       	
-        	end
+            faculty_research_per = 0
+            setting_per = UserPercentage.find_by_key('research').value
+            user.faculty_researches.each do |research|   
+                if research.title.present?
+                    faculty_research_per = setting_per.to_i * 1
+                end                     
+            end
+            user.user_meter.update_column('faculty_research_per' ,faculty_research_per)
+            user.profile_meter_total
         end 
-        user.user_meter.update_column('faculty_research_per' ,research_per)
-        user.profile_meter_total
+        return true
+    end
+
+    def reduce_percentage
+        user = self.user
+        if user.faculty_researches.where.not(id: self.id).count == 0  
+            faculty_research_per = 0
+            user.user_meter.update_column('faculty_research_per' ,faculty_research_per)
+            user.profile_meter_total
+        end
         return true
     end
 

@@ -1483,7 +1483,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
         optional :university
-        optional :collage_name
+        requires :collage_name
         optional :subject
         optional :designation
         optional :join_from
@@ -1534,7 +1534,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :description
+        requires :description
       end
       post :faculty_workshop, jbuilder: 'android' do
         @user = User.find params[:user_id]
@@ -1575,7 +1575,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :title
+        requires :title
         optional :description
         optional :file
         optional :text_field
@@ -1635,7 +1635,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :title
+        requires :title
         optional :description
         optional :file
         optional :text_field
