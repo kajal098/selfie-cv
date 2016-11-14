@@ -21,7 +21,7 @@ class FacultyPublication < ActiveRecord::Base
             faculty_publication_per = 0
             setting_per = UserPercentage.find_by_key('publication').value
             user.faculty_publications.each do |publication|   
-                if publication.requires.present?
+                if publication.title.present?
                     faculty_publication_per = setting_per.to_i * 1
                 end                     
             end
