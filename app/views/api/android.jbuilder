@@ -9,6 +9,8 @@ if @user
 	if @user.role == 'Jobseeker'
 
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+
+		json.password @user.password
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
 		json.resume_thumb @user.resume_thumb_url
