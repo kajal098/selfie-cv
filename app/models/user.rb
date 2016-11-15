@@ -197,8 +197,8 @@ end
 
 def percent_of_resume
             resume_info_per = 0
-            setting_per = UserPercentage.find_by_key('resume_info').value.to_i
-            if self.file_type.present?
+            setting_per = UserPercentage.where(key: 'resume_info').where(ptype: "Jobseeker").first.value.to_i 
+            if self.role == 'Jobseeker' && self.file_type.present?
                 if self.file_type == "video"
                     resume_info_per = setting_per * 1
                 elsif self.file_type == "audio"
@@ -206,10 +206,10 @@ def percent_of_resume
                 elsif self.file_type == "image"
                     resume_info_per = setting_per * 0.5
                 elsif self.file_type == "doc"
-                    resume_info_per = setting_per * 0.5
+                    resume_info_per = setting_per * 0.5               
+                else
+                    resume_info_per = setting_per * 0.3
                 end
-            else
-                resume_info_per = setting_per * 0.3
             end
                 @user_meter.update_column('resume_info_per' ,resume_info_per)
         return true
