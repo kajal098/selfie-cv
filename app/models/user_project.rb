@@ -5,6 +5,14 @@ class UserProject < ActiveRecord::Base
 
 	validates :title, :description, presence: true
 
+    mount_uploader :file, FileUploader
+    def thumb_url
+         
+            file.url(:thumb)
+    end
+
+    def photo_url; file.url; end
+
 	after_save :percent_of_project
 
     def percent_of_project()
