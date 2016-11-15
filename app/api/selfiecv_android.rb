@@ -85,7 +85,7 @@ class SelfiecvAndroid < Grape::API
         error!({error: 'Device not registered', status: 'Fail'}, 200) unless current_device
         error!({error: 'password not matched', status: 'Fail'}, 200) if params[:password] != params[:password_confirmation]
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
-        UserMailer.welcome(@user).deliver_now
+        UserMailer.welcome(@user, @password).deliver_now
         { code: 200, :status => "Success" }
       end
 
