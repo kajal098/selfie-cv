@@ -92,8 +92,10 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-11-09'
-    t.date     "join_till",    default: '2016-11-09'
+    t.date     "join_from",    default: '2016-11-15'
+    t.date     "join_till",    default: '2016-11-15'
+    t.string   "file",         default: ""
+    t.string   "file_type",    default: "",           null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -128,7 +130,10 @@ ActiveRecord::Schema.define(version: 20161024063034) do
 
   create_table "faculty_workshops", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "title",       default: "", null: false
     t.string   "description", default: "", null: false
+    t.string   "file",        default: ""
+    t.string   "file_type",   default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -338,7 +343,8 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-11-09'
+    t.date     "date",            default: '2016-11-15'
+    t.string   "hobby",           default: "",           null: false
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
@@ -383,8 +389,8 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-11-09'
-    t.date     "working_till",    default: '2016-11-09'
+    t.date     "start_from",      default: '2016-11-15'
+    t.date     "working_till",    default: '2016-11-15'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
@@ -452,7 +458,6 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "grade",       default: "", null: false
     t.string   "year",        default: "", null: false
     t.string   "file",        default: ""
-    t.string   "text_field",  default: "", null: false
     t.string   "file_type",   default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
@@ -539,6 +544,8 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.integer  "user_id"
     t.string   "title",       default: "", null: false
     t.string   "description", default: "", null: false
+    t.string   "file",        default: ""
+    t.string   "file_type",   default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -562,7 +569,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-11-09'
+    t.date     "date",       default: '2016-11-15'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "text_field", default: "",           null: false
@@ -617,7 +624,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-11-09"
+    t.string   "date_of_birth",                                 default: "2016-11-15"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -631,7 +638,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-11-09"
+    t.string   "faculty_join_from",                             default: "2016-11-15"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -661,6 +668,7 @@ ActiveRecord::Schema.define(version: 20161024063034) do
     t.string   "delete_code",                                   default: "",           null: false
     t.integer  "user_total_per",                                default: 0,            null: false
     t.integer  "update_cv_count",                               default: 0,            null: false
+    t.string   "back_profile",                                  default: ""
     t.string   "encrypted_password",                            default: "",           null: false
     t.string   "reset_code",                          limit: 6
     t.string   "reset_password_token"

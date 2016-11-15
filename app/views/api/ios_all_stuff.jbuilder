@@ -7,6 +7,8 @@ if @user_stuff
 		json.profile @user_stuff.profile_pic.url
 		json.resume_thumb @user_stuff.resume_thumb_url
 		json.resume @user_stuff.file.url
+		json.back_profile_thumb @user_stuff.back_profile_thumb_url
+		json.back_profile @user_stuff.back_profile.url
 
 		json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i
@@ -124,6 +126,8 @@ if @user_stuff
 		json.profile @user_stuff.company_profile.url
 		json.brochure_thumb @user_stuff.brochure_thumb_url
 		json.brochure @user_stuff.company_brochure.url
+		json.back_profile_thumb @user_stuff.back_profile_thumb_url
+		json.back_profile @user_stuff.back_profile.url
 
 		json.company_id @user_stuff.company ? @user_stuff.company_id : ""
 		json.company @user_stuff.company ? @user_stuff.company.name : ""
@@ -203,6 +207,8 @@ if @user_stuff
 		json.profile @user_stuff.profile_pic.url
 		json.file_thumb @user_stuff.resume_thumb_url
 		json.file @user_stuff.file.url
+		json.back_profile_thumb @user_stuff.back_profile_thumb_url
+		json.back_profile @user_stuff.back_profile.url
 
 		json.student_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_basic_info_per.to_i, "info") : 0
 		json.student_education_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_education_per.to_i, "education") : 0
@@ -297,6 +303,8 @@ if @user_stuff
 		json.profile @user_stuff.profile_pic.url
 		json.resume_thumb @user_stuff.resume_thumb_url
 		json.resume @user_stuff.file.url
+		json.back_profile_thumb @user_stuff.back_profile_thumb_url
+		json.back_profile @user_stuff.back_profile.url
 
 		json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.faculty_basic_info_per.to_i, "info") : 0
 		json.experience_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.experience_per.to_i, "experience") : 0
@@ -328,7 +336,9 @@ if @user_stuff
 		end
 
 		json.faculty_workshops @user_stuff.faculty_workshops do |workshop|
-			json.extract! workshop, :id, :user_id, :description
+			json.extract! workshop, :id, :user_id, :description, :file_type
+			json.file_thumb workshop.thumb_url
+			json.file workshop.file.url
 			json.workshop_created_at workshop.created_at.to_i
 			json.workshop_updated_at workshop.updated_at.to_i
 		end

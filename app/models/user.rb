@@ -142,6 +142,10 @@ mount_uploader :company_brochure, FileUploader
 def brochure_thumb_url; company_brochure.url(:thumb); end
 def brochure_photo_url; company_brochure.url; end
 
+mount_uploader :back_profile, FileUploader
+def back_profile_thumb_url; back_profile.url(:thumb); end
+def back_profile_photo_url; back_profile.url; end
+
 def self.to_csv(options = {})
     CSV.generate(options) do |csv|
         csv << column_names

@@ -13,6 +13,8 @@ if @user
 		json.profile @user.profile_pic.url
 		json.resume_thumb @user.resume_thumb_url
 		json.resume @user.file.url
+		json.back_profile_thumb @user.back_profile_thumb_url
+		json.back_profile @user.back_profile.url
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
@@ -40,6 +42,8 @@ if @user
 		json.profile @user.company_profile.url
 		json.brochure_thumb @user.brochure_thumb_url
 		json.brochure @user.company_brochure.url
+		json.back_profile_thumb @user.back_profile_thumb_url
+		json.back_profile @user.back_profile.url
 		json.company_id @user.company ? @user.company_id : ""
 		json.company @user.company ? @user.company.name : ""
 		json.industry_id @user.industry ? @user.industry_id : ""
@@ -68,6 +72,8 @@ if @user
 		json.profile @user.profile_pic.url
 		json.resume_thumb @user.resume_thumb_url
 		json.resume @user.file.url
+		json.back_profile_thumb @user.back_profile_thumb_url
+		json.back_profile @user.back_profile.url
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
@@ -91,6 +97,8 @@ if @user
 		json.profile @user.profile_pic.url
 		json.resume_thumb @user.resume_thumb_url
 		json.resume @user.file.url
+		json.back_profile_thumb @user.back_profile_thumb_url
+		json.back_profile @user.back_profile.url
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
@@ -394,7 +402,9 @@ if @faculty_affiliations
 end
 
 if @faculty_workshop
-	json.extract! @faculty_workshop, :id, :user_id, :description
+	json.extract! @faculty_workshop, :id, :user_id, :description, :file_type
+	json.file_thumb @faculty_workshop.thumb_url
+			json.file @faculty_workshop.file.url
 	json.workshop_created_at @faculty_workshop.created_at.to_i
 	json.workshop_updated_at @faculty_workshop.updated_at.to_i
 end
@@ -402,7 +412,9 @@ end
 if @faculty_workshops
 	@workshops = @user.faculty_workshops.order('created_at DESC')
 	json.faculty_workshops @workshops do |workshop|
-		json.extract! workshop, :id, :user_id, :description
+		json.extract! workshop, :id, :user_id, :description, :file_type
+		json.file_thumb workshop.thumb_url
+			json.file workshop.file.url
 		json.workshop_created_at workshop.created_at.to_i
 		json.workshop_updated_at workshop.updated_at.to_i
 	end

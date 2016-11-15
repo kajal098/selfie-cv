@@ -84,6 +84,10 @@
                     <td>File URL</td>
                     <td><%= @user.file.url %></td>
                   </tr>              
+                  <tr>
+                    <td>Back Profile</td>
+                    <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
+                  </tr>
                 </table> 
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>        
                 <table>
@@ -290,6 +294,7 @@
                       <td><%= curri.team_type %></td>
                       <td><%= curri.location %></td>
                       <td><%= curri.date %></td>
+                      <td><%= curri.hobby %></td>
                       <td><% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
                     </tr> 
                     <% end %>
@@ -435,6 +440,10 @@
                   <tr>
                     <td>Company Type Name</td>
                     <td><%= @user.company ? @user.company.name : "" %></td>
+                  </tr>
+                  <tr>
+                    <td>Back Profile</td>
+                    <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
                   </tr>
                 </table>
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>
@@ -626,6 +635,10 @@
                   <tr>
                     <td>File URL</td>
                     <td><%= @user.file.url %></td>
+                  </tr>
+                  <tr>
+                    <td>Back Profile</td>
+                    <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
                   </tr>
                 </table>
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>  
@@ -869,6 +882,10 @@
                   <tr>
                     <td>File URL</td>
                     <td><%= @user.file.url %></td>
+                  </tr>
+                  <tr>
+                    <td>Back Profile</td>
+                    <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
                   </tr>
                 </table>
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>

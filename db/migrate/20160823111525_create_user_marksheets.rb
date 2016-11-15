@@ -7,7 +7,6 @@ class CreateUserMarksheets < ActiveRecord::Migration
       t.string :grade,              null:false, default: ""
       t.string :year,              null:false, default: ""
       t.string :file,              default: ''
-      t.string :text_field,              null: false, default: ""
       t.string :file_type,              null:false, default: ""
 
       t.timestamps null: false

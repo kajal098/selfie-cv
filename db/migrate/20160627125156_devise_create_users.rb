@@ -55,6 +55,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :delete_code,              null: false, default: ""
       t.integer :user_total_per,        null:false, default: 0
       t.integer :update_cv_count,        null:false, default: 0
+      t.string :back_profile,              default: ''
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable

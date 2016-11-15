@@ -643,6 +643,7 @@ before { authenticate! }
 		optional :team_type        
 		optional :location
 		optional :date
+		optional :hobby
 		optional :file
 		optional :text_field
 		optional :file_type
@@ -650,9 +651,9 @@ before { authenticate! }
 	post :curriculars, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
-			if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
+			if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] || params[:hobby] )
 				@curricular = UserCurricular.new user_id: @user.id
-				@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
+				@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :hobby, :file_type, :text_field)
 					if (params[:file_type] == 'text')
 						@curricular.text_field = params[:text_field]
 					else
@@ -671,6 +672,7 @@ before { authenticate! }
 		optional :team_type        
 		optional :location
 		optional :date
+		optional :hobby
 		optional :file
 		optional :text_field
 		optional :file_type
@@ -678,7 +680,7 @@ before { authenticate! }
 	post :update_curricular, jbuilder: 'ios' do
 		@curricular = UserCurricular.find params[:curricular_id]
 		error! 'User Curricular not found',422 unless @curricular
-		@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
+		@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :hobby, :file_type, :text_field)
 			if (params[:file_type] == 'text')
 				@curricular.text_field = params[:text_field]
 			else
@@ -1146,6 +1148,7 @@ before { authenticate! }
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
 		optional :profile_pic
+		optional :back_profile
 	end
 	post :update_image, jbuilder: 'ios' do
 		@update_image = User.find params[:user_id]
@@ -1436,7 +1439,7 @@ before { authenticate! }
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
 		optional :university
-		optional :collage_name
+		requires :collage_name
 		optional :subject
 		optional :designation
 		optional :join_from
@@ -1486,13 +1489,17 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :description
+		requires :title
+		requires :description
+		optional :file
+        optional :file_type
 	end
 	post :faculty_workshop, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 		@faculty_workshop = FacultyWorkshop.new user_id: @user.id
-		@faculty_workshop.attributes = clean_params(params).permit(:description)
+		@faculty_workshop.attributes = clean_params(params).permit(:title, :description, :file_type)
+		@faculty_workshop.file = params[:file] if params[:file]
 		error!({error: @faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_workshop.save
 	end
 
@@ -1500,12 +1507,16 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :workshop_id
+		optional :title
 		optional :description
+		optional :file
+        optional :file_type
 	end
 	post :update_faculty_workshop, jbuilder: 'ios' do
 		@faculty_workshop = FacultyWorkshop.find params[:workshop_id]
 		error! 'Student workshop not found',422 unless @faculty_workshop
-		@faculty_workshop.attributes = clean_params(params).permit(:description)
+		@faculty_workshop.attributes = clean_params(params).permit(:titl, :description, :file_type)
+		@faculty_workshop.file = params[:file] if params[:file]
 		error! @faculty_workshop.errors.full_messages.join(', '),422 unless @faculty_workshop.save
 	end
 
@@ -1525,7 +1536,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :title
+		requires :title
 		optional :description
 		optional :file
 		optional :text_field
@@ -1584,7 +1595,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :title
+		requires :title
 		optional :description
 		optional :file
 		optional :text_field
