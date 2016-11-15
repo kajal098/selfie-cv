@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024063034) do
+ActiveRecord::Schema.define(version: 20161115122140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,12 @@ ActiveRecord::Schema.define(version: 20161024063034) do
   end
 
   add_index "faculty_workshops", ["user_id"], name: "index_faculty_workshops_on_user_id", using: :btree
+
+  create_table "folders", force: :cascade do |t|
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "graphs", force: :cascade do |t|
     t.integer  "company_stock_id"
@@ -407,12 +413,24 @@ ActiveRecord::Schema.define(version: 20161024063034) do
   create_table "user_favourites", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "favourite_id"
+    t.integer  "folder_id"
     t.boolean  "is_favourited", default: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
   end
 
+  add_index "user_favourites", ["folder_id"], name: "index_user_favourites_on_folder_id", using: :btree
   add_index "user_favourites", ["user_id", "favourite_id"], name: "index_user_favourites_on_user_id_and_favourite_id", using: :btree
+
+  create_table "user_folders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "folder_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_folders", ["folder_id"], name: "index_user_folders_on_folder_id", using: :btree
+  add_index "user_folders", ["user_id"], name: "index_user_folders_on_user_id", using: :btree
 
   create_table "user_future_goals", force: :cascade do |t|
     t.integer  "user_id"
@@ -719,8 +737,11 @@ ActiveRecord::Schema.define(version: 20161024063034) do
   add_foreign_key "user_educations", "users", on_delete: :cascade
   add_foreign_key "user_environments", "users", on_delete: :cascade
   add_foreign_key "user_experiences", "users", on_delete: :cascade
+  add_foreign_key "user_favourites", "folders", on_delete: :cascade
   add_foreign_key "user_favourites", "users", column: "favourite_id", on_delete: :cascade
   add_foreign_key "user_favourites", "users", on_delete: :cascade
+  add_foreign_key "user_folders", "folders", on_delete: :cascade
+  add_foreign_key "user_folders", "users", on_delete: :cascade
   add_foreign_key "user_future_goals", "users", on_delete: :cascade
   add_foreign_key "user_likes", "users", column: "like_id", on_delete: :cascade
   add_foreign_key "user_likes", "users", on_delete: :cascade

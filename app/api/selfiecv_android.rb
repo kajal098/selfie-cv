@@ -2244,4 +2244,29 @@ class SelfiecvAndroid < Grape::API
 
   end
   #--------------------------------marketiq end----------------------------------#
+
+  #--------------------------------folder start----------------------------------#
+  resources :folder do
+  before { authenticate! }
+
+      desc 'Create Folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
+        requires :name
+      end
+      post :create, jbuilder: 'android_folder' do
+          @user = User.find params[:user_id]
+          error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+          @folder = Folder.new
+          @folder.attributes = clean_params(params).permit(:name)
+          error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+          @user_folder = UserFolder.new user_id: @user.id
+          @user_folder.folder_id = @folder.id
+          error!({error: @user_folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
+      end      
+
+  end
+  #--------------------------------folder end----------------------------------#
+
 end
