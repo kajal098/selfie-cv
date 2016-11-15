@@ -155,6 +155,15 @@ def self.to_csv(options = {})
     end
 end
 
+# def self.to_csv(options = {})
+#     CSV.generate(options) do |csv|
+#         csv << ["ID", "User name" "Updated At"]
+#         all.each do |user|
+#             csv << [user.id, user.username, user.updated_at]
+#         end
+#     end
+# end
+
 
 # Start Percentage Module
 

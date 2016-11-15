@@ -1491,13 +1491,16 @@ class SelfiecvAndroid < Grape::API
         optional :designation
         optional :join_from
         optional :join_till
+        optional :file
+        optional :file_type
       end
       post :faculty_affiliation, jbuilder: 'android' do
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-        if (params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] || params[:join_till] )
+        if (params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] || params[:join_till] || params[:file_type] )
           @faculty_affiliation = FacultyAffiliation.new user_id: @user.id
-          @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till)
+          @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till, :file_type)
+          @faculty_affiliation.file = params[:file] if params[:file]
           error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
         end          
       end
@@ -1512,11 +1515,14 @@ class SelfiecvAndroid < Grape::API
         optional :designation
         optional :join_from
         optional :join_till
+        optional :file
+        optional :file_type
       end
       post :update_faculty_affiliation, jbuilder: 'android' do
         @faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
         error!({error: 'Faculty affiliation not found', status: 'Fail'}, 200) unless @faculty_affiliation
-        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till)
+        @faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till, :file_type)
+        @faculty_affiliation.file = params[:file] if params[:file]
         error!({error: @faculty_affiliation.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_affiliation.save
       end
       

@@ -385,7 +385,9 @@ if @student_projects
 end
 
 if @faculty_affiliation
-	json.extract! @faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till
+	json.extract! @faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
+	json.file_thumb affiliation.thumb_url
+			json.file affiliation.file.url
 	json.affiliation_created_at @faculty_affiliation.created_at.to_i
 	json.affiliation_updated_at @faculty_affiliation.updated_at.to_i
 end
@@ -393,7 +395,9 @@ end
 if @faculty_affiliations
 	@affiliations = @user.faculty_affiliations.order('created_at DESC')
 	json.faculty_affiliations @affiliations do |affiliation|
-		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till
+		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
+		json.file_thumb affiliation.thumb_url
+			json.file affiliation.file.url
 		json.affiliation_created_at affiliation.created_at.to_i
 		json.affiliation_updated_at affiliation.updated_at.to_i
 	end

@@ -5,6 +5,14 @@ class FacultyAffiliation < ActiveRecord::Base
 	validates :collage_name,:subject,:designation,:join_from, presence: true
     #validates_format_of :join_from, :with => /\d{2}\/\d{2}\/\d{4}/
     #validates_format_of :join_till, :with => /\d{2}\/\d{2}\/\d{4}/
+
+    mount_uploader :file, FileUploader
+    def thumb_url
+         
+            file.url(:thumb)
+    end
+
+    def photo_url; file.url; end
 	
 	after_save :percent_of_affiliation
     before_destroy :reduce_percentage

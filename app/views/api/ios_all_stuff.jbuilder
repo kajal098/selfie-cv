@@ -330,7 +330,9 @@ if @user_stuff
 		end
 
 		json.faculty_affiliations @user_stuff.faculty_affiliations do |affiliation|
-			json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till
+			json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
+			json.file_thumb affiliation.thumb_url
+			json.file affiliation.file.url
 			json.affiliation_created_at affiliation.created_at.to_i
 			json.affiliation_updated_at affiliation.updated_at.to_i
 		end
