@@ -1,6 +1,8 @@
 if @update_image
 	json.profile_thumb @update_image.profile_thumb_url
 	json.profile @update_image.profile_photo_url
+	json.profile_thumb @update_image.back_profile_thumb_url
+	json.profile @update_image.back_profile_photo_url
 end
 
 if @user

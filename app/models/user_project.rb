@@ -15,25 +15,32 @@ class UserProject < ActiveRecord::Base
 
 	after_save :percent_of_project
 
-    def percent_of_project()
-    	user = self.user
-        
+    after_save :percent_of_project
+    before_destroy :reduce_percentage
+    
+    def percent_of_project
+        user = self.user
         if user.user_projects.count > 0  
-        	student_project_per = 0
-        	setting_per = UserPercentage.find_by_key('project').value.to_i
-        	user.user_projects.each do |project|   
+            student_project_per = 0
+            setting_per = UserPercentage.find_by_key('project').value.to_i
+            user.user_projects.each do |project|                      
+                if project.title.present?
+                    student_project_per = setting_per * 1
+                end                  
+            end
+            user.user_meter.update_column('student_project_per' ,student_project_per)
+            user.profile_meter_total
+        end
+        return true
+    end
 
-        	   		if project.title.present?           	   		
-	                    workshop_per = setting_per * 1
-	                    break
-	                else
-	                    workshop_per = setting_per * 0.5
-	                end
-        		       	
-        	end
-        end 
-        user.user_meter.update_column('student_project_per' ,student_project_per)
-        user.profile_meter_total
+    def reduce_percentage
+        user = self.user
+        if user.user_projects.where.not(id: self.id).count == 0  
+            student_project_per = 0
+            user.user_meter.update_column('student_project_per' ,student_project_per)
+            user.profile_meter_total
+        end
         return true
     end
 

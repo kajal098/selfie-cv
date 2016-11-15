@@ -639,7 +639,7 @@ before { authenticate! }
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
 		optional :curricular_type
-		optional :title
+		requires :title
 		optional :team_type        
 		optional :location
 		optional :date
@@ -1225,7 +1225,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :standard
+		requires :standard
 		optional :school
 		optional :year
 	end
@@ -1271,7 +1271,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :school_name
+		requires :school_name
 		optional :standard
 		optional :grade
 		optional :year
@@ -1324,7 +1324,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :title
+		requires :title
 		optional :description
 	end
 	post :student_project, jbuilder: 'ios' do

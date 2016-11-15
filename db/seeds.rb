@@ -47,7 +47,7 @@ UserPercentage.create(ptype: 'Company', key: 'workingenv', value: 10)
 
 UserPercentage.create(ptype: 'Student', key: 'info', value: 20)
 UserPercentage.create(ptype: 'Student', key: 'education', value: 40)
-UserPercentage.create(parent_id: 25, ptype: 'Student', key: 'education', value: 50)
+UserPercentage.create(parent_id: 25, ptype: 'Student', key: 'education_info', value: 50)
 UserPercentage.create(parent_id: 25, ptype: 'Student', key: 'marksheet', value: 40)
 UserPercentage.create(parent_id: 25, ptype: 'Student', key: 'project', value: 10)
 UserPercentage.create(ptype: 'Student', key: 'achievement', value: 20)

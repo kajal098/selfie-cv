@@ -662,7 +662,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
         optional :curricular_type
-        optional :title
+        requires :title
         optional :team_type        
         optional :location
         optional :date
@@ -743,7 +743,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :goal_type
+        requires :goal_type
         optional :title
         optional :term_type        
         optional :file
@@ -1271,7 +1271,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :standard
+        requires :standard
         optional :school
         optional :year
       end
@@ -1318,7 +1318,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :school_name
+        requires :school_name
         optional :standard
         optional :grade
         optional :year
@@ -1372,7 +1372,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :title
+        requires :title
         optional :description
       end
       post :student_project, jbuilder: 'android' do
