@@ -2059,11 +2059,12 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :favourite_id
+        requires :folder_id
         requires :is_favourited
       end
       post :favourite, jbuilder: 'android_notification' do
           if params[:is_favourited] == 'false'
-              @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id]
+              @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: params[:folder_id]
               @user_favourite.is_favourited = 'true'
               error!({error: @user_favourite.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_favourite.save     
           else        
