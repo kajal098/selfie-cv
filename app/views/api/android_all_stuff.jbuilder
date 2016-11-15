@@ -77,12 +77,12 @@ if @user_stuff
 			json.environment_updated_at environment.updated_at.to_i
 		end
 
-		json.jobseeker_references @user_stuff.user_references do |env|
-			json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :file_type
-			json.file_thumb env.thumb_url
-			json.file env.file.url
-			json.env_created_at env.created_at.to_i
-			json.env_updated_at env.updated_at.to_i
+		json.jobseeker_references @user_stuff.user_references do |ref|
+			json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :file_type
+			json.file_thumb ref.thumb_url
+			json.file ref.file.url
+			json.ref_created_at ref.created_at.to_i
+			json.ref_updated_at ref.updated_at.to_i
 		end
 
 		json.resume_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.resume_per.to_i, "resume") : 0
@@ -269,7 +269,9 @@ if @user_stuff
 		end
 
 		json.student_projects @user_stuff.user_projects do |project|
-			json.extract! project, :id, :title, :description
+			json.extract! project, :id, :title, :description, :file_type
+			json.file_thumb project.thumb_url
+			json.file project.file.url
 			json.project_created_at project.created_at.to_i
 			json.project_updated_at project.updated_at.to_i
 		end

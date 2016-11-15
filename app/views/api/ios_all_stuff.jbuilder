@@ -267,7 +267,9 @@ if @user_stuff
 		end
 
 		json.student_projects @user_stuff.user_projects do |project|
-			json.extract! project, :id, :title, :description
+			json.extract! project, :id, :title, :description, :file_type
+			json.file_thumb project.thumb_url
+			json.file project.file.url
 			json.project_created_at project.created_at.to_i
 			json.project_updated_at project.updated_at.to_i
 		end

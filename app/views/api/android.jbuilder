@@ -147,6 +147,8 @@ if @user_experiences
 	@experiences = @user.user_experiences.order('created_at DESC')
 	json.user_experiences @experiences do |experience|
 		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :text_field, :file_type
+		json.file_thumb experience.thumb_url
+		json.file experience.file.url
 		json.exp_created_at experience.created_at.to_i
 		json.exp_updated_at experience.updated_at.to_i
 	end
@@ -174,6 +176,8 @@ end
 
 if @award
 	json.extract! @award, :id, :user_id, :name, :description, :text_field, :file_type
+	json.file_thumb @award.thumb_url
+	json.file @award.file.url
 	json.created_at @award.created_at.to_i
 	json.updated_at @award.updated_at.to_i
 end
@@ -270,12 +274,12 @@ if @reference
 end
 if @user_references
 	@references = @user.user_references.order('created_at DESC')
-	json.user_references @references do |env|
-		json.extract! env, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
-		json.file_thumb env.thumb_url
-		json.file env.file.url
-		json.env_created_at env.created_at.to_i
-		json.env_updated_at env.updated_at.to_i
+	json.user_references @references do |ref|
+		json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
+		json.file_thumb ref.thumb_url
+		json.file ref.file.url
+		json.ref_created_at ref.created_at.to_i
+		json.ref_updated_at ref.updated_at.to_i
 	end
 end
 
@@ -374,7 +378,9 @@ if @student_marksheets
 end
 
 if @student_project
-	json.extract! @student_project, :id, :user_id, :title, :description
+	json.extract! @student_project, :id, :user_id, :title, :description, :file_type
+	json.file_thumb @student_project.thumb_url
+	json.file @student_project.file.url
 	json.project_created_at @student_project.created_at.to_i
 	json.project_updated_at @student_project.updated_at.to_i
 end
@@ -382,7 +388,9 @@ end
 if @student_projects
 	@projects = @user.user_projects.order('created_at DESC')
 	json.student_projects @projects do |project|
-		json.extract! project, :id, :user_id, :title, :description
+		json.extract! project, :id, :user_id, :title, :description, :file_type
+		json.file_thumb project.thumb_url
+		json.file project.file.url
 		json.project_created_at project.created_at.to_i
 		json.project_updated_at project.updated_at.to_i
 	end
@@ -390,8 +398,8 @@ end
 
 if @faculty_affiliation
 	json.extract! @faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
-	json.file_thumb affiliation.thumb_url
-			json.file affiliation.file.url
+	json.file_thumb @faculty_affiliation.thumb_url
+	json.file @faculty_affiliation.file.url
 	json.affiliation_created_at @faculty_affiliation.created_at.to_i
 	json.affiliation_updated_at @faculty_affiliation.updated_at.to_i
 end
@@ -410,7 +418,7 @@ end
 if @faculty_workshop
 	json.extract! @faculty_workshop, :id, :user_id, :description, :file_type
 	json.file_thumb @faculty_workshop.thumb_url
-			json.file @faculty_workshop.file.url
+	json.file @faculty_workshop.file.url
 	json.workshop_created_at @faculty_workshop.created_at.to_i
 	json.workshop_updated_at @faculty_workshop.updated_at.to_i
 end
