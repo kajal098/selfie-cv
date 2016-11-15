@@ -1154,6 +1154,7 @@ before { authenticate! }
 		@update_image = User.find params[:user_id]
 		error! 'User Environment not found',422 unless @update_image
 		@update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
+		@update_image.back_profile = params[:back_profile] if params[:back_profile]
 		error! @update_image.errors.full_messages.join(', '), 422 unless @update_image.save
 	end
 

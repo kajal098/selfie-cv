@@ -1197,6 +1197,7 @@ class SelfiecvAndroid < Grape::API
         @update_image = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @update_image
         @update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
+        @update_image.back_profile = params[:back_profile] if params[:back_profile]
         error!({error: @update_image.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_image.save
       end
 
