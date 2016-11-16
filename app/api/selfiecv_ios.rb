@@ -2003,12 +2003,19 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :favourite_id
-		requires :folder_id
+		requires :folder_name
 		requires :is_favourited
 	end
 	post :favourite, jbuilder: 'ios_notification' do
+		if Folder.where(name: params[:folder_name]).count > 0
+	       @folder = Folder.find_by name: params[:folder_name]
+	       error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
+	    else
+	       @folder = Folder.new name: params[:folder_name]
+	       error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+	    end
 		if params[:is_favourited] == 'false'
-			@user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: params[:folder_id]
+			@user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
 			@user_favourite.is_favourited = 'true'
 			error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
 		else        
@@ -2190,16 +2197,17 @@ end
       desc 'Create Folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :user_id
         requires :name
       end
       post :create, jbuilder: 'android_folder' do
-          @user = User.find params[:user_id]
-          error! 'User not found',422 unless @user
-          @folder = Folder.new
-          @folder.attributes = clean_params(params).permit(:name)
-          error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-          @user_folder = UserFolder.new user_id: @user.id
+          if Folder.where(name: params[:name]).count > 0
+            error! 'Folde name already exist! Please try another one!',422
+          else
+            @folder = Folder.new name: params[:name]
+            error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+          end
+
+          @user_folder = UserFolder.new user_id: current_user.id
           @user_folder.folder_id = @folder.id
           error! @user_folder.errors.full_messages.join(', '),422 unless @user_folder.save
       end      
