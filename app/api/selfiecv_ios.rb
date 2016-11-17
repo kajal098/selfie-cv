@@ -2288,7 +2288,7 @@ end
       desc 'Delete folder user'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :user_fav_id
+        requires :user_id
       end
       post :delete_favourite_user do
         @user_fav = UserFavourite.find_by favourite_id: params[:user_id]
