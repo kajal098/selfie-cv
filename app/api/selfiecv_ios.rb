@@ -2256,9 +2256,12 @@ end
       desc 'List Folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
       end
       post :listing, jbuilder: 'ios_folder' do
-          @user_folders = current_user.user_folders
+      	  @user = User.find params[:user_id]
+		  error! 'User not found',422 unless @user
+          @user_folders = @user.user_folders
           error! @user_folders.errors.full_messages.join(', '),422 unless @user_folders
       end
 

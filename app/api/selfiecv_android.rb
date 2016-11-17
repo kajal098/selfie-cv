@@ -2316,9 +2316,12 @@ class SelfiecvAndroid < Grape::API
       desc 'List Folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
+        requires :user_id
       end
       post :listing, jbuilder: 'android_folder' do
-          @user_folders = current_user.user_folders
+          @user = User.find params[:user_id]
+          error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+          @user_folders = @user.user_folders
           error!({error: @user_folders.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folders
       end
 
