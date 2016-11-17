@@ -2350,10 +2350,10 @@ class SelfiecvAndroid < Grape::API
       desc 'Delete folder user'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :user_fav_id
+        requires :user_id
       end
       post :delete_favourite_user do
-        @user_fav = UserFavourite.find params[:user_fav_id]
+        @user_fav = UserFavourite.find_by favourite_id: params[:user_id]
         error!({error: 'Favourite User not found', status: 'Fail'}, 200) unless @user_fav
         @user_fav.destroy
         { code: 200, status: 'Success'}
