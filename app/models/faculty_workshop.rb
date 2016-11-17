@@ -4,6 +4,14 @@ class FacultyWorkshop < ActiveRecord::Base
 
 	validates :description, presence: true
 
+    mount_uploader :file, FileUploader
+    def thumb_url
+         
+            file.url(:thumb)
+    end
+
+    def photo_url; file.url; end
+
 	after_save :percent_of_workshop
     before_destroy :reduce_percentage
 
