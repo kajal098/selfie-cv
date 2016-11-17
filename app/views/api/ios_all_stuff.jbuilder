@@ -2,7 +2,7 @@ if @user_stuff
 
 	if @user_stuff.role == 'Jobseeker'
 
-		json.User @user_stuff, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+		json.User @user_stuff, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field, :active
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 		json.resume_thumb @user_stuff.resume_thumb_url
@@ -118,7 +118,7 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Company'
 
-		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type
+		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type, :active
 		json.logo @user_stuff.logo_thumb_url
 		json.logo_thumb @user_stuff.logo_thumb_url
 		json.logo @user_stuff.company_logo.url		
@@ -202,7 +202,7 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Student'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field, :active
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 		json.file_thumb @user_stuff.resume_thumb_url
@@ -300,7 +300,7 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Faculty'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field, :active
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 		json.resume_thumb @user_stuff.resume_thumb_url

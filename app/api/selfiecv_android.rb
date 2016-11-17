@@ -100,6 +100,7 @@ class SelfiecvAndroid < Grape::API
         @user = User.find_by username: params[:username]
         error!({error: 'Device not registered', status: 'Fail'}, 200) unless current_device
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
+        error!({error: 'Your account has been deactivated', status: 'Fail'}, 200) unless @user.active == true
         error!({error: 'Authentication failed', status: 'Fail'}, 200) unless @user.role == params[:role]
         error!({error: 'Wrong username or password', status: 'Fail'}, 200) unless @user.valid_password? params[:password]
         current_device.update_column :user_id, @user.id
@@ -173,28 +174,55 @@ class SelfiecvAndroid < Grape::API
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       end
 
-      desc 'Send Delete Code To User'
+      # desc 'Send Delete Code To User'
+      # params do
+      #   requires :token, type: String, regexp: UUID_REGEX
+      # end
+      # post :send_delete_account_code do
+      #   authenticate!
+      #   @user = current_user
+      #   @user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
+      #   UserMailer.send_ac_delete_code(@user).deliver_now
+      #   { code: 200, :status => "Success" }
+      # end
+
+      # desc 'Delete User Account'
+      # params do
+      #   requires :token, type: String, regexp: UUID_REGEX
+      #   requires :delete_code
+      # end
+      # post :delete_account do
+      #   authenticate!
+      #   @user = User.find_by_delete_code(params[:delete_code])
+      #   error!({error: 'Wrong delete code.', status: 'Fail'}, 200) unless @user 
+      #   @user.destroy
+      #   { code: 200, :status => "Success" }
+      # end
+
+      desc 'Deactivate User Account'
       params do
         requires :token, type: String, regexp: UUID_REGEX
       end
-      post :send_delete_account_code do
+      post :deactivate_user_account do
         authenticate!
         @user = current_user
-        @user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
-        UserMailer.send_ac_delete_code(@user).deliver_now
+        @user.active = false
+        @user.save
+        UserMailer.send_ac_deactivate_mail(@user).deliver_now
         { code: 200, :status => "Success" }
       end
 
-      desc 'Delete User Account'
+      desc 'Reactivate User Account'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :delete_code
+        requires :username
       end
-      post :delete_account do
-        authenticate!
-        @user = User.find_by_delete_code(params[:delete_code])
+      post :reactivate_user_account do
+        @user = User.find_by_username(params[:username])
         error!({error: 'Wrong delete code.', status: 'Fail'}, 200) unless @user 
-        @user.destroy
+        @user.active = true
+        @user.save
+        UserMailer.send_ac_reactivate_mail(@user).deliver_now
         { code: 200, :status => "Success" }
       end
 

@@ -89,6 +89,7 @@ resources :member do
 		@user = User.find_by username: params[:username]
 		error! 'Device not registered',422 unless current_device
 		error! 'User not found',422 unless @user
+		error! 'Your account has been deactivated',422 unless @user.active == true
 		error! 'authentication failed',422 unless @user.role == params[:role]
 		error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
 		current_device.update_column :user_id, @user.id
@@ -162,32 +163,59 @@ resources :member do
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 	end
 
-	desc 'Send Delete Code To User'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-	end
-	post :send_delete_account_code do
-		authenticate!
-		@user = current_user
-		@user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
-		UserMailer.send_ac_delete_code(@user).deliver_now
-		{
-		status: 200,code: @user.delete_code
-		}
-	end
+	# desc 'Send Delete Code To User'
+	# params do
+	# 	requires :token, type: String, regexp: UUID_REGEX
+	# end
+	# post :send_delete_account_code do
+	# 	authenticate!
+	# 	@user = current_user
+	# 	@user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
+	# 	UserMailer.send_ac_delete_code(@user).deliver_now
+	# 	{
+	# 	status: 200,code: @user.delete_code
+	# 	}
+	# end
 
-	desc 'Delete User Account'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :delete_code
-	end
-	post :delete_account do
-		authenticate!
-		@user = User.find_by_delete_code(params[:delete_code])
-		error! "Wrong delete code.", 422 unless @user
-		@user.destroy
-		status 200
-	end
+	# desc 'Delete User Account'
+	# params do
+	# 	requires :token, type: String, regexp: UUID_REGEX
+	# 	requires :delete_code
+	# end
+	# post :delete_account do
+	# 	authenticate!
+	# 	@user = User.find_by_delete_code(params[:delete_code])
+	# 	error! "Wrong delete code.", 422 unless @user
+	# 	@user.destroy
+	# 	status 200
+	# end
+
+	desc 'Deactivate User Account'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+      end
+      post :deactivate_user_account do
+        authenticate!
+        @user = current_user
+        @user.active = false
+        @user.save
+        UserMailer.send_ac_deactivate_mail(@user).deliver_now
+        status 200
+      end
+
+      desc 'Reactivate User Account'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :username
+      end
+      post :reactivate_user_account do
+        @user = User.find_by_username(params[:username])
+        error! 'Wrong delete code.',422 unless @user 
+        @user.active = true
+        @user.save
+        UserMailer.send_ac_reactivate_mail(@user).deliver_now
+        status 200
+      end
 
 	desc 'All stuff'
 	params do
