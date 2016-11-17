@@ -87,6 +87,15 @@ class SelfiecvAndroid < Grape::API
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
         UserMailer.welcome(@user, @password).deliver_now
         { code: 200, :status => "Success" }
+        if @user.role == 'Jobseeker' || @user.role == 'Company'
+          @names = ['IT', 'Politics', 'Sports']
+          @names.each do |name|
+            @folder = Folder.new name: name
+            error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+            @user_folder = UserFolder.new user_id: @user.id, folder_id: @folder.id
+            error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
+          end
+        end
       end
 
       desc 'User login with email and password'

@@ -76,6 +76,17 @@ resources :member do
 		error! 'Device not registered',422 unless current_device
 		error! 'password not matched', 200 if params[:password] != params[:password_confirmation]
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
+		UserMailer.welcome(@user, @password).deliver_now
+        status 200
+        if @user.role == 'Jobseeker' || @user.role == 'Company'
+          @names = ['IT', 'Politics', 'Sports']
+          @names.each do |name|
+            @folder = Folder.new name: name
+            error! @user.errors.full_messages.join(', '),422 unless @folder.save
+            @user_folder = UserFolder.new user_id: @user.id, folder_id: @folder.id
+            error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
+          end
+        end
 	end
 
 	desc 'User login with email and password'
