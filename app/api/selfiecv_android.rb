@@ -2325,6 +2325,7 @@ class SelfiecvAndroid < Grape::API
       desc 'Edit folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
+        requires :folder_id
         optional :name
       end
       post :edit do
@@ -2337,7 +2338,7 @@ class SelfiecvAndroid < Grape::API
       desc 'Delete folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        optional :name
+        requires :folder_id
       end
       post :delete do
         @folder = Folder.find params[:folder_id]
