@@ -1793,6 +1793,14 @@ before { authenticate! }
 		status 200
 	end
 
+	desc 'Registered Students'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+      end
+      post :registered_students, jbuilder: 'ios' do
+        @students = User.where(role: 1).all
+      end
+
 	desc 'Email invitation'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX

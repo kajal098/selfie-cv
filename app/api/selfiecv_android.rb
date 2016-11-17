@@ -1845,6 +1845,14 @@ class SelfiecvAndroid < Grape::API
         { code: 200, :status => "Success" }
       end
 
+      desc 'Registered Students'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+      end
+      post :registered_students, jbuilder: 'android' do
+        @students = User.where(role: 1).all
+      end      
+
       desc 'Email invitation'
       params do
         requires :token, type: String, regexp: UUID_REGEX

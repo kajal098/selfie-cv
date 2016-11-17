@@ -136,6 +136,12 @@ if @user
 	end
 end
 
+if @students
+	json.students @students do |student|
+		json.extract! student, :id, :username, :email
+	end
+end
+
 if @user_education
 		json.extract! @user_education, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
 		json.course @user_education.course.name
