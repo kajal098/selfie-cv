@@ -1,6 +1,3 @@
-json.status "Success"
-
-
 if @user_like
 	json.User @user_like, :id, :user_id, :like_id, :is_liked
 
