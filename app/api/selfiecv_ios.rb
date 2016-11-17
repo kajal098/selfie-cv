@@ -2242,15 +2242,15 @@ end
       end
       post :create, jbuilder: 'ios_folder' do
           if Folder.where(name: params[:name]).count > 0
-            error!({error: 'Folde name already exist! Please try another one!', status: 'Fail'}, 200)
+            error! 'Folde name already exist! Please try another one!',422
           else
             @folder = Folder.new name: params[:name]
-            error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+            error! @folder.errors.full_messages.join(', '),422 unless @folder.save
           end
 
           @user_folder = UserFolder.new user_id: current_user.id
           @user_folder.folder_id = @folder.id
-          error!({error: @user_folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
+          error! @user_folder.errors.full_messages.join(', '),422 unless @user_folder.save
       end
 
       desc 'List Folder'
@@ -2259,7 +2259,7 @@ end
       end
       post :listing, jbuilder: 'ios_folder' do
           @user_folders = current_user.user_folders
-          error!({error: @user_folders.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folders
+          error! @user_folders.errors.full_messages.join(', '),422 unless @user_folders
       end
 
       desc 'Edit folder'
@@ -2270,9 +2270,9 @@ end
       end
       post :edit, jbuilder: 'ios_folder' do
         @folder = Folder.find params[:folder_id]
-        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
+        error! 'Folder not found',422 unless @folder
         @folder.attributes = clean_params(params).permit(:name)
-        error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+        error! @folder.errors.full_messages.join(', '),422 unless @folder.save
       end
 
       desc 'Delete folder'
@@ -2282,9 +2282,9 @@ end
       end
       post :delete do
         @folder = Folder.find params[:folder_id]
-        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
+        error! 'Folder not found',422 unless @folder
         @folder.destroy
-        { code: 200, status: 'Success'}
+        status 200
       end  
 
       desc 'Delete folder user'
@@ -2294,9 +2294,9 @@ end
       end
       post :delete_favourite_user do
         @user_fav = UserFavourite.find_by favourite_id: params[:user_id]
-        error!({error: 'Favourite User not found', status: 'Fail'}, 200) unless @user_fav
+        error! 'Favourite User not found',422 unless @user_fav
         @user_fav.destroy
-        { code: 200, status: 'Success'}
+        status 200
       end
 
   end
