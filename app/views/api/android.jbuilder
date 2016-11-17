@@ -37,6 +37,15 @@ if @user
 		json.favourites @user.favourites.count
 		json.rates @user.rates.count
 
+		json.user_folders @user.user_folders do |user_folder|
+			json.extract! user_folder, :id, :folder_id
+			json.folder_name user_folder.folder.name
+			json.user_favs UserFavourite.where(folder_id: user_folder.folder_id) do |user_fav|
+				json.id user_fav.fav_user.id
+				json.username user_fav.fav_user.username
+			end
+		end
+
 	elsif @user.role == 'Company'
 
 		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type, :active
@@ -68,6 +77,15 @@ if @user
 		json.shares @user.shares.count
 		json.favourites @user.favourites.count
 		json.rates @user.rates.count
+
+		json.user_folders @user.user_folders do |user_folder|
+			json.extract! user_folder, :id, :folder_id
+			json.folder_name user_folder.folder.name
+			json.user_favs UserFavourite.where(folder_id: user_folder.folder_id) do |user_fav|
+				json.id user_fav.fav_user.id
+				json.username user_fav.fav_user.username
+			end
+		end
 
 	elsif @user.role == 'Student'
 

@@ -100,6 +100,15 @@ if @user_stuff
 		json.favourites @user_stuff.favourites.count
 		json.rates @user_stuff.rates.count
 
+		json.user_folders @user_stuff.user_folders do |user_folder|
+			json.extract! user_folder, :id, :folder_id
+			json.folder_name user_folder.folder.name
+			json.user_favs UserFavourite.where(folder_id: user_folder.folder_id) do |user_fav|
+				json.id user_fav.fav_user.id
+				json.username user_fav.fav_user.username
+			end
+		end
+
 		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
 			json.liked true
 		else
@@ -183,6 +192,15 @@ if @user_stuff
 		json.shares @user_stuff.shares.count
 		json.favourites @user_stuff.favourites.count
 		json.rates @user_stuff.rates.count
+
+		json.user_folders @user_stuff.user_folders do |user_folder|
+			json.extract! user_folder, :id, :folder_id
+			json.folder_name user_folder.folder.name
+			json.user_favs UserFavourite.where(folder_id: user_folder.folder_id) do |user_fav|
+				json.id user_fav.fav_user.id
+				json.username user_fav.fav_user.username
+			end
+		end
 
 		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
 			json.liked true
