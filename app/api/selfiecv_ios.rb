@@ -2047,21 +2047,21 @@ before { authenticate! }
 	end
 	post :favourite, jbuilder: 'ios_notification' do
 		if Folder.where(name: params[:folder_name]).count > 0
-	       @folder = Folder.find_by name: params[:folder_name]
-	       error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
-	    else
-	       @folder = Folder.new name: params[:folder_name]
-	       error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
-	       @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
-           error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
-	    end
-		if params[:is_favourited] == 'false'
-			@user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
-			@user_favourite.is_favourited = 'true'
-			error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
-		else        
-			error! 'You already favourite this profile!',422
-		end
+            @folder = Folder.find_by name: params[:folder_name]
+            error! 'Folder not found',422 unless @folder
+          else
+            @folder = Folder.new name: params[:folder_name]
+            error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+            @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
+            error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
+          end
+          if params[:is_favourited] == 'false'
+              @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
+              @user_favourite.is_favourited = 'true'
+              error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
+          else        
+              error! 'You already favourite this profile!',422
+          end
 	end
 
 	desc 'Rate Profile'
