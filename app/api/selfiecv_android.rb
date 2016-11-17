@@ -446,7 +446,6 @@ class SelfiecvAndroid < Grape::API
           @user_experience.file = params[:file] if params[:file]
         end
         error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
-        @user_experience
       end
 
       desc 'Get Users Experience Detail'
@@ -2321,7 +2320,43 @@ class SelfiecvAndroid < Grape::API
       post :listing, jbuilder: 'android_folder' do
           @user_folders = current_user.user_folders
           error!({error: @user_folders.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folders
-      end      
+      end
+
+      desc 'Edit folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        optional :name
+      end
+      post :edit do
+        @folder = Folder.find params[:folder_id]
+        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
+        @folder.attributes = clean_params(params).permit(:name)
+        error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+      end
+
+      desc 'Delete folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        optional :name
+      end
+      post :delete do
+        @folder = Folder.find params[:folder_id]
+        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
+        @folder.destroy
+        { code: 200, status: 'Success'}
+      end  
+
+      desc 'Delete folder user'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_fav_id
+      end
+      post :delete_favourite_user do
+        @user_fav = UserFavourite.find params[:user_fav_id]
+        error!({error: 'Favourite User not found', status: 'Fail'}, 200) unless @user_fav
+        @user_fav.destroy
+        { code: 200, status: 'Success'}
+      end
 
   end
   #--------------------------------folder end----------------------------------#

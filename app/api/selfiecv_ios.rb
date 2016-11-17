@@ -2251,6 +2251,51 @@ end
           error! @user_folder.errors.full_messages.join(', '),422 unless @user_folder.save
       end      
 
+      desc 'List Folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+      end
+      post :listing, jbuilder: 'android_folder' do
+          @user_folders = current_user.user_folders
+          error! @user_folders.errors.full_messages.join(', '),422 unless @user_folders
+      end
+
+      desc 'Edit folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        optional :name
+      end
+      post :edit do
+        @folder = Folder.find params[:folder_id]
+        error! 'Folder not found',422 unless @folder
+        @folder.attributes = clean_params(params).permit(:name)
+        error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+      end
+
+      desc 'Delete folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        optional :name
+      end
+      post :delete do
+        @folder = Folder.find params[:folder_id]
+        error! 'Folder not found',422 unless @folder
+        @folder.destroy
+        { code: 200, status: 'Success'}
+      end  
+
+      desc 'Delete folder user'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_fav_id
+      end
+      post :delete_favourite_user do
+        @user_fav = UserFavourite.find params[:user_fav_id]
+        error! 'Favourite User not found',422 unless @user_fav
+        @user_fav.destroy
+        { code: 200, status: 'Success'}
+      end
+
   end
   #--------------------------------folder end----------------------------------#
 
