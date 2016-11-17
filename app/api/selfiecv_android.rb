@@ -2273,6 +2273,15 @@ class SelfiecvAndroid < Grape::API
           @user_folder = UserFolder.new user_id: current_user.id
           @user_folder.folder_id = @folder.id
           error!({error: @user_folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
+      end
+
+      desc 'List Folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+      end
+      post :listing, jbuilder: 'android_folder' do
+          @user_folders = current_user.user_folders
+          error!({error: @user_folders.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folders
       end      
 
   end
