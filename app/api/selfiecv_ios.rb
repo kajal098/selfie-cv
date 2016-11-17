@@ -2238,7 +2238,7 @@ end
         requires :token, type: String, regexp: UUID_REGEX
         requires :name
       end
-      post :create, jbuilder: 'android_folder' do
+      post :create, jbuilder: 'ios_folder' do
           if Folder.where(name: params[:name]).count > 0
             error! 'Folde name already exist! Please try another one!',422
           else
@@ -2255,7 +2255,7 @@ end
       params do
         requires :token, type: String, regexp: UUID_REGEX
       end
-      post :listing, jbuilder: 'android_folder' do
+      post :listing, jbuilder: 'ios_folder' do
           @user_folders = current_user.user_folders
           error! @user_folders.errors.full_messages.join(', '),422 unless @user_folders
       end
@@ -2266,7 +2266,7 @@ end
         requires :folder_id
         optional :name
       end
-      post :edit do
+      post :edit, jbuilder: 'ios_folder' do
         @folder = Folder.find params[:folder_id]
         error! 'Folder not found',422 unless @folder
         @folder.attributes = clean_params(params).permit(:name)
