@@ -81,7 +81,7 @@ resources :member do
         if @user.role == 'Jobseeker' || @user.role == 'Company'
           @names = ['IT', 'Politics', 'Sports']
           @names.each do |name|
-            @folder = Folder.new name: name
+            @folder = Folder.new name: name, default_status: true
             error! @user.errors.full_messages.join(', '),422 unless @folder.save
             @user_folder = UserFolder.new user_id: @user.id, folder_id: @folder.id
             error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
@@ -2058,7 +2058,7 @@ before { authenticate! }
             @folder = Folder.find_by name: params[:folder_name]
             error! 'Folder not found',422 unless @folder
           else
-            @folder = Folder.new name: params[:folder_name]
+            @folder = Folder.new name: params[:folder_name], default_status: false
             error! @folder.errors.full_messages.join(', '),422 unless @folder.save
             @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
             error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
@@ -2252,7 +2252,7 @@ end
           if Folder.where(name: params[:name]).count > 0
             error! 'Folde name already exist! Please try another one!',422
           else
-            @folder = Folder.new name: params[:name]
+            @folder = Folder.new name: params[:name], default_status: false
             error! @folder.errors.full_messages.join(', '),422 unless @folder.save
           end
 
@@ -2282,8 +2282,12 @@ end
       post :edit, jbuilder: 'ios_folder' do
         @folder = Folder.find params[:folder_id]
         error! 'Folder not found',422 unless @folder
-        @folder.attributes = clean_params(params).permit(:name)
-        error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+        if @folder.default_status == false
+	        @folder.attributes = clean_params(params).permit(:name)
+	        error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+        else
+          error! 'You cant edit default folder name',422
+        end
       end
 
       desc 'Delete folder'
@@ -2294,8 +2298,12 @@ end
       post :delete do
         @folder = Folder.find params[:folder_id]
         error! 'Folder not found',422 unless @folder
+        if @folder.default_status == false
         @folder.destroy
         status 200
+        else
+          error! 'You cant delete default folder',422
+        end
       end  
 
       desc 'Delete folder user'

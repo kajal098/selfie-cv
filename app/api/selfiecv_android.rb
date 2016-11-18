@@ -90,7 +90,7 @@ class SelfiecvAndroid < Grape::API
         if @user.role == 'Jobseeker' || @user.role == 'Company'
           @names = ['IT', 'Politics', 'Sports']
           @names.each do |name|
-            @folder = Folder.new name: name
+            @folder = Folder.new name: name, default_status: true
             error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
             @user_folder = UserFolder.new user_id: @user.id, folder_id: @folder.id
             error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
@@ -2111,7 +2111,7 @@ class SelfiecvAndroid < Grape::API
             @folder = Folder.find_by name: params[:folder_name]
             error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
           else
-            @folder = Folder.new name: params[:folder_name]
+            @folder = Folder.new name: params[:folder_name], default_status: false
             error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
             @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
             error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
@@ -2312,7 +2312,7 @@ class SelfiecvAndroid < Grape::API
           if Folder.where(name: params[:name]).count > 0
             error!({error: 'Folde name already exist! Please try another one!', status: 'Fail'}, 200)
           else
-            @folder = Folder.new name: params[:name]
+            @folder = Folder.new name: params[:name], default_status: false
             error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
           end
 
@@ -2342,8 +2342,12 @@ class SelfiecvAndroid < Grape::API
       post :edit, jbuilder: 'android_folder' do
         @folder = Folder.find params[:folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
-        @folder.attributes = clean_params(params).permit(:name)
-        error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+        if @folder.default_status == false
+          @folder.attributes = clean_params(params).permit(:name)
+          error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+        else
+          error!({error: 'You cant edit default folder name', status: 'Fail'}, 200)
+        end
       end
 
       desc 'Delete folder'
@@ -2354,8 +2358,12 @@ class SelfiecvAndroid < Grape::API
       post :delete do
         @folder = Folder.find params[:folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
+        if @folder.default_status == false
         @folder.destroy
         { code: 200, status: 'Success'}
+        else
+          error!({error: 'You cant delete default folder', status: 'Fail'}, 200)
+        end
       end  
 
       desc 'Delete folder user'
@@ -2367,6 +2375,21 @@ class SelfiecvAndroid < Grape::API
         @user_fav = UserFavourite.find_by favourite_id: params[:user_id]
         error!({error: 'Favourite User not found', status: 'Fail'}, 200) unless @user_fav
         @user_fav.destroy
+        { code: 200, status: 'Success'}
+      end
+
+      desc 'Move folder user'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :old_folder_id
+        requires :new_folder_id
+        requires :user_id
+      end
+      post :move_fav_user do
+        @user_fav = UserFavourite.where(favourite_id: params[:user_id]).where(folder_id: params[:old_folder_id]).first
+        error!({error: 'Favourite User not found', status: 'Fail'}, 200) unless @user_fav
+        @user_fav.folder_id = params[:new_folder_id]
+        error!({error: @user_fav.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_fav.save
         { code: 200, status: 'Success'}
       end
 
