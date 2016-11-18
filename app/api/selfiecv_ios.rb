@@ -2283,8 +2283,12 @@ end
         @folder = Folder.find params[:folder_id]
         error! 'Folder not found',422 unless @folder
         if @folder.default_status == false
-	        @folder.attributes = clean_params(params).permit(:name)
-	        error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+        	if Folder.where(name: params[:name]).count > 0
+            	error! 'Folde name already exist! Please try another one!',422
+          	else
+	        	@folder.attributes = clean_params(params).permit(:name)
+	        	error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+	    	end
         else
           error! 'You cant edit default folder name',422
         end

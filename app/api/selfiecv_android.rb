@@ -2310,7 +2310,7 @@ class SelfiecvAndroid < Grape::API
       end
       post :create, jbuilder: 'android_folder' do
           if Folder.where(name: params[:name]).count > 0
-            error!({error: 'Folde name already exist! Please try another one!', status: 'Fail'}, 200)
+            error!({error: 'Folder name already exist! Please try another one!', status: 'Fail'}, 200)
           else
             @folder = Folder.new name: params[:name], default_status: false
             error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
@@ -2339,12 +2339,16 @@ class SelfiecvAndroid < Grape::API
         requires :folder_id
         optional :name
       end
-      post :edit, jbuilder: 'android_folder' do
+      get :edit, jbuilder: 'android_folder' do
         @folder = Folder.find params[:folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
         if @folder.default_status == false
-          @folder.attributes = clean_params(params).permit(:name)
-          error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+          if Folder.where(name: params[:name]).count > 0
+            error!({error: 'Folder name already exist! Please try another one!', status: 'Fail'}, 200)
+          else
+            @folder.attributes = clean_params(params).permit(:name)
+            error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
+          end
         else
           error!({error: 'You cant edit default folder name', status: 'Fail'}, 200)
         end
