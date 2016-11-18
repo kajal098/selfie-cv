@@ -2109,13 +2109,12 @@ class SelfiecvAndroid < Grape::API
       post :favourite, jbuilder: 'android_notification' do
           if Folder.where(name: params[:folder_name]).count > 0
             @folder = Folder.find_by name: params[:folder_name]
-            error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
           else
             @folder = Folder.new name: params[:folder_name], default_status: false
             error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
-            @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
-            error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
           end
+            @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
+            error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save          
           if params[:is_favourited] == 'false'
               @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
               @user_favourite.is_favourited = 'true'
