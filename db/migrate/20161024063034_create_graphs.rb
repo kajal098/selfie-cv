@@ -4,7 +4,6 @@ class CreateGraphs < ActiveRecord::Migration
     	t.integer :company_stock_id
     	t.integer :industry_id
     	t.string  :company_code
-
       t.timestamps null: false
     end
     add_index :graphs, [:company_stock_id]

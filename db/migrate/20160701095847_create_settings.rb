@@ -10,7 +10,6 @@ class CreateSettings < ActiveRecord::Migration
       t.string :google_plus_url, null:false, default: 'www.google.com/Selfiecv'
       t.string :whizquiz_time, default: 0
       t.string :marketiq_time, default: 0
-
       t.timestamps null: false
     end
   end

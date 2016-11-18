@@ -4,7 +4,6 @@ class CreateUserShares < ActiveRecord::Migration
       t.integer :user_id
       t.integer :share_id
       t.string  :share_type
-
       t.timestamps null: false
     end
     add_index :user_shares, [:user_id, :share_id]

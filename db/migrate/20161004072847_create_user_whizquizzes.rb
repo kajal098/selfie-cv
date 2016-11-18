@@ -6,9 +6,7 @@ class CreateUserWhizquizzes < ActiveRecord::Migration
       t.string  :text_field,              null:false, default: ""
     	t.string  :review_type,              null:false, default: ""
       t.string  :review,              default: ''
-    	t.boolean :status,            default: false
-    	
-
+    	t.boolean :status,            default: false  	
       t.timestamps null: false
     end
     add_index :user_whizquizzes, [:user_id]

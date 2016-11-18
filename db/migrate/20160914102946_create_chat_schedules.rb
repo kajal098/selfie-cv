@@ -7,8 +7,6 @@ class CreateChatSchedules < ActiveRecord::Migration
       t.string :description, array: true, default: []
       t.string :info,              null: false, default: ""
       t.integer :group_id, array: true, default: []
-      
-
       t.timestamps null: false
     end
     end

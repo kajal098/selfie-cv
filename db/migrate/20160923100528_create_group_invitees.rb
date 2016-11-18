@@ -3,7 +3,6 @@ class CreateGroupInvitees < ActiveRecord::Migration
     create_table :group_invitees do |t|
     	t.integer :group_id
       t.string :email, null:false, default: ""
-      
       t.timestamps null: false
     end
     add_index :group_invitees, [:group_id]

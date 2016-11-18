@@ -4,7 +4,6 @@ class CreateUserLikes < ActiveRecord::Migration
       t.integer :user_id
       t.integer :like_id
       t.boolean :is_liked, default:false
-
       t.timestamps null: false
     end
     add_index :user_likes, [:user_id, :like_id]

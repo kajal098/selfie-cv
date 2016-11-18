@@ -6,7 +6,6 @@ class CreateDevices < ActiveRecord::Migration
       t.string :registration_id
       t.uuid :token
       t.string :device_type
-
       t.timestamps null: false
     end
     add_index :devices, [:user_id]

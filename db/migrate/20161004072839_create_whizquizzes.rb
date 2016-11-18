@@ -4,7 +4,6 @@ class CreateWhizquizzes < ActiveRecord::Migration
     	t.string  :question,              null:false, default: ""
     	t.string  :answer,              null:false, default: ""
     	t.boolean :status,            default: false
-
       t.timestamps null: false
     end
   end

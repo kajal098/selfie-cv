@@ -5,7 +5,6 @@ class CreateUserFavourites < ActiveRecord::Migration
       t.integer :favourite_id
       t.integer :folder_id
       t.boolean :is_favourited, default:false
-
       t.timestamps null: false
     end
     add_index :user_favourites, [:user_id, :favourite_id]

@@ -8,7 +8,6 @@ class CreateUserEducations < ActiveRecord::Migration
       t.string :school,              null: false, default: ""
       t.string :skill,              null: false, default: ""
       t.boolean :active,            default: false
-
       t.timestamps null: false
     end
     add_index :user_educations, [:user_id]

@@ -7,7 +7,6 @@ class CreateFacultyPublications < ActiveRecord::Migration
       t.string :file,              default: ''
       t.string :text_field,              null: false, default: ""
       t.string :file_type,              null:false, default: ""
-
       t.timestamps null: false
     end
     add_index :faculty_publications, [:user_id]

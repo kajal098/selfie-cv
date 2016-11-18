@@ -4,7 +4,6 @@ class CreateUserRates < ActiveRecord::Migration
       t.integer :user_id
       t.integer :rate_id
       t.integer  :rate_type,              null: false, default: 0
-
       t.timestamps null: false
     end
     add_index :user_rates, [:user_id, :rate_id]

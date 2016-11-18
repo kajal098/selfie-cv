@@ -3,7 +3,6 @@ class CreateUserViews < ActiveRecord::Migration
     create_table :user_views do |t|
       t.integer :user_id
       t.integer :view_id
-
       t.timestamps null: false
     end
     add_index :user_views, [:user_id, :view_id]
