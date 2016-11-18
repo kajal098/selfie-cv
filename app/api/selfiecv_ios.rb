@@ -2318,6 +2318,21 @@ end
         status 200
       end
 
+      desc 'Move folder user'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :old_folder_id
+        requires :new_folder_id
+        requires :user_id
+      end
+      post :move_fav_user do
+        @user_fav = UserFavourite.where(favourite_id: params[:user_id]).where(folder_id: params[:old_folder_id]).first
+        error! 'Favourite User not found',422 unless @user_fav
+        @user_fav.folder_id = params[:new_folder_id]
+        error! @user_fav.errors.full_messages.join(', '),422 unless @user_fav.save
+        status 200
+      end
+
   end
   #--------------------------------folder end----------------------------------#
 
