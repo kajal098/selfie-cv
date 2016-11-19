@@ -2300,10 +2300,10 @@ end
         requires :folder_id
       end
       post :delete do
-        @folder = UserFolder.find_by_folder_id params[:folder_id]
-        error! 'Folder not found',422 unless @folder
-        if @folder.default_status == false
-        @folder.destroy
+        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id].first
+        error! 'Folder not found',422 unless @user_folder
+        if @user_folder.default_status == false
+        @user_folder.destroy
         status 200
         else
           error! 'You cant delete default folder',422
@@ -2316,7 +2316,7 @@ end
         requires :user_id
       end
       post :delete_favourite_user do
-        @user_fav = UserFavourite.find_by favourite_id: params[:user_id]
+        @user_fav = UserFavourite.where(user_id: current_user.id).where(favourite_id: params[:user_id]).first
         error! 'Favourite User not found',422 unless @user_fav
         @user_fav.destroy
         status 200
