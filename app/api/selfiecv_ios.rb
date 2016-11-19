@@ -2300,7 +2300,7 @@ end
         requires :folder_id
       end
       post :delete do
-        @folder = Folder.find params[:folder_id]
+        @folder = UserFolder.find_by_folder_id params[:folder_id]
         error! 'Folder not found',422 unless @folder
         if @folder.default_status == false
         @folder.destroy
