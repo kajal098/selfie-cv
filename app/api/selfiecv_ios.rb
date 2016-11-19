@@ -2300,7 +2300,7 @@ end
         requires :folder_id
       end
       post :delete do
-        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id].first
+        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).first
         error! 'Folder not found',422 unless @user_folder
         if @user_folder.default_status == false
         @user_folder.destroy
