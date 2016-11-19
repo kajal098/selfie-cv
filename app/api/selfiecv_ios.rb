@@ -2340,11 +2340,11 @@ end
       desc 'View folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :folder_id
+        requires :user_folder_id
       end
       post :view, jbuilder: 'ios_folder' do
-        @folder = Folder.find params[:folder_id]
-        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
+        @user_folder = Folder.find params[:user_folder_id]
+        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @user_folder
       end
 
   end
