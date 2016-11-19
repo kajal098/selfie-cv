@@ -2054,7 +2054,7 @@ before { authenticate! }
 		requires :is_favourited
 	end
 	post :favourite, jbuilder: 'ios_notification' do
-		if Folder.where(name: params[:folder_name]).count > 0
+		if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name]).count > 0
             @folder = Folder.find_by name: params[:folder_name]
             error! 'Folder not found',422 unless @folder
           else
@@ -2249,7 +2249,7 @@ end
         requires :name
       end
       post :create, jbuilder: 'ios_folder' do
-          if Folder.where(name: params[:name]).count > 0
+          if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
             error! 'Folde name already exist! Please try another one!',422
           else
             @folder = Folder.new name: params[:name], default_status: false
@@ -2283,7 +2283,7 @@ end
         @folder = Folder.find params[:folder_id]
         error! 'Folder not found',422 unless @folder
         if @folder.default_status == false
-        	if Folder.where(name: params[:name]).count > 0
+        	if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
             	error! 'Folde name already exist! Please try another one!',422
           	else
 	        	@folder.attributes = clean_params(params).permit(:name)
@@ -2300,7 +2300,7 @@ end
         requires :folder_id
       end
       post :delete do
-        @folder = Folder.find params[:folder_id]
+        @folder = UserFolder.find_by_folder_id params[:folder_id]
         error! 'Folder not found',422 unless @folder
         if @folder.default_status == false
         @folder.destroy
@@ -2335,6 +2335,16 @@ end
         @user_fav.folder_id = params[:new_folder_id]
         error! @user_fav.errors.full_messages.join(', '),422 unless @user_fav.save
         status 200
+      end
+
+      desc 'View folder'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :user_folder_id
+      end
+      post :view, jbuilder: 'ios_folder' do
+        @user_folder = UserFolder.find params[:user_folder_id]
+        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @user_folder
       end
 
   end
