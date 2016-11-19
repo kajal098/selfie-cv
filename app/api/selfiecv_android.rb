@@ -2361,7 +2361,7 @@ class SelfiecvAndroid < Grape::API
       post :delete do
         @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).first
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @user_folder
-        if @user_folder.default_status == false
+        if @user_folder.folder.default_status == false
         @user_folder.destroy
         { code: 200, status: 'Success'}
         else
