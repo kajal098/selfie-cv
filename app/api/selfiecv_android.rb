@@ -2107,7 +2107,7 @@ class SelfiecvAndroid < Grape::API
         requires :is_favourited
       end
       post :favourite, jbuilder: 'android_notification' do
-          if Folder.where(name: params[:folder_name]).count > 0
+          if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name]).count > 0
             @folder = Folder.find_by name: params[:folder_name]
           else
             @folder = Folder.new name: params[:folder_name], default_status: false
@@ -2308,7 +2308,7 @@ class SelfiecvAndroid < Grape::API
         requires :name
       end
       post :create, jbuilder: 'android_folder' do
-          if Folder.where(name: params[:name]).count > 0
+          if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
             error!({error: 'Folder name already exist! Please try another one!', status: 'Fail'}, 200)
           else
             @folder = Folder.new name: params[:name], default_status: false
@@ -2342,7 +2342,7 @@ class SelfiecvAndroid < Grape::API
         @folder = Folder.find params[:folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
         if @folder.default_status == false
-          if Folder.where(name: params[:name]).count > 0
+          if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
             error!({error: 'Folder name already exist! Please try another one!', status: 'Fail'}, 200)
           else
             @folder.attributes = clean_params(params).permit(:name)
