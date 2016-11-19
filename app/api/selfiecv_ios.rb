@@ -98,12 +98,16 @@ resources :member do
 	end
 	post :login , jbuilder: 'ios' do
 		@user = User.find_by username: params[:username]
-		error!({error: 'Device not registered', status: 'Fail'}, 422) unless current_device
-		error!({error: 'User not found', status: 'Fail'}, 422) unless @user
-		error!({error: 'Your account has been deactivated', status: 'Fail'}, 422) unless @user.active == true
-		error!({error: 'authentication failed', status: 'Fail'}, 422) unless @user.role == params[:role]
-		error!({error: 'Wrong username or password', status: 'Fail'}, 422) unless @user.valid_password? params[:password]
-		current_device.update_column :user_id, @user.id
+		error!({error: 'User not found', status: ''}, 422) unless @user
+		if @user.active == false		
+			error!({error: 'Your account has been deactivated', status: 'Fail'}, 422)
+		else
+			error!({error: 'Device not registered', status: ''}, 422) unless current_device			
+			error!({error: 'authentication failed', status: ''}, 422) unless @user.role == params[:role]
+			error!({error: 'Wrong username or password', status: ''}, 422) unless @user.valid_password? params[:password]
+			current_device.update_column :user_id, @user.id
+		end
+		
 	end
 
 	desc 'Send reset password token'
@@ -2280,7 +2284,7 @@ end
         optional :name
       end
       post :edit, jbuilder: 'ios_folder' do
-        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).count > 0
+        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).first
         error! 'Folder not found',422 unless @folder
         if @user_folder.folder.default_status == false
         	if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
