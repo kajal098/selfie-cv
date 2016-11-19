@@ -2280,9 +2280,9 @@ end
         optional :name
       end
       post :edit, jbuilder: 'ios_folder' do
-        @folder = Folder.find params[:folder_id]
+        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).count > 0
         error! 'Folder not found',422 unless @folder
-        if @folder.default_status == false
+        if @user_folder.folder.default_status == false
         	if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
             	error! 'Folde name already exist! Please try another one!',422
           	else
