@@ -2343,8 +2343,8 @@ end
         requires :user_folder_id
       end
       post :view, jbuilder: 'ios_folder' do
-        @user_folder = UserFolder.find params[:user_folder_id]
-        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @user_folder
+        @my_folder = UserFolder.find params[:user_folder_id]
+        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @my_folder
       end
 
   end
