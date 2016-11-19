@@ -2402,7 +2402,7 @@ class SelfiecvAndroid < Grape::API
         requires :user_folder_id
       end
       post :view, jbuilder: 'android_folder' do
-        @user_folder = Folder.find params[:user_folder_id]
+        @user_folder = UserFolder.find params[:user_folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @user_folder
       end
 
