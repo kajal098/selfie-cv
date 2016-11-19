@@ -2399,10 +2399,10 @@ class SelfiecvAndroid < Grape::API
       desc 'View folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :user_folder_id
+        requires :folder_id
       end
       post :view, jbuilder: 'android_folder' do
-        @my_folder = UserFolder.find params[:user_folder_id]
+        @my_folder = UserFolder.find params[:folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @my_folder
       end
 

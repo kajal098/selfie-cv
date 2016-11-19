@@ -100,7 +100,7 @@ resources :member do
 		@user = User.find_by username: params[:username]
 		error! 'Device not registered',422 unless current_device
 		error! 'User not found',422 unless @user
-		error! 'Your account has been deactivated',422 unless @user.active == true
+		error!({error: 'Your account has been deactivated', status: 'Fail'}, 422) unless @user.active == true
 		error! 'authentication failed',422 unless @user.role == params[:role]
 		error! 'Wrong username or password',422 unless @user.valid_password? params[:password]
 		current_device.update_column :user_id, @user.id
@@ -2340,10 +2340,10 @@ end
       desc 'View folder'
       params do
         requires :token, type: String, regexp: UUID_REGEX
-        requires :user_folder_id
+        requires :folder_id
       end
       post :view, jbuilder: 'ios_folder' do
-        @my_folder = UserFolder.find params[:user_folder_id]
+        @my_folder = UserFolder.find params[:folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @my_folder
       end
 
