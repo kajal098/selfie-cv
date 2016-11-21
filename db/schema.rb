@@ -665,7 +665,7 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.string   "company_address",                               default: "",           null: false
     t.string   "company_zipcode",                               default: "",           null: false
     t.string   "company_city",                                  default: "",           null: false
-    t.string   "company_country",                               default: "",           null: false
+    t.string   "country",                               default: "",           null: false
     t.string   "company_contact",                               default: "",           null: false
     t.string   "company_skype_id",                              default: "",           null: false
     t.integer  "company_id"

@@ -15,7 +15,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :nationality,              null: false, default: ""
       t.string :address,              null: false, default: ""
       t.string :city,              null: false, default: ""
-      t.string :country,              null: false, default: ""
+      t.integer :country_id
       t.string :zipcode,              null: false, default: ""
       t.string :contact_number,              null: false, default: ""
       t.string :file,              default: ''
@@ -33,7 +33,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :company_address,              null: false, default: ""
       t.string :company_zipcode,              null: false, default: ""           
       t.string :company_city,              null: false, default: ""
-      t.string :company_country,              null: false, default: ""
       t.string :company_contact,              null: false, default: ""
       t.string :company_skype_id,              null: false, default: ""
       t.integer :company_id
@@ -86,7 +85,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
       t.timestamps null: false
     end
-
+    add_index :users, [:company_stock_id]
+    add_foreign_key :users, :company_stocks, on_delete: :cascade
     add_index :users, :username,                unique: true
     add_index :users, :reset_password_token, unique: true
     # add_index :users, :confirmation_token,   unique: true

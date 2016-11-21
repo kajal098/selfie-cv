@@ -83,7 +83,7 @@ def self.company_search(params)
       conditions << " AND " unless conditions.length == 0
       conditions << " company_city ilike ? OR"
       wheres << "%#{params[:location]}%"
-      conditions << " company_country ilike ?"
+      conditions << " country ilike ?"
       wheres << "%#{params[:location]}%"
     end
 

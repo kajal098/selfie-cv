@@ -264,6 +264,7 @@ before { authenticate! }
 		requires :address 
 		requires :city
 		requires :zipcode
+		requires :country_id
 		requires :contact_number
 		optional :file
 		optional :text_field
@@ -273,7 +274,7 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 		@user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
-		:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,
+		:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id,
 		:contact_number, :file_type, :text_field)
 			if (params[:file_type] == 'text')
 				@user.text_field = params[:text_field]
@@ -297,6 +298,7 @@ before { authenticate! }
 		optional :address 
 		optional :city
 		optional :zipcode
+		requires :country_id
 		optional :contact_number
 		optional :file
 		optional :text_field
@@ -306,7 +308,7 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error!({error: 'User not found', status: 'Fail'}, 200) unless @user
 		@user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
-		:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,
+		:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id,
 		:contact_number, :file_type, :text_field)
 			if (params[:file_type] == 'text')
 				@user.text_field = params[:text_field]
@@ -993,16 +995,16 @@ before { authenticate! }
 		requires :company_address
 		requires :company_zipcode
 		requires :company_city
-		requires :company_country
 		requires :company_contact
 		optional :company_skype_id
 		requires :company_id
+		requires :country_id
 	end
 	post :company_info, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 			if @user.role == 'Company'
-				@user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id)
+				@user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id, :country_id)
 				error! @user.errors.full_messages.join(', '), 422 unless @user.save
 			else
 				error! "Record not found.", 422
@@ -1084,8 +1086,7 @@ before { authenticate! }
 				error! "Record not found.", 422
 			end
 	end
-	#edit company info
-
+	
 	desc 'Edit Company Info'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1097,7 +1098,7 @@ before { authenticate! }
 		optional :company_address
 		optional :company_zipcode
 		optional :company_city
-		optional :company_country
+		optional :country_id
 		optional :company_contact
 		optional :company_skype_id
 		optional :company_id
@@ -1120,7 +1121,7 @@ before { authenticate! }
 	post :edit_company, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
-		@user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_country, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :company_logo_type, :company_profile_type, :company_brochure_type)
+		@user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :country_id, :company_contact, :company_skype_id, :company_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :company_logo_type, :company_profile_type, :company_brochure_type)
 		@user.company_logo = params[:company_logo] if params[:company_logo]
 		@user.company_profile = params[:company_profile] if params[:company_profile]
 		@user.company_brochure = params[:company_brochure] if params[:company_brochure]
@@ -1219,6 +1220,7 @@ before { authenticate! }
 		optional :address 
 		optional :city
 		optional :zipcode
+		requires :country_id
 		optional :contact_number
 		optional :file
 		optional :file_type
@@ -1226,7 +1228,7 @@ before { authenticate! }
 	post :basic_info, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-		@user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode,  :contact_number, :file_type)
+		@user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
 		@user.file = params[:file] if params[:file]
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 	end
@@ -1243,6 +1245,7 @@ before { authenticate! }
 		optional :address 
 		optional :city
 		optional :zipcode
+		requires :country_id
 		optional :contact_number
 		optional :file
 		optional :file_type
@@ -1251,7 +1254,7 @@ before { authenticate! }
 		@basic_info = User.find params[:user_id]
 		error! 'User not found', 422 unless @basic_info
 		@basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
-		:date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type)
+		:date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
 		error! @basic_info.errors.full_messages.join(', '), 422 unless @basic_info.save
 	end
 
@@ -1426,8 +1429,8 @@ before { authenticate! }
 		optional :nationality 
 		optional :address 
 		optional :city
-		optional :country
 		optional :zipcode
+		requires :country_id
 		optional :contact_number
 		optional :file
 		optional :text_field
@@ -1437,7 +1440,7 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 		@user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
-		:date_of_birth, :nationality, :address, :city, :country, :zipcode,  :contact_number, :file_type)
+		:date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
 			if (params[:file_type] == 'text')
 				@user.text_field = params[:text_field]
 			else
@@ -1446,7 +1449,7 @@ before { authenticate! }
 		error! @user.errors.full_messages.join(', '),422 unless @user.save
 	end
 
-	desc 'Faculty Resume'
+	desc 'Edit Faculty Resume'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
@@ -1458,7 +1461,7 @@ before { authenticate! }
 		optional :nationality 
 		optional :address 
 		optional :city
-		optional :country
+		optional :country_id
 		optional :zipcode
 		optional :contact_number
 		optional :file
@@ -1469,7 +1472,7 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 		@user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
-		:date_of_birth, :nationality, :address, :city, :country, :zipcode,  :contact_number, :file_type)
+		:date_of_birth, :nationality, :address, :city, :country_id, :zipcode,  :contact_number, :file_type)
 			if (params[:file_type] == 'text')
 				@user.text_field = params[:text_field]
 			else
