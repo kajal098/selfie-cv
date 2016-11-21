@@ -2287,18 +2287,10 @@ end
         optional :name
       end
       post :edit, jbuilder: 'ios_folder' do
-        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).first
+        @folder = Folder.find params[:folder_id])
         error! 'Folder not found',422 unless @folder
-        if @user_folder.folder.default_status == false
-        	if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
-            	error! 'Folde name already exist! Please try another one!',422
-          	else
-	        	@folder.attributes = clean_params(params).permit(:name)
-	        	error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-	    	end
-        else
-          error! 'You cant edit default folder name',422
-        end
+        @folder.attributes = clean_params(params).permit(:name)
+        error! @folder.errors.full_messages.join(', '),422 unless @folder.save
       end
 
       desc 'Delete folder'
