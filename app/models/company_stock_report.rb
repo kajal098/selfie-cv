@@ -12,7 +12,7 @@ class CompanyStockReport
   column(:sensex_co, header: "Country", :order => "company_stocks.sensex_co")
   column(:sensex, header: "Sensex", :order => "company_stocks.sensex")
   column(:currency, header: "Currency", :order => "company_stocks.currency")
-  column(:created_at, html: true, header: "Created At") { |company_stock| content_tag :span, time_ago_in_words(company_stock.created_at), title: company_stock.created_at.to_formatted_s(:long) if company_stock.created_at }
+  column(:date_format, header: "Date Format", :order => "company_stocks.date_format")
   column(:updated_at, html: true, header: "Updated At") { |company_stock| content_tag :span, time_ago_in_words(company_stock.updated_at), title: company_stock.updated_at.to_formatted_s(:long) if company_stock.updated_at }
   
   column(:actions, header: "Action", html: true  ) do |company_stock|

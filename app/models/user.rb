@@ -28,7 +28,7 @@ has_many    :courses
 has_many    :specializations
 belongs_to  :company
 belongs_to  :industry
-belongs_to  :company_stock
+belongs_to  :company_stock, class_name: 'CompanyStock',foreign_key: "country_id"
 has_many    :user_educations
 has_many    :student_educations
 has_many    :user_experiences

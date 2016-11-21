@@ -73,8 +73,16 @@
                     <td><%= @user.address %> , <%= @user.city %></td>
                   </tr>
                   <tr>
-                    <td>Country</td>
+                    <td>Country ID</td>
                     <td><%= @user.country_id  %></td>
+                  </tr>
+                  <tr>
+                    <td>Country Name</td>
+                    <% if @user.country_id.blank? %>
+                      <td><p>Not Available</p></td>                      
+                    <% else %>
+                      <td><%= @user.company_stock.sensex_co  %></td>
+                    <% end %>
                   </tr>
                   <tr>
                     <td>Nationality</td>
@@ -430,8 +438,16 @@
                     <td><%= @user.company_city %></td>
                   </tr>
                   <tr>
-                    <td>Country</td>
+                    <td>Country ID</td>
                     <td><%= @user.country_id  %></td>
+                  </tr>
+                  <tr>
+                    <td>Country Name</td>
+                    <% if @user.country_id.blank? %>
+                      <td><p>Not Available</p></td>                      
+                    <% else %>
+                      <td><%= @user.company_stock.sensex_co  %></td>
+                    <% end %>
                   </tr>
                   <tr>
                     <td>Company Contact</td>
@@ -641,8 +657,16 @@
                     <td><% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "50x50" %><% end %></td>
                   </tr>
                   <tr>
-                    <td>Country</td>
+                    <td>Country ID</td>
                     <td><%= @user.country_id  %></td>
+                  </tr>
+                  <tr>
+                    <td>Country Name</td>
+                    <% if @user.country_id.blank? %>
+                      <td><p>Not Available</p></td>                      
+                    <% else %>
+                      <td><%= @user.company_stock.sensex_co  %></td>
+                    <% end %>
                   </tr>
                   <tr>
                     <td>File URL</td>
@@ -888,8 +912,16 @@
                     <td><%= @user.faculty_join_from %></td>
                   </tr>
                   <tr>
-                    <td>Country</td>
+                    <td>Country ID</td>
                     <td><%= @user.country_id  %></td>
+                  </tr>
+                  <tr>
+                    <td>Country Name</td>
+                    <% if @user.country_id.blank? %>
+                      <td><p>Not Available</p></td>                      
+                    <% else %>
+                      <td><%= @user.company_stock.sensex_co  %></td>
+                    <% end %>
                   </tr>
                   <tr>
                     <td>File</td>

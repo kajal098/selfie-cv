@@ -1,14 +1,14 @@
 namespace :import do
   desc "TODO"
   task users: :environment do
-  	User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student' , first_name: 'ghghg') 
-	User.create!(email: 'anni@gmail.com', password:'12345678' , username: 'anni' , role: 'Student' , first_name: 'ghghg') 
-	User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'Faculty', first_name: 'ghghg' )
-	User.create!(email: 'jekky@gmail.com', password: '12345678' , username: 'jekky' , role: 'Faculty', first_name: 'ghghg' )
-	User.create!(email: 'thomas@gmail.com', password: '12345678' , username: 'thomas' , role: 'Jobseeker', first_name: 'ghghg' )
-	User.create!(email: 'victor@gmail.com', password: '12345678' , username: 'victor' , role: 'Jobseeker', first_name: 'ghghg' )
-	User.create!(email: 'parnel@gmail.com', password: '12345678' , username: 'parnel' , role: 'Company', first_name: 'ghghg' )
-	User.create!(email: 'kriya@gmail.com', password: '12345678' , username: 'kriya' , role: 'Company', first_name: 'ghghg' )
+  	User.create!(email: 'trupti@gmail.com', password:'12345678' , username: 'trupti' , role: 'Student' , first_name: 'trupti', country_id: 3) 
+	User.create!(email: 'anni@gmail.com', password:'12345678' , username: 'anni' , role: 'Student' , first_name: 'anni', country_id: 3) 
+	User.create!(email: 'daisy@gmail.com', password: '12345678' , username: 'daisy' , role: 'Faculty', first_name: 'daisy', country_id: 3)
+	User.create!(email: 'jekky@gmail.com', password: '12345678' , username: 'jekky' , role: 'Faculty', first_name: 'jekky', country_id: 3)
+	User.create!(email: 'thomas@gmail.com', password: '12345678' , username: 'thomas' , role: 'Jobseeker', first_name: 'thomas', country_id: 3)
+	User.create!(email: 'victor@gmail.com', password: '12345678' , username: 'victor' , role: 'Jobseeker', first_name: 'victor', country_id: 3)
+	User.create!(email: 'parnel@gmail.com', password: '12345678' , username: 'parnel' , role: 'Company', first_name: 'parnel', country_id: 3)
+	User.create!(email: 'kriya@gmail.com', password: '12345678' , username: 'kriya' , role: 'Company', first_name: 'kriya', country_id: 3)
   end
 
   desc "TODO"
