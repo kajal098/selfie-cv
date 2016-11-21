@@ -2287,7 +2287,7 @@ end
         optional :name
       end
       post :edit, jbuilder: 'ios_folder' do
-        @folder = Folder.find params[:folder_id])
+        @folder = Folder.find params[:folder_id]
         error! 'Folder not found',422 unless @folder
         @folder.attributes = clean_params(params).permit(:name)
         error! @folder.errors.full_messages.join(', '),422 unless @folder.save

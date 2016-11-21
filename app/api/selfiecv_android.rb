@@ -2343,7 +2343,7 @@ class SelfiecvAndroid < Grape::API
         optional :name
       end
       post :edit, jbuilder: 'android_folder' do
-        @folder = Folder.find params[:folder_id])
+        @folder = Folder.find params[:folder_id]
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
         @folder.attributes = clean_params(params).permit(:name)
         error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
