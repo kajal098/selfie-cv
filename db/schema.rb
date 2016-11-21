@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-11-18'
-    t.date     "join_till",    default: '2016-11-18'
+    t.date     "join_from",    default: '2016-11-21'
+    t.date     "join_till",    default: '2016-11-21'
     t.string   "file",         default: ""
     t.string   "file_type",    default: "",           null: false
     t.datetime "created_at",                          null: false
@@ -350,7 +350,7 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-11-18'
+    t.date     "date",            default: '2016-11-21'
     t.string   "hobby",           default: "",           null: false
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
@@ -396,8 +396,8 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-11-18'
-    t.date     "working_till",    default: '2016-11-18'
+    t.date     "start_from",      default: '2016-11-21'
+    t.date     "working_till",    default: '2016-11-21'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
@@ -588,7 +588,7 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-11-18'
+    t.date     "date",       default: '2016-11-21'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "text_field", default: "",           null: false
@@ -643,11 +643,11 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-11-18"
+    t.string   "date_of_birth",                                 default: "2016-11-21"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
-    t.string   "country",                                       default: "",           null: false
+    t.integer  "country_id"
     t.string   "zipcode",                                       default: "",           null: false
     t.string   "contact_number",                                default: "",           null: false
     t.string   "file",                                          default: ""
@@ -657,7 +657,7 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-11-18"
+    t.string   "faculty_join_from",                             default: "2016-11-21"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -665,7 +665,6 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.string   "company_address",                               default: "",           null: false
     t.string   "company_zipcode",                               default: "",           null: false
     t.string   "company_city",                                  default: "",           null: false
-    t.string   "country",                               default: "",           null: false
     t.string   "company_contact",                               default: "",           null: false
     t.string   "company_skype_id",                              default: "",           null: false
     t.integer  "company_id"
@@ -703,6 +702,7 @@ ActiveRecord::Schema.define(version: 20161115122140) do
     t.datetime "updated_at",                                                           null: false
   end
 
+  add_index "users", ["country_id"], name: "index_users_on_country_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
@@ -763,4 +763,5 @@ ActiveRecord::Schema.define(version: 20161115122140) do
   add_foreign_key "user_views", "users", on_delete: :cascade
   add_foreign_key "user_whizquizzes", "users", on_delete: :cascade
   add_foreign_key "user_whizquizzes", "whizquizzes", on_delete: :cascade
+  add_foreign_key "users", "company_stocks", column: "country_id", on_delete: :cascade
 end

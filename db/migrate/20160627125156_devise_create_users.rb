@@ -85,8 +85,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
       t.timestamps null: false
     end
-    add_index :users, [:company_stock_id]
-    add_foreign_key :users, :company_stocks, on_delete: :cascade
+    add_index :users, [:country_id]
+    add_foreign_key :users, :company_stocks, column: :country_id, on_delete: :cascade
     add_index :users, :username,                unique: true
     add_index :users, :reset_password_token, unique: true
     # add_index :users, :confirmation_token,   unique: true
