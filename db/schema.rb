@@ -61,11 +61,12 @@ ActiveRecord::Schema.define(version: 20161115122140) do
   add_index "company_galeries", ["user_id"], name: "index_company_galeries_on_user_id", using: :btree
 
   create_table "company_stocks", force: :cascade do |t|
-    t.string   "sensex_co",  default: "", null: false
-    t.string   "sensex",     default: "", null: false
-    t.string   "currency",   default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "sensex_co",   default: "", null: false
+    t.string   "sensex",      default: "", null: false
+    t.string   "currency",    default: "", null: false
+    t.string   "date_format", default: "", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "courses", force: :cascade do |t|

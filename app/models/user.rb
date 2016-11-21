@@ -28,6 +28,7 @@ has_many    :courses
 has_many    :specializations
 belongs_to  :company
 belongs_to  :industry
+belongs_to  :company_stock
 has_many    :user_educations
 has_many    :student_educations
 has_many    :user_experiences

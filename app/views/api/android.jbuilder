@@ -10,7 +10,7 @@ end
 if @user
 	if @user.role == 'Jobseeker'
 
-		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :file_type, :text_field, :active
+		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :text_field, :active
 
 		json.password @user.password
 		json.profile_thumb @user.profile_thumb_url
