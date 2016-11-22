@@ -1206,7 +1206,7 @@ before { authenticate! }
 	params do
 	  requires :token, type: String, regexp: UUID_REGEX
 	end
-	post :video, jbuilder: 'android' do
+	post :video, jbuilder: 'ios' do
 	  @video = VideoUpload.last
 	end
 
