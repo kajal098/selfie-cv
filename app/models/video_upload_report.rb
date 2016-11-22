@@ -2,7 +2,7 @@ class VideoUploadReport
 
   include Datagrid
 
-  scope { Chat.order(:id) }
+  scope { VideoUpload.order(:id) }
   
   column(:id, header: "id", :order => "video_uploads.id")
   column(:file, header: "File", :order => "video_uploads.file")
