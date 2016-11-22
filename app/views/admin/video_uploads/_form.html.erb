@@ -3,7 +3,7 @@
   <div class="form-group string required user_district">
     <label class="string required col-sm-3 control-label" for="user_district">Uploaded Profile</label>
       <div class="col-sm-9">
-        <%= video_tag @video_upload.file.url %>
+        <%= video_tag @video_upload.file, :size => "320x240", :controls => true, :autobuffer => true %>
       </div>
   </div>
   <div class="form-group string required user_district">
