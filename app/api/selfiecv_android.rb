@@ -1239,6 +1239,14 @@ class SelfiecvAndroid < Grape::API
         error!({error: @update_image.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_image.save
       end
 
+      desc 'Video For Appflow'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+      end
+      post :video, jbuilder: 'android' do
+        @courses = VideoUpload.last.file.url
+      end
+
   end
   #--------------------------------data end----------------------------------#
   #--------------------------------student start----------------------------------#

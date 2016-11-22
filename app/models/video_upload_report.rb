@@ -5,7 +5,9 @@ class VideoUploadReport
   scope { VideoUpload.order(:id) }
   
   column(:id, header: "id", :order => "video_uploads.id")
-  column(:file, header: "File", :order => "video_uploads.file")
+  column(:file, :html => true, header: "Video") do |model|
+    model.thumb_url
+  end
   column(:updated_at, html: true, header: "Updated At") { |video_upload| content_tag :span, time_ago_in_words(video_upload.updated_at), title: video_upload.updated_at.to_formatted_s(:long) if video_upload.updated_at }
   column(:actions, header: "Action", html: true  ) do |video_upload|
     html = link_to "", admin_video_upload_path(video_upload), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View Video"
