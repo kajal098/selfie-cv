@@ -117,9 +117,9 @@ if @user_stuff
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
-			json.favourited true
+			json.favourited 1
 		else
-			json.favourited false
+			json.favourited 0
 		end
 
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
@@ -213,9 +213,9 @@ if @user_stuff
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
-			json.favourited true
+			json.favourited 1
 		else
-			json.favourited false
+			json.favourited 0
 		end
 
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
@@ -314,9 +314,9 @@ if @user_stuff
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
-			json.favourited true
+			json.favourited 1
 		else
-			json.favourited false
+			json.favourited 0
 		end
 
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
@@ -406,9 +406,9 @@ if @user_stuff
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
-			json.favourited true
+			json.favourited 1
 		else
-			json.favourited false
+			json.favourited 0
 		end
 
 		if ( current_user.user_rates.where(rate_id: @user_stuff.id).count > 0 )
