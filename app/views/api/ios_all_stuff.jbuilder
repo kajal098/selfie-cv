@@ -111,9 +111,9 @@ if @user_stuff
 		end
 
 		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
-			json.liked true
+			json.liked 1
 		else
-			json.liked false
+			json.liked 0
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
@@ -207,9 +207,9 @@ if @user_stuff
 		end
 
 		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
-			json.liked true
+			json.liked 1
 		else
-			json.liked false
+			json.liked 0
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
@@ -308,9 +308,9 @@ if @user_stuff
 		json.rates @user_stuff.rates.count
 
 		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
-			json.liked true
+			json.liked 1
 		else
-			json.liked false
+			json.liked 0
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
@@ -400,9 +400,9 @@ if @user_stuff
 		json.rates @user_stuff.rates.count
 
 		if ( current_user.user_likes.where(like_id: @user_stuff.id).count > 0 )
-			json.liked true
+			json.liked 1
 		else
-			json.liked false
+			json.liked 0
 		end
 
 		if ( current_user.user_favourites.where(favourite_id: @user_stuff.id).count > 0 )
