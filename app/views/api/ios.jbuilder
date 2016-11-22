@@ -6,7 +6,7 @@ if @update_image
 end
 
 if @video
-	json.file_thumb @video.file.thumb_url
+	json.file_thumb @video.thumb_url
 	json.file @video.file.url
 end
 
