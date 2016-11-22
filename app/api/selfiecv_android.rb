@@ -1244,7 +1244,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
       end
       post :video, jbuilder: 'android' do
-        @courses = VideoUpload.last.file.url
+        @video = VideoUpload.last.file.url
       end
 
   end

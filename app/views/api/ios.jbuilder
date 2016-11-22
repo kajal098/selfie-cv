@@ -5,6 +5,10 @@ if @update_image
 	json.back_profile @update_image.back_profile_photo_url
 end
 
+if @video
+	json.file @video.file.url
+end
+
 if @user
 	if @user.role == 'Jobseeker'
 
