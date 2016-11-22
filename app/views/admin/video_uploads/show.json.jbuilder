@@ -1,0 +1,1 @@
+json.extract! @video_upload, :name, :created_at, :updated_at
