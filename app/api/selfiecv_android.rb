@@ -1619,7 +1619,7 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_faculty_workshop, jbuilder: 'android' do
         @faculty_workshop = FacultyWorkshop.find params[:workshop_id]
-        error!({error: 'Student workshop not found', status: 'Fail'}, 200) unless @faculty_workshop
+        error!({error: 'Faculty workshop not found', status: 'Fail'}, 200) unless @faculty_workshop
         @faculty_workshop.attributes = clean_params(params).permit(:title, :description, :file_type)
         @faculty_workshop.file = params[:file] if params[:file]
         error!({error: @faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_workshop.save
