@@ -12,7 +12,7 @@ class CreateMarketiqs < ActiveRecord::Migration
     	t.string  :option_c,              null:false, default: ""
     	t.string  :option_d,              null:false, default: ""
     	t.string  :answer,                null:false, default: ""
-      t.boolean :role,                  default: false
+      t.integer :role,                  default: 1
       t.timestamps null: false
     end
     add_index :marketiqs, [:industry_id]

@@ -202,17 +202,17 @@ ActiveRecord::Schema.define(version: 20161122090038) do
   create_table "marketiqs", force: :cascade do |t|
     t.integer  "industry_id"
     t.integer  "specialization_id"
-    t.string   "subject",           default: "",    null: false
-    t.string   "award_name",        default: "",    null: false
-    t.string   "question",          default: "",    null: false
-    t.string   "option_a",          default: "",    null: false
-    t.string   "option_b",          default: "",    null: false
-    t.string   "option_c",          default: "",    null: false
-    t.string   "option_d",          default: "",    null: false
-    t.string   "answer",            default: "",    null: false
-    t.boolean  "role",              default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.string   "subject",           default: "", null: false
+    t.string   "award_name",        default: "", null: false
+    t.string   "question",          default: "", null: false
+    t.string   "option_a",          default: "", null: false
+    t.string   "option_b",          default: "", null: false
+    t.string   "option_c",          default: "", null: false
+    t.string   "option_d",          default: "", null: false
+    t.string   "answer",            default: "", null: false
+    t.integer  "role",              default: 1
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "marketiqs", ["industry_id"], name: "index_marketiqs_on_industry_id", using: :btree

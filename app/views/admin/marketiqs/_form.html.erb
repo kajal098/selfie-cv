@@ -18,7 +18,7 @@
 
 
 
-  <div class="form-group string required marketiq_question" id="spe">
+  <div class="form-group string required marketiq_question" id="my_jobseeker">
   <label class="string required col-sm-3 control-label" for="marketiq_question">
   <abbr title="required">*</abbr> Specialization </label>
   <div class="col-sm-9">
@@ -27,7 +27,7 @@
   </div>
 
 
-  <div class="form-group string required marketiq_question" id="ind" style='display:none'>
+  <div class="form-group string required marketiq_question" id="my_company" style='display:none'>
   <label class="string required col-sm-3 control-label" for="marketiq_question">
   <abbr title="required">*</abbr> Industry </label>
   <div class="col-sm-9">
@@ -35,8 +35,12 @@
   </div>
   </div>
 
-  <%= f.input :subject, label: "Subject", html: { style: "display:none"}  %>
-  <%= f.input :award_name, label: "Award", html: { style: "display:none"}  %>
+  <div id="my_faculty" style="display:none;">
+  <%= f.input :subject, label: "Subject"  %>
+  </div>
+  <div id="my_student" style="display:none;">
+  <%= f.input :award_name, label: "Award"  %>
+  </div>
 
   
 
@@ -55,28 +59,28 @@ $(document).ready(function() {
 
    $('input[name="marketiq[role]"]').click(function() {
            if($(this).val() == 'Jobseeker') {
-                $('#spe').show();    
-                $('#ind').hide();  
-                $('#marketiq_subject').hide();
-                $('#marketiq_award_name').hide();
+                $('#my_jobseeker').show();    
+                $('#my_company').hide();  
+                $('#my_student').hide();
+                $('#my_faculty').hide();
            }
            else if($(this).val() == 'Company') {
-                $('#ind').show();    
-                $('#spe').hide();   
-                $('#marketiq_subject').hide();
-                $('#marketiq_award_name').hide();
+                $('#my_jobseeker').hide();    
+                $('#my_company').show();   
+                $('#my_student').hide();
+                $('#my_faculty').hide();
            }
            else if($(this).val() == 'Student') {
-                $('#spe').hide();    
-                $('#ind').hide();    
-                $('#marketiq_subject').hide();
-                $('#marketiq_award_name').show();      
+                $('#my_jobseeker').hide();    
+                $('#my_company').hide();    
+                $('#my_student').show();
+                $('#my_faculty').hide();      
            }
            else {
-                $('#spe').hide();    
-                $('#ind').hide();  
-                $('#marketiq_subject').show();
-                $('#marketiq_award_name').hide();        
+                $('#my_jobseeker').hide();    
+                $('#my_company').hide();  
+                $('#my_student').hide();
+                $('#my_faculty').show();        
            }
        });
     });

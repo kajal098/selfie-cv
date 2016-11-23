@@ -13,6 +13,19 @@
   <%= @marketiq.role %>
 </p>
 
+<% if @marketiq.subject.present? %>
+<p>
+  <strong>Subject:</strong>
+  <%= @marketiq.subject %>
+</p>
+<% end %>
+
+<% if @marketiq.award_name.present? %>
+<p>
+  <strong>Award Name:</strong>
+  <%= @marketiq.award_name %>
+</p>
+<% end %>
 
 <% if @marketiq.industry_id.present? %>
 <p>
