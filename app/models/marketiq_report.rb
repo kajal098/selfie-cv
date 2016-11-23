@@ -11,14 +11,20 @@ filter(:specialization_id, :enum, header: "Specialization", select: ->{ Speciali
 filter(:subject, :string, header: "Subject") {|value| where("subject ilike ?", "%#{value}%")}
 
 filter(:award_name, :string, header: "Award Name") {|value| where("award_name ilike ?", "%#{value}%")}
-  column(:industry_id, header: "Industry") do |model|
-    model.industry_id ? model.industry.name : ""
+
+  column(:industry_id, header: "Category") do |model|
+    if model.role == "Company"
+      data = model.industry.name
+    elsif model.role == "Jobseeker"
+      data = model.specialization.name
+    elsif model.role == "Student"
+      data = model.award_name
+    elsif model.role == "Faculty"
+      data = model.subject
+    end
   end
-  column(:specialization_id, header: "Spe.") do |model|
-    model.specialization_id ? model.specialization.name : ""
-  end
-  column(:subject, header: "Subject", :order => "marketiqs.subject")
-  column(:award_name, header: "Award Name", :order => "marketiqs.award_name")
+
+
   column(:question, header: "Question", :order => "marketiqs.question")
   column(:option_a, header: "A", :order => "marketiqs.option_a")
   column(:option_b, header: "B", :order => "marketiqs.option_b")
