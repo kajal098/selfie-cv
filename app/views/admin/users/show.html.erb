@@ -354,13 +354,14 @@
                       <th><strong class="text_color" >Env Type </strong></th>
                       <th><strong class="text_color" >Title </strong></th>
                       <th><strong class="text_color" >File </strong></th>
+                      <th><strong class="text_color" >Filetype </strong></th>
                     </tr>
                     <% @user.user_environments.each do |work_env| %>     
                     <tr >
                       <td><%= work_env.id %></td>
                       <td><%= work_env.env_type %></td>
                       <td><%= work_env.title %></td>
-                      <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'audio' %><%= image_tag work_env.thumb_url, :size => "50x50" %><% else %><%= work_env.text_value %><% end %></td>
                     </tr>
                     <% end %>
                   </table>
