@@ -4,7 +4,9 @@ class CreateMarketiqs < ActiveRecord::Migration
 
       t.integer  :industry_id
       t.integer  :specialization_id
-    	t.string  :question,              null:false, default: ""
+      t.string   :subject,              null:false, default: ""
+      t.string   :award_name,              null:false, default: ""
+      t.string  :question,              null:false, default: ""
     	t.string  :option_a,              null:false, default: ""
     	t.string  :option_b,              null:false, default: ""
     	t.string  :option_c,              null:false, default: ""

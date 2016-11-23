@@ -11,6 +11,10 @@
   <%= f.label(:role, "Jobseeker") %>
   <%= f.radio_button(:role, "Company")%>
   <%= f.label(:role, "Company") %>
+  <%= f.radio_button(:role, "Student") %>
+  <%= f.label(:role, "Student") %>
+  <%= f.radio_button(:role, "Faculty")%>
+  <%= f.label(:role, "Faculty") %>
 
 
 
@@ -31,9 +35,9 @@
   </div>
   </div>
 
+  <%= f.input :subject, label: "Subject", html: { style: "display:none"}  %>
+  <%= f.input :award_name, label: "Award", html: { style: "display:none"}  %>
 
-
-  
   
 
 
@@ -52,11 +56,27 @@ $(document).ready(function() {
    $('input[name="marketiq[role]"]').click(function() {
            if($(this).val() == 'Jobseeker') {
                 $('#spe').show();    
-                $('#ind').hide();          
+                $('#ind').hide();  
+                $('#marketiq_subject').hide();
+                $('#marketiq_award_name').hide();
            }
-           else {
+           else if($(this).val() == 'Company') {
                 $('#ind').show();    
                 $('#spe').hide();   
+                $('#marketiq_subject').hide();
+                $('#marketiq_award_name').hide();
+           }
+           else if($(this).val() == 'Student') {
+                $('#spe').hide();    
+                $('#ind').hide();    
+                $('#marketiq_subject').hide();
+                $('#marketiq_award_name').show();      
+           }
+           else {
+                $('#spe').hide();    
+                $('#ind').hide();  
+                $('#marketiq_subject').show();
+                $('#marketiq_award_name').hide();        
            }
        });
     });

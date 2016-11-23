@@ -4,7 +4,7 @@ class CreateCompanyStocks < ActiveRecord::Migration
     	t.string  :sensex_co,              null:false, default: ""
     	t.string  :sensex,              null:false, default: ""
     	t.string  :currency,              null:false, default: ""
-    	t.string  :date_format,              null:false, default: ""
+    	t.string  :date_format,              null:false, default: "dd/mm/yyyy"
         t.timestamps null: false
     end
   end
