@@ -95,7 +95,11 @@
                   <tr>
                     <td>File URL</td>
                     <td><%= @user.file.url %></td>
-                  </tr>              
+                  </tr>  
+                  <tr>
+                    <td>Profile</td>
+                    <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
+                  </tr>            
                   <tr>
                     <td>Back Profile</td>
                     <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
@@ -466,6 +470,10 @@
                     <td><%= @user.company ? @user.company.name : "" %></td>
                   </tr>
                   <tr>
+                    <td>Profile</td>
+                    <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
+                  </tr>
+                  <tr>
                     <td>Back Profile</td>
                     <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
                   </tr>
@@ -671,6 +679,10 @@
                   <tr>
                     <td>File URL</td>
                     <td><%= @user.file.url %></td>
+                  </tr>
+                  <tr>
+                    <td>Profile</td>
+                    <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
                   </tr>
                   <tr>
                     <td>Back Profile</td>
@@ -930,6 +942,10 @@
                   <tr>
                     <td>File URL</td>
                     <td><%= @user.file.url %></td>
+                  </tr>
+                  <tr>
+                    <td>Profile</td>
+                    <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
                   </tr>
                   <tr>
                     <td>Back Profile</td>
