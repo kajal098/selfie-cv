@@ -16,6 +16,12 @@ ActiveRecord::Schema.define(version: 20161122090038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "chat_schedules", force: :cascade do |t|
     t.string   "name",        default: "", null: false
     t.date     "date",        default: [],              array: true
@@ -62,12 +68,15 @@ ActiveRecord::Schema.define(version: 20161122090038) do
 
   create_table "company_stocks", force: :cascade do |t|
     t.string   "sensex_co",   default: "",           null: false
+    t.integer  "category_id"
     t.string   "sensex",      default: "",           null: false
     t.string   "currency",    default: "",           null: false
     t.string   "date_format", default: "dd/mm/yyyy", null: false
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
   end
+
+  add_index "company_stocks", ["category_id"], name: "index_company_stocks_on_category_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.string   "name",       default: "", null: false
@@ -93,8 +102,8 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-11-23'
-    t.date     "join_till",    default: '2016-11-23'
+    t.date     "join_from",    default: '2016-11-24'
+    t.date     "join_till",    default: '2016-11-24'
     t.string   "file",         default: ""
     t.string   "file_type",    default: "",           null: false
     t.datetime "created_at",                          null: false
@@ -353,7 +362,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-11-23'
+    t.date     "date",            default: '2016-11-24'
     t.string   "hobby",           default: "",           null: false
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
@@ -399,8 +408,8 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-11-23'
-    t.date     "working_till",    default: '2016-11-23'
+    t.date     "start_from",      default: '2016-11-24'
+    t.date     "working_till",    default: '2016-11-24'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
@@ -591,7 +600,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "from",       default: "",           null: false
     t.string   "email",      default: "",           null: false
     t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-11-23'
+    t.date     "date",       default: '2016-11-24'
     t.string   "location",   default: "",           null: false
     t.string   "file",       default: ""
     t.string   "text_field", default: "",           null: false
@@ -646,7 +655,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-11-23"
+    t.string   "date_of_birth",                                 default: "2016-11-24"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -660,7 +669,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-11-23"
+    t.string   "faculty_join_from",                             default: "2016-11-24"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -727,6 +736,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
   add_foreign_key "chats", "groups", on_delete: :cascade
   add_foreign_key "chats", "users", column: "sender_id", on_delete: :cascade
   add_foreign_key "company_galeries", "users", on_delete: :cascade
+  add_foreign_key "company_stocks", "categories", on_delete: :cascade
   add_foreign_key "devices", "users", on_delete: :cascade
   add_foreign_key "faculty_affiliations", "users", on_delete: :cascade
   add_foreign_key "faculty_publications", "users", on_delete: :cascade
