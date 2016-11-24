@@ -371,7 +371,10 @@ if @companystocks
 end
 
 if @basic_info
-	json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number
+	json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :country_id
+
+	json.country_name @basic_info.company_stock ? @basic_info.company_stock.sensex_co : ""
+	
 	json.file_thumb @basic_info.resume_thumb_url
 	json.file @basic_info.file.url
 	json.student_basic_info_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.student_basic_info_per.to_i, "info") : 0
