@@ -242,6 +242,18 @@ resources :member do
 		@user_stuff = User.find params[:user_id]
 		error! 'User not found',422 unless @user_stuff      
 	end
+
+	desc 'View Another Users All stuff'
+	params do
+	  requires :token, type: String, regexp: UUID_REGEX
+	  requires :user_id
+	end
+	post :view_another_user_all_stuff , jbuilder: 'ios_another_stuff' do
+	  authenticate!
+	  @user_stuff = User.find params[:user_id]
+	  error!({error: 'User not found', status: 'Fail'}, 200) unless @user_stuff      
+	end
+
 end
 #--------------------------------member end----------------------------------#
 #--------------------------------member profile start----------------------------------#
