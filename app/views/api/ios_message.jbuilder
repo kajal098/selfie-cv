@@ -38,7 +38,10 @@ if @chats
 			json.file chat.file.url
 			json.msg_created_at chat.created_at.to_i
 			json.msg_updated_at chat.updated_at.to_i
-			json.chat_schedule chat.chat_schedule, :id, :name
+			json.chat_schedule do
+				json.status "success"
+				json.extract! chat.chat_schedule, :id, :name
+			end
 		end
 	end
 end
