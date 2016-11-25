@@ -370,7 +370,7 @@ if @user_stuff
 		end
 
 		json.faculty_workshops @user_stuff.faculty_workshops do |workshop|
-			json.extract! workshop, :id, :user_id, :description, :file_type
+			json.extract! workshop, :id, :user_id, :title, :description, :file_type
 			json.file_thumb workshop.thumb_url
 			json.file workshop.file.url
 			json.workshop_created_at workshop.created_at.to_i
