@@ -1,6 +1,14 @@
 <%= simple_form_for [:admin, @company_stock], html: { class: 'form-horizontal' } do |f| %>
   
   <%= f.input :sensex_co, label: "Country" %>
+  <div class="form-group string" id="country">
+  <label class="string required col-sm-3 control-label" >
+  <abbr title="required">*</abbr> Category </label>
+  <div class="col-sm-9">
+  <%= f.collection_select :category_id, Category.order(:name),:id,:name, include_blank: true %>
+  <%= f.error :category_id %>
+  </div>
+  </div>
   <%= f.input :sensex, label: "Sensex" %>
   <%= f.input :currency, label: "Currency" %>
   <%= f.input :date_format, label: "Date Format" %>

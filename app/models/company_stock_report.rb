@@ -10,6 +10,9 @@ class CompanyStockReport
   
   column(:id, header: "Id", :order => "company_stocks.id")
   column(:sensex_co, header: "Country", :order => "company_stocks.sensex_co")
+  column(:category_id, header: "Category") do |model|
+    model.category_id ? model.category.name : ""
+  end
   column(:sensex, header: "Sensex", :order => "company_stocks.sensex")
   column(:currency, header: "Currency", :order => "company_stocks.currency")
   column(:date_format, header: "Date Format", :order => "company_stocks.date_format")

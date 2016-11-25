@@ -14,7 +14,7 @@ class Admin::CompanyStocksController < Admin::ApplicationController
   def create
     @company_stock = CompanyStock.new company_stock_params
     if @company_stock.save
-      redirect_to admin_company_stocks_path, notice: "The company stockcreated successfully."
+      redirect_to admin_company_stocks_path, notice: "The company stock created successfully."
     else
       render action: :new
     end
@@ -29,7 +29,7 @@ class Admin::CompanyStocksController < Admin::ApplicationController
 
   def update    
     if @company_stock.update company_stock_params
-      redirect_to admin_company_stocks_path, notice: "The company stockupdated successfully."
+      redirect_to admin_company_stocks_path, notice: "The company stock updated successfully."
     else
       render action: :edit
     end
@@ -38,7 +38,7 @@ class Admin::CompanyStocksController < Admin::ApplicationController
   def destroy
     begin
       @company_stock.destroy
-      redirect_to admin_company_stocks_path, notice: "The company stockdeleted successfully."
+      redirect_to admin_company_stocks_path, notice: "The company stock deleted successfully."
     rescue Exception => e      
       redirect_to admin_company_stocks_path, alert: e.message
     end

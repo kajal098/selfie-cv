@@ -1,6 +1,12 @@
 class Marketiq < ActiveRecord::Base
 
-	validates :question, :option_a, :option_b, :option_c, :option_d, :answer, presence: true
+	
+validates :question, presence: { message: "Question must be filled" }
+validates :option_a, presence: { message: "Option A must be filled" }
+validates :option_b, presence: { message: "Option B must be filled" }
+validates :option_c, presence: { message: "Option C must be filled" }
+validates :option_d, presence: { message: "Option D must be filled" }
+validates :answer, presence: { message: "Answer must be filled" }
 
 	paginates_per 10
 

@@ -1,6 +1,6 @@
 class Industry < ActiveRecord::Base
 
-	validates :name, presence: true
+	validates :name, presence: { message: "Name must be filled" }
 
 	has_many :marketiqs, class_name: 'Marketiq',foreign_key: "industry_id"
 
