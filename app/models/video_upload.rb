@@ -1,6 +1,6 @@
 class VideoUpload < ActiveRecord::Base
 
-	validates :name, presence: { message: "Please upload file." }
+	validates :file, presence: { message: "Please upload file." }
 
 	mount_uploader :file, FileUploader
     def thumb_url
