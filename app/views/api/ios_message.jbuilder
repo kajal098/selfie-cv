@@ -21,7 +21,7 @@ if @chats
 	json.msgs @chats do |chat|
 			json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
 			json.sender_id chat.user ? chat.sender_id : ""
-			json.chat_schedule_id chat.chat_schedule_id ? chat.chat_schedule_id : ""
+			json.chat_schedule_id chat.chat_schedule_id ? chat.chat_schedule_id : 0
 		   	json.sender_first_name chat.user ? chat.user.first_name : ""
 		   	json.sender_last_name chat.user ? chat.user.last_name : ""
 			json.file chat.file.url
