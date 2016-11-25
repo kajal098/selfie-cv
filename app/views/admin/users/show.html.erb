@@ -301,7 +301,6 @@
                       <th><strong class="text_color" >Team Type </strong></th>
                       <th><strong class="text_color" >Location </strong></th>
                       <th><strong class="text_color" >Date </strong></th>
-                      <th><strong class="text_color" >Hobby</strong></th>
                       <th><strong class="text_color" >File </strong></th>
                     </tr>
                     <% @user.user_curriculars.each do |curri| %>    
@@ -311,7 +310,6 @@
                       <td><%= curri.team_type %></td>
                       <td><%= curri.location %></td>
                       <td><%= curri.date %></td>
-                      <td><%= curri.hobby %></td>
                       <td><% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
                     </tr> 
                     <% end %>

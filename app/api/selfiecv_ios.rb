@@ -700,7 +700,6 @@ before { authenticate! }
 		optional :team_type        
 		optional :location
 		optional :date
-		optional :hobby
 		optional :file
 		optional :text_field
 		optional :file_type
@@ -708,9 +707,9 @@ before { authenticate! }
 	post :curriculars, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
-			if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] || params[:hobby] )
+			if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
 				@curricular = UserCurricular.new user_id: @user.id
-				@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :hobby, :file_type, :text_field)
+				@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
 					if (params[:file_type] == 'text')
 						@curricular.text_field = params[:text_field]
 					else
@@ -729,7 +728,6 @@ before { authenticate! }
 		optional :team_type        
 		optional :location
 		optional :date
-		optional :hobby
 		optional :file
 		optional :text_field
 		optional :file_type
@@ -737,7 +735,7 @@ before { authenticate! }
 	post :update_curricular, jbuilder: 'ios' do
 		@curricular = UserCurricular.find params[:curricular_id]
 		error! 'User Curricular not found',422 unless @curricular
-		@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :hobby, :file_type, :text_field)
+		@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
 			if (params[:file_type] == 'text')
 				@curricular.text_field = params[:text_field]
 			else

@@ -715,7 +715,6 @@ class SelfiecvAndroid < Grape::API
         optional :team_type        
         optional :location
         optional :date
-        optional :hobby
         optional :file
         optional :text_field
         optional :file_type
@@ -724,9 +723,9 @@ class SelfiecvAndroid < Grape::API
         authenticate!
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-        if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] || params[:hobby] )
+        if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
           @curricular = UserCurricular.new user_id: @user.id
-          @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :hobby, :file_type, :text_field)
+          @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
               if (params[:file_type] == 'text')
                   @curricular.text_field = params[:text_field] if params[:text_field]
               else
@@ -745,7 +744,6 @@ class SelfiecvAndroid < Grape::API
         optional :team_type        
         optional :location
         optional :date
-        optional :hobby
         optional :file
         optional :text_field
         optional :file_type
@@ -754,7 +752,7 @@ class SelfiecvAndroid < Grape::API
         authenticate!
         @curricular = UserCurricular.find params[:curricular_id]
         error!({error: 'User Curricular not found', status: 'Fail'}, 200) unless @curricular
-        @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :hobby, :file_type, :text_field)
+        @curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type, :text_field)
             if (params[:file_type] == 'text')
                 @curricular.text_field = params[:text_field] if params[:text_field]
             else

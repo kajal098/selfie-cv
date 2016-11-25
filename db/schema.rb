@@ -363,7 +363,6 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
     t.date     "date",            default: '2016-11-25'
-    t.string   "hobby",           default: "",           null: false
     t.string   "file",            default: ""
     t.string   "text_field",      default: "",           null: false
     t.string   "file_type",       default: "",           null: false
