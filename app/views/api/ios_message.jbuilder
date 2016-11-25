@@ -27,7 +27,7 @@ if @chats
 			json.file chat.file.url
 			json.msg_created_at chat.created_at.to_i
 			json.msg_updated_at chat.updated_at.to_i		
-			json.chat_schedule ""	
+			json.chat_schedule {}
 		else
 			json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
 			json.sender_id chat.user ? chat.sender_id : ""
