@@ -19,27 +19,16 @@ end
 if @chats
 	@chats = @chats.order('created_at ASC')
 	json.msgs @chats do |chat|
-		if chat.chat_schedule_id.blank?
 			json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
 			json.sender_id chat.user ? chat.sender_id : ""
+			json.chat_schedule_id chat.chat_schedule_id ? chat.chat_schedule_id : ""
 		   	json.sender_first_name chat.user ? chat.user.first_name : ""
 		   	json.sender_last_name chat.user ? chat.user.last_name : ""
 			json.file chat.file.url
 			json.msg_created_at chat.created_at.to_i
 			json.msg_updated_at chat.updated_at.to_i		
+		if !chat.chat_schedule_id.blank?
 			json.chat_schedule do
-				json.status "fail"
-			end
-		else
-			json.msg chat, :id, :group_id, :quick_msg, :activity, :file_type
-			json.sender_id chat.user ? chat.sender_id : ""
-		   	json.sender_first_name chat.user ? chat.user.first_name : ""
-		   	json.sender_last_name chat.user ? chat.user.last_name : ""
-			json.file chat.file.url
-			json.msg_created_at chat.created_at.to_i
-			json.msg_updated_at chat.updated_at.to_i
-			json.chat_schedule do
-				json.status "success"
 				json.extract! chat.chat_schedule, :id, :name
 			end
 		end
