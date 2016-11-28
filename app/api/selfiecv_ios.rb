@@ -79,7 +79,7 @@ resources :member do
 		UserMailer.welcome(@user, @password).deliver_now
         status 200
         if @user.role == 'Jobseeker' || @user.role == 'Company'
-          @names = ['My Favourite','IT', 'Politics', 'Sports']
+          @names = ['my favourite','it', 'politics', 'sports']
           @names.each do |name|
             @folder = Folder.new name: name, default_status: true
             error! @user.errors.full_messages.join(', '),422 unless @folder.save
