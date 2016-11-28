@@ -7,7 +7,7 @@ if @user_folders
 		json.folder_id user_folder.folder.id
 		json.folder_name user_folder.folder.name
 		json.folder_default user_folder.folder.default_status
-		json.user_favs UserFavourite.where(user_id: current_user.id).where(folder_id: user_folder.folder_id) do |user_fav|
+		json.user_favs UserFavourite.where(user_id: current_user.id).where(folder_id: user_folder.folder_id).all do |user_fav|
 			json.id user_fav.fav_user.id
 			json.username user_fav.fav_user.username
 		end
@@ -19,14 +19,14 @@ if @user_folder
 	json.user @user_folder.user.username
 	json.folder @user_folder.folder.name
 	json.folder_default @user_folder.folder.default_status
-	json.user_favs UserFavourite.where(user_id: current_user.id).where(folder_id: @user_folder.folder_id) do |user_fav|
+	json.user_favs UserFavourite.where(user_id: current_user.id).where(folder_id: @user_folder.folder_id).all do |user_fav|
 		json.id user_fav.fav_user.id
 		json.username user_fav.fav_user.username
 	end
 end
 
 if @my_folder
-	json.user_favs UserFavourite.where(user_id: current_user.id).where(folder_id: @my_folder.folder_id) do |user_fav|
+	json.user_favs UserFavourite.where(user_id: current_user.id).where(folder_id: @my_folder.folder_id).all do |user_fav|
 		if user_fav.fav_user.role == "Jobseeker"
 			json.extract! user_fav.fav_user, :id, :username, :first_name, :last_name, :city, :country_id
 
