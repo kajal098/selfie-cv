@@ -79,7 +79,7 @@ resources :member do
 		UserMailer.welcome(@user, @password).deliver_now
         status 200
         if @user.role == 'Jobseeker' || @user.role == 'Company'
-          @names = ['My Favourite','IT', 'Politics', 'Sports']
+          @names = ['my favourite','it', 'politics', 'sports']
           @names.each do |name|
             @folder = Folder.new name: name, default_status: true
             error! @user.errors.full_messages.join(', '),422 unless @folder.save
@@ -1586,7 +1586,7 @@ before { authenticate! }
 	post :update_faculty_workshop, jbuilder: 'ios' do
 		@faculty_workshop = FacultyWorkshop.find params[:workshop_id]
 		error! 'Faculty workshop not found',422 unless @faculty_workshop
-		@faculty_workshop.attributes = clean_params(params).permit(:titl, :description, :file_type)
+		@faculty_workshop.attributes = clean_params(params).permit(:title, :description, :file_type)
 		@faculty_workshop.file = params[:file] if params[:file]
 		error! @faculty_workshop.errors.full_messages.join(', '),422 unless @faculty_workshop.save
 	end
@@ -2085,9 +2085,9 @@ before { authenticate! }
           else
             @folder = Folder.new name: params[:folder_name].downcase, default_status: false
             error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-          end
             @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
             error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
+          end            
           if params[:is_favourited] == 'false'
               @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
               @user_favourite.is_favourited = 'true'
@@ -2279,11 +2279,10 @@ end
           else
             @folder = Folder.new name: params[:name].downcase, default_status: false
             error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-          end
-
-          @user_folder = UserFolder.new user_id: current_user.id
-          @user_folder.folder_id = @folder.id
-          error! @user_folder.errors.full_messages.join(', '),422 unless @user_folder.save
+            @user_folder = UserFolder.new user_id: current_user.id
+          	@user_folder.folder_id = @folder.id
+          	error! @user_folder.errors.full_messages.join(', '),422 unless @user_folder.save
+          end         
       end
 
       desc 'List Folder'
