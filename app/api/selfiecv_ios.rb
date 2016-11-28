@@ -2274,10 +2274,10 @@ end
         requires :name
       end
       post :create, jbuilder: 'ios_folder' do
-          if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name]).count > 0
-            error! 'Folde name already exist! Please try another one!',422
+          if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).count > 0
+            error! 'Folder name already exist! Please try another one!',422
           else
-            @folder = Folder.new name: params[:name], default_status: false
+            @folder = Folder.new name: params[:name].downcase, default_status: false
             error! @folder.errors.full_messages.join(', '),422 unless @folder.save
           end
 
