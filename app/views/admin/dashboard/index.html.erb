@@ -28,17 +28,21 @@
             </div>
             <table class="table table-condensed table-striped">
               <tbody>
-                <tr>
-                  <th>Username</th>
-                  <th>E-mail</th>                  
-                  <th>Contact</th>
-                </tr>
-                <% @student.each do |student| %>     
-                <tr >
-                  <td><%= student.username %></td>
-                  <td><%= student.email %></td>                  
-                  <td><%= student.contact_number %></td>
-                </tr>
+                <% if @student.count > 0 %>
+                      <tr>
+                        <th>Username</th>
+                        <th>E-mail</th>                  
+                        <th>Contact</th>
+                      </tr>
+                      <% @student.each do |student| %>     
+                      <tr >
+                        <td><%= student.username %></td>
+                        <td><%= student.email %></td>                  
+                        <td><%= student.contact_number %></td>
+                      </tr>
+                      <% end %>
+                <% else %>
+                      <p class="alert">No students to display . </p>
                 <% end %>
               </tbody>
             </table>
@@ -52,6 +56,7 @@
             </div>
             <table class="table table-condensed table-striped">
               <tbody>
+              <% if @faculty.count > 0 %>
                 <tr>
                   <th>Username</th>
                   <th>E-mail</th>                  
@@ -63,6 +68,9 @@
                   <td><%= faculty.email %></td>                  
                   <td><%= faculty.contact_number %></td>
                 </tr>
+                <% end %>
+                <% else %>
+                      <p class="alert">No faculties to display . </p>
                 <% end %>
               </tbody>
             </table>
@@ -76,6 +84,7 @@
             </div>
             <table class="table table-condensed table-striped">
               <tbody>
+              <% if @jobseeker.count > 0 %>
                 <tr>
                   <th>Username</th>
                   <th>E-mail</th>                  
@@ -87,6 +96,9 @@
                   <td><%= jobseeker.email %></td>                  
                   <td><%= jobseeker.contact_number %></td>
                 </tr>
+                <% end %>
+                <% else %>
+                      <p class="alert">No jobseekers to display . </p>
                 <% end %>
               </tbody>
             </table>
@@ -100,6 +112,7 @@
             </div>
             <table class="table table-condensed table-striped">
               <tbody>
+              <% if @company.count > 0 %>
                 <tr>
                   <th>Username</th>
                   <th>E-mail</th>                  
@@ -111,6 +124,9 @@
                   <td><%= company.email %></td>                 
                   <td><%= company.contact_number %></td>
                 </tr>
+                <% end %>
+                <% else %>
+                      <p class="alert">No companies to display . </p>
                 <% end %>
               </tbody>
             </table>
