@@ -2334,11 +2334,10 @@ class SelfiecvAndroid < Grape::API
           else
             @folder = Folder.new name: params[:name].downcase, default_status: false
             error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
-          end
-
-          @user_folder = UserFolder.new user_id: current_user.id
-          @user_folder.folder_id = @folder.id
-          error!({error: @user_folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
+            @user_folder = UserFolder.new user_id: current_user.id
+            @user_folder.folder_id = @folder.id
+            error!({error: @user_folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_folder.save
+          end          
       end
 
       desc 'List Folder'
