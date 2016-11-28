@@ -36,7 +36,7 @@ if @my_folder
 			json.total_per user_fav.fav_user.user_meter.total_per
 			json.profile_thumb user_fav.fav_user.profile_thumb_url
 			json.profile user_fav.fav_user.profile_pic.url
-		elsif user_fav.fav_user_fav.fav_user.role == "Company"
+		elsif user_fav.fav_user.role == "Company"
 			json.extract! user, :id, :username, :company_name, :company_establish_from, :company_city, :country_id
 
 			json.country_name user_fav.fav_user.company_stock ? user_fav.fav_user.company_stock.sensex_co : ""
