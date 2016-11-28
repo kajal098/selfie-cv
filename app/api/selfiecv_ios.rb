@@ -2079,11 +2079,11 @@ before { authenticate! }
 		requires :is_favourited
 	end
 	post :favourite, jbuilder: 'ios_notification' do
-		if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name]).count > 0
-            @folder = Folder.find_by name: params[:folder_name]
+		if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).count > 0
+            @folder = Folder.find_by name: params[:folder_name].downcase
             error! 'Folder not found',422 unless @folder
           else
-            @folder = Folder.new name: params[:folder_name], default_status: false
+            @folder = Folder.new name: params[:folder_name].downcase, default_status: false
             error! @folder.errors.full_messages.join(', '),422 unless @folder.save
           end
             @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
