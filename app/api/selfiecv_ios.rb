@@ -1586,7 +1586,7 @@ before { authenticate! }
 	post :update_faculty_workshop, jbuilder: 'ios' do
 		@faculty_workshop = FacultyWorkshop.find params[:workshop_id]
 		error! 'Faculty workshop not found',422 unless @faculty_workshop
-		@faculty_workshop.attributes = clean_params(params).permit(:titl, :description, :file_type)
+		@faculty_workshop.attributes = clean_params(params).permit(:title, :description, :file_type)
 		@faculty_workshop.file = params[:file] if params[:file]
 		error! @faculty_workshop.errors.full_messages.join(', '),422 unless @faculty_workshop.save
 	end
