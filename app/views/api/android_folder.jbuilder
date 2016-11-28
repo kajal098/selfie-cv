@@ -33,7 +33,6 @@ if @my_folder
 			json.extract! user_fav.fav_user, :id, :username, :first_name, :last_name, :city, :country_id
 
 			json.country_name user_fav.fav_user.company_stock ? user_fav.fav_user.company_stock.sensex_co : ""
-
 			json.skills !user_fav.fav_user.user_educations.empty? ? user_fav.fav_user.user_educations.map(&:skill).join(",") : ""
 			json.total_per user_fav.fav_user.user_meter.total_per
 			json.profile_thumb user_fav.fav_user.profile_thumb_url
@@ -42,7 +41,6 @@ if @my_folder
 			json.extract! user, :id, :username, :company_name, :company_establish_from, :company_city, :country_id
 
 			json.country_name user_fav.fav_user.company_stock ? user_fav.fav_user.company_stock.sensex_co : ""
-
 			json.total_per user_fav.fav_user.user_meter.total_per
 			json.logo_thumb user_fav.fav_user.logo_thumb_url
 			json.logo user_fav.fav_user.company_logo.url
