@@ -2375,7 +2375,8 @@ class SelfiecvAndroid < Grape::API
         @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).first
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @user_folder
         if @user_folder.folder.default_status == false
-        @user_folder.destroy
+          @user_folder.user_favourites.destroy_all
+          @user_folder.destroy
         { code: 200, status: 'Success'}
         else
           error!({error: 'You cant delete default folder', status: 'Fail'}, 200)
