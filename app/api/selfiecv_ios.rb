@@ -1194,7 +1194,7 @@ before { authenticate! }
 		@specializations = Specialization.all
 		@companies = Company.all
 		@industries = Industry.all
-		@companystocks = CompanyStock.all
+		@companystocks = CompanyStock.select(:sensex_co).uniq
 	end
 
 	desc 'Update Image'
