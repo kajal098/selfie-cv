@@ -51,7 +51,7 @@ private
   end
 
   def video_upload_params
-    #params.require(:video_upload).permit!
+    params.require(:video_upload).permit!
   end
 
 end
