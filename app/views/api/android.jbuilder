@@ -333,8 +333,6 @@ if @courses
 	@all_courses = @courses.order('created_at DESC')
 	json.courses @all_courses do |course|
 		json.extract! course, :id, :name
-		json.course_created_at course.created_at.to_i
-		json.course_updated_at course.updated_at.to_i
 	end
 end
 
@@ -342,8 +340,6 @@ if @industries
 	@all_industries = @industries.order('created_at DESC')
 	json.industries @all_industries do |industry|
 		json.extract! industry, :id, :name
-		json.industry_created_at industry.created_at.to_i
-		json.industry_updated_at industry.updated_at.to_i
 	end
 end
 
@@ -351,8 +347,6 @@ if @companies
 	@all_companies = @companies.order('created_at DESC')
 	json.companies @all_companies do |company|
 		json.extract! company, :id, :name
-		json.company_created_at company.created_at.to_i
-		json.company_updated_at company.updated_at.to_i
 	end
 end
 
@@ -360,18 +354,13 @@ if @specializations
 	@all_specializations = @specializations.order('created_at DESC')
 	json.specializations @all_specializations do |specialization|
 		json.extract! specialization, :id, :name
-		json.specialization_created_at specialization.created_at.to_i
-		json.specialization_updated_at specialization.updated_at.to_i
 	end
 end
 
 if @companystocks
-	@all_companystocks = @companystocks.order('created_at DESC')
-	json.companystocks @all_companystocks do |coun|
+	json.companystocks @companystocks do |coun|
 		json.id coun.id
 		json.country coun.sensex_co
-		json.created_at coun.created_at.to_i
-		json.updated_at coun.updated_at.to_i
 	end
 end
 

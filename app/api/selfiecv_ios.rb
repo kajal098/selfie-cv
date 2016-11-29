@@ -1181,7 +1181,7 @@ before { authenticate! }
 
 end
 #--------------------------------company end----------------------------------#
-#--------------------------------data start----------------------------------#
+#--------------------------------data start-----------------------------------#
 resources :data do 
 before { authenticate! }
 
@@ -1206,7 +1206,7 @@ before { authenticate! }
 	end
 	post :update_image, jbuilder: 'ios' do
 		@update_image = User.find params[:user_id]
-		error! 'User Environment not found',422 unless @update_image
+		error! 'User not found',422 unless @update_image
 		@update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
 		@update_image.back_profile = params[:back_profile] if params[:back_profile]
 		error! @update_image.errors.full_messages.join(', '), 422 unless @update_image.save
