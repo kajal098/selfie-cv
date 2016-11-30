@@ -1230,7 +1230,7 @@ class SelfiecvAndroid < Grape::API
         @specializations = Specialization.all
         @companies = Company.all
         @industries = Industry.all
-        @companystocks = CompanyStock.select(:sensex_co).uniq
+        @companystocks = CompanyStock.distinct(:sensex_co).uniq
       end
 
       desc 'Update Image'
