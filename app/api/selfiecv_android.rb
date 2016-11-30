@@ -2415,7 +2415,7 @@ class SelfiecvAndroid < Grape::API
         requires :folder_id
       end
       post :view, jbuilder: 'android_folder' do
-        @my_folder_fav = UserFavourite.where(user_id: current_user.id).where(folder_id: params[:folder_id])
+        @my_folder_fav = UserFavourite.where(user_id: current_user.id).where(folder_id: params[:folder_id]).all
         error!({error: 'Folder not found', status: 'Fail'}, 200) unless @my_folder_fav
       end
 
