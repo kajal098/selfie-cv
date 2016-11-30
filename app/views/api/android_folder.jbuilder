@@ -27,8 +27,8 @@ if @user_folder
 	end
 end
 
-if @my_folder
-	json.user_favs UserFavourite.where(user_id: current_user.id).where(folder_id: @my_folder.folder_id).all do |user_fav|
+if @my_folder_fav
+	json.user_favs @my_folder_fav do |user_fav|
 		if user_fav.fav_user.role == "Jobseeker"
 			json.extract! user_fav.fav_user, :id, :username, :first_name, :last_name, :city, :country_id
 
