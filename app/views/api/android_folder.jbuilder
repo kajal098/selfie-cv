@@ -29,7 +29,7 @@ end
 
 if @my_folder_fav
 	json.user_favs @my_folder_fav do |user_fav|
-			json.extract! user, :id, :username, :company_name, :company_establish_from, :company_city, :country_id
+			json.extract! user_fav.fav_user, :id, :username, :company_name, :company_establish_from, :company_city, :country_id
 
 			json.country_name user_fav.fav_user.company_stock ? user_fav.fav_user.company_stock.sensex_co : ""
 
