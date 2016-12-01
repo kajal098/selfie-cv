@@ -826,7 +826,7 @@ class SelfiecvAndroid < Grape::API
       end
       post :update_future_goal, jbuilder: 'android' do
         authenticate!
-        @future_goal = UserFutureGoal.find params[:update_future_goal_id]
+        @future_goal = UserFutureGoal.find params[:future_goal_id]
         error!({error: 'User Future Goal not found', status: 'Fail'}, 200) unless @future_goal
         @future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type, :text_field)
             if (params[:file_type] == 'text')
