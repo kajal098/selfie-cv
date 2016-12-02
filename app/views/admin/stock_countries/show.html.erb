@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col-lg-6 col-lg-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">        
+        <h3 class="panel-title" style="color: #000000"><b>Question No : <%= @stock_country.id %></b></h3>
+      </div>
+      <div class="panel-body">
+
+<p>
+  <strong>Name:</strong>
+  <%= @stock_country.name %>
+</p>
+
+<div class="form-group clearfix">
+    <div class="col-sm-offset-3 col-sm-9">
+      <%= link_to "Back", admin_stock_countries_path, class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+      </div>
+    </div>
+  </div>
+</div>

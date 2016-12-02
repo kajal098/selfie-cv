@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
     root 'dashboard#index'
 
-    resources :chats, :categories, :companies, :company_stocks, :courses, :devices, :graphs, :group_users, :groups, :industries, :marketiqs, :quick_messages, :specializations, :video_uploads
+    resources :chats, :categories, :companies, :company_stocks, :courses, :devices, :graphs, :group_users, :groups, :industries, :marketiqs, :quick_messages, :specializations, :stock_countries, :video_uploads
 
     resource  :settings, only: [:show, :create, :update]
 
