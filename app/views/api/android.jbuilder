@@ -357,10 +357,10 @@ if @specializations
 	end
 end
 
-if @companystocks
-	json.companystocks @companystocks do |coun|
+if @stock_countries
+	json.stock_countries @stock_countries do |coun|
 		json.id coun.id
-		json.country coun.stock_country_id
+		json.country coun.name
 	end
 end
 
