@@ -2224,7 +2224,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 	end
-	post :send_question, jbuilder: 'android_marketiq' do
+	post :send_question, jbuilder: 'ios_marketiq' do
 		if current_user.role == 'Jobseeker'
 			@marketiq = Marketiq.where(role: 1).where(specialization_id: current_user.user_educations.pluck('specialization_id')).order("RANDOM()").first
 		elsif current_user.role == 'Company'        
@@ -2247,7 +2247,7 @@ before { authenticate! }
 		requires :user_marketiq_id
 		requires :answer
 	end
-	post :send_answer, jbuilder: 'android_marketiq' do
+	post :send_answer, jbuilder: 'ios_marketiq' do
 		@answer_user_marketiq = UserMarketiq.find params[:user_marketiq_id]
 		@answer_user_marketiq.answer = params[:answer]
 		@answer_user_marketiq.status = true
@@ -2259,7 +2259,7 @@ before { authenticate! }
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
 	end
-	post :list, jbuilder: 'android_marketiq' do
+	post :list, jbuilder: 'ios_marketiq' do
 		@user = User.find params[:user_id]
 		@user_marketiqs = @user.user_marketiqs
 		error! @user_marketiqs.errors.full_messages.join(', '),422 unless @user_marketiqs
