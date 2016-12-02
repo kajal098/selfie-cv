@@ -2229,6 +2229,10 @@ before { authenticate! }
 			@marketiq = Marketiq.where(role: 1).where(specialization_id: current_user.user_educations.pluck('specialization_id')).order("RANDOM()").first
 		elsif current_user.role == 'Company'        
 			@marketiq = Marketiq.where(role: 2).where(industry_id: current_user.industry_id).order("RANDOM()").first
+		elsif current_user.role == 'Student'        
+			@marketiq = Marketiq.where(role: 3).where(award_name: current_user.user_awards.pluck('name')).order("RANDOM()").first
+		elsif current_user.role == 'Faculty'        
+			@marketiq = Marketiq.where(role: 4).where(subject: current_user.faculty_affiliations.pluck('subject')).order("RANDOM()").first
 		end
 
 		if @marketiq
