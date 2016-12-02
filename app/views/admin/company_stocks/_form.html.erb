@@ -2,7 +2,7 @@
   
   <div class="form-group string" id="country">
   <label class="string required col-sm-3 control-label" >
-  <abbr title="required">*</abbr> Category </label>
+  <abbr title="required">*</abbr> Country </label>
   <div class="col-sm-9">
   <%= f.collection_select :stock_country_id, StockCountry.order(:name),:id,:name, include_blank: true %>
   <%= f.error :stock_country_id %>
