@@ -2226,9 +2226,9 @@ before { authenticate! }
 	end
 	post :send_question, jbuilder: 'android_marketiq' do
 		if current_user.role == 'Jobseeker'
-			@marketiq = Marketiq.where(role: 'false').where(specialization_id: current_user.user_educations.pluck('specialization_id')).order("RANDOM()").first
+			@marketiq = Marketiq.where(role: 1).where(specialization_id: current_user.user_educations.pluck('specialization_id')).order("RANDOM()").first
 		elsif current_user.role == 'Company'        
-			@marketiq = Marketiq.where(role: 'true').where(industry_id: current_user.industry_id).order("RANDOM()").first
+			@marketiq = Marketiq.where(role: 2).where(industry_id: current_user.industry_id).order("RANDOM()").first
 		end
 
 		if @marketiq
