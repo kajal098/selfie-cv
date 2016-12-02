@@ -31,13 +31,16 @@
 
 
 
-          <!-- <li><%= link_to "Dashboard", admin_root_path %></li> -->
+          <li><%= link_to "Home", admin_root_path %></li>
           <li><%= link_to "Device", admin_devices_path %></li>
           <li><%= link_to "User", admin_users_path %></li>
-          <li><%= link_to "Country", admin_stock_countries_path %></li>
-          <li><%= link_to "Category", admin_categories_path %></li>
+          
           <li><%= link_to "Company", admin_companies_path %></li>
-          <li><%= link_to "Stock", admin_company_stocks_path %></li>
+          
+
+          
+
+
           <li><%= link_to "Course", admin_courses_path %></li>
           <!-- <li><%= link_to "Graph", admin_graphs_path %></li> -->
           <li><%= link_to "Group", admin_groups_path %></li>          
@@ -48,7 +51,16 @@
           <li><%= link_to "Video Upload", admin_video_uploads_path %></li>
           <li><%= link_to "Whizquiz", admin_whizquizzes_path %></li>
 
-          
+          <li class="dropdown" style="margin:15px;">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Stock
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Country", admin_stock_countries_path %></li>
+          <li><%= link_to "Category", admin_categories_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Stock", admin_company_stocks_path %></li>
+            </ul>
+          </li>
 
           <li class="dropdown" style="margin:15px;">
             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">%
