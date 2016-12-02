@@ -17,7 +17,7 @@ if @user
 
 		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :text_field, :active
 
-		json.country_name @user.company_stock ? @user.company_stock.sensex_co : ""
+		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
@@ -61,7 +61,7 @@ if @user
 		
 		json.CompanyFutureGoal @user, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
-		json.country_name @user.company_stock ? @user.company_stock.sensex_co : ""
+		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
 		json.logo_thumb @user.logo_thumb_url
 		json.logo @user.company_logo.url		
@@ -105,7 +105,7 @@ if @user
 
 		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :text_field, :active
 
-		json.country_name @user.company_stock ? @user.company_stock.sensex_co : ""
+		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
@@ -133,7 +133,7 @@ if @user
 
 		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field, :active
 
-		json.country_name @user.company_stock ? @user.company_stock.sensex_co : ""
+		json.country_name @user.stock_country ? @user.stock_country.name : ""
 		
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
@@ -360,14 +360,14 @@ end
 if @companystocks
 	json.companystocks @companystocks do |coun|
 		json.id coun.id
-		json.country coun.sensex_co
+		json.country coun.stock_country_id
 	end
 end
 
 if @basic_info
 	json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :country_id
 
-	json.country_name @basic_info.company_stock ? @basic_info.company_stock.sensex_co : ""
+	json.country_name @basic_info.stock_country ? @basic_info.stock_country.name : ""
 	
 	json.file_thumb @basic_info.resume_thumb_url
 	json.file @basic_info.file.url

@@ -4,13 +4,15 @@ class CompanyStockReport
 
   scope { CompanyStock.order(:id) }
   
-  filter(:sensex_co, :string, header: "Country") {|value| where("sensex_co ilike ?", "%#{value}%")}
+  filter(:stock_country_id, :enum, header: "Country", select: ->{ StockCountry.pluck(:name, :id) })
   filter(:category_id, :enum, header: "Category", select: ->{ Category.pluck(:name, :id) })
   filter(:sensex, :string, header: "Sensex") {|value| where("sensex ilike ?", "%#{value}%")}
   filter(:currency, :string, header: "Currency") {|value| where("currency ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "company_stocks.id")
-  column(:sensex_co, header: "Country", :order => "company_stocks.sensex_co")
+  column(:stock_country_id, header: "Category") do |model|
+    model.stock_country_id ? model.stock_country.name : ""
+  end
   column(:category_id, header: "Category") do |model|
     model.category_id ? model.category.name : ""
   end

@@ -51,6 +51,7 @@ has_many    :faculty_researches
 has_many    :user_whizquizzes
 has_many    :user_marketiqs
 has_many    :user_folders, class_name: 'UserFolder',foreign_key: "user_id"
+belongs_to  :stock_country, class_name: 'StockCountry',foreign_key: "country_id"
 
 has_many    :groups, class_name: 'GroupUser',foreign_key: "user_id"
 has_many    :all_groups, -> (user) { where("#{user.id} != ALL (deleted_from)") }, through: :groups, class_name: 'Group', source: :group

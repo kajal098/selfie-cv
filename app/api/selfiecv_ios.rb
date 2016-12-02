@@ -1194,7 +1194,7 @@ before { authenticate! }
 		@specializations = Specialization.all
 		@companies = Company.all
 		@industries = Industry.all
-		@companystocks = CompanyStock.distinct(:sensex_co).uniq
+		@companystocks = CompanyStock.distinct(:stock_country_id).uniq
 	end
 
 	desc 'Update Image'

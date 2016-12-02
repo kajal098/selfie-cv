@@ -4,14 +4,13 @@ class GraphReport
 
   scope { Graph.order(:id) }
 
-  filter(:company_stock_id, :enum, header: "Country", select: ->{ CompanyStock.pluck(:sensex_co, :id) })
   filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) })
   filter(:company_code, :string, header: "Company Code") {|value| where("company_code ilike ?", "%#{value}%")}
   
   
   column(:id, header: "id", :order => "graphs.id")
   column(:company_stock_id, header: "Country") do |model|
-    model.company_stock_id ? model.company_stock.sensex_co : "Not Available"
+    model.company_stock_id.stock_country_id ? model.company_stock.stock_country.name : "Not Available"
   end
   column(:industry_id, header: "Industry") do |model|
     model.industry_id ? model.industry.name : "Not Available"
