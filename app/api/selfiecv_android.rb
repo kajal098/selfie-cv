@@ -1230,7 +1230,7 @@ class SelfiecvAndroid < Grape::API
         @specializations = Specialization.all
         @companies = Company.all
         @industries = Industry.all
-        @companystocks = CompanyStock.all
+        @companystocks = StockCountry.all
       end
 
       desc 'Update Image'
