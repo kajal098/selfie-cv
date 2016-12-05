@@ -262,6 +262,7 @@
                       <% elsif certi.file_type == 'doc' %><%= link_to certi.thumb_url %>
                       <% end %></td>
                       <%= link_to certi.file.url, target: '_blank' %>
+                      <td><%= certi.file_type %></td>
                     </tr>
                     <% end %>
                   </table>
