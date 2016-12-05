@@ -1,8 +1,7 @@
 json.status "Success"
 
 if @galeries
-	@all_galeries = @galeries.order('created_at DESC')
-	json.galeries @all_galeries do |galery|
+	json.galeries @galeries.order('created_at DESC') do |galery|
 		json.extract! galery, :id
 		json.FileThumb galery.thumb_url
 		json.File galery.file.url
