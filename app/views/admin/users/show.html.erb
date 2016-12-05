@@ -381,6 +381,7 @@
                       <th><strong class="text_color" >Date </strong></th>
                       <th><strong class="text_color" >Location </strong></th>
                       <th><strong class="text_color" >File </strong></th>
+                      <th><strong class="text_color" >File Type </strong></th>
                     </tr>
                     <% @user.user_references.each do |ref| %>     
                     <tr >
@@ -392,7 +393,8 @@
                       <td><%= ref.contact %></td>
                       <td><%= ref.date %></td>
                       <td><%= ref.location %></td>
-                      <td><% if ref.file_type == 'video' %><%= video_tag ref.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag ref.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if ref.file_type == 'video' %><%= video_tag ref.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif ref.file_type == 'text' %><%= ref.text_field %><% else %><%= image_tag ref.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><%= ref.file_type %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -1029,7 +1031,6 @@
                     <th><strong class="text_color" >Title </strong></th>
                     <th><strong class="text_color" >Description </strong></th>
                     <th><strong class="text_color" >File Type </strong></th>
-                    <th><strong class="text_color" >Text Field </strong></th>
                     <th><strong class="text_color" >File </strong></th>
                   </tr>
                   <% @user.faculty_publications.each do |publication| %>     
@@ -1038,7 +1039,6 @@
                     <td><%= publication.title %></td>
                     <td><%= publication.description %></td>
                     <td><%= publication.file_type %></td>
-                    <td><%= publication.text_field %></td>
                     <td><% publication.file.url %></td>
                   </tr>
                   <% end %>
@@ -1056,7 +1056,6 @@
                     <th><strong class="text_color" >Title </strong></th>
                     <th><strong class="text_color" >Description </strong></th>
                     <th><strong class="text_color" >File Type </strong></th>
-                    <th><strong class="text_color" >Text Field </strong></th>
                     <th><strong class="text_color" >File </strong></th>
                   </tr>
                   <% @user.faculty_researches.each do |research| %>     
@@ -1065,7 +1064,6 @@
                     <td><%= research.title %></td>
                     <td><%= research.description %></td>
                     <td><%= research.file_type %></td>
-                    <td><%= research.text_field %></td>
                     <td><% research.file.url %></td>
                   </tr>
                   <% end %>

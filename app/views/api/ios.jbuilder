@@ -13,7 +13,7 @@ end
 if @user
 	if @user.role == 'Jobseeker'
 
-		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :text_field, :active
+		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 		
@@ -54,7 +54,7 @@ if @user
 
 	elsif @user.role == 'Company'
 
-		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :country_id,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :text_field, :company_logo_type, :company_profile_type, :company_brochure_type, :active
+		json.User @user, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :country_id,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :company_logo_type, :company_profile_type, :company_brochure_type, :active
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 		
@@ -98,7 +98,7 @@ if @user
 
 	elsif @user.role == 'Student'
 
-		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :text_field, :active
+		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 		
@@ -126,7 +126,7 @@ if @user
 
 	elsif @user.role == 'Faculty'
 
-		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :text_field, :active
+		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 		
@@ -178,7 +178,7 @@ if @user_educations
 end
 
 if @user_experience
-	json.extract! @user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :text_field, :file_type
+	json.extract! @user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
 	json.file_thumb @user_experience.thumb_url
 	json.file @user_experience.file.url
 	json.created_at @user_experience.created_at.to_i
@@ -187,7 +187,7 @@ end
 if @user_experiences
 	@experiences = @user.user_experiences.order('created_at DESC')
 	json.user_experiences @experiences do |experience|
-		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :text_field, :file_type
+		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
 		json.file_thumb experience.thumb_url
 		json.file experience.file.url
 		json.exp_created_at experience.created_at.to_i
@@ -216,7 +216,7 @@ end
 
 
 if @award
-	json.extract! @award, :id, :user_id, :name, :description, :text_field, :file_type
+	json.extract! @award, :id, :user_id, :name, :description, :file_type
 	json.file_thumb @award.thumb_url
 	json.file @award.file.url
 	json.created_at @award.created_at.to_i
@@ -226,7 +226,7 @@ end
 if @user_awards
 	@awards = @user.user_awards.order('created_at DESC')
 	json.awards @awards do |award|
-		json.extract! award, :id, :user_id, :name, :description, :text_field, :file_type
+		json.extract! award, :id, :user_id, :name, :description, :file_type
 		json.file_thumb award.thumb_url
 		json.file award.file.url
 		json.award_created_at award.created_at.to_i
@@ -235,7 +235,7 @@ if @user_awards
 end
 
 if @certificate
-	json.extract! @certificate, :id, :user_id, :certificate_type, :name, :year, :text_field, :file_type
+	json.extract! @certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
 	json.file_thumb @certificate.thumb_url
 	json.file @certificate.file.url
 	json.created_at @certificate.created_at.to_i
@@ -244,7 +244,7 @@ end
 if @user_certificates
 	@certificates = @user.user_certificates.order('created_at DESC')
 	json.certificates @certificates do |certificate|
-		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :text_field, :file_type
+		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
 		json.file_thumb certificate.thumb_url
 		json.file certificate.file.url
 		json.certificate_created_at certificate.created_at.to_i
@@ -253,7 +253,7 @@ if @user_certificates
 end
 
 if @curricular
-	json.extract! @curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :text_field, :file_type
+	json.extract! @curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 	json.file_thumb @curricular.thumb_url
 	json.file @curricular.file.url
 	json.created_at @curricular.created_at.to_i
@@ -262,7 +262,7 @@ end
 if @user_curriculars
 	@curriculars = @user.user_curriculars.order('created_at DESC')
 	json.user_curriculars @curriculars do |curricular|
-		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :text_field, :file_type
+		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 		json.file_thumb curricular.thumb_url
 		json.file curricular.file.url
 		json.curricular_created_at curricular.created_at.to_i
@@ -271,7 +271,7 @@ if @user_curriculars
 end
 
 if @future_goal
-	json.extract! @future_goal, :id, :user_id, :goal_type, :title, :term_type, :text_field, :file_type
+	json.extract! @future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
 	json.file_thumb @future_goal.thumb_url
 	json.file @future_goal.file.url
 	json.created_at @future_goal.created_at.to_i
@@ -280,7 +280,7 @@ end
 if @user_future_goals
 	@future_goals = @user.user_future_goals.order('created_at DESC')
 	json.user_future_goals @future_goals do |future_goal|
-		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :text_field, :file_type
+		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
 		json.file_thumb future_goal.thumb_url
 		json.file future_goal.file.url
 		json.future_goal_created_at future_goal.created_at.to_i

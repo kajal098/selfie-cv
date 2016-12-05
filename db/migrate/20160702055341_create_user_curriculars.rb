@@ -8,7 +8,6 @@ class CreateUserCurriculars < ActiveRecord::Migration
       t.string :location,              null: false, default: ""
       t.date :date,                   :default=> Date.today
       t.string :file,                 default: ''
-      t.string :text_field,              null: false, default: ""
       t.string :file_type,              null: false, default: ""
       t.boolean :active,            default: false
       t.timestamps null: false

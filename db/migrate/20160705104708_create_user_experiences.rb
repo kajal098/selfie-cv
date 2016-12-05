@@ -9,7 +9,6 @@ class CreateUserExperiences < ActiveRecord::Migration
       t.string :designation,              null:false, default: ""
       t.string :description,              null:false, default: ""
       t.string :file,              default: ''
-      t.string :text_field,              null: false, default: ""
       t.string :file_type,              null: false, default: ""
       t.boolean :active,            default: false
       t.boolean :current_company,            default: false
