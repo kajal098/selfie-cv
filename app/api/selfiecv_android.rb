@@ -1642,7 +1642,7 @@ class SelfiecvAndroid < Grape::API
         error!({error: 'User not found', status: 'Fail'}, 200) unless @find_user
         if (params[:title] || params[:description] )
           @faculty_research = FacultyResearch.new user_id: @find_user.id
-          @faculty_research.attributes = clean_params(params).permit(:title, :description)
+          @faculty_research.attributes = clean_params(params).permit(:title, :description, :file_type)
               @faculty_research.file = params[:file] if params[:file]
           error!({error: @faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_research.save
         end          
@@ -1660,7 +1660,7 @@ class SelfiecvAndroid < Grape::API
       post :update_faculty_research, jbuilder: 'android' do
         @faculty_research = FacultyResearch.find params[:research_id]
         error!({error: 'Student research not found', status: 'Fail'}, 200) unless @faculty_research
-        @faculty_research.attributes = clean_params(params).permit(:title, :description)
+        @faculty_research.attributes = clean_params(params).permit(:title, :description, :file_type)
         @faculty_research.file = params[:file] if params[:file]
         error!({error: @faculty_research.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_research.save
       end

@@ -172,8 +172,7 @@ if @user_education
 		json.edu_updated_at @user_education.updated_at.to_i
 end
 if @user_educations
-	@educations = @user.user_educations.order('created_at DESC')
-	json.user_educations @educations do |education|
+	json.user_educations @user_educations.order('created_at DESC') do |education|
 		json.extract! education, :id, :user_id, :year, :school, :skill, :course_id, :specialization_id
 		json.course education.course.name
 		json.specialization education.specialization.name
@@ -190,8 +189,7 @@ if @user_experience
 	json.updated_at @user_experience.updated_at.to_i
 end
 if @user_experiences
-	@experiences = @user.user_experiences.order('created_at DESC')
-	json.user_experiences @experiences do |experience|
+	json.user_experiences @user_experiences.order('created_at DESC') do |experience|
 		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
 		json.file_thumb experience.thumb_url
 		json.file experience.file.url
@@ -207,8 +205,7 @@ if @user_preferred_work
 end
 
 if @user_preferred_works
-	@preferred_works = @user.user_preferred_works.order('created_at DESC')
-	json.user_preferred_works @preferred_works do |user_preferred_work|
+	json.user_preferred_works @user_preferred_works.order('created_at DESC') do |user_preferred_work|
 		json.extract! user_preferred_work, :id, :user_id, :ind_name, :functional_name, :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type
 		json.created_at user_preferred_work.created_at.to_i
 		json.updated_at user_preferred_work.updated_at.to_i
@@ -229,8 +226,7 @@ if @award
 end
 
 if @user_awards
-	@awards = @user.user_awards.order('created_at DESC')
-	json.awards @awards do |award|
+	json.awards @user_awards.order('created_at DESC') do |award|
 		json.extract! award, :id, :user_id, :name, :description, :file_type
 		json.file_thumb award.thumb_url
 		json.file award.file.url
@@ -247,8 +243,7 @@ if @certificate
 	json.updated_at @certificate.updated_at.to_i
 end
 if @user_certificates
-	@certificates = @user.user_certificates.order('created_at DESC')
-	json.certificates @certificates do |certificate|
+	json.certificates @user_certificates.order('created_at DESC') do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
 		json.file_thumb certificate.thumb_url
 		json.file certificate.file.url
@@ -265,8 +260,7 @@ if @curricular
 	json.updated_at @curricular.updated_at.to_i
 end
 if @user_curriculars
-	@curriculars = @user.user_curriculars.order('created_at DESC')
-	json.user_curriculars @curriculars do |curricular|
+	json.user_curriculars @user_curriculars.order('created_at DESC') do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 		json.file_thumb curricular.thumb_url
 		json.file curricular.file.url
@@ -283,8 +277,7 @@ if @future_goal
 	json.updated_at @future_goal.updated_at.to_i
 end
 if @user_future_goals
-	@future_goals = @user.user_future_goals.order('created_at DESC')
-	json.user_future_goals @future_goals do |future_goal|
+	json.user_future_goals @user_future_goals.order('created_at DESC') do |future_goal|
 		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
 		json.file_thumb future_goal.thumb_url
 		json.file future_goal.file.url
@@ -301,8 +294,7 @@ if @environment
 	json.updated_at @environment.updated_at.to_i
 end
 if @user_working_environments
-	@environments = @user.user_environments.order('created_at DESC')
-	json.user_working_environments @environments do |environment|
+	json.user_working_environments @user_working_environments.order('created_at DESC') do |environment|
 		json.extract! environment, :id, :user_id, :env_type, :title, :text_field, :file_type, :text_field
 		json.file_thumb environment.thumb_url
 		json.file environment.file.url
@@ -319,8 +311,7 @@ if @reference
 	json.updated_at @reference.updated_at.to_i
 end
 if @user_references
-	@references = @user.user_references.order('created_at DESC')
-	json.user_references @references do |ref|
+	json.user_references @user_references.order('created_at DESC') do |ref|
 		json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
 		json.file_thumb ref.thumb_url
 		json.file ref.file.url
@@ -388,8 +379,7 @@ if @student_education
 end
 
 if @student_educations
-	@educations = @user.student_educations.order('created_at DESC')
-	json.student_educations @educations do |education|
+	json.student_educations @student_educations.order('created_at DESC') do |education|
 		json.extract! education, :id, :user_id, :standard, :school, :year
 		json.edu_created_at education.created_at.to_i
 		json.edu_updated_at education.updated_at.to_i
@@ -405,8 +395,7 @@ if @student_marksheet
 end
 
 if @student_marksheets
-	@marksheets = @user.user_marksheets.order('created_at DESC')
-	json.student_marksheets @marksheets do |marksheet|
+	json.student_marksheets @student_marksheets.order('created_at DESC') do |marksheet|
 		json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	, :file_type
 		json.file_thumb marksheet.thumb_url
 		json.file marksheet.file.url	
@@ -424,8 +413,7 @@ if @student_project
 end
 
 if @student_projects
-	@projects = @user.user_projects.order('created_at DESC')
-	json.student_projects @projects do |project|
+	json.student_projects @student_projects.order('created_at DESC') do |project|
 		json.extract! project, :id, :user_id, :title, :description, :file_type
 		json.file_thumb project.thumb_url
 		json.file project.file.url
@@ -443,8 +431,7 @@ if @faculty_affiliation
 end
 
 if @faculty_affiliations
-	@affiliations = @user.faculty_affiliations.order('created_at DESC')
-	json.faculty_affiliations @affiliations do |affiliation|
+	json.faculty_affiliations @faculty_affiliations.order('created_at DESC') do |affiliation|
 		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
 		json.file_thumb affiliation.thumb_url
 			json.file affiliation.file.url
@@ -462,8 +449,7 @@ if @faculty_workshop
 end
 
 if @faculty_workshops
-	@workshops = @user.faculty_workshops.order('created_at DESC')
-	json.faculty_workshops @workshops do |workshop|
+	json.faculty_workshops @faculty_workshops.order('created_at DESC') do |workshop|
 		json.extract! workshop, :id, :user_id, :description, :file_type
 		json.file_thumb workshop.thumb_url
 			json.file workshop.file.url
@@ -481,8 +467,7 @@ if @faculty_publication
 end
 
 if @faculty_publications
-	@publications = @user.faculty_publications.order('created_at DESC')
-	json.faculty_publications @publications do |publication|
+	json.faculty_publications @faculty_publications.order('created_at DESC') do |publication|
 		json.extract! publication, :id, :user_id, :title, :description
 		json.file_thumb publication.thumb_url
 		json.file publication.file.url
@@ -500,8 +485,7 @@ if @faculty_research
 end
 
 if @faculty_researches
-	@researches = @user.faculty_researches.order('created_at DESC')
-	json.faculty_researches @researches do |research|
+	json.faculty_researches @faculty_researches.order('created_at DESC') do |research|
 		json.extract! research, :id, :user_id, :title, :description
 		json.file_thumb research.thumb_url
 		json.file research.file.url

@@ -1596,7 +1596,7 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 			if (params[:title] || params[:description] )
 				@faculty_research = FacultyResearch.new user_id: @find_user.id
-				@faculty_research.attributes = clean_params(params).permit(:title, :description)
+				@faculty_research.attributes = clean_params(params).permit(:title, :description, :file_type)
 					@faculty_research.file = params[:file] if params[:file]
 				error! @faculty_research.errors.full_messages.join(', '),422 unless @faculty_research.save
 			end          
@@ -1614,7 +1614,7 @@ before { authenticate! }
 	post :update_faculty_research, jbuilder: 'ios' do
 		@faculty_research = FacultyResearch.find params[:research_id]
 		error! 'Student research not found',422 unless @faculty_research
-		@faculty_research.attributes = clean_params(params).permit(:title, :description)
+		@faculty_research.attributes = clean_params(params).permit(:title, :description, :file_type)
 			@faculty_research.file = params[:file] if params[:file]
 		error! @faculty_research.errors.full_messages.join(', '),422 unless @faculty_research.save
 	end

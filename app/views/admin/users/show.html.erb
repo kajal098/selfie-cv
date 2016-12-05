@@ -222,6 +222,7 @@
                     <td><strong class="text_color" >Award Type </strong></td>
                     <td><strong class="text_color" >Description </strong></td>
                     <td><strong class="text_color" >File </strong></td>
+                    <th><strong class="text_color" >File Type </strong></th>
                   </tr>
                   <% @user.user_awards.each do |award| %>    
                   <tr >
@@ -230,6 +231,7 @@
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
                     <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -246,6 +248,7 @@
                     <th><strong class="text_color" >Certificate Type </strong></th>
                     <th><strong class="text_color" >Year </strong></th>
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type </strong></th>
                   </tr>
                   <% @user.user_certificates.each do |certi| %> 
                   <tr >
@@ -255,8 +258,10 @@
                     <td><%= certi.year %></td>
                     <td><% if certi.file_type == 'video' %>
                       <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% else %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% end %></td>
+                      <td><%= certi.file_type %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -576,6 +581,7 @@
                     <th><strong class="text_color" >Award Type </strong></th>
                     <th><strong class="text_color" >Description </strong></th>
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type</strong></th>
                   </tr>
                   <% @user.user_awards.each do |award| %>     
                   <tr >
@@ -584,6 +590,7 @@
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
                     <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -597,15 +604,26 @@
                 <table>
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
-                    <th><strong class="text_color" >File Type </strong></th>
+                    <th><strong class="text_color" >Name </strong></th>
+                    <th><strong class="text_color" >Certificate Type </strong></th>
+                    <th><strong class="text_color" >Year </strong></th>
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type </strong></th>
                   </tr>
                   <% @user.user_certificates.each do |certi| %>     
                   <tr >
                     <td><%= certi.id %></td>
-                    <td><%= certi.file_type %></td>
-                    <td><%= image_tag certi.thumb_url, :size => "50x50" %></td>
-                  </tr>
+                    <td><%= certi.name %></td>
+                    <td><%= certi.certificate_type %></td>
+                    <td><%= certi.year %></td>
+                    <td><% if certi.file_type == 'video' %>
+                      <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
+                      <% else %><%= image_tag certi.thumb_url, :size => "50x50" %>
+                      <% end %></td>
+                      <td><%= certi.file_type %></td>
+                    </tr>
+
                   <% end %>
                 </table>     
                 <% else %>
@@ -759,7 +777,7 @@
                     <td><%= marksheet.grade %></td>
                     <td><%= marksheet.year %></td>
                     <td><%= marksheet.file_type %></td>
-                    <td><%= marksheet.file.url %></td>
+                    <td><% if marksheet.file_type == 'image' %><%= image_tag marksheet.thumb_url, :size => "50x50" %><% else %><%= image_tag marksheet.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -775,12 +793,16 @@
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Title </strong></th>
                     <th><strong class="text_color" >Description </strong></th>
+                    <th><strong class="text_color" >File Type</strong></th>
+                    <th><strong class="text_color" >File </strong></th>
                   </tr>
                   <% @user.user_projects.each do |project| %>     
                   <tr >
                     <td><%= project.id %></td>
                     <td><%= project.title %></td>
                     <td><%= project.description %></td>
+                    <td><%= project.file_type %></td>
+                    <td><% if project.file_type == 'video' %><%= video_tag project.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif project.file_type == 'image' %><%= image_tag project.thumb_url, :size => "50x50" %><% else %><%= image_tag project.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -798,6 +820,7 @@
                     <th><strong class="text_color" >Award Type </strong></th>
                     <th><strong class="text_color" >Description </strong></th>
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type</strong></th>
                   </tr>
                   <% @user.user_awards.each do |award| %>     
                   <tr >
@@ -806,6 +829,7 @@
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
                     <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -823,6 +847,7 @@
                     <th><strong class="text_color" >Certificate Type </strong></th>
                     <th><strong class="text_color" >Year </strong></th>
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type </strong></th>
                   </tr>
                   <% @user.user_certificates.each do |certi| %>     
                   <tr >
@@ -830,8 +855,13 @@
                     <td><%= certi.name %></td>
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
-                    <td><% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "50x50" %><% end %></td>
-                  </tr>
+                    <td><% if certi.file_type == 'video' %>
+                      <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
+                      <% else %><%= image_tag certi.thumb_url, :size => "50x50" %>
+                      <% end %></td>
+                      <td><%= certi.file_type %></td>
+                    </tr>
                   <% end %>
                 </table>
                 <% else %>
@@ -986,6 +1016,7 @@
                     <th><strong class="text_color" >Designation </strong></th>
                     <th><strong class="text_color" >Join From </strong></th>
                     <th><strong class="text_color" >Join Till </strong></th>
+                    <th><strong class="text_color" >File </strong></th>
                   </tr>
                   <% @user.faculty_affiliations.each do |affiliation| %>     
                   <tr >
@@ -996,6 +1027,7 @@
                     <td><%= affiliation.designation %></td>
                     <td><%= affiliation.join_from %></td>
                     <td><%= affiliation.join_till %></td>
+                    <td><%= image_tag affiliation.thumb_url, :size => "50x50" %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -1009,12 +1041,18 @@
                 <table>     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
+                    <th><strong class="text_color" >Title</strong></th>
                     <th><strong class="text_color" >Description </strong></th>
+                    <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type </strong></th>
                   </tr>
                   <% @user.faculty_workshops.each do |workshop| %>     
                   <tr >
                     <td><%= workshop.id %></td>
+                    <td><%= workshop.title %></td>
                     <td><%= workshop.description %></td>
+                    <td><% if workshop.file_type == 'video' %><%= video_tag workshop.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif workshop.file_type == 'image' %><%= image_tag workshop.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><%= workshop.file_type %></td>                    
                   </tr>
                   <% end %>
                 </table>
@@ -1082,6 +1120,7 @@
                     <th><strong class="text_color" >Award Type </strong></th>
                     <th><strong class="text_color" >Description </strong></th>
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type</strong></th>
                   </tr>
                   <% @user.user_awards.each do |award| %>     
                   <tr >
@@ -1090,6 +1129,7 @@
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
                     <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -1107,6 +1147,8 @@
                     <th><strong class="text_color" >Certificate Type </strong></th>
                     <th><strong class="text_color" >Year </strong></th>
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type </strong></th>
+
                   </tr>
                   <% @user.user_certificates.each do |certi| %>     
                   <tr >
@@ -1114,8 +1156,13 @@
                     <td><%= certi.name %></td>
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
-                    <td><% if certi.file_type == 'video' %><%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag certi.thumb_url, :size => "50x50" %><% end %></td>
-                  </tr>
+                    <td><% if certi.file_type == 'video' %>
+                      <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
+                      <% else %><%= image_tag certi.thumb_url, :size => "50x50" %>
+                      <% end %></td>
+                      <td><%= certi.file_type %></td>
+                    </tr>
                   <% end %>
                 </table>
                 <% else %>
