@@ -259,9 +259,8 @@
                     <td><% if certi.file_type == 'video' %>
                       <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
-                      <% elsif certi.file_type == 'doc' %><%= link_to certi.thumb_url %>
-                      <% end %></td>
-                      <%= link_to certi.file.url, target: '_blank' %>
+                      <% elsif certi.file_type == 'doc' %><%= link_to certi.file.url, target: '_blank' %>
+                      <% end %></td>                      
                       <td><%= certi.file_type %></td>
                     </tr>
                     <% end %>
@@ -620,9 +619,8 @@
                     <td><% if certi.file_type == 'video' %>
                       <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
-                      <% elsif certi.file_type == 'doc' %><%= link_to certi.thumb_url %>
+                      <% elsif certi.file_type == 'doc' %><%= link_to certi.file.url, target: '_blank' %>
                       <% end %></td>
-                      <%= link_to certi.file.url, target: '_blank' %>
                     </tr>
 
                   <% end %>
@@ -859,9 +857,8 @@
                     <td><% if certi.file_type == 'video' %>
                       <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
-                      <% elsif certi.file_type == 'doc' %><%= link_to certi.thumb_url %>
+                      <% elsif certi.file_type == 'doc' %><%= link_to certi.file.url, target: '_blank' %>
                       <% end %></td>
-                      <%= link_to certi.file.url, target: '_blank' %>
                     </tr>
                   <% end %>
                 </table>
