@@ -100,3 +100,10 @@ json.notifications @notifications.count.times do |n|
 end
 
 end
+
+if @response
+
+	data =  JSON.parse(@response.body)
+	json.id = data['id']
+	
+end
