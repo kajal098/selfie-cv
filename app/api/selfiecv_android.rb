@@ -2360,7 +2360,8 @@ class SelfiecvAndroid < Grape::API
                 http = Net::HTTP.new(uri.host, uri.port)      
                 http.use_ssl = true          
                 request = Net::HTTP::Get.new(uri, 'Content-Language' => 'en-us', 'Content-Type' =>'application/json')
-                @response = http.request(request)
+                response = http.request(request)
+                parsed_response = JSON.parse(response.body)
           else
             error!({error: 'Something went wrong', status: 'Fail'}, 200)
           end

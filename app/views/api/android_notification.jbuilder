@@ -101,9 +101,8 @@ end
 
 end
 
-if @response
+if parsed_response
 
-	data =  JSON.parse(@response.body)
-	json.id = data['id']
+	json.id parsed_response.id
 	
 end
