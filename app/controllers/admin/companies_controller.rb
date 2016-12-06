@@ -53,11 +53,7 @@ private
   end
 
   def company_params
-    if params[:action] == "update" and params[:company]
-      params.require(:company).permit( :name, :email, :phone_number)
-    else
-      params.require(:company).permit!
-    end
+    params.require(:company).permit!
   end
 
 end

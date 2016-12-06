@@ -53,11 +53,7 @@ private
   end
 
   def company_stock_params
-    if params[:action] == "update" and params[:company_stock]
-      params.require(:company_stock).permit( :name, :email, :phone_number)
-    else
-      params.require(:company_stock).permit!
-    end
+    params.require(:company_stock).permit!
   end
 
 end

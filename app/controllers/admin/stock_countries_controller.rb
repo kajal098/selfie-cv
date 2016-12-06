@@ -53,11 +53,7 @@ private
   end
 
   def stock_country_params
-    if params[:action] == "update" and params[:stock_country]
-      params.require(:stock_country).permit( :name, :email, :phone_number)
-    else
-      params.require(:stock_country).permit!
-    end
+    params.require(:stock_country).permit!
   end
 
 end

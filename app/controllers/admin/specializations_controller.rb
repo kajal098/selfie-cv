@@ -53,11 +53,7 @@ private
   end
 
   def specialization_params
-    if params[:action] == "update" and params[:specialization]
-      params.require(:specialization).permit( :name, :email, :phone_number)
-    else
-      params.require(:specialization).permit!
-    end
+    params.require(:specialization).permit!
   end
 
 end
