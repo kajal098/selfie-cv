@@ -101,8 +101,8 @@ end
 
 end
 
-if parsed_response
+if @parsed_response
 
-	json.id parsed_response.id
+	json.id @parsed_response[0]['id']
 	
 end
