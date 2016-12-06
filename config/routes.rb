@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     resources :whizquizzes do
         get :flop
     end    
+
+    get 'search' => 'graphs#search', as: :search
+    post 'search_graph' => 'graphs#search_graph', as: :search_graph
     
   end
   mount SelfiecvAndroid => '/'

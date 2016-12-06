@@ -3,6 +3,7 @@ class CreateCompanyStocks < ActiveRecord::Migration
     create_table :company_stocks do |t|
     	t.integer  :stock_country_id
     	t.integer :category_id
+        t.string  :company_code,              null:false, default: ""
     	t.string  :sensex,              null:false, default: ""
     	t.string  :currency,              null:false, default: ""
     	t.string  :date_format,              null:false, default: "dd/mm/yyyy"

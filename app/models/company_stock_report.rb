@@ -10,12 +10,13 @@ class CompanyStockReport
   filter(:currency, :string, header: "Currency") {|value| where("currency ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "company_stocks.id")
-  column(:stock_country_id, header: "Category") do |model|
+  column(:stock_country_id, header: "Country") do |model|
     model.stock_country_id ? model.stock_country.name : ""
   end
   column(:category_id, header: "Category") do |model|
     model.category_id ? model.category.name : ""
   end
+  column(:company_code, header: "Company Code", :order => "company_stocks.company_code")
   column(:sensex, header: "Sensex", :order => "company_stocks.sensex")
   column(:currency, header: "Currency", :order => "company_stocks.currency")
   column(:date_format, header: "Date Format", :order => "company_stocks.date_format")

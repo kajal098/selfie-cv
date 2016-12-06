@@ -53,11 +53,7 @@ private
   end
 
   def category_params
-    if params[:action] == "update" and params[:category]
-      params.require(:category).permit( :name, :email, :phone_number)
-    else
-      params.require(:category).permit!
-    end
+    params.require(:category).permit( :name )
   end
 
 end

@@ -2337,4 +2337,36 @@ class SelfiecvAndroid < Grape::API
   end
   #--------------------------------folder end----------------------------------#
 
+  #--------------------------------folder start----------------------------------#
+    resources :graph do
+    before { authenticate! }
+
+      desc 'Search For Graph'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :country_name
+        requires :category_name
+      end
+      post :search, jbuilder: 'android_graph' do
+          @stock = CompanyStock.joins(:category,:stock_country).where('stock_countries.name = ?', params[:country_name]).where('categories.name = ?', params[:category_name]).first
+          error!({error: 'No record found', status: 'Fail'}, 200) unless @stock
+          if !params[:country_name].empty? && !params[:category_name].empty?
+                @host = 'https://www.google.com/finance/info?q='
+                @json_array = {
+                  "countysensexcode" => @stock.sensex,
+                  "companyscripcode" => @stock.company_code
+                } 
+                uri = URI.parse(@host)
+                uri.query = URI.encode_www_form(@json_array)
+                http = Net::HTTP.new(uri.host, uri.port)
+                request = Net::HTTP::Get.new(uri, 'Content-Language' => 'en-us', 'Content-Type' =>'application/json')
+                response = http.request(request)
+                return response
+          else
+            error!({error: 'Something went wrong', status: 'Fail'}, 200)
+          end
+      end
+
+    end
+  #--------------------------------folder end----------------------------------#
 end

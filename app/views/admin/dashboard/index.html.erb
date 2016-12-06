@@ -32,13 +32,11 @@
                       <tr>
                         <th>Username</th>
                         <th>E-mail</th>                  
-                        <th>Contact</th>
                       </tr>
                       <% @student.each do |student| %>     
                       <tr >
                         <td><%= student.username %></td>
                         <td><%= student.email %></td>                  
-                        <td><%= student.contact_number %></td>
                       </tr>
                       <% end %>
                 <% else %>
@@ -60,13 +58,11 @@
                 <tr>
                   <th>Username</th>
                   <th>E-mail</th>                  
-                  <th>Contact</th>
                 </tr>
                 <% @faculty.each do |faculty| %>     
                 <tr >
                   <td><%= faculty.username %></td>
                   <td><%= faculty.email %></td>                  
-                  <td><%= faculty.contact_number %></td>
                 </tr>
                 <% end %>
                 <% else %>
@@ -98,13 +94,11 @@
                 <tr>
                   <th>Username</th>
                   <th>E-mail</th>                  
-                  <th>Contact</th>
                 </tr>
                 <% @jobseeker.each do |jobseeker| %>     
                 <tr >
                   <td><%= jobseeker.username %></td>
                   <td><%= jobseeker.email %></td>                  
-                  <td><%= jobseeker.contact_number %></td>
                 </tr>
                 <% end %>
                 <% else %>
@@ -126,13 +120,11 @@
                 <tr>
                   <th>Username</th>
                   <th>E-mail</th>                  
-                  <th>Contact</th>
                 </tr>
                 <% @company.each do |company| %>     
                 <tr >
                   <td><%= company.username %></td>
                   <td><%= company.email %></td>                 
-                  <td><%= company.contact_number %></td>
                 </tr>
                 <% end %>
                 <% else %>
