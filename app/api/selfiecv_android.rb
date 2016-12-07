@@ -414,7 +414,7 @@ class SelfiecvAndroid < Grape::API
         @find_user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @find_user
         @user_experience = UserExperience.new user_id: @find_user.id
-        @user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :current_company, :file_type )
+        @user_experience.attributes = clean_params(params).permit(:name, :exp_type, :start_from,  :working_till, :designation, :description, :current_company, :file_type )
         @user_experience.file = params[:file] if params[:file]
         error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
       end
