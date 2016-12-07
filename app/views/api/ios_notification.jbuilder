@@ -97,3 +97,18 @@ json.notifications @notifications.count.times do |n|
 end
 
 end
+
+
+if @parsed_response
+
+	json.Id @parsed_response[0]['id']
+	json.StockSymbol  @parsed_response[0]['t']
+	json.Index  @parsed_response[0]['e']
+	json.LastTradeTime  @parsed_response[0]['ltt']
+	json.LastTradeDateTime  @parsed_response[0]['lt_dts']
+	json.LastTradeDateTimeLong  @parsed_response[0]['lt']
+	json.Change  @parsed_response[0]['c']
+	json.ChangePercent  @parsed_response[0]['cp']
+	json.PreviousClosePrice  @parsed_response[0]['pcls_fix']
+	
+end

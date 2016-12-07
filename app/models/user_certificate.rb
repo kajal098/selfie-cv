@@ -23,16 +23,18 @@ class UserCertificate < ActiveRecord::Base
         	certi_per = 0
             setting_per = UserPercentage.where(key: 'certificate').where(ptype: user.role).first
         	user.user_certificates.each do |certi|   
-        	   		if certi.file_type == "image"
+        	   		if certi.file_type == "video"
 	                    certi_per = setting_per.value.to_i * 1
 	                    break
+                    elsif certi.file_type == "image"
+                        certi_per = setting_per.value.to_i * 0.7
+                        break
 	                elsif certi.file_type == "doc"
-	                    certi_per = setting_per.value.to_i * 1
+	                    certi_per = setting_per.value.to_i * 0.7
 	                    break
 	                else
 	                    certi_per = setting_per.value.to_i * 0.5
-	                end
-        		       	
+	                end        		       	
         	end
             user.user_meter.update_column('certificate_per' ,certi_per)
             user.profile_meter_total
@@ -48,16 +50,18 @@ class UserCertificate < ActiveRecord::Base
         if user.user_certificates.where.not(id: self.id).count > 0 
             setting_per = UserPercentage.where(key: 'certificate').where(ptype: user.role).first
             user.user_certificates.where.not(id: self.id).each do |certi|   
-                    if certi.file_type == "image"
+                    if certi.file_type == "video"
                         certi_per = setting_per.value.to_i * 1
                         break
+                    elsif certi.file_type == "image"
+                        certi_per = setting_per.value.to_i * 0.7
+                        break
                     elsif certi.file_type == "doc"
-                        certi_per = setting_per.value.to_i * 1
+                        certi_per = setting_per.value.to_i * 0.7
                         break
                     else
                         certi_per = setting_per.value.to_i * 0.5
-                    end
-                        
+                    end                        
             end
         end
         user.user_meter.update_column('certificate_per' ,certi_per)

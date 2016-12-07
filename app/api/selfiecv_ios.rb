@@ -2282,4 +2282,37 @@ end
   end
   #--------------------------------folder end----------------------------------#
 
+  #--------------------------------folder start----------------------------------#
+    resources :graph do
+    #before { authenticate! }
+
+      desc 'Search For Graph'
+      params do
+        requires :token, type: String, regexp: UUID_REGEX
+        requires :country_name
+        requires :category_name
+      end
+      post :search, jbuilder: 'ios_notification' do
+          @stock = CompanyStock.joins(:category,:stock_country).where('stock_countries.name = ?', params[:country_name]).where('categories.name = ?', params[:category_name]).first
+          error! 'No record found',422 unless @stock
+          if !params[:country_name].empty? && !params[:category_name].empty?
+                @host = 'https://www.google.com/finance/info'
+                @json_array = {
+                  "q" => @stock.sensex + ":" + @stock.company_code
+                } 
+                uri = URI.parse(@host)
+                uri.query = URI.encode_www_form(@json_array)
+                http = Net::HTTP.new(uri.host, uri.port)      
+                http.use_ssl = true          
+                request = Net::HTTP::Get.new(uri, 'Content-Language' => 'en-us')
+                response = http.request(request)
+                @parsed_response = JSON.parse(response.body.gsub('//',''))
+           else
+            error! 'Something went wrong',422
+          end
+      end
+
+    end
+  #--------------------------------folder end----------------------------------#
+
 end
