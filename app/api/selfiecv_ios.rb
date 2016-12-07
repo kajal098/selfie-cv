@@ -1331,13 +1331,16 @@ before { authenticate! }
 		requires :user_id
 		requires :title
 		optional :description
+		optional :file
+        optional :file_type
 	end
 	post :student_project, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
 			if (params[:title] || params[:description] )
 				@student_project = UserProject.new user_id: @find_user.id
-				@student_project.attributes = clean_params(params).permit(:title, :description)
+				@student_project.attributes = clean_params(params).permit(:title, :description, :file_type)
+				@student_project.file = params[:file] if params[:file]
 				error! @student_project.errors.full_messages.join(', '),422 unless @student_project.save
 			end          
 	end
@@ -1348,11 +1351,13 @@ before { authenticate! }
 		requires :project_id
 		optional :title
 		optional :description
+		optional :file
+        optional :file_type
 	end
 	post :update_student_project, jbuilder: 'ios' do
 		@student_project = UserProject.find params[:project_id]
 		error! 'Student project not found',422 unless @student_project
-		@student_project.attributes = clean_params(params).permit(:title, :description)
+		@student_project.attributes = clean_params(params).permit(:title, :description, :file_type)
 		@student_project.file = params[:file] if params[:file]
 		error! @student_project.errors.full_messages.join(', '),422 unless @student_project.save
 	end
