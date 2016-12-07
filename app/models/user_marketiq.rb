@@ -1,6 +1,7 @@
 class UserMarketiq < ActiveRecord::Base
 
 	belongs_to :user
+    belongs_to :marketiq
 
 	after_save :percent_of_marketiq
     
