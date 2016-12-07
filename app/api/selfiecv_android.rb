@@ -435,7 +435,7 @@ class SelfiecvAndroid < Grape::API
         authenticate!
         @user_experience = UserExperience.find params[:experience_id]
         error!({error: 'User Experience not found', status: 'Fail'}, 200) unless @user_experience
-        @user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
+        @user_experience.attributes = clean_params(params).permit(:name,  :exp_type, :start_from, :working_till,
         :designation, :description, :file_type )
         @user_experience.file = params[:file] if params[:file]
         error!({error: @user_experience.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user_experience.save
