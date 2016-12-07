@@ -621,6 +621,7 @@
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %><%= link_to "Download Document" ,certi.file.url, target: '_blank' %>
                       <% end %></td>
+                      <td><%= certi.file_type %></td>
                     </tr>
 
                   <% end %>
@@ -859,6 +860,7 @@
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %><%= link_to "Download Document", certi.file.url, target: '_blank' %>
                       <% end %></td>
+                      <td><%= certi.file_type %></td>
                     </tr>
                   <% end %>
                 </table>
