@@ -421,6 +421,7 @@
                       <th><strong class="text_color" >Your Answer </strong></th>
                       <th><strong class="text_color" >True Answer </strong></th>
                       <th><strong class="text_color" >Status </strong></th>
+                      <th><strong class="text_color" >Change</strong></th>
                     </tr>
                     <% @user.user_marketiqs.each do |user_marketiq| %>     
                     <tr >
@@ -429,6 +430,7 @@
                       <td><%= user_marketiq.answer %></td>
                       <td><%= user_marketiq.marketiq.answer %></td>
                       <td><%= user_marketiq.status %></td>
+                      <td><%= link_to "", admin_user_flop_marketiq_path(user_marketiq), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop marketiq" %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -709,6 +711,7 @@
                       <th><strong class="text_color" >Your Answer </strong></th>
                       <th><strong class="text_color" >True Answer </strong></th>
                       <th><strong class="text_color" >Status </strong></th>
+                      <th><strong class="text_color" >Change</strong></th>
                     </tr>
                     <% @user.user_marketiqs.each do |user_marketiq| %>     
                     <tr >
@@ -717,6 +720,7 @@
                       <td><%= user_marketiq.answer %></td>
                       <td><%= user_marketiq.marketiq.answer %></td>
                       <td><%= user_marketiq.status %></td>
+                      <td><%= link_to "", admin_user_flop_marketiq_path(user_marketiq), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop marketiq" %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -988,6 +992,7 @@
                       <th><strong class="text_color" >Your Answer </strong></th>
                       <th><strong class="text_color" >True Answer </strong></th>
                       <th><strong class="text_color" >Status </strong></th>
+                      <th><strong class="text_color" >Change</strong></th>
                     </tr>
                     <% @user.user_marketiqs.each do |user_marketiq| %>     
                     <tr >
@@ -996,6 +1001,7 @@
                       <td><%= user_marketiq.answer %></td>
                       <td><%= user_marketiq.marketiq.answer %></td>
                       <td><%= user_marketiq.status %></td>
+                      <td><%= link_to "", admin_user_flop_marketiq_path(user_marketiq), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop marketiq" %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -1261,6 +1267,7 @@
                       <th><strong class="text_color" >Your Answer </strong></th>
                       <th><strong class="text_color" >True Answer </strong></th>
                       <th><strong class="text_color" >Status </strong></th>
+                      <th><strong class="text_color" >Change</strong></th>
                     </tr>
                     <% @user.user_marketiqs.each do |user_marketiq| %>     
                     <tr >
@@ -1269,6 +1276,7 @@
                       <td><%= user_marketiq.answer %></td>
                       <td><%= user_marketiq.marketiq.answer %></td>
                       <td><%= user_marketiq.status %></td>
+                      <td><%= link_to "", admin_user_flop_marketiq_path(user_marketiq), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop marketiq" %></td>
                     </tr>
                     <% end %>
                   </table>

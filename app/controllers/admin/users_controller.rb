@@ -58,6 +58,13 @@ respond_to :json, :html
     redirect_to admin_user_path(@user_whizquiz.user_id)
   end
 
+  def flop_marketiq
+    @user_marketiq = UserMarketiq.find(params[:user_id])
+    @user_marketiq.status = !@user_marketiq.status # flop the status
+    @user_marketiq.save
+    redirect_to admin_user_path(@user_marketiq.user_id)
+  end
+
   
 
 private

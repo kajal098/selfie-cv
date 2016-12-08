@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
     resources :users do
         get :flop
+        get :flop_marketiq
     end
 
     resources :whizquizzes do
