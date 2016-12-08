@@ -200,8 +200,9 @@ end
 
 def percent_of_resume
             if self.role == 'Jobseeker' && self.file_type.present?
-                resume_info_per = 0
+                
                 setting_per = UserPercentage.where(key: 'resume_info').where(ptype: "Jobseeker").first.value.to_i 
+                resume_info_per = setting_per * 0.3
                 if self.file_type == "video"
                     resume_info_per = setting_per * 1
                 elsif self.file_type == "audio"
@@ -210,8 +211,6 @@ def percent_of_resume
                     resume_info_per = setting_per * 0.5
                 elsif self.file_type == "doc"
                     resume_info_per = setting_per * 0.5               
-                elsif self.file_type == ""
-                    resume_info_per = setting_per * 0.3
                 else
                     resume_info_per = setting_per * 0.3
                 end
