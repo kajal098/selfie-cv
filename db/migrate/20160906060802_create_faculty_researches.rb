@@ -6,6 +6,7 @@ class CreateFacultyResearches < ActiveRecord::Migration
       t.string :description,              null:false, default: ""
       t.string :file,              default: ''
       t.string :file_type,              null:false, default: ""
+      t.string :file_status,              null: false, default: ""
       t.timestamps null: false
     end
     add_index :faculty_researches, [:user_id]

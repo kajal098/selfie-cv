@@ -7,6 +7,7 @@ class CreateUserAwards < ActiveRecord::Migration
       t.string :description,              null: false, default: ""
       t.string :file,              default: ''
       t.string :file_type,              null: false, default: ""
+      t.string :file_status,              null: false, default: ""
       t.boolean :active,            default: false
       t.timestamps null: false
     end

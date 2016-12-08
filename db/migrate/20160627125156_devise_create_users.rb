@@ -20,6 +20,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :contact_number,              null: false, default: ""
       t.string :file,              default: ''
       t.string :file_type,              null: false, default: ""
+      t.string :file_status,              null: false, default: ""
       t.string :faculty_work_with_type,              null: false, default: ""
       t.string :faculty_uni_name,              null: false, default: ""
       t.string :faculty_subject,              null: false, default: ""
@@ -37,10 +38,13 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :company_id
       t.string :company_logo,              default: ''
       t.string :company_logo_type,              null: false, default: ""
+      t.string :company_logo_status,              null: false, default: ""
       t.string :company_profile,              default: ''
       t.string :company_profile_type,              null: false, default: ""
+      t.string :company_profile_status,              null: false, default: ""
       t.string :company_brochure,              default: ''
       t.string :company_brochure_type,              null: false, default: ""
+      t.string :company_brochure_status,              null: false, default: ""
       t.string :company_website,              null: false, default: ""
       t.string :company_facebook_link,              null: false, default: ""
       t.string :company_turnover,              null: false, default: ""
