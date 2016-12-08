@@ -14,6 +14,7 @@
         <li class="text_color"><a href="#JobseekerFutureGoal" >Goal</a></li>
         <li class="text_color"><a href="#JobseekerWorkingEnvironment" >Work</a></li>
         <li class="text_color"><a href="#JobseekerReferences" >References</a></li>
+        <li class="text_color"><a href="#JobseekerMarketIQ" >Market IQ</a></li>
         <% elsif @user.role == 'Company' %>
         <li class="text_color"><a href="#CompanyDetail" >Info</a></li>
         <li class="text_color"><a href="#CompanyCorporate" >Corporate Identity</a></li>
@@ -23,6 +24,7 @@
         <li class="text_color"><a href="#CompanyCertificates" >Certificates</a></li>
         <li class="text_color"><a href="#CompanyGallery" >Gallery</a></li>
         <li class="text_color"><a href="#CompanyWorkingEnvironment" >Work Environment</a></li>
+        <li class="text_color"><a href="#CompanyMarketIQ" >Market IQ</a></li>
         <% elsif @user.role == 'Faculty' %>
         <li class="text_color"><a href="#FacultyDetail" >Info</a></li>
         <li class="text_color"><a href="#FacultyAffiliation" >Professional Affiliation</a></li>
@@ -31,6 +33,7 @@
         <li class="text_color"><a href="#FacultyResearch" >Research</a></li>
         <li class="text_color"><a href="#FacultyAwards" >Awards</a></li>
         <li class="text_color"><a href="#FacultyCertificates" >Certificates</a></li>
+        <li class="text_color"><a href="#FacultyMarketIQ" >Market IQ</a></li>
         <% elsif @user.role == 'Student' %>
         <li class="text_color"><a href="#StudentDetail" >Info</a></li>
         <li class="text_color"><a href="#StudentEducation" >Education</a></li>
@@ -40,6 +43,7 @@
         <li class="text_color"><a href="#StudentCertificates" >Certificates</a></li>
         <li class="text_color"><a href="#StudentCurricular" >Curricular</a></li>
         <li class="text_color"><a href="#StudentFutureGoal" >Future Goal</a></li>
+        <li class="text_color"><a href="#StudentMarketIQ" >Market IQ</a></li>
         <% end %>
       </ul>
       <div class="panel-body" style="background:#fff;">
@@ -408,6 +412,32 @@
                   <% end %>
               </div>
 
+              <div id="JobseekerMarketIQ">
+                  <% if @user.user_marketiqs.count > 0 %>
+                  <table>     
+                    <tr >
+                      <th><strong class="text_color" >No</strong></th>
+                      <th><strong class="text_color" >Question </strong></th>
+                      <th><strong class="text_color" >Your Answer </strong></th>
+                      <th><strong class="text_color" >True Answer </strong></th>
+                      <th><strong class="text_color" >Status </strong></th>
+                    </tr>
+                    <% @user.user_marketiqs.each do |user_marketiq| %>     
+                    <tr >
+                      <td><%= user_marketiq.id %></td>
+                      <td><%= user_marketiq.marketiq.question %></td>
+                      <td><%= user_marketiq.answer %></td>
+                      <td><%= user_marketiq.marketiq.answer %></td>
+                      <td><%= user_marketiq.status %></td>
+                    </tr>
+                    <% end %>
+                  </table>
+                  <% else %>
+                  <p><strong class="text_color" >No Records Found.</strong></p>
+                  <% end %>
+              </div>
+
+
         <% elsif @user.role == 'Company' %>
 
               <div id="CompanyDetail">   
@@ -630,6 +660,7 @@
                 <p><strong class="text_color" >No Records Found.</strong></p>
                 <% end %>
               </div>
+
               <div id="CompanyGallery">          
                 <h4 class="text_decoration"><b> Company Gallery </b></h4>
                 <% if @user.company_galeries.count > 0 %>
@@ -642,8 +673,8 @@
                 <p><strong class="text_color" >No Records Found.</strong></p>
                 <% end %>
               </div>
-              <div id="CompanyWorkingEnvironment">          
-                
+
+              <div id="CompanyWorkingEnvironment">                          
                 <% if @user.user_environments.count > 0 %>
                 <h4 class="text_decoration"><b> Company Working Environment </b></h4>
                 <table>     
@@ -667,6 +698,31 @@
                 <% else %>
                 <p><strong class="text_color" >No Records Found.</strong></p>
                 <% end %>
+              </div>
+
+              <div id="CompanyMarketIQ">
+                  <% if @user.user_marketiqs.count > 0 %>
+                  <table>     
+                    <tr >
+                      <th><strong class="text_color" >No</strong></th>
+                      <th><strong class="text_color" >Question </strong></th>
+                      <th><strong class="text_color" >Your Answer </strong></th>
+                      <th><strong class="text_color" >True Answer </strong></th>
+                      <th><strong class="text_color" >Status </strong></th>
+                    </tr>
+                    <% @user.user_marketiqs.each do |user_marketiq| %>     
+                    <tr >
+                      <td><%= user_marketiq.id %></td>
+                      <td><%= user_marketiq.marketiq.question %></td>
+                      <td><%= user_marketiq.answer %></td>
+                      <td><%= user_marketiq.marketiq.answer %></td>
+                      <td><%= user_marketiq.status %></td>
+                    </tr>
+                    <% end %>
+                  </table>
+                  <% else %>
+                  <p><strong class="text_color" >No Records Found.</strong></p>
+                  <% end %>
               </div>
 
 
@@ -923,6 +979,31 @@
                 <% end %>
               </div>
 
+              <div id="StudentMarketIQ">
+                  <% if @user.user_marketiqs.count > 0 %>
+                  <table>     
+                    <tr >
+                      <th><strong class="text_color" >No</strong></th>
+                      <th><strong class="text_color" >Question </strong></th>
+                      <th><strong class="text_color" >Your Answer </strong></th>
+                      <th><strong class="text_color" >True Answer </strong></th>
+                      <th><strong class="text_color" >Status </strong></th>
+                    </tr>
+                    <% @user.user_marketiqs.each do |user_marketiq| %>     
+                    <tr >
+                      <td><%= user_marketiq.id %></td>
+                      <td><%= user_marketiq.marketiq.question %></td>
+                      <td><%= user_marketiq.answer %></td>
+                      <td><%= user_marketiq.marketiq.answer %></td>
+                      <td><%= user_marketiq.status %></td>
+                    </tr>
+                    <% end %>
+                  </table>
+                  <% else %>
+                  <p><strong class="text_color" >No Records Found.</strong></p>
+                  <% end %>
+              </div>
+
 
           <% elsif @user.role == 'Faculty' %>
 
@@ -1169,6 +1250,31 @@
                 <% else %>
                 <p><strong class="text_color" >No Records Found.</strong></p>
                 <% end %>
+              </div>
+
+              <div id="FacultyMarketIQ">
+                  <% if @user.user_marketiqs.count > 0 %>
+                  <table>     
+                    <tr >
+                      <th><strong class="text_color" >No</strong></th>
+                      <th><strong class="text_color" >Question </strong></th>
+                      <th><strong class="text_color" >Your Answer </strong></th>
+                      <th><strong class="text_color" >True Answer </strong></th>
+                      <th><strong class="text_color" >Status </strong></th>
+                    </tr>
+                    <% @user.user_marketiqs.each do |user_marketiq| %>     
+                    <tr >
+                      <td><%= user_marketiq.id %></td>
+                      <td><%= user_marketiq.marketiq.question %></td>
+                      <td><%= user_marketiq.answer %></td>
+                      <td><%= user_marketiq.marketiq.answer %></td>
+                      <td><%= user_marketiq.status %></td>
+                    </tr>
+                    <% end %>
+                  </table>
+                  <% else %>
+                  <p><strong class="text_color" >No Records Found.</strong></p>
+                  <% end %>
               </div>
 
 
