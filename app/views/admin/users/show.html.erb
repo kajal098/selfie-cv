@@ -50,7 +50,7 @@
         <% if @user.role == 'Jobseeker' %>
 
               <div id="JobseekerDetail">   
-                <table>      
+                <table class="col-lg-12" >      
                   <p><strong class="text_color" >Personal Details</strong></p>         
                   <tr>
                     <td>Username</td>
@@ -110,7 +110,7 @@
                   </tr>
                 </table> 
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>        
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <th>Resume</th>
                     <th>Achievement</th>
@@ -135,7 +135,7 @@
               </div>
               <div id="JobseekerEducation">
                 <% if @user.user_educations.count > 0 %>
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Course</strong></th>
@@ -161,7 +161,7 @@
               </div>
               <div id="JobseekerExperience">
                 <% if @user.user_experiences.count > 0 %>
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name</strong></th>
@@ -189,7 +189,7 @@
               </div>
               <div id="JobseekerPreferredWork">
                 <% if @user.user_preferred_works.count > 0 %>
-                <table>
+                <table class="col-lg-12" >
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Industry</strong></th>
@@ -219,7 +219,7 @@
               </div>
               <div id="JobseekerAwards">
                 <% if @user.user_awards.count > 0 %>
-                <table>
+                <table class="col-lg-12" >
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <td><strong class="text_color" >Name </strong></td>
@@ -245,7 +245,7 @@
               </div>
               <div id="JobseekerCertificates">
                 <% if @user.user_certificates.count > 0 %>
-                <table>
+                <table class="col-lg-12" >
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name </strong></th>
@@ -275,7 +275,7 @@
               </div>
               <div id="JobseekerWhizQuiz">
                   <% if @user.user_whizquizzes.count > 0 %>
-                  <table>
+                  <table class="col-lg-12" >
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Whizquiz Id </strong></th>
@@ -303,7 +303,7 @@
               </div>
               <div id="JobseekerCurricular">
                   <% if @user.user_curriculars.count > 0 %>
-                  <table>
+                  <table class="col-lg-12" >
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Curricular Type </strong></th>
@@ -329,7 +329,7 @@
               </div>
               <div id="JobseekerFutureGoal">
                   <% if @user.user_future_goals.count > 0 %>
-                  <table>
+                  <table class="col-lg-12" >
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Id </strong></th>
@@ -355,7 +355,7 @@
               </div>
               <div id="JobseekerWorkingEnvironment">
                   <% if @user.user_environments.count > 0 %>
-                  <table>
+                  <table class="col-lg-12" >
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Env Type </strong></th>
@@ -379,7 +379,7 @@
               </div>
               <div id="JobseekerReferences">
                   <% if @user.user_references.count > 0 %>
-                  <table>     
+                  <table class="col-lg-12" >     
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Title </strong></th>
@@ -414,7 +414,7 @@
 
               <div id="JobseekerMarketIQ">
                   <% if @user.user_marketiqs.count > 0 %>
-                  <table>     
+                  <table class="col-lg-12" >     
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Question </strong></th>
@@ -443,7 +443,7 @@
         <% elsif @user.role == 'Company' %>
 
               <div id="CompanyDetail">   
-                <table>      
+                <table class="col-lg-12" >      
                   <p><strong class="text_color" >Company Information</strong></p>         
                   <tr>
                     <td>Username</td>
@@ -519,7 +519,7 @@
                   </tr>
                 </table>
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <th>Company Info</th>
                     <th>Corporate Identity</th>
@@ -541,7 +541,7 @@
                 </table>
               </div>
               <div id="CompanyCorporate">  
-                <table>        
+                <table class="col-lg-12" >        
                   <p><strong class="text_color" >Corporate Identity</strong></p>   
                   <tr>
                     <td>Company Logo</td>
@@ -567,7 +567,7 @@
               </div>
               <div id="CompanyEvalution">          
                 <p><strong class="text_color" >Company Evalution</strong></p>
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <td>Company Turnover:</td>
                     <td><%= @user.company_turnover %></td>
@@ -588,7 +588,7 @@
               </div>
               <div id="CompanyFutureGoal">   
                 <p><strong class="text_color" >Company Future Goal</strong></p>   
-                <table>    
+                <table class="col-lg-12" >    
                   <tr>
                     <td>Company Future Turnover</td>
                     <td><%= @user.company_future_turnover %></td>
@@ -606,7 +606,7 @@
               <div id="CompanyAwards">          
                 <h4 class="text_decoration"><b> Company Awards </b></h4>
                 <% if @user.user_awards.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name </strong></th>
@@ -633,7 +633,7 @@
               <div id="CompanyCertificates">          
                 <h4 class="text_decoration"><b> Company Certificates </b></h4>
                 <% if @user.user_certificates.count > 0 %>
-                <table>
+                <table class="col-lg-12" >
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name </strong></th>
@@ -679,7 +679,7 @@
               <div id="CompanyWorkingEnvironment">                          
                 <% if @user.user_environments.count > 0 %>
                 <h4 class="text_decoration"><b> Company Working Environment </b></h4>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Env Type </strong></th>
@@ -704,7 +704,7 @@
 
               <div id="CompanyMarketIQ">
                   <% if @user.user_marketiqs.count > 0 %>
-                  <table>     
+                  <table class="col-lg-12" >     
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Question </strong></th>
@@ -735,7 +735,7 @@
 
               <div id="StudentDetail">    
                 <p><strong class="text_color" >Student Detail</strong></p>  
-                <table>    
+                <table class="col-lg-12" >    
                   <tr>
                     <td>Username</td>
                     <td><%= @user.username %></td>
@@ -774,7 +774,7 @@
                   </tr>
                 </table>
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>  
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <th>Basic Info</th>
                     <th>Education</th>
@@ -796,7 +796,7 @@
               <div id="StudentEducation">          
                 <h4 class="text_decoration"><b> Student Education </b></h4>
                 <% if @user.student_educations.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >standard </strong></th>
@@ -819,7 +819,7 @@
               <div id="StudentMarksheet">          
                 <h4 class="text_decoration"><b> Student Marksheet </b></h4>
                 <% if @user.user_marksheets.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >School Name </strong></th>
@@ -848,7 +848,7 @@
               <div id="StudentProject">          
                 <h4 class="text_decoration"><b> Student Project </b></h4>
                 <% if @user.user_projects.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Title </strong></th>
@@ -873,7 +873,7 @@
               <div id="StudentAwards">          
                 <h4 class="text_decoration"><b> Student Awards </b></h4>
                 <% if @user.user_awards.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name </strong></th>
@@ -900,7 +900,7 @@
               <div id="StudentCertificates">          
                 <h4 class="text_decoration"><b> Student Certificates </b></h4>
                 <% if @user.user_certificates.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name </strong></th>
@@ -931,7 +931,7 @@
               <div id="StudentCurricular">          
                 <h4 class="text_decoration"><b> Student Curricular </b></h4>
                 <% if @user.user_curriculars.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Curricular Type </strong></th>
@@ -958,7 +958,7 @@
               <div id="StudentFutureGoal">          
                 <h4 class="text_decoration"><b> Student FutureGoal </b></h4>
                 <% if @user.user_future_goals.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Id </strong></th>
@@ -985,7 +985,7 @@
 
               <div id="StudentMarketIQ">
                   <% if @user.user_marketiqs.count > 0 %>
-                  <table>     
+                  <table class="col-lg-12" >     
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Question </strong></th>
@@ -1017,7 +1017,7 @@
               <div id="FacultyDetail">          
                 <h4 class="text_decoration"><b> Faculty Information </b></h4>          
                 <p><strong class="text_color" >Faculty Information</strong></p>
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <td>Username</td>
                     <td><%= @user.username %></td>
@@ -1076,7 +1076,7 @@
                   </tr>
                 </table>
                 <p style="margin-top:20px;"><strong class="text_color" >All Percentage</strong></p>
-                <table>
+                <table class="col-lg-12" >
                   <tr>
                     <th>Basic Info</th>
                     <th>Experience</th>
@@ -1094,7 +1094,7 @@
               <div id="FacultyAffiliation">          
                 <h4 class="text_decoration"><b> Faculty Affiliation </b></h4>
                 <% if @user.faculty_affiliations.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >University </strong></th>
@@ -1125,7 +1125,7 @@
               <div id="FacultyWorkshop">          
                 <h4 class="text_decoration"><b> Faculty Workshop </b></h4>
                 <% if @user.faculty_workshops.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Title</strong></th>
@@ -1150,7 +1150,7 @@
               <div id="FacultyPublication">          
                 <h4 class="text_decoration"><b> Faculty Publication </b></h4>
                 <% if @user.faculty_publications.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Title </strong></th>
@@ -1175,7 +1175,7 @@
               <div id="FacultyResearch">          
                 <h4 class="text_decoration"><b> Faculty Research </b></h4>
                 <% if @user.faculty_researches.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Title </strong></th>
@@ -1200,7 +1200,7 @@
               <div id="FacultyAwards">          
                 <h4 class="text_decoration"><b> Faculty Awards </b></h4>
                 <% if @user.user_awards.count > 0 %>
-                <table>     
+                <table class="col-lg-12" >     
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name </strong></th>
@@ -1227,7 +1227,7 @@
               <div id="FacultyCertificates">          
                 <h4 class="text_decoration"><b> Faculty Certificates </b></h4>
                 <% if @user.user_certificates.count > 0 %>
-                <table>
+                <table class="col-lg-12" >
                   <tr >
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Name </strong></th>
@@ -1260,7 +1260,7 @@
 
               <div id="FacultyMarketIQ">
                   <% if @user.user_marketiqs.count > 0 %>
-                  <table>     
+                  <table class="col-lg-12" >     
                     <tr >
                       <th><strong class="text_color" >No</strong></th>
                       <th><strong class="text_color" >Question </strong></th>
