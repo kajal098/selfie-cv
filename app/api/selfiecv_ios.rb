@@ -1552,7 +1552,7 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 			if (params[:title] || params[:description] )
 				@faculty_publication = FacultyPublication.new user_id: @find_user.id
-				@faculty_publication.attributes = clean_params(params).permit(:title, :description)
+				@faculty_publication.attributes = clean_params(params).permit(:title, :description, :file_type)
 					@faculty_publication.file = params[:file] if params[:file]
 				error! @faculty_publication.errors.full_messages.join(', '),422 unless @faculty_publication.save
 			end          
@@ -1570,7 +1570,7 @@ before { authenticate! }
 	post :update_faculty_publication, jbuilder: 'ios' do
 		@faculty_publication = FacultyPublication.find params[:publication_id]
 		error! 'Student publication not found',422 unless @faculty_publication
-		@faculty_publication.attributes = clean_params(params).permit(:title, :description)
+		@faculty_publication.attributes = clean_params(params).permit(:title, :description, :file_type)
 		@faculty_publication.file = params[:file] if params[:file]
 		error! @faculty_publication.errors.full_messages.join(', '),422 unless @faculty_publication.save
 	end

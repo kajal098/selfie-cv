@@ -459,7 +459,7 @@ if @faculty_workshops
 end
 
 if @faculty_publication
-	json.extract! @faculty_publication, :id, :user_id, :title, :description
+	json.extract! @faculty_publication, :id, :user_id, :title, :description, :file_type
 	json.file_thumb @faculty_publication.thumb_url
 	json.file @faculty_publication.file.url
 	json.publication_created_at @faculty_publication.created_at.to_i
@@ -468,7 +468,7 @@ end
 
 if @faculty_publications
 	json.faculty_publications @faculty_publications.order('created_at DESC') do |publication|
-		json.extract! publication, :id, :user_id, :title, :description
+		json.extract! publication, :id, :user_id, :title, :description, :file_type
 		json.file_thumb publication.thumb_url
 		json.file publication.file.url
 		json.publication_created_at publication.created_at.to_i
