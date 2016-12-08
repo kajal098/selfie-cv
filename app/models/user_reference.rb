@@ -30,7 +30,7 @@ class UserReference < ActiveRecord::Base
 	                    break
 	                elsif ref.file_type == "audio"
 	                    ref_per = setting_per.to_i * 0.7
-	                elsif ref.file_type == "image"
+	                elsif ref.file_type == "doc"
 	                    ref_per = setting_per.to_i * 0.5
 	                else
 	                    ref_per = setting_per.to_i * 0.3
