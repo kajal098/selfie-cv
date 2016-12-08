@@ -132,7 +132,12 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Company'
 
-		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :country_id,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet, :file_type, :company_logo_type, :company_profile_type, :company_brochure_type, :active
+		json.User @user_stuff, :id, :username, :role, :company_name, :company_establish_from, :company_functional_area, :company_address, :company_zipcode, :company_city, :country_id,  :company_contact, :company_skype_id, :company_website, :company_facebook_link, :file_type, :company_logo_type, :company_profile_type, :company_brochure_type, :active
+
+		json.CompanyEvalution @user, :company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures
+
+		
+		json.CompanyFutureGoal @user, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
