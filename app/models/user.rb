@@ -210,6 +210,8 @@ def percent_of_resume
                     resume_info_per = setting_per * 0.5
                 elsif self.file_type == "doc"
                     resume_info_per = setting_per * 0.5               
+                elsif self.file_type == ""
+                    resume_info_per = setting_per * 0.3
                 else
                     resume_info_per = setting_per * 0.3
                 end
