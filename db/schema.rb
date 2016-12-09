@@ -58,10 +58,11 @@ ActiveRecord::Schema.define(version: 20161122090038) do
 
   create_table "company_galeries", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "file",       default: ""
-    t.string   "file_type",  default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "file",        default: ""
+    t.string   "file_type",   default: "", null: false
+    t.string   "file_status", default: "", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "company_galeries", ["user_id"], name: "index_company_galeries_on_user_id", using: :btree
@@ -104,10 +105,11 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-12-06'
-    t.date     "join_till",    default: '2016-12-06'
+    t.date     "join_from",    default: '2016-12-09'
+    t.date     "join_till",    default: '2016-12-09'
     t.string   "file",         default: ""
     t.string   "file_type",    default: "",           null: false
+    t.string   "file_status",  default: "",           null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -120,6 +122,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "description", default: "", null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "", null: false
+    t.string   "file_status", default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -132,6 +135,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "description", default: "", null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "", null: false
+    t.string   "file_status", default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -144,6 +148,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "description", default: "", null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "", null: false
+    t.string   "file_status", default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -339,6 +344,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "description", default: "",      null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "",      null: false
+    t.string   "file_status", default: "",      null: false
     t.boolean  "active",      default: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
@@ -353,6 +359,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "year",             default: "",    null: false
     t.string   "file",             default: ""
     t.string   "file_type",        default: "",    null: false
+    t.string   "file_status",      default: "",    null: false
     t.boolean  "active",           default: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
@@ -366,9 +373,10 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-12-06'
+    t.date     "date",            default: '2016-12-09'
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
+    t.string   "file_status",     default: "",           null: false
     t.boolean  "active",          default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -394,14 +402,15 @@ ActiveRecord::Schema.define(version: 20161122090038) do
 
   create_table "user_environments", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "env_type",   default: "",    null: false
-    t.string   "title",      default: "",    null: false
-    t.string   "file",       default: ""
-    t.string   "text_field", default: "",    null: false
-    t.string   "file_type",  default: "",    null: false
-    t.boolean  "active",     default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "env_type",    default: "",    null: false
+    t.string   "title",       default: "",    null: false
+    t.string   "file",        default: ""
+    t.string   "text_field",  default: "",    null: false
+    t.string   "file_type",   default: "",    null: false
+    t.string   "file_status", default: "",    null: false
+    t.boolean  "active",      default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "user_environments", ["user_id"], name: "index_user_environments_on_user_id", using: :btree
@@ -410,12 +419,13 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-12-06'
-    t.date     "working_till",    default: '2016-12-06'
+    t.date     "start_from",      default: '2016-12-09'
+    t.date     "working_till",    default: '2016-12-09'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
+    t.string   "file_status",     default: "",           null: false
     t.boolean  "active",          default: false
     t.boolean  "current_company", default: false
     t.datetime "created_at",                             null: false
@@ -448,14 +458,15 @@ ActiveRecord::Schema.define(version: 20161122090038) do
 
   create_table "user_future_goals", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "goal_type",  default: "",    null: false
-    t.string   "title",      default: "",    null: false
-    t.string   "term_type",  default: "",    null: false
-    t.string   "file",       default: ""
-    t.string   "file_type",  default: "",    null: false
-    t.boolean  "active",     default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "goal_type",   default: "",    null: false
+    t.string   "title",       default: "",    null: false
+    t.string   "term_type",   default: "",    null: false
+    t.string   "file",        default: ""
+    t.string   "file_type",   default: "",    null: false
+    t.string   "file_status", default: "",    null: false
+    t.boolean  "active",      default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
@@ -490,6 +501,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "year",        default: "", null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "", null: false
+    t.string   "file_status", default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -577,6 +589,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "description", default: "", null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "", null: false
+    t.string   "file_status", default: "", null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -595,19 +608,20 @@ ActiveRecord::Schema.define(version: 20161122090038) do
 
   create_table "user_references", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",      default: "",           null: false
-    t.string   "ref_type",   default: "",           null: false
-    t.string   "from",       default: "",           null: false
-    t.string   "email",      default: "",           null: false
-    t.string   "contact",    default: "",           null: false
-    t.date     "date",       default: '2016-12-06'
-    t.string   "location",   default: "",           null: false
-    t.string   "file",       default: ""
-    t.string   "text_field", default: "",           null: false
-    t.string   "file_type",  default: "",           null: false
-    t.boolean  "active",     default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.string   "title",       default: "",           null: false
+    t.string   "ref_type",    default: "",           null: false
+    t.string   "from",        default: "",           null: false
+    t.string   "email",       default: "",           null: false
+    t.string   "contact",     default: "",           null: false
+    t.date     "date",        default: '2016-12-09'
+    t.string   "location",    default: "",           null: false
+    t.string   "file",        default: ""
+    t.string   "text_field",  default: "",           null: false
+    t.string   "file_type",   default: "",           null: false
+    t.string   "file_status", default: "",           null: false
+    t.boolean  "active",      default: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "user_references", ["user_id"], name: "index_user_references_on_user_id", using: :btree
@@ -634,12 +648,13 @@ ActiveRecord::Schema.define(version: 20161122090038) do
   create_table "user_whizquizzes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "whizquiz_id"
-    t.string   "text_field",  default: "",    null: false
-    t.string   "review_type", default: "",    null: false
-    t.string   "review",      default: ""
-    t.boolean  "status",      default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "text_field",    default: "",    null: false
+    t.string   "review_type",   default: "",    null: false
+    t.string   "review",        default: ""
+    t.string   "review_status", default: "",    null: false
+    t.boolean  "status",        default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "user_whizquizzes", ["user_id"], name: "index_user_whizquizzes_on_user_id", using: :btree
@@ -655,7 +670,7 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-12-06"
+    t.string   "date_of_birth",                                 default: "2016-12-09"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -664,11 +679,12 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.string   "contact_number",                                default: "",           null: false
     t.string   "file",                                          default: ""
     t.string   "file_type",                                     default: "",           null: false
+    t.string   "file_status",                                   default: "",           null: false
     t.string   "faculty_work_with_type",                        default: "",           null: false
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-12-06"
+    t.string   "faculty_join_from",                             default: "2016-12-09"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
@@ -681,10 +697,13 @@ ActiveRecord::Schema.define(version: 20161122090038) do
     t.integer  "company_id"
     t.string   "company_logo",                                  default: ""
     t.string   "company_logo_type",                             default: "",           null: false
+    t.string   "company_logo_status",                           default: "",           null: false
     t.string   "company_profile",                               default: ""
     t.string   "company_profile_type",                          default: "",           null: false
+    t.string   "company_profile_status",                        default: "",           null: false
     t.string   "company_brochure",                              default: ""
     t.string   "company_brochure_type",                         default: "",           null: false
+    t.string   "company_brochure_status",                       default: "",           null: false
     t.string   "company_website",                               default: "",           null: false
     t.string   "company_facebook_link",                         default: "",           null: false
     t.string   "company_turnover",                              default: "",           null: false

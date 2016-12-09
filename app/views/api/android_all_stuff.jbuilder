@@ -117,7 +117,7 @@ if @user_stuff
 
 		json.jobseeker_references @user_stuff.user_references do |ref|
 			json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :file_type
-			if @reference.file_type == ""
+			if ref.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 		else
