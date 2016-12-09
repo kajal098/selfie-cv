@@ -191,15 +191,20 @@ if @user_experience
 			json.file_thumb @user_experience.thumb_url
 			json.file @user_experience.file.url
 		end
-		
+
 	json.created_at @user_experience.created_at.to_i
 	json.updated_at @user_experience.updated_at.to_i
 end
 if @user_experiences
 	json.user_experiences @user_experiences.order('created_at DESC') do |experience|
 		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
-		json.file_thumb experience.thumb_url
-		json.file experience.file.url
+		if experience.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb experience.thumb_url
+			json.file experience.file.url
+		end
 		json.exp_created_at experience.created_at.to_i
 		json.exp_updated_at experience.updated_at.to_i
 	end
