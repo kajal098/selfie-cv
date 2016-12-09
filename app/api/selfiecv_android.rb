@@ -312,7 +312,11 @@ class SelfiecvAndroid < Grape::API
         @user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
         :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id,
         :contact_number, :file_type )
-        @user.file = params[:file] if params[:file]
+        if params[:file_type] == ""
+          @user.file = "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+        else 
+          @user.file = params[:file] if params[:file]
+        end
         @user.update_cv_count += 1
         error!({error: @user.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @user.save
       end
