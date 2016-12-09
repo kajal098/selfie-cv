@@ -121,8 +121,8 @@ if @user_stuff
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 		else
-			json.file_thumb @reference.thumb_url
-			json.file @reference.file.url
+			json.file_thumb ref.thumb_url
+			json.file ref.file.url
 		end
 			json.ref_created_at ref.created_at.to_i
 			json.ref_updated_at ref.updated_at.to_i
