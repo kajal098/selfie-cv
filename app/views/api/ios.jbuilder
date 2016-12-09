@@ -112,8 +112,15 @@ if @user
 
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
-		json.resume_thumb @user.resume_thumb_url
-		json.resume @user.file.url
+
+		if @user.file_type == ""
+			json.resume_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.resume "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.resume_thumb @user.resume_thumb_url
+			json.resume @user.file.url
+		end
+
 		json.back_profile_thumb @user.back_profile_thumb_url
 		json.back_profile @user.back_profile.url
 		json.created_at @user.created_at.to_i
@@ -140,8 +147,15 @@ if @user
 		
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
-		json.resume_thumb @user.resume_thumb_url
-		json.resume @user.file.url
+
+		if @user.file_type == ""
+			json.resume_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.resume "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.resume_thumb @user.resume_thumb_url
+			json.resume @user.file.url
+		end
+		
 		json.back_profile_thumb @user.back_profile_thumb_url
 		json.back_profile @user.back_profile.url
 		json.created_at @user.created_at.to_i
@@ -232,8 +246,13 @@ end
 
 if @award
 	json.extract! @award, :id, :user_id, :name, :description, :file_type
-	json.file_thumb @award.thumb_url
-	json.file @award.file.url
+	if @user.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @award.thumb_url
+			json.file @award.file.url
+		end
 	json.created_at @award.created_at.to_i
 	json.updated_at @award.updated_at.to_i
 end
@@ -241,8 +260,13 @@ end
 if @user_awards
 	json.awards @user_awards.order('created_at DESC') do |award|
 		json.extract! award, :id, :user_id, :name, :description, :file_type
-		json.file_thumb award.thumb_url
-		json.file award.file.url
+		if award.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb award.thumb_url
+			json.file award.file.url
+		end
 		json.award_created_at award.created_at.to_i
 		json.award_updated_at award.updated_at.to_i
 	end
@@ -250,16 +274,26 @@ end
 
 if @certificate
 	json.extract! @certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
-	json.file_thumb @certificate.thumb_url
-	json.file @certificate.file.url
+	if @certificate.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @certificate.thumb_url
+			json.file @certificate.file.url
+		end
 	json.created_at @certificate.created_at.to_i
 	json.updated_at @certificate.updated_at.to_i
 end
 if @user_certificates
 	json.certificates @user_certificates.order('created_at DESC') do |certificate|
 		json.extract! certificate, :id, :user_id, :certificate_type, :name, :year, :file_type
-		json.file_thumb certificate.thumb_url
-		json.file certificate.file.url
+		if certificate.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb certificate.thumb_url
+			json.file certificate.file.url
+		end
 		json.certificate_created_at certificate.created_at.to_i
 		json.certificate_updated_at certificate.updated_at.to_i
 	end
@@ -267,16 +301,26 @@ end
 
 if @curricular
 	json.extract! @curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
-	json.file_thumb @curricular.thumb_url
-	json.file @curricular.file.url
+	if @curricular.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @curricular.thumb_url
+			json.file @curricular.file.url
+		end
 	json.created_at @curricular.created_at.to_i
 	json.updated_at @curricular.updated_at.to_i
 end
 if @user_curriculars
 	json.user_curriculars @user_curriculars.order('created_at DESC') do |curricular|
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
-		json.file_thumb curricular.thumb_url
-		json.file curricular.file.url
+		if curricular.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb curricular.thumb_url
+			json.file curricular.file.url
+		end
 		json.curricular_created_at curricular.created_at.to_i
 		json.curricular_updated_at curricular.updated_at.to_i
 	end
@@ -284,16 +328,26 @@ end
 
 if @future_goal
 	json.extract! @future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
-	json.file_thumb @future_goal.thumb_url
-	json.file @future_goal.file.url
+	if @future_goal.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @future_goal.thumb_url
+			json.file @future_goal.file.url
+		end
 	json.created_at @future_goal.created_at.to_i
 	json.updated_at @future_goal.updated_at.to_i
 end
 if @user_future_goals
 	json.user_future_goals @user_future_goals.order('created_at DESC') do |future_goal|
 		json.extract! future_goal, :id, :user_id, :goal_type, :title, :term_type, :file_type
-		json.file_thumb future_goal.thumb_url
-		json.file future_goal.file.url
+		if future_goal.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb future_goal.thumb_url
+			json.file future_goal.file.url
+		end
 		json.future_goal_created_at future_goal.created_at.to_i
 		json.future_goal_updated_at future_goal.updated_at.to_i
 	end
@@ -301,16 +355,26 @@ end
 
 if @environment
 	json.extract! @environment, :id, :user_id, :env_type, :title, :text_field, :file_type, :text_field
-	json.file_thumb @environment.thumb_url
-	json.file @environment.file.url
+	if @environment.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @environment.thumb_url
+			json.file @environment.file.url
+		end
 	json.created_at @environment.created_at.to_i
 	json.updated_at @environment.updated_at.to_i
 end
 if @user_working_environments
 	json.user_working_environments @user_working_environments.order('created_at DESC') do |environment|
 		json.extract! environment, :id, :user_id, :env_type, :title, :text_field, :file_type, :text_field
-		json.file_thumb environment.thumb_url
-		json.file environment.file.url
+		if environment.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb environment.thumb_url
+			json.file environment.file.url
+		end
 		json.environment_created_at environment.created_at.to_i
 		json.environment_updated_at environment.updated_at.to_i
 	end
@@ -318,16 +382,26 @@ end
 
 if @reference
 	json.extract! @reference, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
-	json.file_thumb @reference.thumb_url
-	json.file @reference.file.url
+	if @reference.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @reference.thumb_url
+			json.file @reference.file.url
+		end
 	json.created_at @reference.created_at.to_i
 	json.updated_at @reference.updated_at.to_i
 end
 if @user_references
 	json.user_references @user_references.order('created_at DESC') do |ref|
 		json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
-		json.file_thumb ref.thumb_url
-		json.file ref.file.url
+		if ref.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb ref.thumb_url
+			json.file ref.file.url
+		end
 		json.ref_created_at ref.created_at.to_i
 		json.ref_updated_at ref.updated_at.to_i
 	end
@@ -373,8 +447,13 @@ if @basic_info
 
 	json.country_name @basic_info.stock_country ? @basic_info.stock_country.name : ""
 	
-	json.file_thumb @basic_info.resume_thumb_url
-	json.file @basic_info.file.url
+	if @basic_info.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @basic_info.resume_thumb_url
+			json.file @basic_info.file.url
+		end
 	json.student_basic_info_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.student_basic_info_per.to_i, "info") : 0
 	json.student_education_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.student_education_per.to_i, "education") : 0
 	json.achievement_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.achievement_per.to_i, "achievement") : 0
@@ -401,8 +480,13 @@ end
 
 if @student_marksheet
 	json.extract! @student_marksheet, :id, :user_id, :school_name, :standard, :grade, :year	, :file_type
-	json.file_thumb @student_marksheet.thumb_url
-	json.file @student_marksheet.file.url
+	if @student_marksheet.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @student_marksheet.thumb_url
+			json.file @student_marksheet.file.url
+		end
 	json.marksheet_created_at @student_marksheet.created_at.to_i
 	json.marksheet_updated_at @student_marksheet.updated_at.to_i
 end
@@ -410,8 +494,13 @@ end
 if @student_marksheets
 	json.student_marksheets @student_marksheets.order('created_at DESC') do |marksheet|
 		json.extract! marksheet, :id, :user_id, :school_name, :standard, :grade, :year	, :file_type
-		json.file_thumb marksheet.thumb_url
-		json.file marksheet.file.url	
+		if marksheet.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb marksheet.thumb_url
+			json.file marksheet.file.url	
+		end	
 		json.marksheet_created_at marksheet.created_at.to_i
 		json.marksheet_updated_at marksheet.updated_at.to_i
 	end
@@ -419,8 +508,13 @@ end
 
 if @student_project
 	json.extract! @student_project, :id, :user_id, :title, :description, :file_type
-	json.file_thumb @student_project.thumb_url
-	json.file @student_project.file.url
+	if @student_project.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @student_project.thumb_url
+			json.file @student_project.file.url
+		end
 	json.project_created_at @student_project.created_at.to_i
 	json.project_updated_at @student_project.updated_at.to_i
 end
@@ -428,8 +522,13 @@ end
 if @student_projects
 	json.student_projects @student_projects.order('created_at DESC') do |project|
 		json.extract! project, :id, :user_id, :title, :description, :file_type
-		json.file_thumb project.thumb_url
-		json.file project.file.url
+		if project.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb project.thumb_url
+			json.file project.file.url
+		end
 		json.project_created_at project.created_at.to_i
 		json.project_updated_at project.updated_at.to_i
 	end
@@ -437,8 +536,13 @@ end
 
 if @faculty_affiliation
 	json.extract! @faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
-	json.file_thumb @faculty_affiliation.thumb_url
-	json.file @faculty_affiliation.file.url
+	if @faculty_affiliation.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @faculty_affiliation.thumb_url
+			json.file @faculty_affiliation.file.url
+		end
 	json.affiliation_created_at @faculty_affiliation.created_at.to_i
 	json.affiliation_updated_at @faculty_affiliation.updated_at.to_i
 end
@@ -446,8 +550,13 @@ end
 if @faculty_affiliations
 	json.faculty_affiliations @faculty_affiliations.order('created_at DESC') do |affiliation|
 		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
-		json.file_thumb affiliation.thumb_url
+		if affiliation.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb affiliation.thumb_url
 			json.file affiliation.file.url
+		end
 		json.affiliation_created_at affiliation.created_at.to_i
 		json.affiliation_updated_at affiliation.updated_at.to_i
 	end
@@ -455,8 +564,13 @@ end
 
 if @faculty_workshop
 	json.extract! @faculty_workshop, :id, :user_id, :description, :file_type
-	json.file_thumb @faculty_workshop.thumb_url
-	json.file @faculty_workshop.file.url
+	if @faculty_workshop.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @faculty_workshop.thumb_url
+			json.file @faculty_workshop.file.url
+		end
 	json.workshop_created_at @faculty_workshop.created_at.to_i
 	json.workshop_updated_at @faculty_workshop.updated_at.to_i
 end
@@ -464,8 +578,13 @@ end
 if @faculty_workshops
 	json.faculty_workshops @faculty_workshops.order('created_at DESC') do |workshop|
 		json.extract! workshop, :id, :user_id, :description, :file_type
-		json.file_thumb workshop.thumb_url
+		if workshop.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb workshop.thumb_url
 			json.file workshop.file.url
+		end
 		json.workshop_created_at workshop.created_at.to_i
 		json.workshop_updated_at workshop.updated_at.to_i
 	end
@@ -473,8 +592,13 @@ end
 
 if @faculty_publication
 	json.extract! @faculty_publication, :id, :user_id, :title, :description, :file_type
-	json.file_thumb @faculty_publication.thumb_url
-	json.file @faculty_publication.file.url
+	if @faculty_publication.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @faculty_publication.thumb_url
+			json.file @faculty_publication.file.url
+		end
 	json.publication_created_at @faculty_publication.created_at.to_i
 	json.publication_updated_at @faculty_publication.updated_at.to_i
 end
@@ -482,8 +606,13 @@ end
 if @faculty_publications
 	json.faculty_publications @faculty_publications.order('created_at DESC') do |publication|
 		json.extract! publication, :id, :user_id, :title, :description, :file_type
-		json.file_thumb publication.thumb_url
-		json.file publication.file.url
+		if publication.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb publication.thumb_url
+			json.file publication.file.url
+		end
 		json.publication_created_at publication.created_at.to_i
 		json.publication_updated_at publication.updated_at.to_i
 	end
@@ -491,8 +620,13 @@ end
 
 if @faculty_research
 	json.extract! @faculty_research, :id, :user_id, :title, :description
-	json.file_thumb @faculty_research.thumb_url
-	json.file @faculty_research.file.url
+	if @faculty_research.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb @faculty_research.thumb_url
+			json.file @faculty_research.file.url
+		end
 	json.research_created_at @faculty_research.created_at.to_i
 	json.research_updated_at @faculty_research.updated_at.to_i
 end
@@ -500,8 +634,13 @@ end
 if @faculty_researches
 	json.faculty_researches @faculty_researches.order('created_at DESC') do |research|
 		json.extract! research, :id, :user_id, :title, :description
-		json.file_thumb research.thumb_url
-		json.file research.file.url
+		if research.file_type == ""
+			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
+			json.file_thumb research.thumb_url
+			json.file research.file.url
+		end
 		json.research_created_at research.created_at.to_i
 		json.research_updated_at research.updated_at.to_i
 	end
