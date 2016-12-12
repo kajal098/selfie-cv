@@ -4,9 +4,9 @@ class MarketiqReport
 
   scope { Marketiq.order(updated_at: :desc).all }
   
-filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) })
+filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) }, prompt: "Select something")
 
-filter(:specialization_id, :enum, header: "Specialization", select: ->{ Specialization.pluck(:name, :id) })
+filter(:specialization_id, :enum, header: "Specialization", select: ->{ Specialization.pluck(:name, :id) }, prompt: "Select something")
 
 filter(:subject, :string, header: "Subject") {|value| where("subject ilike ?", "%#{value}%")}
 
