@@ -59,28 +59,29 @@ $(document).ready(function() {
 
    $('input[name="marketiq[role]"]').click(function() {
            if($(this).val() == 'Jobseeker') {
-                $('#my_jobseeker').show();    
+                $('#my_jobseeker').show().find('select').prop('disabled', false);
                 $('#my_company').hide().find('select').prop('disabled', true);  
                 $('#my_student').hide().find('input').prop('disabled', true);
                 $('#my_faculty').hide().find('input').prop('disabled', true);
            }
            else if($(this).val() == 'Company') {
-                $('#my_jobseeker').hide().find('input').prop('disabled', true);    
-                $('#my_company').show();   
+                $('#my_jobseeker').hide().find('select').prop('disabled', true);
+                $('#my_company').show().find('select').prop('disabled', false);   
                 $('#my_student').hide().find('input').prop('disabled', true);
                 $('#my_faculty').hide().find('input').prop('disabled', true);
            }
            else if($(this).val() == 'Student') {
-                $('#my_jobseeker').hide().find('input').prop('disabled', true);    
+                $('#my_jobseeker').hide().find('select').prop('disabled', true);
                 $('#my_company').hide().find('select').prop('disabled', true);    
-                $('#my_student').show();
+                $('#my_student').show().find('input').prop('disabled', false);
                 $('#my_faculty').hide().find('input').prop('disabled', true);      
            }
            else {
                 $('#my_jobseeker').hide().find('input').prop('disabled', true);    
                 $('#my_company').hide().find('select').prop('disabled', true);  
                 $('#my_student').hide().find('input').prop('disabled', true);
-                $('#my_faculty').show();        
+                $('#my_faculty').show().find('input').prop('disabled', false); 
+                       
            }
        });
 
