@@ -31,7 +31,7 @@
   <label class="string required col-sm-3 control-label" for="marketiq_question">
   <abbr title="required">*</abbr> Industry </label>
   <div class="col-sm-9">
-  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, include_blank: true %>
+  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, include_blank: false %>
   </div>
   </div>
 
@@ -60,29 +60,32 @@ $(document).ready(function() {
    $('input[name="marketiq[role]"]').click(function() {
            if($(this).val() == 'Jobseeker') {
                 $('#my_jobseeker').show();    
-                $('#my_company').hide();  
-                $('#my_student').hide();
-                $('#my_faculty').hide();
+                $('#my_company').hide().find('select').prop('disabled', true);  
+                $('#my_student').hide().find('input').prop('disabled', true);
+                $('#my_faculty').hide().find('input').prop('disabled', true);
            }
            else if($(this).val() == 'Company') {
-                $('#my_jobseeker').hide();    
+                $('#my_jobseeker').hide().find('input').prop('disabled', true);    
                 $('#my_company').show();   
-                $('#my_student').hide();
-                $('#my_faculty').hide();
+                $('#my_student').hide().find('input').prop('disabled', true);
+                $('#my_faculty').hide().find('input').prop('disabled', true);
            }
            else if($(this).val() == 'Student') {
-                $('#my_jobseeker').hide();    
-                $('#my_company').hide();    
+                $('#my_jobseeker').hide().find('input').prop('disabled', true);    
+                $('#my_company').hide().find('select').prop('disabled', true);    
                 $('#my_student').show();
-                $('#my_faculty').hide();      
+                $('#my_faculty').hide().find('input').prop('disabled', true);      
            }
            else {
-                $('#my_jobseeker').hide();    
-                $('#my_company').hide();  
-                $('#my_student').hide();
+                $('#my_jobseeker').hide().find('input').prop('disabled', true);    
+                $('#my_company').hide().find('select').prop('disabled', true);  
+                $('#my_student').hide().find('input').prop('disabled', true);
                 $('#my_faculty').show();        
            }
        });
+
+           
+
     });
 
 
