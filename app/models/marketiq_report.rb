@@ -37,7 +37,6 @@ filter(:award_name, :string, header: "Award Name") {|value| where("award_name il
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |marketiq| content_tag :span, time_ago_in_words(marketiq.last_sign_in_at), title: marketiq.last_sign_in_at.to_formatted_s(:long) if marketiq.last_sign_in_at }
   column(:actions, header: "Action", html: true  ) do |marketiq|
     html = link_to "", admin_marketiq_path(marketiq), class: "margin_class btn btn-primary btn-xs glyphicon glyphicon-eye-open", title: "View marketiq"
-    html += link_to "", admin_marketiq_path(marketiq), class: "margin_class btn btn-danger btn-xs glyphicon glyphicon-remove", method: :delete, title: "Remove marketiq", 'data-confirm' => 'Are you sure?'
     html
   end
 
