@@ -93,8 +93,13 @@
                     <td><%= @user.nationality %></td>
                   </tr>
                   <tr>
+                  <% if @user.file_type == "" %>
                     <td>File</td>
-                    <td><% if @user.file_type == 'video' %><%= video_tag @user.file, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file, :size => "50x50" %><% end %></td>
+                    <td><%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
+                  <% else %>
+                    <td>File</td>
+                    <td><% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "50x50" %><% end %></td>
+                  <% end %>
                   </tr>
                   <tr>
                     <td>File Type</td>
@@ -749,8 +754,13 @@
                     <td><%= @user.first_name %></td>
                   </tr>
                   <tr>
+                  <% if @user.file_type == "" %>
+                    <td>File</td>
+                    <td><%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
+                  <% else %>
                     <td>File</td>
                     <td><% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "50x50" %><% end %></td>
+                  <% end %>
                   </tr>
                   <tr>
                     <td>Country ID</td>
@@ -1067,8 +1077,13 @@
                     <% end %>
                   </tr>
                   <tr>
+                  <% if @user.file_type == "" %>
+                    <td>File</td>
+                    <td><%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
+                  <% else %>
                     <td>File</td>
                     <td><% if @user.file_type == 'video' %><%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag @user.file.url, :size => "50x50" %><% end %></td>
+                  <% end %>
                   </tr>
                   <tr>
                     <td>File Type</td>
