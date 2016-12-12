@@ -1,6 +1,6 @@
 <%= simple_form_for [:admin, @industry], html: { class: 'form-horizontal' } do |f| %>
   
-  <%= f.input :name, label: "Name" %>
+  <%= f.input :name, label: "Industry Name" %>
   <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <button type="submit" class="btn btn-primary btn-sm">Save</button> <%= link_to "Back", admin_industries_path, class: "btn btn-default btn-sm" %>
