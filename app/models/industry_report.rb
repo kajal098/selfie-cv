@@ -2,13 +2,12 @@ class IndustryReport
 
   include Datagrid
 
-  scope { Industry.order(:id) }
+  scope { Industry.order(updated_at: :desc).all }
   
-  filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
+  filter(:name, :string, header: "Industry Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "industries.id")
-  column(:name, header: "Name", :order => "industries.name")
-  column(:created_at, html: true, header: "Created At") { |industry| content_tag :span, time_ago_in_words(industry.created_at), title: industry.created_at.to_formatted_s(:long) if industry.created_at }
+  column(:name, header: "Industry Name", :order => "industries.name")
   column(:updated_at, html: true, header: "Updated At") { |industry| content_tag :span, time_ago_in_words(industry.updated_at), title: industry.updated_at.to_formatted_s(:long) if industry.updated_at }
   
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |industry| content_tag :span, time_ago_in_words(industry.last_sign_in_at), title: industry.last_sign_in_at.to_formatted_s(:long) if industry.last_sign_in_at }

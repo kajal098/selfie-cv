@@ -2,15 +2,14 @@ class CategoryReport
 
   include Datagrid
 
-  scope { Category.order(:id) }
+  scope { Category.order(updated_at: :desc).all }
   
-  filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
+  filter(:name, :string, header: "Category Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "categories.id")
-  column(:name, header: "Name") do |model|
+  column(:name, header: "Category Name") do |model|
     model.name.capitalize
   end
-  column(:created_at, html: true, header: "Created At") { |category| content_tag :span, time_ago_in_words(category.created_at), title: category.created_at.to_formatted_s(:long) if category.created_at }
   column(:updated_at, html: true, header: "Updated At") { |category| content_tag :span, time_ago_in_words(category.updated_at), title: category.updated_at.to_formatted_s(:long) if category.updated_at }
   
   column(:actions, header: "Action", html: true  ) do |category|

@@ -2,7 +2,7 @@ class MarketiqReport
 
   include Datagrid
 
-  scope { Marketiq.order(:id) }
+  scope { Marketiq.order(updated_at: :desc).all }
   
 filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) })
 

@@ -2,17 +2,16 @@ class StockCountryReport
 
   include Datagrid
 
-  scope { StockCountry.order(:id) }
+  scope { StockCountry.order(updated_at: :desc).all }
   
   # filter(:id, header: "Id") {|value| where("id ilike ?", "%#{value}%")}
   #filter(:id, header: "Personeelsnummer")
-  filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
+  filter(:name, :string, header: "Country Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "stock_countries.id")
-  column(:name, header: "Name") do |model|
+  column(:name, header: "Country Name") do |model|
     model.name.capitalize
   end
-  column(:created_at, html: true, header: "Created At") { |stock_country| content_tag :span, time_ago_in_words(stock_country.created_at), title: stock_country.created_at.to_formatted_s(:long) if stock_country.created_at }
   column(:updated_at, html: true, header: "Updated At") { |stock_country| content_tag :span, time_ago_in_words(stock_country.updated_at), title: stock_country.updated_at.to_formatted_s(:long) if stock_country.updated_at }
   
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |stock_country| content_tag :span, time_ago_in_words(stock_country.last_sign_in_at), title: stock_country.last_sign_in_at.to_formatted_s(:long) if stock_country.last_sign_in_at }

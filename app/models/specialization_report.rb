@@ -2,15 +2,14 @@ class SpecializationReport
 
   include Datagrid
 
-  scope { Specialization.order(:id) }
+  scope { Specialization.order(updated_at: :desc).all }
   
   # filter(:id, header: "Id") {|value| where("id ilike ?", "%#{value}%")}
   #filter(:id, header: "Personeelsnummer")
-  filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
+  filter(:name, :string, header: "Specialization Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "specializations.id")
-  column(:name, header: "Name", :order => "specializations.name")
-  column(:created_at, html: true, header: "Created At") { |specialization| content_tag :span, time_ago_in_words(specialization.created_at), title: specialization.created_at.to_formatted_s(:long) if specialization.created_at }
+  column(:name, header: "Specialization Name", :order => "specializations.name")
   column(:updated_at, html: true, header: "Updated At") { |specialization| content_tag :span, time_ago_in_words(specialization.updated_at), title: specialization.updated_at.to_formatted_s(:long) if specialization.updated_at }
   
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |specialization| content_tag :span, time_ago_in_words(specialization.last_sign_in_at), title: specialization.last_sign_in_at.to_formatted_s(:long) if specialization.last_sign_in_at }

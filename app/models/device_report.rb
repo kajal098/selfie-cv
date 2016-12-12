@@ -2,7 +2,7 @@ class DeviceReport
 
   include Datagrid
 
-  scope { Device.order(:id) }
+  scope { Device.order(updated_at: :desc).all }
   
   filter(:registration_id, :string, header: "Registration Id") {|value| where("registration_id ilike ?", "%#{value}%")}
   filter(:uuid, :string, header: "Uuid") {|value| where("CAST(uuid AS text) ilike ?", "%#{value}%")}

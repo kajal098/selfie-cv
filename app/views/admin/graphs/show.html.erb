@@ -27,6 +27,15 @@
   <%= @graph.company_code %>
 </p>
 
+<p>
+  <strong>Created At:</strong>
+  <%= @graph.created_at.to_date %>
+</p>
+<p>
+  <strong>Updated At:</strong>
+  <%= @graph.updated_at.to_date %>
+</p>
+
 <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <%= link_to 'Edit', edit_admin_graph_path(@graph), class: "btn btn-primary btn-sm" %> <%= link_to "Back", admin_graphs_path, class: "btn btn-default btn-sm" %>

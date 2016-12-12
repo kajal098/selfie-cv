@@ -4,7 +4,7 @@
   <div class="col-lg-6 col-lg-offset-3">
     <div class="panel panel-default">
       <div class="panel-heading">        
-        <h3 class="panel-title" style="color: #000000"><b><%= @industry.name.capitalize %></b></h3>
+        <h3 class="panel-title" style="color: #000000"><b>Industry <%= @industry.id %></b></h3>
       </div>
       <div class="panel-body">
 
@@ -12,6 +12,15 @@
 <p>
   <strong>Name:</strong>
   <%= @industry.name %>
+</p>
+
+<p>
+  <strong>Created At:</strong>
+  <%= @industry.created_at.to_date %>
+</p>
+<p>
+  <strong>Updated At:</strong>
+  <%= @industry.updated_at.to_date %>
 </p>
 
 <div class="form-group clearfix">

@@ -2,9 +2,10 @@ class QuickMessageReport
 
   include Datagrid
 
-  scope { QuickMessage.order(:id) }
+  scope { QuickMessage.order(updated_at: :desc).all }
   
   filter(:text, :string, header: "Text") {|value| where("text ilike ?", "%#{value}%")}
+  filter(:role, :enum, header: "Role", select: ->{ QuickMessage.roles})
   
   column(:text, header: "Text", :order => "quick_messages.text")
   column(:role, header: "Role", :order => "quick_messages.role")

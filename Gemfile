@@ -44,6 +44,10 @@ gem 'bootstrap-datepicker-rails'
 # for pagination
 gem 'kaminari'
 
+#for elastic search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 # for font
 gem "font-awesome-rails"
 

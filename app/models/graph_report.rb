@@ -2,7 +2,7 @@ class GraphReport
 
   include Datagrid
 
-  scope { Graph.order(:id) }
+  scope { Graph.order(updated_at: :desc).all }
 
   filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) })
   filter(:company_code, :string, header: "Company Code") {|value| where("company_code ilike ?", "%#{value}%")}

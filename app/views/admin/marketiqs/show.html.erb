@@ -73,6 +73,15 @@
   <%= @marketiq.answer %>
 </p>
 
+<p>
+  <strong>Created At:</strong>
+  <%= @marketiq.created_at.to_date %>
+</p>
+<p>
+  <strong>Updated At:</strong>
+  <%= @marketiq.updated_at.to_date %>
+</p>
+
 <div class="form-group clearfix">
     <div class="col-sm-offset-3 col-sm-9">
       <%= link_to "Back", admin_marketiqs_path, class: "btn btn-primary btn-sm" %>

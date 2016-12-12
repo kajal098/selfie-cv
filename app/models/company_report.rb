@@ -2,13 +2,12 @@ class CompanyReport
 
   include Datagrid
 
-  scope { Company.order(:id) }
+  scope { Company.order(updated_at: :desc).all }
   
-  filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
+  filter(:name, :string, header: "Company Name") {|value| where("name ilike ?", "%#{value}%")}
   
   column(:id, header: "Id", :order => "companies.id")
-  column(:name, header: "Name", :order => "companies.name")
-  column(:created_at, html: true, header: "Created At") { |company| content_tag :span, time_ago_in_words(company.created_at), title: company.created_at.to_formatted_s(:long) if company.created_at }
+  column(:name, header: "Company Name", :order => "companies.name")
   column(:updated_at, html: true, header: "Updated At") { |company| content_tag :span, time_ago_in_words(company.updated_at), title: company.updated_at.to_formatted_s(:long) if company.updated_at }
   
   column(:actions, header: "Action", html: true  ) do |company|

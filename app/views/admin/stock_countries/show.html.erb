@@ -4,13 +4,22 @@
   <div class="col-lg-6 col-lg-offset-3">
     <div class="panel panel-default">
       <div class="panel-heading">        
-        <h3 class="panel-title" style="color: #000000"><b>Question No : <%= @stock_country.id %></b></h3>
+        <h3 class="panel-title" style="color: #000000"><b>Country <%= @stock_country.id %></b></h3>
       </div>
       <div class="panel-body">
 
 <p>
   <strong>Name:</strong>
   <%= @stock_country.name %>
+</p>
+
+<p>
+  <strong>Created At:</strong>
+  <%= @stock_country.created_at.to_date %>
+</p>
+<p>
+  <strong>Updated At:</strong>
+  <%= @stock_country.updated_at.to_date %>
 </p>
 
 <div class="form-group clearfix">
