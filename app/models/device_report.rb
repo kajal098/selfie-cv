@@ -10,6 +10,7 @@ class DeviceReport
   
   column(:uuid, header: "Uuid", :order => "devices.uuid")
   column(:token, header: "Token", :order => "devices.token")
+  column(:device_type, header: "Device", :order => "devices.device_type")
   column(:registration_id, header: "Registration Id", :order => "devices.registration_id")
   column(:updated_at, html: true, header: "Updated At") { |device| content_tag :span, time_ago_in_words(device.updated_at), title: device.updated_at.to_formatted_s(:long) if device.updated_at }
   
