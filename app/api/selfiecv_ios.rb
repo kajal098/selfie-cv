@@ -1127,7 +1127,6 @@ end
 #--------------------------------company end----------------------------------#
 #--------------------------------data start-----------------------------------#
 resources :data do 
-before { authenticate! }
 
 	desc 'Dropdown Data'
 		params do
@@ -1149,6 +1148,7 @@ before { authenticate! }
 		optional :back_profile
 	end
 	post :update_image, jbuilder: 'ios' do
+		authenticate!
 		@update_image = User.find params[:user_id]
 		error! 'User not found',422 unless @update_image
 		@update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
@@ -1161,6 +1161,7 @@ before { authenticate! }
 	  requires :token, type: String, regexp: UUID_REGEX
 	end
 	post :video, jbuilder: 'ios' do
+		authenticate!
 	  @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]]).first
 	end
 
