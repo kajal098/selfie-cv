@@ -21,8 +21,12 @@ class VideoUploader < CarrierWave::Uploader::Base
     end
   end
 
-  def extension_whitelist
-    %w(mp4)
+  # def extension_whitelist
+  #   %w(mp4)
+  # end
+
+  def content_type_whitelist
+    /video\//
   end
 
   def png_name for_file, version_name
