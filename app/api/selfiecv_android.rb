@@ -1194,7 +1194,7 @@ class SelfiecvAndroid < Grape::API
         requires :role
       end
       post :video, jbuilder: 'android' do
-        @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]])
+        @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]]).first
       end
 
   end

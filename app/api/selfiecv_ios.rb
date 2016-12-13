@@ -1161,7 +1161,7 @@ before { authenticate! }
 	  requires :token, type: String, regexp: UUID_REGEX
 	end
 	post :video, jbuilder: 'ios' do
-	  @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]])
+	  @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]]).first
 	end
 
 end
