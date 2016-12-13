@@ -13,7 +13,14 @@
         <%= f.input :file, as: :file, label: false %>
       </div>
   </div>
-
+<%= f.radio_button(:role, "Jobseeker") %>
+  <%= f.label(:role, "Jobseeker") %>
+  <%= f.radio_button(:role, "Company")%>
+  <%= f.label(:role, "Company") %>
+  <%= f.radio_button(:role, "Student") %>
+  <%= f.label(:role, "Student") %>
+  <%= f.radio_button(:role, "Faculty")%>
+  <%= f.label(:role, "Faculty") %>
 
   
 

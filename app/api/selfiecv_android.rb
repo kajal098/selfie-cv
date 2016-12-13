@@ -1191,9 +1191,10 @@ class SelfiecvAndroid < Grape::API
       desc 'Video For Appflow'
       params do
         requires :token, type: String, regexp: UUID_REGEX
+        requires :role
       end
       post :video, jbuilder: 'android' do
-        @video = VideoUpload.last
+        @video = VideoUpload.where(role: params[:role]).last
       end
 
   end

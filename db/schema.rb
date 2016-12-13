@@ -752,6 +752,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
 
   create_table "video_uploads", force: :cascade do |t|
     t.string   "file",       default: ""
+    t.integer  "role",       default: 1
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
