@@ -12,7 +12,11 @@ respond_to :json, :html
   end
 
   def create
-    @video_upload = VideoUpload.new video_upload_params
+    if defined? params[:video_upload][:file]
+      @video_upload = VideoUpload.new video_upload_params
+    else
+      @video_upload = VideoUpload.new
+    end
     if @video_upload.save
       redirect_to admin_video_uploads_path, notice: "The video has been uploaded successfully."
     else
@@ -51,7 +55,7 @@ private
   end
 
   def video_upload_params
-    params[:file] ? params.require(:video_upload).permit! : params.require(:video_upload).permit!
+    params.require(:video_upload).permit!
   end
 
 end
