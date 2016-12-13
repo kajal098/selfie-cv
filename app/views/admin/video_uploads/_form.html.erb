@@ -1,10 +1,12 @@
 <%= simple_form_for [:admin, @video_upload], html: { class: 'form-horizontal' } do |f| %>
+  <% if !@video_upload.file.blank? %>
   <div class="form-group string required user_district">
     <label class="string required col-sm-3 control-label" for="user_district">Uploaded Profile</label>
       <div class="col-sm-9">
         <%= video_tag @video_upload.file, :size => "320x240", :controls => true, :autobuffer => true %>
       </div>
   </div>
+  <% end %>
   <div class="form-group string required user_district">
     <label class="string required col-sm-3 control-label" for="user_district">Upload Profile</label>
       <div class="col-sm-9">
