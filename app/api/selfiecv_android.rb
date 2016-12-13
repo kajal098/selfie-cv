@@ -2173,19 +2173,6 @@ class SelfiecvAndroid < Grape::API
         @searched_company =  User.company_search(params)
       end
 
-      desc 'Search Top User'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        optional :location
-        optional :functional_area_id
-        optional :industry_id
-        optional :company_name
-      end
-      post :company, jbuilder: 'android_search'  do
-        authenticate!
-        @searched_company =  User.company_search(params)
-      end
-
   end
   #--------------------------------search end----------------------------------#
   #--------------------------------marketiq start----------------------------------#
