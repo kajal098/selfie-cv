@@ -6,7 +6,7 @@ class VideoUploadReport
   
   column(:id, header: "id", :order => "video_uploads.id")
   column(:file, :html => true, header: "Video") do |model|
-    model.thumb_url
+    model.file.url
   end
   column(:updated_at, html: true, header: "Updated At") { |video_upload| content_tag :span, time_ago_in_words(video_upload.updated_at), title: video_upload.updated_at.to_formatted_s(:long) if video_upload.updated_at }
   column(:actions, header: "Action", html: true  ) do |video_upload|
