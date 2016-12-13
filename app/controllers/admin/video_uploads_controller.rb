@@ -1,5 +1,5 @@
 class Admin::VideoUploadsController < Admin::ApplicationController
-respond_to :json, :html
+
   before_action :find_video_upload, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -18,14 +18,14 @@ respond_to :json, :html
       @video_upload = VideoUpload.new
     end
     if @video_upload.save
-      redirect_to admin_video_uploads_path, notice: "The video has been uploaded successfully."
+      redirect_to admin_video_uploads_path, notice: "The video has been created successfully."
     else
       render action: :new
     end
   end
 
   def show
-    @video_upload = VideoUpload.find params[:id]
+
   end
 
   def edit    
