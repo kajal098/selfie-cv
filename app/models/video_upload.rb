@@ -10,4 +10,5 @@ class VideoUpload < ActiveRecord::Base
 
     extend Enumerize
 	enum role: { Jobseeker: 1, Company: 2, Student:3, Faculty:4 }
+	ROLES = {"Jobseeker" => 1, "Company" => 2, "Student" => 3, "Faculty" => 4}
 end
