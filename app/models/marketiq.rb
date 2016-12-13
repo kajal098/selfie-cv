@@ -7,10 +7,25 @@ validates :option_b, presence: { message: "Option B must be filled" }
 validates :option_c, presence: { message: "Option C must be filled" }
 validates :option_d, presence: { message: "Option D must be filled" }
 validates :answer, presence: { message: "Answer must be filled" }
-validates :specialization_id, presence: { message: "specialization_id must be filled" }
-validates :industry_id, presence: { message: "industry_id must be filled" }
-validates :award_name, presence: { message: "award_name must be filled" }
-validates :subject, presence: { message: "subject must be filled" }
+validates_presence_of :specialization_id, :if => :check_jobseeker?, message: "specialization_id must be filled"
+validates_presence_of :industry_id, :if => :check_company?, message:"industry_id must be filled"
+validates_presence_of :award_name, :if => :check_student?, message: "award_name must be filled"
+validates_presence_of :subject, :if => :check_faculty?, message: "subject must be filled"
+
+
+def check_jobseeker?
+  role == "Jobseeker"
+end
+def check_company?
+	role == "Company"
+end
+def check_student? 
+	role == "Student"
+end
+
+def check_faculty? 
+	role == "Faculty"
+end
 
 	paginates_per 10
 
