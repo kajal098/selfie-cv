@@ -7,10 +7,7 @@ validates :option_b, presence: { message: "Option B must be filled" }
 validates :option_c, presence: { message: "Option C must be filled" }
 validates :option_d, presence: { message: "Option D must be filled" }
 validates :answer, presence: { message: "Answer must be filled" }
-validates :specialization_id, presence: { message: "specialization_id must be filled" }
-validates :industry_id, presence: { message: "industry_id must be filled" }
-validates :award_name, presence: { message: "award_name must be filled" }
-validates :subject, presence: { message: "subject must be filled" }
+
 
 	paginates_per 10
 

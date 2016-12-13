@@ -8,6 +8,7 @@ class CompanyStock < ActiveRecord::Base
 	validates :category_id, presence: { message: "Category must be filled" }
 	validates :stock_country_id,  presence: { message: "Country must be filled" }
 	validates :sensex,  presence: { message: "Sensex must be filled" }
+	validates :company_code,  presence: { message: "Company code must be filled" }
 	validates :currency,  presence: { message: "Currency must be filled" }
 	validates :date_format,  presence: { message: "Date Format must be filled" }
 
