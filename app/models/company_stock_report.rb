@@ -4,8 +4,8 @@ class CompanyStockReport
 
   scope { CompanyStock.order(:id) }
   
-  filter(:stock_country_id, :enum, header: "Country", select: ->{ StockCountry.pluck(:name, :id) })
-  filter(:category_id, :enum, header: "Category", select: ->{ Category.pluck(:name, :id) })
+  filter(:stock_country_id, :enum, header: "Country", select: ->{ StockCountry.pluck(:name, :id) }, prompt: "Select something")
+  filter(:category_id, :enum, header: "Category", select: ->{ Category.pluck(:name, :id) }, prompt: "Select something")
   filter(:sensex, :string, header: "Sensex") {|value| where("sensex ilike ?", "%#{value}%")}
   filter(:currency, :string, header: "Currency") {|value| where("currency ilike ?", "%#{value}%")}
   

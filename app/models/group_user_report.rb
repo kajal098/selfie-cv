@@ -5,8 +5,8 @@ class GroupUserReport
   scope { GroupUser.order(updated_at: :desc).all }
   
   #filter(:name, :string, header: "Name") {|value| where("name ilike ?", "%#{value}%")}
-  filter(:user_id, :enum, header: "User", select: ->{ User.pluck(:first_name, :id) })
-  filter(:group_id, :enum, header: "Group", select: ->{ Group.pluck(:name, :id) })
+  filter(:user_id, :enum, header: "User", select: ->{ User.pluck(:first_name, :id) }, prompt: "Select something")
+  filter(:group_id, :enum, header: "Group", select: ->{ Group.pluck(:name, :id) }, prompt: "Select something")
   
   column(:user_id, header: "User Id", :order => "groups.user_id")
 

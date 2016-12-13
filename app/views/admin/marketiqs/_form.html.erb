@@ -22,14 +22,14 @@
   <label class="string required col-sm-3 control-label" for="marketiq_question">
   <abbr title="required">*</abbr> Specialization </label>
   <div class="col-sm-9">
-  <%= f.collection_select :specialization_id, Specialization.order(:name),:id,:name, include_blank: false %>
+  <%= f.collection_select :specialization_id, Specialization.order(:name),:id,:name, prompt: "Select something" %>
   </div>
   </div>
   <div class="form-group string required marketiq_question" id="my_company" style='display:none'>
   <label class="string required col-sm-3 control-label" for="marketiq_question">
   <abbr title="required">*</abbr> Industry </label>
   <div class="col-sm-9">
-  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, include_blank: false %>
+  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, prompt: "Select something" %>
   </div>
   </div>
 

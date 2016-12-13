@@ -4,7 +4,7 @@ class GraphReport
 
   scope { Graph.order(updated_at: :desc).all }
 
-  filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) })
+  filter(:industry_id, :enum, header: "Industry", select: ->{ Industry.pluck(:name, :id) }, prompt: "Select something")
   filter(:company_code, :string, header: "Company Code") {|value| where("company_code ilike ?", "%#{value}%")}
   
   

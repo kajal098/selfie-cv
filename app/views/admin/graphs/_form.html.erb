@@ -4,7 +4,7 @@
   <label class="string required col-sm-3 control-label" >
   <abbr title="required">*</abbr> Industry </label>
   <div class="col-sm-9">
-  <%= f.collection_select :stock_country_id, StockCountry.order(:name),:id,:name, include_blank: true %>
+  <%= f.collection_select :stock_country_id, StockCountry.order(:name),:id,:name, prompt: "Select something" %>
   <%= f.error :stock_country_id %>
   </div>
   </div>
@@ -13,7 +13,7 @@
   <label class="string required col-sm-3 control-label" >
   <abbr title="required">*</abbr> Industry </label>
   <div class="col-sm-9">
-  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, include_blank: true %>
+  <%= f.collection_select :industry_id, Industry.order(:name),:id,:name, prompt: "Select something" %>
   <%= f.error :industry_id %>
   </div>
   </div>
