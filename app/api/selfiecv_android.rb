@@ -1193,7 +1193,7 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         requires :role
       end
-      post :video do
+      post :video, jbuilder: 'android' do
         @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]])
       end
 
