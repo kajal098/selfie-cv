@@ -24,6 +24,7 @@ class UserCurricular < ActiveRecord::Base
 	                    break
 	                elsif curri.file_type == "image"
 	                    curri_per = setting_per.value.to_i * 0.7
+                        break
 	                else
 	                    curri_per = setting_per.value.to_i * 0.3
 	                end
