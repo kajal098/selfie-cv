@@ -1,11 +1,11 @@
 namespace :graphapi do
 
 	task fetch: :environment do
-		@stocks = CompanyStock.all
-        @stocks.each do |stock|
+		@stock = CompanyStock.first
+        100.times do |i|
             @host = 'https://www.google.com/finance/info'
             @json_array = {
-                "q" => stock.sensex + ":" + stock.company_code
+                "q" => @stock.sensex + ":" + @stock.company_code
             } 
             uri = URI.parse(@host)
             uri.query = URI.encode_www_form(@json_array)
@@ -14,6 +14,7 @@ namespace :graphapi do
             request = Net::HTTP::Get.new(uri, 'Content-Language' => 'en-us')
             response = http.request(request)
             @parsed_response = JSON.parse(response.body.gsub('//',''))
+            puts @parsed_response
             @api = Graphapi.new
             @api.api_id = @parsed_response[0]['id']
     	    @api.symbol = @parsed_response[0]['t']
