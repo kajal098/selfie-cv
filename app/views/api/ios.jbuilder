@@ -19,13 +19,19 @@ if @user
 
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
+
 		if @user.file_type == ""
 			json.resume_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 			json.resume "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 		else
-			json.resume_thumb @user.resume_thumb_url
+			if @user.file_type == "audio"
+				json.resume_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			else
+				json.resume_thumb @user.resume_thumb_url
+			end
 			json.resume @user.file.url
 		end
+		
 		json.back_profile_thumb @user.back_profile_thumb_url
 		json.back_profile @user.back_profile.url
 		json.created_at @user.created_at.to_i
