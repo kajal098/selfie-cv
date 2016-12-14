@@ -213,7 +213,15 @@
                     <td><%= exp.working_till %></td>
                     <td><%= exp.designation %></td>
                     <td><%= exp.file.url.split("/").last %></td>
-                    <td><% if exp.file_type == 'video' %><%= video_tag exp.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag exp.thumb_url, :size => "50x50" %><% end %></td>
+                    <td>
+                    <% if exp.file_type == 'video' %>
+                    <%= video_tag exp.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                    <% elsif exp.file_type == 'doc' %>
+                    <%= link_to "Download Document",exp.file.url, target: '_blank' %>
+                    <% else %>
+                    <%= image_tag exp.thumb_url, :size => "50x50" %>
+                    <% end %>                      
+                    </td>
                     <td><%= exp.file_type %></td>
                   </tr>
                   <% end %>
@@ -299,11 +307,15 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><%= certi.file.url.split("/").last %></td>
-                    <td><% if certi.file_type == 'video' %>
-                      <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-                      <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
-                      <% elsif certi.file_type == 'doc' %><%= link_to "Download Document",certi.file.url, target: '_blank' %>
-                      <% end %></td>                      
+                    <td>
+                    <% if certi.file_type == 'video' %>
+                    <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                    <% elsif certi.file_type == 'image' %>
+                    <%= image_tag certi.thumb_url, :size => "50x50" %>
+                    <% elsif certi.file_type == 'doc' %>
+                    <%= link_to "Download Document",certi.file.url, target: '_blank' %>
+                    <% end %>                        
+                    </td>                      
                       <td><%= certi.file_type %></td>
                     </tr>
                     <% end %>
@@ -390,7 +402,8 @@
                       <td><%= future.title %></td>
                       <td><%= future.term_type %></td>
                       <td><%= future.file.url.split("/").last %></td>
-                      <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif future.file_type == 'audio' %>
+                        <%= audio_tag future.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -415,7 +428,8 @@
                       <td><%= work_env.env_type %></td>
                       <td><%= work_env.title %></td>
                       <td><%= work_env.file.url.split("/").last %></td>
-                      <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'audio' %>
+                        <%= audio_tag work_env.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
                       <td><%= work_env.file_type %></td>
                     </tr>
                     <% end %>
@@ -451,7 +465,19 @@
                       <td><%= ref.date %></td>
                       <td><%= ref.location %></td>
                       <td><%= ref.file.url.split("/").last %></td>
-                      <td><% if ref.file_type == 'video' %><%= video_tag ref.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif ref.file_type == 'text' %><%= ref.text_field %><% else %><%= image_tag ref.thumb_url, :size => "50x50" %><% end %></td>
+                      <td>
+                          <% if ref.file_type == 'video' %>
+                          <%= video_tag ref.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                          <% elsif ref.file_type == 'audio' %>
+                          <%= audio_tag ref.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %>
+                          <% elsif ref.file_type == 'doc' %>
+                          <%= link_to "Download Document",ref.file.url, target: '_blank' %>
+                          <% elsif ref.file_type == 'image' %>
+                          <%= image_tag ref.thumb_url, :size => "50x50" %>
+                          <% elsif ref.file_type == 'text' %>
+                          <%= ref.text_field %>
+                          <% end %>                          
+                      </td>
                       <td><%= ref.file_type %></td>
                     </tr>
                     <% end %>
@@ -709,11 +735,15 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><%= certi.file.url.split("/").last %></td>
-                    <td><% if certi.file_type == 'video' %>
+                    <td>
+                      <% if certi.file_type == 'video' %>
                       <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-                      <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
-                      <% elsif certi.file_type == 'doc' %><%= link_to "Download Document" ,certi.file.url, target: '_blank' %>
-                      <% end %></td>
+                      <% elsif certi.file_type == 'image' %>
+                      <%= image_tag certi.thumb_url, :size => "50x50" %>
+                      <% elsif certi.file_type == 'doc' %>
+                      <%= link_to "Download Document" ,certi.file.url, target: '_blank' %>
+                      <% end %>                        
+                    </td>
                       <td><%= certi.file_type %></td>
                     </tr>
 
@@ -755,7 +785,8 @@
                     <td><%= work_env.env_type %></td>
                     <td><%= work_env.title %></td>
                     <td><%= work_env.file.url.split("/").last %></td>
-                    <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'audio' %>
+                        <%= audio_tag work_env.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
                       <td><%= work_env.file_type %></td>
                   </tr>
                   <% end %>
@@ -902,7 +933,13 @@
                     <td><%= marksheet.year %></td>
                     <td><%= marksheet.file.url.split("/").last %></td>
                     <td><%= marksheet.file_type %></td>
-                    <td><% if marksheet.file_type == 'image' %><%= image_tag marksheet.thumb_url, :size => "50x50" %><% else %><%= image_tag marksheet.thumb_url, :size => "50x50" %><% end %></td>
+                    <td>
+                        <% if marksheet.file_type == 'image' %>
+                        <%= image_tag marksheet.thumb_url, :size => "50x50" %>
+                        <% elsif marksheet.file_type == 'doc' %>
+                        <%= link_to "Download Document" ,marksheet.file.url, target: '_blank' %>
+                        <% end %>
+                    </td>
                   </tr>
                   <% end %>
                 </table>
@@ -929,7 +966,15 @@
                     <td><%= project.description %></td>
                     <td><%= project.file.url.split("/").last %></td>
                     <td><%= project.file_type %></td>
-                    <td><% if project.file_type == 'video' %><%= video_tag project.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif project.file_type == 'image' %><%= image_tag project.thumb_url, :size => "50x50" %><% else %><%= image_tag project.thumb_url, :size => "50x50" %><% end %></td>
+                    <td>
+                        <% if project.file_type == 'video' %>
+                        <%= video_tag project.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                        <% elsif project.file_type == 'image' %>
+                        <%= image_tag project.thumb_url, :size => "50x50" %>
+                        <% elsif project.file_type == 'doc' %>
+                        <%= link_to "Download Document" ,project.file.url, target: '_blank' %>
+                        <% end %>                          
+                    </td>
                   </tr>
                   <% end %>
                 </table>
@@ -1049,7 +1094,8 @@
                     <td><%= future.title %></td>
                     <td><%= future.term_type %></td>
                     <td><%= future.file.url.split("/").last %></td>
-                    <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif future.file_type == 'audio' %>
+                        <%= audio_tag future.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -1238,7 +1284,17 @@
                     <td><%= workshop.title %></td>
                     <td><%= workshop.description %></td>
                     <td><%= workshop.file.url.split("/").last %></td>
-                    <td><% if workshop.file_type == 'video' %><%= video_tag workshop.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif workshop.file_type == 'image' %><%= image_tag workshop.thumb_url, :size => "50x50" %><% end %></td>
+                    <td>
+                        <% if workshop.file_type == 'video' %>
+                        <%= video_tag workshop.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                        <% elsif workshop.file_type == 'image' %>
+                        <%= image_tag workshop.thumb_url, :size => "50x50" %>
+                        <% elsif workshop.file_type == 'audio' %>
+                        <%= audio_tag workshop.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %>
+                        <% elsif workshop.file_type == 'doc' %>
+                        <%= link_to "Download Document", workshop.file.url, target: '_blank' %>
+                        <% end %>                        
+                    </td>
                     <td><%= workshop.file_type %></td>                    
                   </tr>
                   <% end %>
@@ -1266,7 +1322,11 @@
                     <td><%= publication.description %></td>
                     <td><%= publication.file.url.split("/").last %></td>
                     <td><%= publication.file_type %></td>
-                    <td><%= publication.file.url %></td>
+                    <td>
+                      <% if publication.file_type == 'doc' %>
+                      <%= link_to "Download Document", publication.file.url, target: '_blank' %>
+                      <% end %>
+                    </td>
                   </tr>
                   <% end %>
                 </table>
@@ -1282,18 +1342,28 @@
                     <th><strong class="text_color" >No</strong></th>
                     <th><strong class="text_color" >Title </strong></th>
                     <th><strong class="text_color" >Description </strong></th>
-                    <th><strong class="text_color" >File Name</strong></th>
-                    <th><strong class="text_color" >File Type </strong></th>
+                    <th><strong class="text_color" >File Name</strong></th>                    
                     <th><strong class="text_color" >File </strong></th>
+                    <th><strong class="text_color" >File Type </strong></th>
                   </tr>
                   <% @user.faculty_researches.each do |research| %>     
                   <tr >
                     <td><%= research.id %></td>
                     <td><%= research.title %></td>
                     <td><%= research.description %></td>
-                    <td><%= research.file.url.split("/").last %></td>
+                    <td><%= research.file.url.split("/").last %></td>                    
+                    <td>
+                      <% if research.file_type == 'video' %>
+                      <%= video_tag research.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <% elsif research.file_type == 'image' %>
+                      <%= image_tag research.thumb_url, :size => "50x50" %>
+                      <% elsif research.file_type == 'audio' %>
+                      <%= audio_tag research.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %>
+                      <% elsif research.file_type == 'doc' %>
+                      <%= link_to "Download Document", research.file.url, target: '_blank' %>
+                      <% end %>
+                    </td>
                     <td><%= research.file_type %></td>
-                    <td><%= research.file.url %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -1321,7 +1391,15 @@
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
                     <td><%= award.file.url.split("/").last %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td>
+                        <% if award.file_type == 'video' %>
+                        <%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                        <% elsif award.file_type == 'doc' %>
+                        <%= link_to "Download Document" ,award.file.url, target: '_blank' %>
+                        <% else %>
+                        <%= image_tag award.thumb_url, :size => "50x50" %>
+                        <% end %>                          
+                    </td>
                     <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
