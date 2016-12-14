@@ -857,7 +857,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :title
+		requires :title
 		optional :ref_type
 		optional :from        
 		optional :email

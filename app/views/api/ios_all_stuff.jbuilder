@@ -121,8 +121,8 @@ if @user_stuff
 			json.ref_updated_at ref.updated_at.to_i
 		end
 
-		json.resume_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.resume_per.to_i, "resume") : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
+		json.resume_per @user_stuff.user_meter ? @user_stuff.user_meter.resume_info_per.to_i + @user_stuff.user_meter.education_per.to_i + @user_stuff.user_meter.experience_per.to_i + @user_stuff.user_meter.prework_per.to_i  : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
 		json.curri_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.curri_per.to_i, "extra") : 0
 		json.future_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.future_goal_per.to_i, "futuregoal") : 0
 		json.working_env_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.working_env_per.to_i, "workingenv") : 0
@@ -236,7 +236,7 @@ if @user_stuff
 		json.company_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.company_info_per.to_i, "info") : 0
 		json.corporate_identity_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.corporate_identity_per.to_i, "corporate") : 0
 		json.growth_and_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.growth_and_goal_per.to_i, "growth") : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
 		json.galery_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.galery_per.to_i, "gallery") : 0
 		json.working_env_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.working_env_per.to_i, "workingenv") : 0
 		json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : 0
@@ -289,10 +289,11 @@ if @user_stuff
 
 		json.student_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_basic_info_per.to_i, "info") : 0
 		json.student_education_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_education_per.to_i, "education") : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
 		json.curri_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.curri_per.to_i, "extra") : 0
 		json.future_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.future_goal_per.to_i, "futuregoal") : 0
 		json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.profile_meter_per.to_i : 0
+
 		json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i  
 
@@ -424,9 +425,10 @@ if @user_stuff
 		json.back_profile @user_stuff.back_profile.url
 
 		json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.faculty_basic_info_per.to_i, "info") : 0
-		json.experience_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.experience_per.to_i, "experience") : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
+		json.experience_per @user_stuff.user_meter ? @user_stuff.user_meter.faculty_affiliation_per.to_i + @user_stuff.user_meter.faculty_workshop_per.to_i + @user_stuff.user_meter.faculty_publication_per.to_i + @user_stuff.user_meter.faculty_research_per.to_i : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
 		json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.profile_meter_per.to_i : 0
+		
 		json.created_at @user_stuff.created_at.to_i
 		json.updated_at @user_stuff.updated_at.to_i
 
