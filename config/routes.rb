@@ -16,6 +16,22 @@ Rails.application.routes.draw do
     resources :users do
         get :flop
         get :flop_marketiq
+        get :flop_award
+        get :flop_certificate
+        get :flop_futuregoal
+        get :flop_workingenv
+        get :flop_job_education
+        get :flop_experience
+        get :flop_whizquiz
+        get :flop_curricular
+        get :flop_reference
+        get :flop_student_education
+        get :flop_marksheet
+        get :flop_project
+        get :flop_affiliation
+        get :flop_workshop
+        get :flop_publication
+        get :flop_research
     end
 
     resources :whizquizzes do
