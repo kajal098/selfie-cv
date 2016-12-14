@@ -572,7 +572,7 @@
                   </tr> 
                   <tr>
                     <td>Company Brochure</td>
-                    <td><% if @user.file_type == 'doc' %><%= link_to "Download Document",@user.file.url, target: '_blank' %><% end %></td>
+                    <td><% if @user.company_brochure_type == 'doc' %><%= link_to "Download Document",@user.file.url, target: '_blank' %><% end %></td>
                   </tr>     
                   <tr>
                     <td>Company Website</td>
