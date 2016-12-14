@@ -93,6 +93,10 @@
                     <td><%= @user.nationality %></td>
                   </tr>
                   <tr>
+                    <td>File Name</td>
+                    <td><%= @user.file.url.split("/").last %></td>
+                  </tr>
+                  <tr>
                   <% if @user.file_type == "" %>
                     <td>File</td>
                     <td><%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
@@ -120,9 +124,17 @@
                     <td><%= @user.file.url %></td>
                   </tr>  
                   <tr>
+                    <td>Profile Picture Name</td>
+                    <td><%= @user.profile_pic.url.split("/").last %></td>
+                  </tr>
+                  <tr>
                     <td>Profile</td>
                     <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
-                  </tr>            
+                  </tr>  
+                  <tr>
+                    <td>Back Profile Picture Name</td>
+                    <td><%= @user.back_profile.url.split("/").last %></td>
+                  </tr>          
                   <tr>
                     <td>Back Profile</td>
                     <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
@@ -198,7 +210,7 @@
                     <td><%= exp.start_from %></td>
                     <td><%= exp.working_till %></td>
                     <td><%= exp.designation %></td>
-                    <td><% if exp.file_type == 'video' %><%= video_tag exp.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag exp.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if exp.file_type == 'video' %><%= video_tag exp.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag exp.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -253,7 +265,7 @@
                     <td><%= award.name %></td>
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
                     <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
@@ -280,7 +292,7 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><% if certi.file_type == 'video' %>
-                      <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %><%= link_to "Download Document",certi.file.url, target: '_blank' %>
                       <% end %></td>                      
@@ -338,7 +350,7 @@
                       <td><%= curri.team_type %></td>
                       <td><%= curri.location %></td>
                       <td><%= curri.date %></td>
-                      <td><% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if curri.file_type == 'video' %><%= video_tag curri.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
                     </tr> 
                     <% end %>
                   </table>
@@ -364,7 +376,7 @@
                       <td><%= future.goal_type %></td>
                       <td><%= future.title %></td>
                       <td><%= future.term_type %></td>
-                      <td><% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -387,7 +399,7 @@
                       <td><%= work_env.id %></td>
                       <td><%= work_env.env_type %></td>
                       <td><%= work_env.title %></td>
-                      <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
                       <td><%= work_env.file_type %></td>
                     </tr>
                     <% end %>
@@ -421,7 +433,7 @@
                       <td><%= ref.contact %></td>
                       <td><%= ref.date %></td>
                       <td><%= ref.location %></td>
-                      <td><% if ref.file_type == 'video' %><%= video_tag ref.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif ref.file_type == 'text' %><%= ref.text_field %><% else %><%= image_tag ref.thumb_url, :size => "50x50" %><% end %></td>
+                      <td><% if ref.file_type == 'video' %><%= video_tag ref.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif ref.file_type == 'text' %><%= ref.text_field %><% else %><%= image_tag ref.thumb_url, :size => "50x50" %><% end %></td>
                       <td><%= ref.file_type %></td>
                     </tr>
                     <% end %>
@@ -529,9 +541,17 @@
                     <td><%= @user.company ? @user.company.name : "" %></td>
                   </tr>
                   <tr>
+                    <td>Profile Picture Name</td>
+                    <td><%= @user.profile_pic.url.split("/").last %></td>
+                  </tr>
+                  <tr>
                     <td>Profile</td>
                     <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
                   </tr>
+                  <tr>
+                    <td>Back Profile Picture Name</td>
+                    <td><%= @user.back_profile.url.split("/").last %></td>
+                  </tr> 
                   <tr>
                     <td>Back Profile</td>
                     <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
@@ -640,7 +660,7 @@
                     <td><%= award.name %></td>
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
                     <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
@@ -668,7 +688,7 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><% if certi.file_type == 'video' %>
-                      <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %><%= link_to "Download Document" ,certi.file.url, target: '_blank' %>
                       <% end %></td>
@@ -711,7 +731,7 @@
                     <td><%= work_env.id %></td>
                     <td><%= work_env.env_type %></td>
                     <td><%= work_env.title %></td>
-                    <td><% if work_env.file_type == 'video' %><%= video_tag work_env.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
                       <td><%= work_env.file_type %></td>
                   </tr>
                   <% end %>
@@ -776,9 +796,17 @@
                     <% end %>
                   </tr>
                   <tr>
+                    <td>Profile Picture Name</td>
+                    <td><%= @user.profile_pic.url.split("/").last %></td>
+                  </tr>
+                  <tr>
                     <td>Profile</td>
                     <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
                   </tr>
+                  <tr>
+                    <td>Back Profile Picture Name</td>
+                    <td><%= @user.back_profile.url.split("/").last %></td>
+                  </tr> 
                   <tr>
                     <td>Back Profile</td>
                     <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
@@ -873,7 +901,7 @@
                     <td><%= project.title %></td>
                     <td><%= project.description %></td>
                     <td><%= project.file_type %></td>
-                    <td><% if project.file_type == 'video' %><%= video_tag project.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif project.file_type == 'image' %><%= image_tag project.thumb_url, :size => "50x50" %><% else %><%= image_tag project.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if project.file_type == 'video' %><%= video_tag project.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif project.file_type == 'image' %><%= image_tag project.thumb_url, :size => "50x50" %><% else %><%= image_tag project.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -899,7 +927,7 @@
                     <td><%= award.name %></td>
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
                     <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
@@ -927,7 +955,7 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><% if certi.file_type == 'video' %>
-                      <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %><%= link_to "Download Document", certi.file.url, target: '_blank' %>
                       <% end %></td>
@@ -958,7 +986,7 @@
                     <td><%= curri.team_type %></td>
                     <td><%= curri.location %></td>
                     <td><%= curri.date %></td>
-                    <td><% if curri.file_type == 'video' %><%= video_tag curri.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if curri.file_type == 'video' %><%= video_tag curri.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -985,7 +1013,7 @@
                     <td><%= future.goal_type %></td>
                     <td><%= future.title %></td>
                     <td><%= future.term_type %></td>
-                    <td><% if future.file_type == 'video' %><%= video_tag future.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -1070,6 +1098,10 @@
                     <% end %>
                   </tr>
                   <tr>
+                    <td>File Name</td>
+                    <td><%= @user.file.url.split("/").last %></td>
+                  </tr>
+                  <tr>
                   <% if @user.file_type == "" %>
                     <td>File</td>
                     <td><%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
@@ -1087,9 +1119,17 @@
                     <td><%= @user.file.url %></td>
                   </tr>
                   <tr>
+                    <td>Profile Picture Name</td>
+                    <td><%= @user.profile_pic.url.split("/").last %></td>
+                  </tr>
+                  <tr>
                     <td>Profile</td>
                     <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
                   </tr>
+                  <tr>
+                    <td>Back Profile Picture Name</td>
+                    <td><%= @user.back_profile.url.split("/").last %></td>
+                  </tr> 
                   <tr>
                     <td>Back Profile</td>
                     <td><%= image_tag @user.back_profile, :size => "50x50" %></td>
@@ -1158,7 +1198,7 @@
                     <td><%= workshop.id %></td>
                     <td><%= workshop.title %></td>
                     <td><%= workshop.description %></td>
-                    <td><% if workshop.file_type == 'video' %><%= video_tag workshop.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif workshop.file_type == 'image' %><%= image_tag workshop.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if workshop.file_type == 'video' %><%= video_tag workshop.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif workshop.file_type == 'image' %><%= image_tag workshop.thumb_url, :size => "50x50" %><% end %></td>
                     <td><%= workshop.file_type %></td>                    
                   </tr>
                   <% end %>
@@ -1235,7 +1275,7 @@
                     <td><%= award.name %></td>
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
                     <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
@@ -1264,7 +1304,7 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><% if certi.file_type == 'video' %>
-                      <%= video_tag certi.thumb_url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %>
                       <%= link_to "Download Document", certi.file.url, target: '_blank' %>
