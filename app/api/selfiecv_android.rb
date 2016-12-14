@@ -1159,8 +1159,7 @@ class SelfiecvAndroid < Grape::API
   #--------------------------------company end----------------------------------#
   #--------------------------------data start----------------------------------#
   resources :data do 
-  before { authenticate! }
-
+  
       desc 'Dropdown Data'
       params do
         requires :token, type: String, regexp: UUID_REGEX
@@ -1181,6 +1180,7 @@ class SelfiecvAndroid < Grape::API
         optional :back_profile
       end
       post :update_image, jbuilder: 'android' do
+        authenticate!
         @update_image = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @update_image
         @update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
@@ -1191,9 +1191,11 @@ class SelfiecvAndroid < Grape::API
       desc 'Video For Appflow'
       params do
         requires :token, type: String, regexp: UUID_REGEX
+        requires :role
       end
       post :video, jbuilder: 'android' do
-        @video = VideoUpload.last
+        authenticate!
+        @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]]).first
       end
 
   end
@@ -2165,19 +2167,6 @@ class SelfiecvAndroid < Grape::API
         requires :token, type: String, regexp: UUID_REGEX
         optional :location
         optional :functional_area
-        optional :industry_id
-        optional :company_name
-      end
-      post :company, jbuilder: 'android_search'  do
-        authenticate!
-        @searched_company =  User.company_search(params)
-      end
-
-      desc 'Search Top User'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        optional :location
-        optional :functional_area_id
         optional :industry_id
         optional :company_name
       end

@@ -210,7 +210,7 @@ def percent_of_resume
                     resume_info_per = setting_per * 0.5
                 elsif self.file_type == "doc"
                     resume_info_per = setting_per * 0.5             
-                else self.file_type == ""
+                elsif self.first_name.present?
                     resume_info_per = setting_per * 0.3
                 end
                 @user_meter.update_column('resume_info_per' ,resume_info_per)

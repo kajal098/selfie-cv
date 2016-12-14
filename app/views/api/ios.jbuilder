@@ -246,7 +246,7 @@ end
 
 if @award
 	json.extract! @award, :id, :user_id, :name, :description, :file_type
-	if @user.file_type == ""
+	if @award.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 			json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 		else

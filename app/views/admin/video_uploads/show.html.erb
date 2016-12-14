@@ -6,10 +6,17 @@
       <h3 class="panel-title" , style="color:#000000;" ><b>Video</b></h3>
       </div>
       <div class="panel-body">
-        <tr>
-                    <td>File</td>
-                    <td><%= video_tag @video_upload.file, :size => "320x240", :controls => true, :autobuffer => true %></td>
-                  </tr>
+        
+                  <p>
+  <strong>File:</strong>
+  <%= video_tag @video_upload.file, :size => "320x240", :controls => true, :autobuffer => true %>
+</p>
+
+
+                  <p>
+  <strong>Role:</strong>
+  <%= @video_upload.role %>
+</p>
         <div class="form-group clearfix">
           <div class="col-sm-offset-3 col-sm-9">
             <%= link_to 'Edit', edit_admin_video_upload_path(@video_upload), class: "btn btn-primary btn-sm" %> <%= link_to "Back", admin_video_uploads_path, class: "btn btn-default btn-sm" %>
