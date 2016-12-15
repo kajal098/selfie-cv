@@ -99,7 +99,7 @@
                             <td>File</td>
                             <td>
                                 <% if @user.file_type == "" %>                   
-                                    <%= link_to , "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", target: '_blank' %>
+                                    <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
                                 <% elsif @user.file_type == 'video' %>
                                     <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                                 <% elsif @user.file_type == 'image' %>
