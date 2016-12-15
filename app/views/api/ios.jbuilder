@@ -19,13 +19,19 @@ if @user
 
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
+
 		if @user.file_type == ""
 			json.resume_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 			json.resume "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 		else
-			json.resume_thumb @user.resume_thumb_url
+			if @user.file_type == "audio"
+				json.resume_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			else
+				json.resume_thumb @user.resume_thumb_url
+			end
 			json.resume @user.file.url
 		end
+		
 		json.back_profile_thumb @user.back_profile_thumb_url
 		json.back_profile @user.back_profile.url
 		json.created_at @user.created_at.to_i
@@ -33,11 +39,11 @@ if @user
 
 		json.resume_per @user.user_meter ? @user.user_meter.resume_info_per.to_i + @user.user_meter.education_per.to_i + @user.user_meter.experience_per.to_i + @user.user_meter.prework_per.to_i  : 0
 		json.achievement_per @user.user_meter ? @user.user_meter.award_per.to_i + @user.user_meter.certificate_per.to_i : 0
-		json.curri_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.curri_per.to_i, "extra") : 0
-		json.future_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.future_goal_per.to_i, "futuregoal") : 0
-		json.working_env_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0
-		json.ref_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.ref_per.to_i, "references") : 0
-		json.whizquiz_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.whizquiz_per.to_i, "whizquiz") : 0
+		json.curri_per @user.user_meter ? @user.user_meter.curri_per.to_i : 0
+		json.future_goal_per @user.user_meter ? @user.user_meter.future_goal_per.to_i : 0
+		json.working_env_per @user.user_meter ? @user.user_meter.working_env_per.to_i : 0
+		json.ref_per @user.user_meter ? @user.user_meter.ref_per.to_i : 0
+		json.whizquiz_per @user.user_meter ? @user.user_meter.whizquiz_per.to_i : 0
 		json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0
 
 		json.likes @user.likes.count
@@ -81,12 +87,12 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 		
-		json.company_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.company_info_per.to_i, "info") : 0
-		json.corporate_identity_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.corporate_identity_per.to_i, "corporate") : 0
-		json.growth_and_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.growth_and_goal_per.to_i, "growth") : 0
-		json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
-		json.galery_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.galery_per.to_i, "gallery") : 0
-		json.working_env_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.working_env_per.to_i, "workingenv") : 0
+		json.company_info_per @user.user_meter ? @user.user_meter.company_info_per.to_i : 0
+		json.corporate_identity_per @user.user_meter ? @user.user_meter.corporate_identity_per.to_i : 0
+		json.growth_and_goal_per @user.user_meter ? @user.user_meter.growth_and_goal_per.to_i : 0
+		json.achievement_per @user.user_meter ? @user.user_meter.award_per.to_i + @user.user_meter.certificate_per.to_i : 0
+		json.galery_per @user.user_meter ? @user.user_meter.galery_per.to_i : 0
+		json.working_env_per @user.user_meter ? @user.user_meter.working_env_per.to_i : 0
 		json.total_per @user.user_meter ? @user.user_meter.profile_meter_per.to_i : 0
 
 		json.likes @user.likes.count
@@ -126,11 +132,11 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
-		json.student_basic_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.student_basic_info_per.to_i, "info") : 0
-		json.student_education_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.student_education_per.to_i, "education") : 0
-		json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
-		json.curri_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.curri_per.to_i, "extra") : 0
-		json.future_goal_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.future_goal_per.to_i, "futuregoal") : 0
+		json.student_basic_info_per @user.user_meter ? @user.user_meter.student_basic_info_per.to_i : 0
+		json.student_education_per @user.user_meter ? @user.user_meter.student_education_per.to_i : 0
+		json.achievement_per @user.user_meter ? @user.user_meter.award_per.to_i + @user.user_meter.certificate_per.to_i : 0
+		json.curri_per @user.user_meter ? @user.user_meter.curri_per.to_i : 0
+		json.future_goal_per @user.user_meter ? @user.user_meter.future_goal_per.to_i : 0
 		json.total_per @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0
 		
 		json.likes @user.likes.count
@@ -161,9 +167,9 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 
-		json.faculty_basic_info_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.faculty_basic_info_per.to_i, "info") : 0
-		json.experience_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.experience_per.to_i, "experience") : 0
-		json.achievement_per @user.user_meter ? @user.cal_preview_per(@user.user_meter.achievement_per.to_i, "achievement") : 0
+		json.faculty_basic_info_per @user.user_meter ? @user.user_meter.faculty_basic_info_per.to_i : 0
+		json.experience_per @user.user_meter ? @user.user_meter.faculty_affiliation_per.to_i + @user.user_meter.faculty_workshop_per.to_i + @user.user_meter.faculty_publication_per.to_i + @user.user_meter.faculty_research_per.to_i : 0
+		json.achievement_per @user.user_meter ? @user.user_meter.award_per.to_i + @user.user_meter.certificate_per.to_i : 0
 		json.total_per @user.user_meter ?  @user.user_meter.profile_meter_per.to_i : 0
 		
 		json.likes @user.likes.count
@@ -454,11 +460,11 @@ if @basic_info
 			json.file_thumb @basic_info.resume_thumb_url
 			json.file @basic_info.file.url
 		end
-	json.student_basic_info_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.student_basic_info_per.to_i, "info") : 0
-	json.student_education_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.student_education_per.to_i, "education") : 0
-	json.achievement_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.achievement_per.to_i, "achievement") : 0
-	json.curri_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.curri_per.to_i, "extra") : 0
-	json.future_goal_per @basic_info.user_meter ? @basic_info.cal_preview_per(@basic_info.user_meter.future_goal_per.to_i, "futuregoal") : 0
+	json.student_basic_info_per @basic_info.user_meter ? @basic_info.user_meter.student_basic_info_per.to_i : 0
+	json.student_education_per @basic_info.user_meter ? @basic_info.user_meter.student_education_per.to_i : 0
+	json.achievement_per @basic_info.user_meter ? @basic_info.user_meter.achievement_per.to_i : 0
+	json.curri_per @basic_info.user_meter ? @basic_info.user_meter.curri_per.to_i : 0
+	json.future_goal_per @basic_info.user_meter ? @basic_info.user_meter.future_goal_per.to_i : 0
 	json.total_per @basic_info.user_meter ? @basic_info.user_meter.profile_meter_per.to_i : 0
 	json.created_at @basic_info.created_at.to_i
 	json.updated_at @basic_info.updated_at.to_i

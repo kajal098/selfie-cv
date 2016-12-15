@@ -11,6 +11,7 @@ class UserReport
   column(:id, header: "Id",  :order => "users.id")
   column(:role, header: "Role",  :order => "users.role")
   column(:username, header: "Username", :order => "users.username")
+  column(:email, header: "Email",  :order => "users.email")
   # column(:contact_number, header: "Number") do |model|
   #   if model.role == 'Company'
   #     model.company_contact

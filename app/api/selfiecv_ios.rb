@@ -857,7 +857,7 @@ before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :user_id
-		optional :title
+		requires :title
 		optional :ref_type
 		optional :from        
 		optional :email
@@ -1185,15 +1185,12 @@ before { authenticate! }
 		optional :zipcode
 		requires :country_id
 		optional :contact_number
-		optional :file
-		optional :file_type
 	end
 	post :basic_info, jbuilder: 'ios' do
-		@user = User.find params[:user_id]
-		error!({error: 'User not found', status: 'Fail'}, 200) unless @user
-		@user.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
-		@user.file = params[:file] if params[:file]
-		error! @user.errors.full_messages.join(', '), 422 unless @user.save
+		@basic_info = User.find params[:user_id]
+		error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
+		@basic_info.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number )
+		error! @basic_info.errors.full_messages.join(', '), 422 unless @basic_info.save
 	end
 
 	desc 'Update Student Basic Info'

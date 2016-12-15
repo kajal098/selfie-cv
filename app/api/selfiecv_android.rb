@@ -276,7 +276,7 @@ class SelfiecvAndroid < Grape::API
         optional :file
         optional :file_type
       end
-      post :resume, jbuilder: 'android'  do
+      get :resume, jbuilder: 'android'  do
         authenticate!
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
@@ -882,7 +882,7 @@ class SelfiecvAndroid < Grape::API
       params do
         requires :token, type: String, regexp: UUID_REGEX
         requires :user_id
-        optional :title
+        requires :title
         optional :ref_type
         optional :from        
         optional :email
@@ -1218,15 +1218,12 @@ class SelfiecvAndroid < Grape::API
         optional :zipcode
         requires :country_id
         requires :contact_number
-        optional :file
-        optional :file_type
       end
       post :basic_info, jbuilder: 'android' do
         @basic_info = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
         @basic_info.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type )
-        @basic_info.file = params[:file] if params[:file]
+        :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number )
         error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       end
 
@@ -1244,15 +1241,12 @@ class SelfiecvAndroid < Grape::API
         optional :zipcode
         requires :country_id
         optional :contact_number
-        optional :file
-        optional :file_type
       end
       post :update_basic_info, jbuilder: 'android' do
         @basic_info = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @basic_info
         @basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
-        :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type )
-        @basic_info.file = params[:file] if params[:file]
+        :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number )
         @basic_info.update_cv_count += 1
         error!({error: @basic_info.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @basic_info.save
       end
