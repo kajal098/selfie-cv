@@ -1,5 +1,5 @@
-<div class="row ">
-  <div class="col-lg-offset-1 col-lg-10">
+<div class="row">
+  <div class="col-lg-12">
     <div class="panel panel-default" id="user_sections" style="background:#fff;">
       <ul class="tab">
         <% if @user.role == 'Jobseeker' %>
@@ -191,7 +191,6 @@
                     <th><strong class="text_color" >Year</strong></th>
                     <th><strong class="text_color" >School</strong></th>
                     <th><strong class="text_color" >Skill</strong></th>
-                    <th><strong class="text_color" >Change</strong></th>
                   </tr>
                   <% @user.user_educations.each do |edu| %>
                   <tr>
@@ -201,7 +200,6 @@
                     <td><%= edu.year %></td>
                     <td><%= edu.school %></td>
                     <td><%= edu.skill %></td>
-                    <td><%= link_to "", admin_user_flop_job_education_path(edu), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop Education" %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -222,6 +220,8 @@
                     <th><strong class="text_color" >File Name</strong></th>
                     <th><strong class="text_color" >File</strong></th>
                     <th><strong class="text_color" >File Type</strong></th>
+                    <th><strong class="text_color" >File Status</strong></th>
+                    <th><strong class="text_color" >No</strong></th>
                   </tr>
                   <% @user.user_experiences.each do |exp| %>
                   <tr>
@@ -242,6 +242,8 @@
                     <% end %>                      
                     </td>
                     <td><%= exp.file_type %></td>
+                    <td><%= exp.file_status %></td>
+                    <td><%= link_to "", admin_user_flop_experience_path(exp), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop Experience" %></td>
                   </tr>
                   <% end %>
                 </table>

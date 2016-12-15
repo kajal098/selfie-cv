@@ -4,7 +4,7 @@ class CreateCompanyGaleries < ActiveRecord::Migration
       t.integer :user_id
       t.string :file,              default: ''
       t.string :file_type,              null: false, default: ""
-      t.string :file_status,              null: false, default: ""
+      t.string :file_status,              null: false, default: :true
       t.timestamps null: false
     end
     add_index :company_galeries, [:user_id]

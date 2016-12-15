@@ -7,7 +7,7 @@ class CreateUserEnvironments < ActiveRecord::Migration
       t.string :file,              default: ''
       t.string :text_field,              null: false, default: ""
       t.string :file_type,              null: false, default: ""
-      t.string :file_status,              null: false, default: ""
+      t.string :file_status,              null: false, default: :true
       t.boolean :active,            default: false
       t.timestamps null: false
     end

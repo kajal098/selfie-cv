@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(version: 20161213072810) do
   create_table "company_galeries", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "file",        default: ""
-    t.string   "file_type",   default: "", null: false
-    t.string   "file_status", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "company_galeries", ["user_id"], name: "index_company_galeries_on_user_id", using: :btree
@@ -105,11 +105,11 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-12-13'
-    t.date     "join_till",    default: '2016-12-13'
+    t.date     "join_from",    default: '2016-12-15'
+    t.date     "join_till",    default: '2016-12-15'
     t.string   "file",         default: ""
     t.string   "file_type",    default: "",           null: false
-    t.string   "file_status",  default: "",           null: false
+    t.string   "file_status",  default: "true",       null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -118,39 +118,39 @@ ActiveRecord::Schema.define(version: 20161213072810) do
 
   create_table "faculty_publications", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",       default: "", null: false
-    t.string   "description", default: "", null: false
+    t.string   "title",       default: "",     null: false
+    t.string   "description", default: "",     null: false
     t.string   "file",        default: ""
-    t.string   "file_type",   default: "", null: false
-    t.string   "file_status", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "faculty_publications", ["user_id"], name: "index_faculty_publications_on_user_id", using: :btree
 
   create_table "faculty_researches", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",       default: "", null: false
-    t.string   "description", default: "", null: false
+    t.string   "title",       default: "",     null: false
+    t.string   "description", default: "",     null: false
     t.string   "file",        default: ""
-    t.string   "file_type",   default: "", null: false
-    t.string   "file_status", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "faculty_researches", ["user_id"], name: "index_faculty_researches_on_user_id", using: :btree
 
   create_table "faculty_workshops", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",       default: "", null: false
-    t.string   "description", default: "", null: false
+    t.string   "title",       default: "",     null: false
+    t.string   "description", default: "",     null: false
     t.string   "file",        default: ""
-    t.string   "file_type",   default: "", null: false
-    t.string   "file_status", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "faculty_workshops", ["user_id"], name: "index_faculty_workshops_on_user_id", using: :btree
@@ -358,7 +358,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "description", default: "",      null: false
     t.string   "file",        default: ""
     t.string   "file_type",   default: "",      null: false
-    t.string   "file_status", default: "",      null: false
+    t.string   "file_status", default: "true",  null: false
     t.boolean  "active",      default: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
@@ -368,15 +368,15 @@ ActiveRecord::Schema.define(version: 20161213072810) do
 
   create_table "user_certificates", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "certificate_type", default: "",    null: false
-    t.string   "name",             default: "",    null: false
-    t.string   "year",             default: "",    null: false
+    t.string   "certificate_type", default: "",     null: false
+    t.string   "name",             default: "",     null: false
+    t.string   "year",             default: "",     null: false
     t.string   "file",             default: ""
-    t.string   "file_type",        default: "",    null: false
-    t.string   "file_status",      default: "",    null: false
+    t.string   "file_type",        default: "",     null: false
+    t.string   "file_status",      default: "true", null: false
     t.boolean  "active",           default: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "user_certificates", ["user_id"], name: "index_user_certificates_on_user_id", using: :btree
@@ -387,10 +387,10 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-12-13'
+    t.date     "date",            default: '2016-12-15'
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
-    t.string   "file_status",     default: "",           null: false
+    t.string   "file_status",     default: "true",       null: false
     t.boolean  "active",          default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -416,15 +416,15 @@ ActiveRecord::Schema.define(version: 20161213072810) do
 
   create_table "user_environments", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "env_type",    default: "",    null: false
-    t.string   "title",       default: "",    null: false
+    t.string   "env_type",    default: "",     null: false
+    t.string   "title",       default: "",     null: false
     t.string   "file",        default: ""
-    t.string   "text_field",  default: "",    null: false
-    t.string   "file_type",   default: "",    null: false
-    t.string   "file_status", default: "",    null: false
+    t.string   "text_field",  default: "",     null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
     t.boolean  "active",      default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "user_environments", ["user_id"], name: "index_user_environments_on_user_id", using: :btree
@@ -433,13 +433,13 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-12-13'
-    t.date     "working_till",    default: '2016-12-13'
+    t.date     "start_from",      default: '2016-12-15'
+    t.date     "working_till",    default: '2016-12-15'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
-    t.string   "file_status",     default: "",           null: false
+    t.string   "file_status",     default: "true",       null: false
     t.boolean  "active",          default: false
     t.boolean  "current_company", default: false
     t.datetime "created_at",                             null: false
@@ -472,15 +472,15 @@ ActiveRecord::Schema.define(version: 20161213072810) do
 
   create_table "user_future_goals", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "goal_type",   default: "",    null: false
-    t.string   "title",       default: "",    null: false
-    t.string   "term_type",   default: "",    null: false
+    t.string   "goal_type",   default: "",     null: false
+    t.string   "title",       default: "",     null: false
+    t.string   "term_type",   default: "",     null: false
     t.string   "file",        default: ""
-    t.string   "file_type",   default: "",    null: false
-    t.string   "file_status", default: "",    null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
     t.boolean  "active",      default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "user_future_goals", ["user_id"], name: "index_user_future_goals_on_user_id", using: :btree
@@ -509,15 +509,15 @@ ActiveRecord::Schema.define(version: 20161213072810) do
 
   create_table "user_marksheets", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "school_name", default: "", null: false
-    t.string   "standard",    default: "", null: false
-    t.string   "grade",       default: "", null: false
-    t.string   "year",        default: "", null: false
+    t.string   "school_name", default: "",     null: false
+    t.string   "standard",    default: "",     null: false
+    t.string   "grade",       default: "",     null: false
+    t.string   "year",        default: "",     null: false
     t.string   "file",        default: ""
-    t.string   "file_type",   default: "", null: false
-    t.string   "file_status", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "user_marksheets", ["user_id"], name: "index_user_marksheets_on_user_id", using: :btree
@@ -599,13 +599,13 @@ ActiveRecord::Schema.define(version: 20161213072810) do
 
   create_table "user_projects", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",       default: "", null: false
-    t.string   "description", default: "", null: false
+    t.string   "title",       default: "",     null: false
+    t.string   "description", default: "",     null: false
     t.string   "file",        default: ""
-    t.string   "file_type",   default: "", null: false
-    t.string   "file_status", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "file_type",   default: "",     null: false
+    t.string   "file_status", default: "true", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "user_projects", ["user_id"], name: "index_user_projects_on_user_id", using: :btree
@@ -627,12 +627,12 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "from",        default: "",           null: false
     t.string   "email",       default: "",           null: false
     t.string   "contact",     default: "",           null: false
-    t.date     "date",        default: '2016-12-13'
+    t.date     "date",        default: '2016-12-15'
     t.string   "location",    default: "",           null: false
     t.string   "file",        default: ""
     t.string   "text_field",  default: "",           null: false
     t.string   "file_type",   default: "",           null: false
-    t.string   "file_status", default: "",           null: false
+    t.string   "file_status", default: "true",       null: false
     t.boolean  "active",      default: false
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
@@ -662,13 +662,13 @@ ActiveRecord::Schema.define(version: 20161213072810) do
   create_table "user_whizquizzes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "whizquiz_id"
-    t.string   "text_field",    default: "",    null: false
-    t.string   "review_type",   default: "",    null: false
+    t.string   "text_field",    default: "",     null: false
+    t.string   "review_type",   default: "",     null: false
     t.string   "review",        default: ""
-    t.string   "review_status", default: "",    null: false
+    t.string   "review_status", default: "true", null: false
     t.boolean  "status",        default: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "user_whizquizzes", ["user_id"], name: "index_user_whizquizzes_on_user_id", using: :btree
@@ -684,7 +684,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "last_name",                                     default: "",           null: false
     t.string   "profile_pic",                                   default: ""
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-12-13"
+    t.string   "date_of_birth",                                 default: "2016-12-15"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -693,12 +693,12 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "contact_number",                                default: "",           null: false
     t.string   "file",                                          default: ""
     t.string   "file_type",                                     default: "",           null: false
-    t.string   "file_status",                                   default: "",           null: false
+    t.string   "file_status",                                   default: "true",       null: false
     t.string   "faculty_work_with_type",                        default: "",           null: false
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-12-13"
+    t.string   "faculty_join_from",                             default: "2016-12-15"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
