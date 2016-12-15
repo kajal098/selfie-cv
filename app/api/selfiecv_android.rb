@@ -276,7 +276,7 @@ class SelfiecvAndroid < Grape::API
         optional :file
         optional :file_type
       end
-      get :resume, jbuilder: 'android'  do
+      post :resume, jbuilder: 'android'  do
         authenticate!
         @user = User.find params[:user_id]
         error!({error: 'User not found', status: 'Fail'}, 200) unless @user
