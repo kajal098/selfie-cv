@@ -97,23 +97,20 @@
                     <td><%= @user.file.url.split("/").last %></td>
                   </tr>
                   <tr>
-                  <% if @user.file_type == "" %>
-                    <td>File</td>
-                    <td><%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
-                  <% else %>
                     <td>File</td>
                     <td>
-                        <% if @user.file_type == 'video' %>
+                    <% if @user.file_type == "" %>                   
+                        <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                    <% elsif @user.file_type == 'video' %>
                         <%= video_tag @user.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
-                        <% elsif @user.file_type == 'image' %>
+                    <% elsif @user.file_type == 'image' %>
                         <%= image_tag @user.file.url, :size => "50x50" %>
-                        <% elsif @user.file_type == 'audio' %>
+                    <% elsif @user.file_type == 'audio' %>
                         <%= audio_tag @user.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %>
-                        <% elsif @user.file_type == 'doc' %>
+                    <% elsif @user.file_type == 'doc' %>
                         <%= link_to "Download Document",@user.file.url, target: '_blank' %>
-                        <% end %>                      
+                    <% end %>                      
                     </td>
-                  <% end %>
                   </tr>
                   <tr>
                     <td>File Type</td>
@@ -233,12 +230,12 @@
                     <td><%= exp.designation %></td>
                     <td><%= exp.file.url.split("/").last %></td>
                     <td>
-                    <% if exp.file_type == 'video' %>
-                    <%= video_tag exp.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                    <% if exp.file_type == "" %>                   
+                        <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                    <% elsif exp.file_type == 'video' %>
+                        <%= video_tag exp.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                     <% elsif exp.file_type == 'doc' %>
-                    <%= link_to "Download Document",exp.file.url, target: '_blank' %>
-                    <% else %>
-                    <%= image_tag exp.thumb_url, :size => "50x50" %>
+                        <%= link_to "Download Document",exp.file.url, target: '_blank' %>
                     <% end %>                      
                     </td>
                     <td><%= exp.file_type %></td>
@@ -300,7 +297,13 @@
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
                     <td><%= award.file.url.split("/").last %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td>
+                    <% if award.file_type == "" %>                   
+                        <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                    <% elsif award.file_type == 'video' %>
+                        <%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                    <% end %>
+                    </td>
                     <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
@@ -329,12 +332,14 @@
                     <td><%= certi.year %></td>
                     <td><%= certi.file.url.split("/").last %></td>
                     <td>
-                    <% if certi.file_type == 'video' %>
-                    <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                    <% if certi.file_type == "" %>                   
+                        <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                    <% elsif certi.file_type == 'video' %>
+                        <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                     <% elsif certi.file_type == 'image' %>
-                    <%= image_tag certi.thumb_url, :size => "50x50" %>
+                        <%= image_tag certi.thumb_url, :size => "50x50" %>
                     <% elsif certi.file_type == 'doc' %>
-                    <%= link_to "Download Document",certi.file.url, target: '_blank' %>
+                        <%= link_to "Download Document",certi.file.url, target: '_blank' %>
                     <% end %>                        
                     </td>                      
                       <td><%= certi.file_type %></td>
@@ -395,7 +400,15 @@
                       <td><%= curri.location %></td>
                       <td><%= curri.date %></td>
                       <td><%= curri.file.url.split("/").last %></td>
-                      <td><% if curri.file_type == 'video' %><%= video_tag curri.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
+                      <td>
+                      <% if curri.file_type == "" %>                   
+                        <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                      <% elsif curri.file_type == 'video' %>
+                        <%= video_tag curri.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                      <% else %>
+                        <%= image_tag curri.thumb_url, :size => "50x50" %>
+                      <% end %>                          
+                      </td>
                     </tr> 
                     <% end %>
                   </table>
@@ -417,14 +430,21 @@
                     </tr>
                     <% @user.user_future_goals.each do |future| %>
                     <tr >
-                      <td><%= future.id %></td>
-                      <td><%= future.id %></td>
-                      <td><%= future.goal_type %></td>
-                      <td><%= future.title %></td>
-                      <td><%= future.term_type %></td>
-                      <td><%= future.file.url.split("/").last %></td>
-                      <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif future.file_type == 'audio' %>
-                        <%= audio_tag future.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
+                        <td><%= future.id %></td>
+                        <td><%= future.id %></td>
+                        <td><%= future.goal_type %></td>
+                        <td><%= future.title %></td>
+                        <td><%= future.term_type %></td>
+                        <td><%= future.file.url.split("/").last %></td>
+                        <td>
+                        <% if future.file_type == "" %>                   
+                            <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                        <% elsif future.file_type == 'video' %>
+                            <%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                        <% elsif future.file_type == 'audio' %>
+                            <%= audio_tag future.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %>
+                        <% end %>
+                        </td>
                     </tr>
                     <% end %>
                   </table>
@@ -445,13 +465,22 @@
                     </tr>
                     <% @user.user_environments.each do |work_env| %>     
                     <tr >
-                      <td><%= work_env.id %></td>
-                      <td><%= work_env.env_type %></td>
-                      <td><%= work_env.title %></td>
-                      <td><%= work_env.file.url.split("/").last %></td>
-                      <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'audio' %>
-                        <%= audio_tag work_env.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
-                      <td><%= work_env.file_type %></td>
+                        <td><%= work_env.id %></td>
+                        <td><%= work_env.env_type %></td>
+                        <td><%= work_env.title %></td>
+                        <td><%= work_env.file.url.split("/").last %></td>
+                        <td>
+                            <% if work_env.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif work_env.file_type == 'video' %>
+                                <%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                            <% elsif work_env.file_type == 'audio' %>
+                                <%= audio_tag work_env.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %>
+                            <% elsif work_env.file_type == 'text' %>
+                                <%= work_env.text_field %>
+                            <% end %>
+                        </td>
+                        <td><%= work_env.file_type %></td>
                     </tr>
                     <% end %>
                   </table>
@@ -487,7 +516,9 @@
                       <td><%= ref.location %></td>
                       <td><%= ref.file.url.split("/").last %></td>
                       <td>
-                          <% if ref.file_type == 'video' %>
+                          <% if ref.file_type == "" %>                   
+                          <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                          <% elsif ref.file_type == 'video' %>
                           <%= video_tag ref.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                           <% elsif ref.file_type == 'audio' %>
                           <%= audio_tag ref.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %>
@@ -730,13 +761,21 @@
                   </tr>
                   <% @user.user_awards.each do |award| %>     
                   <tr >
-                    <td><%= award.id %></td>
-                    <td><%= award.name %></td>
-                    <td><%= award.award_type %></td>
-                    <td><%= award.description %></td>
-                    <td><%= award.file.url.split("/").last %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
-                    <td><%= award.file_type %></td>
+                        <td><%= award.id %></td>
+                        <td><%= award.name %></td>
+                        <td><%= award.award_type %></td>
+                        <td><%= award.description %></td>
+                        <td><%= award.file.url.split("/").last %></td>
+                        <td>
+                            <% if award.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif award.file_type == 'video' %>
+                                <%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
+                            <% else %>
+                                <%= image_tag award.thumb_url, :size => "50x50" %>
+                            <% end %>                        
+                        </td>
+                        <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -765,7 +804,9 @@
                     <td><%= certi.year %></td>
                     <td><%= certi.file.url.split("/").last %></td>
                     <td>
-                      <% if certi.file_type == 'video' %>
+                      <% if certi.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif certi.file_type == 'video' %>
                       <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %>
                       <%= image_tag certi.thumb_url, :size => "50x50" %>
@@ -814,7 +855,9 @@
                     <td><%= work_env.env_type %></td>
                     <td><%= work_env.title %></td>
                     <td><%= work_env.file.url.split("/").last %></td>
-                    <td><% if work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'audio' %>
+                    <td><% if work_env.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif work_env.file_type == 'video' %><%= video_tag work_env.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif work_env.file_type == 'audio' %>
                         <%= audio_tag work_env.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% elsif work_env.file_type == 'text' %><%= work_env.text_field %><% else %><%= image_tag work_env.thumb_url, :size => "50x50" %><% end %></td>
                       <td><%= work_env.file_type %></td>
                   </tr>
@@ -970,7 +1013,9 @@
                     <td><%= marksheet.file.url.split("/").last %></td>
                     <td><%= marksheet.file_type %></td>
                     <td>
-                        <% if marksheet.file_type == 'image' %>
+                        <% if marksheet.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif marksheet.file_type == 'image' %>
                         <%= image_tag marksheet.thumb_url, :size => "50x50" %>
                         <% elsif marksheet.file_type == 'doc' %>
                         <%= link_to "Download Document" ,marksheet.file.url, target: '_blank' %>
@@ -1003,7 +1048,9 @@
                     <td><%= project.file.url.split("/").last %></td>
                     <td><%= project.file_type %></td>
                     <td>
-                        <% if project.file_type == 'video' %>
+                        <% if project.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif project.file_type == 'video' %>
                         <%= video_tag project.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                         <% elsif project.file_type == 'image' %>
                         <%= image_tag project.thumb_url, :size => "50x50" %>
@@ -1038,7 +1085,9 @@
                     <td><%= award.award_type %></td>
                     <td><%= award.description %></td>
                     <td><%= award.file.url.split("/").last %></td>
-                    <td><% if award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if award.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif award.file_type == 'video' %><%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag award.thumb_url, :size => "50x50" %><% end %></td>
                     <td><%= award.file_type %></td>
                   </tr>
                   <% end %>
@@ -1067,7 +1116,9 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><%= certi.file.url.split("/").last %></td>
-                    <td><% if certi.file_type == 'video' %>
+                    <td><% if certi.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif certi.file_type == 'video' %>
                       <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %><%= link_to "Download Document", certi.file.url, target: '_blank' %>
@@ -1101,7 +1152,9 @@
                     <td><%= curri.location %></td>
                     <td><%= curri.date %></td>
                     <td><%= curri.file.url.split("/").last %></td>
-                    <td><% if curri.file_type == 'video' %><%= video_tag curri.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
+                    <td><% if curri.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif curri.file_type == 'video' %><%= video_tag curri.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% else %><%= image_tag curri.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
                 </table>
@@ -1130,7 +1183,9 @@
                     <td><%= future.title %></td>
                     <td><%= future.term_type %></td>
                     <td><%= future.file.url.split("/").last %></td>
-                    <td><% if future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif future.file_type == 'audio' %>
+                    <td><% if future.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif future.file_type == 'video' %><%= video_tag future.file.url, :size => "320x240", :controls => true, :autobuffer => true %><% elsif future.file_type == 'audio' %>
                         <%= audio_tag future.file.url,:type =>"mp3/audio",:controls =>true,:autoplay =>false,:preload =>:auto %><% else %><%= image_tag future.thumb_url, :size => "50x50" %><% end %></td>
                   </tr>
                   <% end %>
@@ -1220,11 +1275,10 @@
                     <td><%= @user.file.url.split("/").last %></td>
                   </tr>
                   <tr>
-                  <% if @user.file_type == "" %>
-                    <td>File</td>
+                  <td>File</td>
+                  <% if @user.file_type == "" %>                    
                     <td><%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
-                  <% else %>
-                    <td>File</td>
+                  <% else %>                    
                     <td><% if @user.file_type == 'doc' %><%= link_to "Download Document",@user.file.url, target: '_blank' %><% end %></td>
                   <% end %>
                   </tr>
@@ -1326,7 +1380,9 @@
                     <td><%= workshop.description %></td>
                     <td><%= workshop.file.url.split("/").last %></td>
                     <td>
-                        <% if workshop.file_type == 'video' %>
+                        <% if workshop.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif workshop.file_type == 'video' %>
                         <%= video_tag workshop.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                         <% elsif workshop.file_type == 'image' %>
                         <%= image_tag workshop.thumb_url, :size => "50x50" %>
@@ -1364,7 +1420,9 @@
                     <td><%= publication.file.url.split("/").last %></td>
                     <td><%= publication.file_type %></td>
                     <td>
-                      <% if publication.file_type == 'doc' %>
+                      <% if publication.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif publication.file_type == 'doc' %>
                       <%= link_to "Download Document", publication.file.url, target: '_blank' %>
                       <% end %>
                     </td>
@@ -1394,7 +1452,9 @@
                     <td><%= research.description %></td>
                     <td><%= research.file.url.split("/").last %></td>                    
                     <td>
-                      <% if research.file_type == 'video' %>
+                      <% if research.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif research.file_type == 'video' %>
                       <%= video_tag research.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif research.file_type == 'image' %>
                       <%= image_tag research.thumb_url, :size => "50x50" %>
@@ -1433,7 +1493,9 @@
                     <td><%= award.description %></td>
                     <td><%= award.file.url.split("/").last %></td>
                     <td>
-                        <% if award.file_type == 'video' %>
+                        <% if award.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif award.file_type == 'video' %>
                         <%= video_tag award.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                         <% elsif award.file_type == 'doc' %>
                         <%= link_to "Download Document" ,award.file.url, target: '_blank' %>
@@ -1470,7 +1532,9 @@
                     <td><%= certi.certificate_type %></td>
                     <td><%= certi.year %></td>
                     <td><%= certi.file.url.split("/").last %></td>
-                    <td><% if certi.file_type == 'video' %>
+                    <td><% if certi.file_type == "" %>                   
+                                <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
+                            <% elsif certi.file_type == 'video' %>
                       <%= video_tag certi.file.url, :size => "320x240", :controls => true, :autobuffer => true %>
                       <% elsif certi.file_type == 'image' %><%= image_tag certi.thumb_url, :size => "50x50" %>
                       <% elsif certi.file_type == 'doc' %>
