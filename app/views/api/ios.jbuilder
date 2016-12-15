@@ -87,7 +87,7 @@ if @user
 		json.created_at @user.created_at.to_i
 		json.updated_at @user.updated_at.to_i
 		
-		json.company_info_per @user.user_meter ? @user.user_meter.company_info_per.to_i) : 0
+		json.company_info_per @user.user_meter ? @user.user_meter.company_info_per.to_i : 0
 		json.corporate_identity_per @user.user_meter ? @user.user_meter.corporate_identity_per.to_i : 0
 		json.growth_and_goal_per @user.user_meter ? @user.user_meter.growth_and_goal_per.to_i : 0
 		json.achievement_per @user.user_meter ? @user.user_meter.award_per.to_i + @user.user_meter.certificate_per.to_i : 0
