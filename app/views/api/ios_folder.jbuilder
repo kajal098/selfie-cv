@@ -32,6 +32,8 @@ if @my_folder
 
 			json.country_name user_fav.fav_user.stock_country ? user_fav.fav_user.stock_country.name : ""
 
+			json.date_format user_fav.fav_user.company_stock ? user_fav.fav_user.company_stock.date_format : "dd/mm/yyyy"
+
 			json.skills !user_fav.fav_user.user_educations.empty? ? user_fav.fav_user.user_educations.map(&:skill).join(",") : ""
 			json.total_per user_fav.fav_user.user_meter.total_per
 			json.profile_thumb user_fav.fav_user.profile_thumb_url
@@ -40,6 +42,8 @@ if @my_folder
 			json.extract! user, :id, :username, :company_name, :company_establish_from, :company_city, :country_id
 
 			json.country_name user_fav.fav_user.stock_country ? user_fav.fav_user.stock_country.name : ""
+
+			json.date_format user_fav.fav_user.company_stock ? user_fav.fav_user.company_stock.date_format : "dd/mm/yyyy"
 
 			json.total_per user_fav.fav_user.user_meter.total_per
 			json.logo_thumb user_fav.fav_user.logo_thumb_url

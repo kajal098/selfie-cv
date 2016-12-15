@@ -6,6 +6,8 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 
@@ -158,13 +160,36 @@ if @user_stuff
 			json.ref_updated_at ref.updated_at.to_i
 		end
 
-		json.resume_per @user_stuff.user_meter ? @user_stuff.user_meter.resume_info_per.to_i + @user_stuff.user_meter.education_per.to_i + @user_stuff.user_meter.experience_per.to_i + @user_stuff.user_meter.prework_per.to_i  : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
-		json.curri_per @user_stuff.user_meter ? @user_stuff.user_meter.curri_per.to_i : 0
-		json.future_goal_per @user_stuff.user_meter ? @user_stuff.user_meter.future_goal_per.to_i : 0
-		json.working_env_per @user_stuff.user_meter ? @user_stuff.user_meter.working_env_per.to_i : 0
-		json.ref_per @user_stuff.user_meter ? @user_stuff.user_meter.ref_per.to_i : 0
-		json.whizquiz_per @user_stuff.user_meter ? @user_stuff.user_meter.whizquiz_per.to_i : 0
+		json.jobseeker_whizquizzes @user_stuff.user_whizquizzes do |whizquiz|
+			json.extract! whizquiz, :id, :user_id, :whizquiz_id, :review_type
+
+			json.question whizquiz.whizquiz.question
+
+			if whizquiz.review_type == ""
+				json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+				json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			elsif whizquiz.review_type == "audio"
+				json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+				json.file whizquiz.review.url
+			elsif whizquiz.review_type == "text"
+				json.file_thumb whizquiz.thumb_url
+				json.text_field whizquiz.text_field
+			else
+				json.file_thumb whizquiz.thumb_url
+				json.file whizquiz.review.url
+			end
+
+			json.created_at whizquiz.created_at.to_i
+			json.updated_at whizquiz.updated_at.to_i
+		end
+
+		json.resume_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.resume_per.to_i, "resume") : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
+		json.curri_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.curri_per.to_i, "extra") : 0
+		json.future_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.future_goal_per.to_i, "futuregoal") : 0
+		json.working_env_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.working_env_per.to_i, "workingenv") : 0
+		json.ref_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.ref_per.to_i, "references") : 0
+		json.whizquiz_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.whizquiz_per.to_i, "whizquiz") : 0
 		json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : 0
 
 		json.likes @user_stuff.likes.count
@@ -210,6 +235,8 @@ if @user_stuff
 		json.CompanyFutureGoal @user_stuff, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
+
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
 
 		json.logo @user_stuff.logo_thumb_url
 		json.logo_thumb @user_stuff.logo_thumb_url
@@ -284,12 +311,12 @@ if @user_stuff
 			json.galery_updated_at galery.updated_at.to_i
 		end
 
-		json.company_info_per @user_stuff.user_meter ? @user_stuff.user_meter.company_info_per.to_i : 0
-		json.corporate_identity_per @user_stuff.user_meter ? @user_stuff.user_meter.corporate_identity_per.to_i : 0
-		json.growth_and_goal_per @user_stuff.user_meter ? @user_stuff.user_meter.growth_and_goal_per.to_i : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
-		json.galery_per @user_stuff.user_meter ? @user_stuff.user_meter.galery_per.to_i : 0
-		json.working_env_per @user_stuff.user_meter ? @user_stuff.user_meter.working_env_per.to_i : 0
+		json.company_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.company_info_per.to_i, "info") : 0
+		json.corporate_identity_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.corporate_identity_per.to_i, "corporate") : 0
+		json.growth_and_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.growth_and_goal_per.to_i, "growth") : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
+		json.galery_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.galery_per.to_i, "gallery") : 0
+		json.working_env_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.working_env_per.to_i, "workingenv") : 0
 		json.total_per @user_stuff.user_meter ? @user_stuff.user_meter.profile_meter_per.to_i : 0
 
 		json.likes @user_stuff.likes.count
@@ -331,6 +358,8 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 		json.file_thumb @user_stuff.resume_thumb_url
@@ -347,11 +376,11 @@ if @user_stuff
 		json.back_profile_thumb @user_stuff.back_profile_thumb_url
 		json.back_profile @user_stuff.back_profile.url
 
-		json.student_basic_info_per @user_stuff.user_meter ? @user_stuff.user_meter.student_basic_info_per.to_i : 0
-		json.student_education_per @user_stuff.user_meter ? @user_stuff.user_meter.student_education_per.to_i : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
-		json.curri_per @user_stuff.user_meter ? @user_stuff.user_meter.curri_per.to_i : 0
-		json.future_goal_per @user_stuff.user_meter ? @user_stuff.user_meter.future_goal_per.to_i : 0
+		json.student_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_basic_info_per.to_i, "info") : 0
+		json.student_education_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.student_education_per.to_i, "education") : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
+		json.curri_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.curri_per.to_i, "extra") : 0
+		json.future_goal_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.future_goal_per.to_i, "futuregoal") : 0
 		json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.profile_meter_per.to_i : 0
 
 		json.created_at @user_stuff.created_at.to_i
@@ -488,6 +517,8 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 
@@ -502,9 +533,9 @@ if @user_stuff
 		json.back_profile_thumb @user_stuff.back_profile_thumb_url
 		json.back_profile @user_stuff.back_profile.url
 
-		json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.user_meter.faculty_basic_info_per.to_i : 0
-		json.experience_per @user_stuff.user_meter ? @user_stuff.user_meter.faculty_affiliation_per.to_i + @user_stuff.user_meter.faculty_workshop_per.to_i + @user_stuff.user_meter.faculty_publication_per.to_i + @user_stuff.user_meter.faculty_research_per.to_i : 0
-		json.achievement_per @user_stuff.user_meter ? @user_stuff.user_meter.award_per.to_i + @user_stuff.user_meter.certificate_per.to_i : 0
+		json.faculty_basic_info_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.faculty_basic_info_per.to_i, "info") : 0
+		json.experience_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.experience_per.to_i, "experience") : 0
+		json.achievement_per @user_stuff.user_meter ? @user_stuff.cal_preview_per(@user_stuff.user_meter.achievement_per.to_i, "achievement") : 0
 		json.total_per @user_stuff.user_meter ?  @user_stuff.user_meter.profile_meter_per.to_i : 0
 		
 		json.created_at @user_stuff.created_at.to_i

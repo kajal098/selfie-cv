@@ -13,12 +13,16 @@ end
 if @user_whizquiz
 	json.user_whizquizzes @user.user_whizquizzes do |user_whizquiz|
 		json.extract! user_whizquiz, :id, :user_id, :whizquiz_id, :review_type
+
+		json.question user_whizquiz.whizquiz.question
+
 		if user_whizquiz.review_type == 'text'
 			json.text_field user_whizquiz.text_field
 		else
 			json.review_thumb user_whizquiz.thumb_url
 			json.review user_whizquiz.review.url
 		end
+		
 		json.created_at user_whizquiz.created_at.to_i
 		json.updated_at user_whizquiz.updated_at.to_i
 	end

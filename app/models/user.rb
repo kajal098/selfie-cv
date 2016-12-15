@@ -104,6 +104,27 @@ def self.company_search(params)
     return where( wheres )
 end
 
+# search configuration
+  include Elasticsearch::Model
+  # include Elasticsearch::Model::Callbacks
+
+  settings do
+    mappings do 
+      indexes :city, index: :not_analyzed
+    end
+  end
+
+  def as_indexed_json(options={})
+    as_json(
+      only: [:id, :first_name, :email],
+      include: [:user_awards]  
+    )
+  end
+
+def self.job_simple_search
+    
+end
+
 def top_joseekers
     User.joins(:user_meter).where(:users=> { role: 3 }).order("user_meters.total_per DESC").limit(3)
 end
@@ -444,11 +465,11 @@ def cal_total_per
 end
 
 
-# def cal_preview_per(user_per ,per_type)
-#     setting_per = UserPercentage.where(key: per_type).where(ptype: self.role).first
-#     @preview_per = ((user_per * 100) / setting_per.value.to_i)
-#     return @preview_per
-# end    
+def cal_preview_per(user_per ,per_type)
+    setting_per = UserPercentage.where(key: per_type).where(ptype: self.role).first
+    @preview_per = ((user_per * 100) / setting_per.value.to_i)
+    return @preview_per
+end    
 
 
 end

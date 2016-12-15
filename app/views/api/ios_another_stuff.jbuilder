@@ -6,6 +6,8 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 
@@ -158,6 +160,29 @@ if @user_stuff
 			json.ref_updated_at ref.updated_at.to_i
 		end
 
+		json.jobseeker_whizquizzes @user_stuff.user_whizquizzes do |whizquiz|
+			json.extract! whizquiz, :id, :user_id, :whizquiz_id, :review_type
+
+			json.question whizquiz.whizquiz.question
+
+			if whizquiz.review_type == ""
+				json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+				json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			elsif whizquiz.review_type == "audio"
+				json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+				json.file whizquiz.review.url
+			elsif whizquiz.review_type == "text"
+				json.file_thumb whizquiz.thumb_url
+				json.text_field whizquiz.text_field
+			else
+				json.file_thumb whizquiz.thumb_url
+				json.file whizquiz.review.url
+			end
+
+			json.created_at whizquiz.created_at.to_i
+			json.updated_at whizquiz.updated_at.to_i
+		end
+
 		json.likes @user_stuff.likes.count
 		json.views @user_stuff.views.count
 		json.shares @user_stuff.shares.count
@@ -192,6 +217,8 @@ if @user_stuff
 		json.CompanyFutureGoal @user_stuff, :company_future_turnover, :company_future_new_venture_location, :company_future_outlet
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
+
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
 
 		json.logo @user_stuff.logo_thumb_url
 		json.logo_thumb @user_stuff.logo_thumb_url
@@ -296,6 +323,8 @@ if @user_stuff
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
+
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
 
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
@@ -443,6 +472,8 @@ if @user_stuff
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
+
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
 
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url

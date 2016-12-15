@@ -1,35 +1,26 @@
 require 'api_logger'
-
 class SelfiecvIos < Grape::API
-
-use ApiLogger
-version 'ios', using: :path
-format :json
-formatter :json, Grape::Formatter::Jbuilder
-
-helpers do
-
-	def clean_params(params)
-		ActionController::Parameters.new(params)
+	use ApiLogger
+	version 'ios', using: :path
+	format :json
+	formatter :json, Grape::Formatter::Jbuilder
+	helpers do
+		def clean_params(params)
+			ActionController::Parameters.new(params)
+		end
+		def current_device
+			Device.find_by token: params[:token]
+		end
+		def current_user
+			current_device.try(:user)
+		end
+		def authenticate!
+			error! 'Unauthorized', 401 unless params[:token] =~ UUID_REGEX
+			error! 'Unauthorized', 401 unless current_user
+		end
 	end
-
-	def current_device
-		Device.find_by token: params[:token]
-	end
-
-	def current_user
-		current_device.try(:user)
-	end
-
-	def authenticate!
-		error! 'Unauthorized', 401 unless params[:token] =~ UUID_REGEX
-		error! 'Unauthorized', 401 unless current_user
-	end
-
-end
 #--------------------------------devices start----------------------------------#
 resources :devices do
-
 	desc 'Register device after notification service subscription'
 	params do
 		requires :uuid, type: String, regexp: UUID_REGEX
@@ -45,7 +36,6 @@ resources :devices do
 		@device.ensure_duplicate_registrations
 		{ token: @device.token }
 	end
-
 	desc 'Deactivate device for notifications'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -56,12 +46,10 @@ resources :devices do
 		@device.save
 		{ token: @device.token }
 	end
-
 end
 #--------------------------------devices end----------------------------------#
 #--------------------------------member start----------------------------------#
 resources :member do 
-
 	desc 'Register User with primary details'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -77,18 +65,17 @@ resources :member do
 		error! 'password not matched', 200 if params[:password] != params[:password_confirmation]
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 		UserMailer.welcome(@user, @password).deliver_now
-        status 200
-        if @user.role == 'Jobseeker' || @user.role == 'Company'
-          @names = ['my favourite','it', 'politics', 'sports']
-          @names.each do |name|
-            @folder = Folder.new name: name, default_status: true
-            error! @user.errors.full_messages.join(', '),422 unless @folder.save
-            @user_folder = UserFolder.new user_id: @user.id, folder_id: @folder.id
-            error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
-          end
-        end
+		status 200
+		if @user.role == 'Jobseeker' || @user.role == 'Company'
+			@names = ['my favourite','it', 'politics', 'sports']
+			@names.each do |name|
+				@folder = Folder.new name: name, default_status: true
+				error! @user.errors.full_messages.join(', '),422 unless @folder.save
+				@user_folder = UserFolder.new user_id: @user.id, folder_id: @folder.id
+				error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
+			end
+		end
 	end
-
 	desc 'User login with email and password'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -107,9 +94,7 @@ resources :member do
 			error!({error: 'Wrong username or password', status: ''}, 422) unless @user.valid_password? params[:password]
 			current_device.update_column :user_id, @user.id
 		end
-		
 	end
-
 	desc 'Send reset password token'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -126,7 +111,6 @@ resources :member do
 			error! "User does not exist.", 422
 		end
 	end
-
 	desc 'Resend reset password token'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -143,7 +127,6 @@ resources :member do
 			error! "User does not exist.", 422
 		end
 	end
-
 	desc 'Reset Password'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -160,7 +143,6 @@ resources :member do
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 		{}
 	end
-
 	desc 'Change Password'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -177,61 +159,31 @@ resources :member do
 		@user.attributes = clean_params(params).permit(:password, :password_confirmation)
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 	end
-
-	# desc 'Send Delete Code To User'
-	# params do
-	# 	requires :token, type: String, regexp: UUID_REGEX
-	# end
-	# post :send_delete_account_code do
-	# 	authenticate!
-	# 	@user = current_user
-	# 	@user.update_column :delete_code, (SecureRandom.random_number*1000000).to_i
-	# 	UserMailer.send_ac_delete_code(@user).deliver_now
-	# 	{
-	# 	status: 200,code: @user.delete_code
-	# 	}
-	# end
-
-	# desc 'Delete User Account'
-	# params do
-	# 	requires :token, type: String, regexp: UUID_REGEX
-	# 	requires :delete_code
-	# end
-	# post :delete_account do
-	# 	authenticate!
-	# 	@user = User.find_by_delete_code(params[:delete_code])
-	# 	error! "Wrong delete code.", 422 unless @user
-	# 	@user.destroy
-	# 	status 200
-	# end
-
 	desc 'Deactivate User Account'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-      end
-      post :deactivate_user_account do
-        authenticate!
-        @user = current_user
-        @user.active = false
-        @user.save
-        UserMailer.send_ac_deactivate_mail(@user).deliver_now
-        status 200
-      end
-
-      desc 'Reactivate User Account'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :username
-      end
-      post :reactivate_user_account do
-        @user = User.find_by_username(params[:username])
-        error! 'Wrong delete code.',422 unless @user 
-        @user.active = true
-        @user.save
-        UserMailer.send_ac_reactivate_mail(@user).deliver_now
-        status 200
-      end
-
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+	end
+	post :deactivate_user_account do
+		authenticate!
+		@user = current_user
+		@user.active = false
+		@user.save
+		UserMailer.send_ac_deactivate_mail(@user).deliver_now
+		status 200
+	end
+	desc 'Reactivate User Account'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :username
+	end
+	post :reactivate_user_account do
+		@user = User.find_by_username(params[:username])
+		error! 'Wrong delete code.',422 unless @user 
+		@user.active = true
+		@user.save
+		UserMailer.send_ac_reactivate_mail(@user).deliver_now
+		status 200
+	end
 	desc 'All stuff'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -242,26 +194,21 @@ resources :member do
 		@user_stuff = User.find params[:user_id]
 		error! 'User not found',422 unless @user_stuff      
 	end
-
 	desc 'View Another Users All stuff'
 	params do
-	  requires :token, type: String, regexp: UUID_REGEX
-	  requires :user_id
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :user_id
 	end
 	post :view_another_user_all_stuff , jbuilder: 'ios_another_stuff' do
-	  authenticate!
-	  @user_stuff = User.find params[:user_id]
-	  error!({error: 'User not found', status: 'Fail'}, 200) unless @user_stuff      
+		authenticate!
+		@user_stuff = User.find params[:user_id]
+		error!({error: 'User not found', status: 'Fail'}, 200) unless @user_stuff      
 	end
-
 end
 #--------------------------------member end----------------------------------#
 #--------------------------------member profile start----------------------------------#
 resources :member_profile do 
-
-before { authenticate! }
-
-
+	before { authenticate! }
 	desc 'User Resume'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -285,12 +232,11 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 		@user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
-		:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id,
-		:contact_number, :file_type )
-			@user.file = params[:file] if params[:file]
+			:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id,
+			:contact_number, :file_type )
+		@user.file = params[:file] if params[:file]
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 	end
-
 	desc 'Update User Resume'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -314,18 +260,17 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error!({error: 'User not found', status: 'Fail'}, 200) unless @user
 		@user.attributes = clean_params(params).permit(:title, :first_name,  :middle_name,
-		:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id,
-		:contact_number, :file_type )
+			:last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id,
+			:contact_number, :file_type )
 		if params[:file_type].blank?
-          @user.file = "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
-        else
+			@user.file = "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+		else
 			@user.file = params[:file] if params[:file]
 		end
 		@user.update_cv_count += 1
 		@user.save
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 	end
-
 	desc 'Get User Resume'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -335,7 +280,6 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 	end
-
 	desc 'User Education'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -350,12 +294,11 @@ before { authenticate! }
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
 		@user_education = UserEducation.new user_id: @find_user.id
-			if (params[:course_id] || params[:specialization_id] || params[:year] || params[:school] || params[:skill] )
-				@user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
-				error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
-			end
+		if (params[:course_id] || params[:specialization_id] || params[:year] || params[:school] || params[:skill] )
+			@user_education.attributes = clean_params(params).permit(:course_id, :specialization_id,  :year, :school, :skill)
+			error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
+		end
 	end
-
 	desc 'Update User Education'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -370,10 +313,9 @@ before { authenticate! }
 		@user_education = UserEducation.find params[:education_id]
 		error! 'User Education not found',422 unless @user_education
 		@user_education.attributes = clean_params(params).permit(:course_id, :specialization_id, :year,
-		:school, :skill)
+			:school, :skill)
 		error! @user_education.errors.full_messages.join(', '), 422 unless @user_education.save
 	end
-
 	desc 'Get Users Education Detail'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -384,7 +326,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_educations = @find_user.user_educations
 	end
-
 	desc 'Delete Education'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -396,7 +337,6 @@ before { authenticate! }
 		@education.destroy
 		status 200
 	end
-
 	desc 'User Experience'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -416,10 +356,9 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_experience = UserExperience.new user_id: @find_user.id
 		@user_experience.attributes = clean_params(params).permit(:name, :start_from,  :working_till, :designation, :description, :current_company, :exp_type, :file_type )
-			@user_experience.file = params[:file] if params[:file]
+		@user_experience.file = params[:file] if params[:file]
 		error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
 	end
-
 	desc 'Update User Experience'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -438,11 +377,10 @@ before { authenticate! }
 		@user_experience = UserExperience.find params[:experience_id]
 		error! 'User Experience not found',422 unless @user_experience
 		@user_experience.attributes = clean_params(params).permit(:name, :start_from, :working_till,
-		:designation, :description, :current_company, :exp_type, :file_type )
-			@user_experience.file = params[:file] if params[:file]
+			:designation, :description, :current_company, :exp_type, :file_type )
+		@user_experience.file = params[:file] if params[:file]
 		error! @user_experience.errors.full_messages.join(', '), 422 unless @user_experience.save
 	end
-
 	desc 'Get Users Experience Detail'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -453,7 +391,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_experiences = @find_user.user_experiences
 	end
-
 	desc 'Delete Experience'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -465,7 +402,6 @@ before { authenticate! }
 		@experience.destroy
 		status 200
 	end
-
 	desc 'User Preferred Work'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -481,13 +417,12 @@ before { authenticate! }
 	post :preferred_work, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location] || params[:current_salary] || params[:expected_salary] || params[:time_type] )
-				@user_preferred_work = UserPreferredWork.new user_id: @find_user.id
-				@user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
-				error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
-			end
+		if (params[:ind_name] || params[:functional_name] || params[:preferred_designation] || params[:preferred_location] || params[:current_salary] || params[:expected_salary] || params[:time_type] )
+			@user_preferred_work = UserPreferredWork.new user_id: @find_user.id
+			@user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
+			error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
+		end
 	end
-
 	desc 'Update User Preferred Work'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -506,7 +441,6 @@ before { authenticate! }
 		@user_preferred_work.attributes = clean_params(params).permit(:ind_name, :functional_name,  :preferred_designation, :preferred_location, :current_salary, :expected_salary, :time_type)
 		error! @user_preferred_work.errors.full_messages.join(', '), 422 unless @user_preferred_work.save
 	end
-
 	desc 'Get Users Preferred Work'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -517,7 +451,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_preferred_works = @find_user.user_preferred_works
 	end
-
 	desc 'Delete Preffered Work'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -529,7 +462,6 @@ before { authenticate! }
 		@preffered_work.destroy
 		status 200
 	end
-
 	desc 'User Award'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -543,15 +475,14 @@ before { authenticate! }
 	post :award, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:award_type] || params[:name] || params[:descrption] )
-				@award = UserAward.new user_id: @find_user.id
-				@award.attributes = clean_params(params).permit(:name, :description, :file_type )
-				@award.award_type = params[:award_type] if params[:award_type]
-					@award.file = params[:file] if params[:file]
-				error! @award.errors.full_messages.join(', '), 422 unless @award.save
-			end
+		if (params[:award_type] || params[:name] || params[:descrption] )
+			@award = UserAward.new user_id: @find_user.id
+			@award.attributes = clean_params(params).permit(:name, :description, :file_type )
+			@award.award_type = params[:award_type] if params[:award_type]
+			@award.file = params[:file] if params[:file]
+			error! @award.errors.full_messages.join(', '), 422 unless @award.save
+		end
 	end
-
 	desc 'Update User Award'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -569,7 +500,6 @@ before { authenticate! }
 		@award.file = params[:file] if params[:file]
 		error! @award.errors.full_messages.join(', '), 422 unless @award.save
 	end
-
 	desc 'Get Users Award'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -580,7 +510,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_awards = @find_user.user_awards
 	end
-
 	desc 'Delete Award'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -592,7 +521,6 @@ before { authenticate! }
 		@award.destroy
 		status 200
 	end
-
 	desc 'User Certificate'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -606,14 +534,13 @@ before { authenticate! }
 	post :certificate, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:name] || params[:year] || params[:certificate_type] )
-				@certificate = UserCertificate.new user_id: @find_user.id
-				@certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type )
-					@certificate.file = params[:file] if params[:file]
-				error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
-			end
+		if (params[:name] || params[:year] || params[:certificate_type] )
+			@certificate = UserCertificate.new user_id: @find_user.id
+			@certificate.attributes = clean_params(params).permit(:name, :year, :certificate_type, :file_type )
+			@certificate.file = params[:file] if params[:file]
+			error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
+		end
 	end
-
 	desc 'Update User Certificate'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -631,7 +558,6 @@ before { authenticate! }
 		@certificate.file = params[:file] if params[:file]
 		error! @certificate.errors.full_messages.join(', '), 422 unless @certificate.save
 	end
-
 	desc 'Get Users Certificate Detail'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -642,7 +568,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_certificates = @find_user.user_certificates
 	end
-
 	desc 'Delete Certificate'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -654,7 +579,6 @@ before { authenticate! }
 		@certificate.destroy
 		status 200
 	end
-
 	desc 'User Curriculars'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -670,14 +594,13 @@ before { authenticate! }
 	post :curriculars, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
-				@curricular = UserCurricular.new user_id: @find_user.id
-				@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type )
-					@curricular.file = params[:file] if params[:file]
-				error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save 
-			end         
+		if (params[:curricular_type] || params[:title] || params[:team_type] || params[:location] || params[:date] )
+			@curricular = UserCurricular.new user_id: @find_user.id
+			@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type )
+			@curricular.file = params[:file] if params[:file]
+			error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save 
+		end         
 	end
-
 	desc 'Update User Curriculars'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -694,10 +617,9 @@ before { authenticate! }
 		@curricular = UserCurricular.find params[:curricular_id]
 		error! 'User Curricular not found',422 unless @curricular
 		@curricular.attributes = clean_params(params).permit(:curricular_type,:title,:team_type,:location, :date, :file_type )
-			@curricular.file = params[:file] if params[:file]
+		@curricular.file = params[:file] if params[:file]
 		error! @curricular.errors.full_messages.join(', '), 422 unless @curricular.save
 	end
-
 	desc 'Get Users Curriculars Detail'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -708,7 +630,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_curriculars = @find_user.user_curriculars
 	end
-
 	desc 'Delete Curricular'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -720,7 +641,6 @@ before { authenticate! }
 		@curricular.destroy
 		status 200
 	end
-
 	desc 'User Future Goal'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -734,14 +654,13 @@ before { authenticate! }
 	post :future_goal, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:goal_type] || params[:title] || params[:term_type] )
-				@future_goal = UserFutureGoal.new user_id: @find_user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
-				@future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type )
-					@future_goal.file = params[:file] if params[:file]
-				error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
-			end          
+		if (params[:goal_type] || params[:title] || params[:term_type] )
+			@future_goal = UserFutureGoal.new user_id: @find_user.id, goal_type: params[:goal_type], title: params[:title],term_type: params[:term_type]
+			@future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type )
+			@future_goal.file = params[:file] if params[:file]
+			error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
+		end          
 	end
-
 	desc 'Update User Future Goal'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -756,10 +675,9 @@ before { authenticate! }
 		@future_goal = UserFutureGoal.find params[:future_goal_id]
 		error! 'User Future Goal not found',422 unless @future_goal
 		@future_goal.attributes = clean_params(params).permit(:goal_type,:title,:term_type, :file_type )
-			@future_goal.file = params[:file] if params[:file]
+		@future_goal.file = params[:file] if params[:file]
 		error! @future_goal.errors.full_messages.join(', '), 422 unless @future_goal.save
 	end
-
 	desc 'Get Users Future Goals Detail'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -770,7 +688,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_future_goals = @find_user.user_future_goals
 	end
-
 	desc 'Delete Future Goal'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -782,7 +699,6 @@ before { authenticate! }
 		@future_goal.destroy
 		status 200
 	end
-
 	desc 'User Working Environment'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -796,18 +712,17 @@ before { authenticate! }
 	post :working_environment, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:env_type] || params[:title] )
-				@environment = UserEnvironment.new user_id: @find_user.id
-				@environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
-					if (params[:file_type] == 'text')
-						@environment.text_field = params[:text_field] if params[:text_field]
-					else
-						@environment.file = params[:file] if params[:file]
-					end
-				error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
-			end          
+		if (params[:env_type] || params[:title] )
+			@environment = UserEnvironment.new user_id: @find_user.id
+			@environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
+			if (params[:file_type] == 'text')
+				@environment.text_field = params[:text_field] if params[:text_field]
+			else
+				@environment.file = params[:file] if params[:file]
+			end
+			error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
+		end          
 	end
-
 	desc 'Update User Working Environment'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -822,14 +737,13 @@ before { authenticate! }
 		@environment = UserEnvironment.find params[:environment_id]
 		error! 'User Environment not found',422 unless @environment
 		@environment.attributes = clean_params(params).permit(:env_type, :title, :file_type, :text_field)
-			if (params[:file_type] == 'text')
-				@environment.text_field = params[:text_field] if params[:text_field]
-			else
-				@environment.file = params[:file] if params[:file]
-			end
+		if (params[:file_type] == 'text')
+			@environment.text_field = params[:text_field] if params[:text_field]
+		else
+			@environment.file = params[:file] if params[:file]
+		end
 		error! @environment.errors.full_messages.join(', '), 422 unless @environment.save
 	end
-
 	desc 'Get Users Working Environments Detail'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -840,7 +754,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_working_environments = @find_user.user_environments
 	end
-
 	desc 'Delete Work Environment'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -852,7 +765,6 @@ before { authenticate! }
 		@work_env.destroy
 		status 200
 	end
-
 	desc 'User References'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -872,17 +784,16 @@ before { authenticate! }
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
 		@reference = UserReference.new user_id: @find_user.id
-			if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
-				@reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
-					if (params[:file_type] == 'text')
-						@reference.text_field = params[:text_field] if params[:text_field]
-					else
-						@reference.file = params[:file] if params[:file]
-					end
-				error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
-			end          
+		if (params[:title] || params[:ref_type] || params[:from] || params[:email] || params[:contact] || params[:date] || params[:location] )
+			@reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
+			if (params[:file_type] == 'text')
+				@reference.text_field = params[:text_field] if params[:text_field]
+			else
+				@reference.file = params[:file] if params[:file]
+			end
+			error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
+		end          
 	end
-
 	desc 'Update User References'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -902,14 +813,13 @@ before { authenticate! }
 		@reference = UserReference.find params[:reference_id]
 		error! 'User not found',422 unless @reference
 		@reference.attributes = clean_params(params).permit(:title, :ref_type, :from, :email, :contact, :date, :location, :file_type, :text_field)
-			if (params[:file_type] == 'text')
-				@reference.text_field = params[:text_field] if params[:text_field]
-			else
-				@reference.file = params[:file] if params[:file]
-			end
+		if (params[:file_type] == 'text')
+			@reference.text_field = params[:text_field] if params[:text_field]
+		else
+			@reference.file = params[:file] if params[:file]
+		end
 		error! @reference.errors.full_messages.join(', '), 422 unless @reference.save
 	end
-
 	desc 'Get Users References Detail'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -920,7 +830,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@user_references = @find_user.user_references
 	end
-
 	desc 'Delete reference'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -936,8 +845,7 @@ end
 #--------------------------------member profile end----------------------------------#
 #--------------------------------company start----------------------------------#
 resources :company do 
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Company Information'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -957,14 +865,13 @@ before { authenticate! }
 	post :company_info, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
-			if @user.role == 'Company'
-				@user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id, :country_id)
-				error! @user.errors.full_messages.join(', '), 422 unless @user.save
-			else
-				error! "Record not found.", 422
-			end
+		if @user.role == 'Company'
+			@user.attributes = clean_params(params).permit(:company_name, :company_establish_from, :industry_id, :company_functional_area, :company_address, :company_zipcode, :company_city, :company_contact, :company_skype_id, :company_id, :country_id)
+			error! @user.errors.full_messages.join(', '), 422 unless @user.save
+		else
+			error! "Record not found.", 422
+		end
 	end
-
 	desc 'Corporate Identity'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -981,17 +888,16 @@ before { authenticate! }
 	post :corporate_identity, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
-			if @user.role == 'Company'
-				@user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type ,:company_profile_type, :company_brochure_type)
-				@user.company_logo = params[:company_logo] if params[:company_logo]
-				@user.company_profile = params[:company_profile] if params[:company_profile]
-				@user.company_brochure = params[:company_brochure] if params[:company_brochure]
-				error! @user.errors.full_messages.join(', '), 422 unless @user.save
-			else
-				error! "Record not found.", 422
-			end
+		if @user.role == 'Company'
+			@user.attributes = clean_params(params).permit(:company_website, :company_facebook_link, :company_logo_type ,:company_profile_type, :company_brochure_type)
+			@user.company_logo = params[:company_logo] if params[:company_logo]
+			@user.company_profile = params[:company_profile] if params[:company_profile]
+			@user.company_brochure = params[:company_brochure] if params[:company_brochure]
+			error! @user.errors.full_messages.join(', '), 422 unless @user.save
+		else
+			error! "Record not found.", 422
+		end
 	end
-
 	desc 'Company Evalution Information'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1004,14 +910,13 @@ before { authenticate! }
 	post :evalution_information, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
-			if @user.role == 'Company'
-				@user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures )
-				error! @user.errors.full_messages.join(', '), 422 unless @user.save
-			else
-				error! "Record not found.", 422
-			end
+		if @user.role == 'Company'
+			@user.attributes = clean_params(params).permit(:company_turnover, :company_no_of_emp, :company_growth_ratio, :company_new_ventures )
+			error! @user.errors.full_messages.join(', '), 422 unless @user.save
+		else
+			error! "Record not found.", 422
+		end
 	end
-
 	desc 'Get Company Evalution Information'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1021,7 +926,6 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found', 422 unless @user
 	end
-
 	desc 'Company Future Goal'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1033,14 +937,13 @@ before { authenticate! }
 	post :future_goal, jbuilder: 'ios' do
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
-			if @user.role == 'Company'
-				@user.attributes = clean_params(params).permit(:company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
-				error! @user.errors.full_messages.join(', '), 422 unless @user.save
-			else
-				error! "Record not found.", 422
-			end
+		if @user.role == 'Company'
+			@user.attributes = clean_params(params).permit(:company_future_turnover, :company_future_new_venture_location, :company_future_outlet)
+			error! @user.errors.full_messages.join(', '), 422 unless @user.save
+		else
+			error! "Record not found.", 422
+		end
 	end
-	
 	desc 'Edit Company Info'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1081,7 +984,6 @@ before { authenticate! }
 		@user.company_brochure = params[:company_brochure] if params[:company_brochure]
 		error! @user.errors.full_messages.join(', '), 422 unless @user.save
 	end
-
 	desc 'Company Galery'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1091,14 +993,13 @@ before { authenticate! }
 	post :galery, jbuilder: 'ios_galery' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			params[:files].each do |file|
-				@galery = CompanyGalery.new user_id: params[:user_id]
-				@galery.file = file
-				error! @galery.errors.full_messages.join(', '), 422 unless @galery.save
-				@galeries = @find_user.company_galeries
-			end      
+		params[:files].each do |file|
+			@galery = CompanyGalery.new user_id: params[:user_id]
+			@galery.file = file
+			error! @galery.errors.full_messages.join(', '), 422 unless @galery.save
+			@galeries = @find_user.company_galeries
+		end      
 	end
-
 	desc 'Company Galery Listing'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1109,7 +1010,6 @@ before { authenticate! }
 		error! 'User not found',422 unless @find_user
 		@galeries = @find_user.company_galeries
 	end
-
 	desc 'Company Galery  Delete Multiple Photos'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1122,14 +1022,12 @@ before { authenticate! }
 		end   
 		status 200  
 	end
-
 end
 #--------------------------------company end----------------------------------#
 #--------------------------------data start-----------------------------------#
 resources :data do 
-
 	desc 'Dropdown Data'
-		params do
+	params do
 		requires :token, type: String, regexp: UUID_REGEX
 	end
 	post :all_data, jbuilder: 'ios' do
@@ -1139,7 +1037,6 @@ resources :data do
 		@industries = Industry.all
 		@stock_countries = StockCountry.all
 	end
-
 	desc 'Update Image'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1155,22 +1052,19 @@ resources :data do
 		@update_image.back_profile = params[:back_profile] if params[:back_profile]
 		error! @update_image.errors.full_messages.join(', '), 422 unless @update_image.save
 	end
-
 	desc 'Video For Appflow'
 	params do
-	  requires :token, type: String, regexp: UUID_REGEX
+		requires :token, type: String, regexp: UUID_REGEX
 	end
 	post :video, jbuilder: 'ios' do
 		authenticate!
-	  @video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]]).first
+		@video = VideoUpload.where(role: VideoUpload::ROLES[params[:role]]).first
 	end
-
 end
 #--------------------------------data end----------------------------------#
 #--------------------------------student start----------------------------------#
 resources :student do 
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Student Basic Info'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1192,7 +1086,6 @@ before { authenticate! }
 		@basic_info.attributes = clean_params(params).permit(:first_name,  :last_name, :gender,  :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number )
 		error! @basic_info.errors.full_messages.join(', '), 422 unless @basic_info.save
 	end
-
 	desc 'Update Student Basic Info'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1214,10 +1107,9 @@ before { authenticate! }
 		@basic_info = User.find params[:user_id]
 		error! 'User not found', 422 unless @basic_info
 		@basic_info.attributes = clean_params(params).permit(:first_name, :last_name, :gender,
-		:date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
+			:date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
 		error! @basic_info.errors.full_messages.join(', '), 422 unless @basic_info.save
 	end
-
 	desc 'Get Basic Info'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1227,7 +1119,6 @@ before { authenticate! }
 		@basic_info = User.find params[:user_id]
 		error! 'User not found', 422 unless @basic_info
 	end
-
 	desc 'Student Education'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1239,13 +1130,12 @@ before { authenticate! }
 	post :student_education, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:standard] || params[:school] || params[:year] )
-				@student_education = StudentEducation.new user_id: @find_user.id
-				@student_education.attributes = clean_params(params).permit(:standard, :school, :year)
-				error! @student_education.errors.full_messages.join(', '), 422 unless @student_education.save
-			end          
+		if (params[:standard] || params[:school] || params[:year] )
+			@student_education = StudentEducation.new user_id: @find_user.id
+			@student_education.attributes = clean_params(params).permit(:standard, :school, :year)
+			error! @student_education.errors.full_messages.join(', '), 422 unless @student_education.save
+		end          
 	end
-
 	desc 'Update Student Education'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1261,7 +1151,6 @@ before { authenticate! }
 		@student_education.file = params[:file] if params[:file]
 		error! @student_education.errors.full_messages.join(', '), 422 unless @student_education.save
 	end
-
 	desc 'Delete Student Education'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1273,7 +1162,6 @@ before { authenticate! }
 		@student_education.destroy
 		status 200
 	end
-
 	desc 'Student Marksheet'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1288,14 +1176,13 @@ before { authenticate! }
 	post :student_marksheet, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:school_name] || params[:standard] || params[:grade] || params[:year] )
-				@student_marksheet = UserMarksheet.new user_id: @find_user.id
-				@student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
-				@student_marksheet.file = params[:file] if params[:file]
-				error! @student_marksheet.errors.full_messages.join(', '),422 unless @student_marksheet.save
-			end          
+		if (params[:school_name] || params[:standard] || params[:grade] || params[:year] )
+			@student_marksheet = UserMarksheet.new user_id: @find_user.id
+			@student_marksheet.attributes = clean_params(params).permit(:school_name, :standard, :grade, :year, :file_type)
+			@student_marksheet.file = params[:file] if params[:file]
+			error! @student_marksheet.errors.full_messages.join(', '),422 unless @student_marksheet.save
+		end          
 	end
-
 	desc 'Update Student Education'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1314,7 +1201,6 @@ before { authenticate! }
 		@student_marksheet.file = params[:file] if params[:file]
 		error! @student_marksheet.errors.full_messages.join(', '),422 unless @student_marksheet.save
 	end
-
 	desc 'Delete Student Marksheet'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1326,7 +1212,6 @@ before { authenticate! }
 		@student_marksheet.destroy
 		status 200
 	end
-
 	desc 'Student Project'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1334,19 +1219,18 @@ before { authenticate! }
 		requires :title
 		optional :description
 		optional :file
-        optional :file_type
+		optional :file_type
 	end
 	post :student_project, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:title] || params[:description] )
-				@student_project = UserProject.new user_id: @find_user.id
-				@student_project.attributes = clean_params(params).permit(:title, :description, :file_type)
-				@student_project.file = params[:file] if params[:file]
-				error! @student_project.errors.full_messages.join(', '),422 unless @student_project.save
-			end          
+		if (params[:title] || params[:description] )
+			@student_project = UserProject.new user_id: @find_user.id
+			@student_project.attributes = clean_params(params).permit(:title, :description, :file_type)
+			@student_project.file = params[:file] if params[:file]
+			error! @student_project.errors.full_messages.join(', '),422 unless @student_project.save
+		end          
 	end
-
 	desc 'Update Student Project'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1354,7 +1238,7 @@ before { authenticate! }
 		optional :title
 		optional :description
 		optional :file
-        optional :file_type
+		optional :file_type
 	end
 	post :update_student_project, jbuilder: 'ios' do
 		@student_project = UserProject.find params[:project_id]
@@ -1363,7 +1247,6 @@ before { authenticate! }
 		@student_project.file = params[:file] if params[:file]
 		error! @student_project.errors.full_messages.join(', '),422 unless @student_project.save
 	end
-
 	desc 'Delete Student Project'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1375,13 +1258,11 @@ before { authenticate! }
 		@student_project.destroy
 		status 200
 	end
-
 end
 #--------------------------------student end----------------------------------#
 #--------------------------------faculty start----------------------------------#
 resources :faculty do 
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Faculty Resume'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1404,11 +1285,10 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 		@user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
-		:date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
-			@user.file = params[:file] if params[:file]
+			:date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type)
+		@user.file = params[:file] if params[:file]
 		error! @user.errors.full_messages.join(', '),422 unless @user.save
 	end
-
 	desc 'Edit Faculty Resume'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1431,11 +1311,10 @@ before { authenticate! }
 		@user = User.find params[:user_id]
 		error! 'User not found',422 unless @user
 		@user.attributes = clean_params(params).permit(:first_name,  :middle_name, :last_name, :gender,
-		:date_of_birth, :nationality, :address, :city, :country_id, :zipcode,  :contact_number, :file_type)
-			@user.file = params[:file] if params[:file]
+			:date_of_birth, :nationality, :address, :city, :country_id, :zipcode,  :contact_number, :file_type)
+		@user.file = params[:file] if params[:file]
 		error! @user.errors.full_messages.join(', '),422 unless @user.save
 	end
-
 	desc 'Faculty Affiliation'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1447,19 +1326,18 @@ before { authenticate! }
 		optional :join_from
 		optional :join_till
 		optional :file
-        optional :file_type
+		optional :file_type
 	end
 	post :faculty_affiliation, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] || params[:join_till] || params[:file_type])
-				@faculty_affiliation = FacultyAffiliation.new user_id: @find_user.id
-				@faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till, :file_type)
-				@faculty_affiliation.file = params[:file] if params[:file]
-				error! @faculty_affiliation.errors.full_messages.join(', '),422 unless @faculty_affiliation.save
-			end          
+		if (params[:collage_name] || params[:subject] || params[:designation] || params[:join_from] || params[:join_till] || params[:file_type])
+			@faculty_affiliation = FacultyAffiliation.new user_id: @find_user.id
+			@faculty_affiliation.attributes = clean_params(params).permit(:university, :collage_name, :subject, :designation, :join_from, :join_till, :file_type)
+			@faculty_affiliation.file = params[:file] if params[:file]
+			error! @faculty_affiliation.errors.full_messages.join(', '),422 unless @faculty_affiliation.save
+		end          
 	end
-
 	desc 'Update Faculty Affiliation'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1471,7 +1349,7 @@ before { authenticate! }
 		optional :join_from
 		optional :join_till
 		optional :file
-        optional :file_type
+		optional :file_type
 	end
 	post :update_faculty_affiliation, jbuilder: 'ios' do
 		@faculty_affiliation = FacultyAffiliation.find params[:affiliation_id]
@@ -1480,7 +1358,6 @@ before { authenticate! }
 		@faculty_affiliation.file = params[:file] if params[:file]
 		error! @faculty_affiliation.errors.full_messages.join(', '),422 unless @faculty_affiliation.save
 	end
-
 	desc 'Delete Faculty Affiliation'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1492,7 +1369,6 @@ before { authenticate! }
 		@faculty_affiliation.destroy
 		status 200
 	end
-
 	desc 'Faculty Workshop'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1500,7 +1376,7 @@ before { authenticate! }
 		requires :title
 		requires :description
 		optional :file
-        optional :file_type
+		optional :file_type
 	end
 	post :faculty_workshop, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
@@ -1510,7 +1386,6 @@ before { authenticate! }
 		@faculty_workshop.file = params[:file] if params[:file]
 		error!({error: @faculty_workshop.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_workshop.save
 	end
-
 	desc 'Update Faculty Workshop'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1518,7 +1393,7 @@ before { authenticate! }
 		optional :title
 		optional :description
 		optional :file
-        optional :file_type
+		optional :file_type
 	end
 	post :update_faculty_workshop, jbuilder: 'ios' do
 		@faculty_workshop = FacultyWorkshop.find params[:workshop_id]
@@ -1527,7 +1402,6 @@ before { authenticate! }
 		@faculty_workshop.file = params[:file] if params[:file]
 		error! @faculty_workshop.errors.full_messages.join(', '),422 unless @faculty_workshop.save
 	end
-
 	desc 'Delete Faculty Workshop'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1539,7 +1413,6 @@ before { authenticate! }
 		@faculty_workshop.destroy
 		status 200
 	end
-
 	desc 'Faculty Publication'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1552,14 +1425,13 @@ before { authenticate! }
 	post :faculty_publication, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:title] || params[:description] )
-				@faculty_publication = FacultyPublication.new user_id: @find_user.id
-				@faculty_publication.attributes = clean_params(params).permit(:title, :description, :file_type)
-					@faculty_publication.file = params[:file] if params[:file]
-				error! @faculty_publication.errors.full_messages.join(', '),422 unless @faculty_publication.save
-			end          
+		if (params[:title] || params[:description] )
+			@faculty_publication = FacultyPublication.new user_id: @find_user.id
+			@faculty_publication.attributes = clean_params(params).permit(:title, :description, :file_type)
+			@faculty_publication.file = params[:file] if params[:file]
+			error! @faculty_publication.errors.full_messages.join(', '),422 unless @faculty_publication.save
+		end          
 	end
-
 	desc 'Update Faculty Publication'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1576,7 +1448,6 @@ before { authenticate! }
 		@faculty_publication.file = params[:file] if params[:file]
 		error! @faculty_publication.errors.full_messages.join(', '),422 unless @faculty_publication.save
 	end
-
 	desc 'Delete Faculty Publication'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1588,7 +1459,6 @@ before { authenticate! }
 		@faculty_publication.destroy
 		status 200
 	end
-
 	desc 'Faculty Research'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1601,14 +1471,13 @@ before { authenticate! }
 	post :faculty_research, jbuilder: 'ios' do
 		@find_user = User.find params[:user_id]
 		error! 'User not found',422 unless @find_user
-			if (params[:title] || params[:description] )
-				@faculty_research = FacultyResearch.new user_id: @find_user.id
-				@faculty_research.attributes = clean_params(params).permit(:title, :description, :file_type)
-					@faculty_research.file = params[:file] if params[:file]
-				error! @faculty_research.errors.full_messages.join(', '),422 unless @faculty_research.save
-			end          
+		if (params[:title] || params[:description] )
+			@faculty_research = FacultyResearch.new user_id: @find_user.id
+			@faculty_research.attributes = clean_params(params).permit(:title, :description, :file_type)
+			@faculty_research.file = params[:file] if params[:file]
+			error! @faculty_research.errors.full_messages.join(', '),422 unless @faculty_research.save
+		end          
 	end
-
 	desc 'Update Faculty Reaserch'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1622,10 +1491,9 @@ before { authenticate! }
 		@faculty_research = FacultyResearch.find params[:research_id]
 		error! 'Student research not found',422 unless @faculty_research
 		@faculty_research.attributes = clean_params(params).permit(:title, :description, :file_type)
-			@faculty_research.file = params[:file] if params[:file]
+		@faculty_research.file = params[:file] if params[:file]
 		error! @faculty_research.errors.full_messages.join(', '),422 unless @faculty_research.save
 	end
-
 	desc 'Delete Faculty Research'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1637,14 +1505,11 @@ before { authenticate! }
 		@faculty_research.destroy
 		status 200
 	end
-
 end
 #--------------------------------faculty end----------------------------------#
 #--------------------------------group start----------------------------------#
 resources :group do 
-
-before { authenticate! }
-
+	before { authenticate! }
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
 		requires :name
@@ -1670,7 +1535,6 @@ before { authenticate! }
 	post :listing, jbuilder: 'ios_group' do
 		@groups = current_user.all_groups(current_user)
 	end
-
 	desc 'Information of Group'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1680,7 +1544,6 @@ before { authenticate! }
 		@group = Group.find(params[:group_id])
 		error! 'Group not found',422 unless @group
 	end
-
 	desc 'Update Group'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1695,7 +1558,6 @@ before { authenticate! }
 		@group.group_pic = params[:group_pic] if params[:group_pic]
 		error! @group.errors.full_messages.join(', '), 422 unless @group.save
 	end
-
 	desc 'Delete Group'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1705,44 +1567,42 @@ before { authenticate! }
 	post :delete do
 		@group = Group.find params[:group_id]  
 		error! 'Group not found',422 unless @group
-			if params[:user_id]   
-				@user = User.find params[:user_id] 
-				error! 'User not found',422 unless @user  
-				@group_user = GroupUser.find_by_user_id params[:user_id]
-				error! 'Group User not found',422 unless @group_user
-					unless @group.deleted_from.include? @user.id
-					@group.deleted_from << @user.id
-					@group.update_column :deleted_from, @group.deleted_from
-					end       
-				@group_user.status = 'deleted'
-				@group_user.save 
-				@chat = Chat.new
-				@chat.sender_id = current_user.id
-				@chat.group_id = params[:group_id]
-				@chat.activity = "true"
-				@chat.quick_msg = "removed #{@user.username}"
-				@chat.save
+		if params[:user_id]   
+			@user = User.find params[:user_id] 
+			error! 'User not found',422 unless @user  
+			@group_user = GroupUser.find_by_user_id params[:user_id]
+			error! 'Group User not found',422 unless @group_user
+			unless @group.deleted_from.include? @user.id
+				@group.deleted_from << @user.id
+				@group.update_column :deleted_from, @group.deleted_from
+			end       
+			@group_user.status = 'deleted'
+			@group_user.save 
+			@chat = Chat.new
+			@chat.sender_id = current_user.id
+			@chat.group_id = params[:group_id]
+			@chat.activity = "true"
+			@chat.quick_msg = "removed #{@user.username}"
+			@chat.save
+		else
+			if current_user.role == 'Faculty'
+				@group.destroy
 			else
-				if current_user.role == 'Faculty'
-					@group.destroy
-				else
-					unless @group.deleted_from.include? current_user.id
+				unless @group.deleted_from.include? current_user.id
 					@group.deleted_from << current_user.id
 					@group.update_column :deleted_from, @group.deleted_from
-					end
 				end
 			end
+		end
 		status 200
 	end
-
 	desc 'Registered Students'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-      end
-      post :registered_students, jbuilder: 'ios' do
-        @students = User.where(role: 1).all
-      end
-
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+	end
+	post :registered_students, jbuilder: 'ios' do
+		@students = User.where(role: 1).all
+	end
 	desc 'Email invitation'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1753,13 +1613,12 @@ before { authenticate! }
 		@group = Group.find params[:group_id]
 		error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
 		params[:email_ids].each do |email|
-		@group_invitee = GroupInvitee.new group_id: params[:group_id], email: email
-		error! @group_invitee.errors.full_messages.join(', '),422 unless @group_invitee.save
-		UserMailer.send_group_code(@group,email).deliver_now
+			@group_invitee = GroupInvitee.new group_id: params[:group_id], email: email
+			error! @group_invitee.errors.full_messages.join(', '),422 unless @group_invitee.save
+			UserMailer.send_group_code(@group,email).deliver_now
 		end
 		{}
 	end
-
 	desc 'Join Group'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1772,70 +1631,64 @@ before { authenticate! }
 		error! "You are unauthorized for this group.", 422 unless @group_invitee
 		@group_user = @group.users.where(user_id: current_user.id).first
 		error! "You are already in this group.", 422 if @group_user
-			if @group_invitee.present?
-				@group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
-				error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save      
-				@chat = Chat.new
-				@chat.sender_id = current_user.id
-				@chat.group_id = @group.id
-				@chat.activity = "true"
-				@chat.quick_msg = "joined"
-				@chat.save
-				# @group.accepted_users.each do |group_user|
-				#     #Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
-				# end
-			end      
-	end
-
-	desc 'Leave Group'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :group_id
-	end
-	post :leave, jbuilder: 'ios_group' do
-		@group = Group.find params[:group_id]
-		error! 'Group not found',422 unless @group
-		@group_user = @group.users.where(user_id: current_user.id).first
-		@group_user.status = "leaved"          
-		@group_user.deleted_at = Time.now
-		@group_user.save
-		@chat = Chat.new
-		@chat.sender_id = current_user.id
-		@chat.group_id = @group.id
-		@chat.activity = "true"
-		@chat.quick_msg = "left"
-		@chat.save
-			@group.accepted_users.each do |group_user|
-				#Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
-			end
-	end
-
-	desc 'Quick Message'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :role
-	end
-	post :quick_message, jbuilder: 'ios_message' do
-		@messages = QuickMessage.where(role: QuickMessage::ROLES[params[:role]])
-	end
-
-	desc 'Search Group Of Current User'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :q
-	end
-	post :search , jbuilder: 'ios_group' do
-		authenticate!
-		@groups =  current_user.all_groups.search(params[:q])
-	end
-
+		if @group_invitee.present?
+			@group_user = GroupUser.new user_id: current_user.id, group_id: @group.id , admin: false , status: 'joined'
+			error! @group_user.errors.full_messages.join(', '),422 unless @group_user.save      
+			@chat = Chat.new
+			@chat.sender_id = current_user.id
+			@chat.group_id = @group.id
+			@chat.activity = "true"
+			@chat.quick_msg = "joined"
+			@chat.save
+# @group.accepted_users.each do |group_user|
+#     #Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has join to group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+# end
+end      
+end
+desc 'Leave Group'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :group_id
+end
+post :leave, jbuilder: 'ios_group' do
+	@group = Group.find params[:group_id]
+	error! 'Group not found',422 unless @group
+	@group_user = @group.users.where(user_id: current_user.id).first
+	@group_user.status = "leaved"          
+	@group_user.deleted_at = Time.now
+	@group_user.save
+	@chat = Chat.new
+	@chat.sender_id = current_user.id
+	@chat.group_id = @group.id
+	@chat.activity = "true"
+	@chat.quick_msg = "left"
+	@chat.save
+	@group.accepted_users.each do |group_user|
+#Device.notify group_user.user.active_devices, { msg: "#{current_user.username} has left group #{@group}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+end
+end
+desc 'Quick Message'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :role
+end
+post :quick_message, jbuilder: 'ios_message' do
+	@messages = QuickMessage.where(role: QuickMessage::ROLES[params[:role]])
+end
+desc 'Search Group Of Current User'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :q
+end
+post :search , jbuilder: 'ios_group' do
+	authenticate!
+	@groups =  current_user.all_groups.search(params[:q])
+end
 end
 #--------------------------------group end----------------------------------#
 #--------------------------------message start----------------------------------#
 resources :messages do
-
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'create Chat'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1848,16 +1701,15 @@ before { authenticate! }
 	post :create, jbuilder: 'ios_message' do
 		@chat = Chat.new group_id: params[:group_id], sender_id: current_user.id
 		@chat.file_type = params[:file_type] if params[:file_type]
-			if params[:quick_msg_id]
-				@msg = QuickMessage.find params[:quick_msg_id]
-				error! 'Quick Message not found',422 unless @msg
-				@chat.quick_msg = @msg.text
-			else
-				@chat.quick_msg = params[:text_value] if params[:text_value]
-			end
+		if params[:quick_msg_id]
+			@msg = QuickMessage.find params[:quick_msg_id]
+			error! 'Quick Message not found',422 unless @msg
+			@chat.quick_msg = @msg.text
+		else
+			@chat.quick_msg = params[:text_value] if params[:text_value]
+		end
 		error! @chat.errors.full_messages.join(', '),422 unless @chat.save 
 	end
-
 	desc 'read Message'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1866,15 +1718,14 @@ before { authenticate! }
 	post :read , jbuilder: 'ios_message' do
 		@group = Group.find params[:group_id]
 		error! 'Group not found',422 unless @group
-			@group.chats.each do |chat|       
-				unless chat.user_ids.include? current_user.id
-					chat.user_ids << current_user.id
-					chat.update_column :user_ids, chat.user_ids
-				end
+		@group.chats.each do |chat|       
+			unless chat.user_ids.include? current_user.id
+				chat.user_ids << current_user.id
+				chat.update_column :user_ids, chat.user_ids
 			end
+		end
 		status 200
 	end
-
 	desc 'Listing of Chat'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1886,7 +1737,6 @@ before { authenticate! }
 		@chats = @group.chats
 		error! @chat.errors.full_messages.join(', '),422 unless @chats  
 	end
-
 	desc 'Create schedule'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1914,7 +1764,6 @@ before { authenticate! }
 			@chat.save
 		end
 	end
-
 	desc 'Create schedule'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1924,7 +1773,6 @@ before { authenticate! }
 		@chat_schedule = ChatSchedule.find params[:schedule_id]
 		error! 'Schedule not found',422 unless @chat_schedule
 	end
-
 	desc 'Send File To Multiple Group'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1940,14 +1788,11 @@ before { authenticate! }
 			error! @chat.errors.full_messages.join(', '), 422 unless @chat.save
 		end
 	end
-
 end
 #--------------------------------message end----------------------------------#
 #--------------------------------notification end----------------------------------#
 resources :notifications do
-
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Like Profile'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -1959,88 +1804,80 @@ before { authenticate! }
 			@user_like = UserLike.new user_id: current_user.id, like_id: params[:like_id]
 			@user_like.is_liked = 'true'
 			error! @user_like.errors.full_messages.join(', '),422 unless @user_like.save
-			#Device.notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }    
-		else        
-			error! 'You already like this profile!',422
-		end 
+#Device.notify User.find(params[:like_id]).active_devices, { msg: "#{current_user.username} liked your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }    
+else        
+	error! 'You already like this profile!',422
+end 
+end
+desc 'View Profile'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :view_id
+end
+post :view, jbuilder: 'ios_notification' do
+	@user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
+	error! @user_view.errors.full_messages.join(', '),422 unless @user_view.save
+##Device.notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
+end
+desc 'Share Profile'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :share_id
+	requires :share_type
+end
+post :share, jbuilder: 'ios_notification' do
+	@user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
+	error! @user_share.errors.full_messages.join(', '),422 unless @user_share.save
+##Device.notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
+end
+desc 'Favourite Profile'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :favourite_id
+	requires :folder_name
+	requires :is_favourited
+end
+post :favourite, jbuilder: 'ios_notification' do
+	if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).count > 0
+		@folder = Folder.find_by name: params[:folder_name].downcase
+		error! 'Folder not found',422 unless @folder
+	else
+		@folder = Folder.new name: params[:folder_name].downcase, default_status: false
+		error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+		@user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
+		error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
+	end            
+	if params[:is_favourited] == 'false'
+		@user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
+		@user_favourite.is_favourited = 'true'
+		error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
+	else        
+		error! 'You already favourite this profile!',422
 	end
-
-	desc 'View Profile'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :view_id
-	end
-	post :view, jbuilder: 'ios_notification' do
-		@user_view = UserView.new user_id: current_user.id, view_id: params[:view_id]
-		error! @user_view.errors.full_messages.join(', '),422 unless @user_view.save
-		##Device.notify User.find(params[:view_id]).active_devices, { msg: "#{current_user.username} viewed your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
-	end
-
-	desc 'Share Profile'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :share_id
-		requires :share_type
-	end
-	post :share, jbuilder: 'ios_notification' do
-		@user_share = UserShare.new user_id: current_user.id, share_id: params[:share_id], share_type: params[:share_type]
-		error! @user_share.errors.full_messages.join(', '),422 unless @user_share.save
-		##Device.notify User.find(params[:share_id]).active_devices, { msg: "#{current_user.username} shared your profile on #{params[:share_type]}.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }     
-	end
-
-	desc 'Favourite Profile'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :favourite_id
-		requires :folder_name
-		requires :is_favourited
-	end
-	post :favourite, jbuilder: 'ios_notification' do
-		if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).count > 0
-            @folder = Folder.find_by name: params[:folder_name].downcase
-            error! 'Folder not found',422 unless @folder
-          else
-            @folder = Folder.new name: params[:folder_name].downcase, default_status: false
-            error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-            @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
-            error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
-          end            
-          if params[:is_favourited] == 'false'
-              @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
-              @user_favourite.is_favourited = 'true'
-              error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
-          else        
-              error! 'You already favourite this profile!',422
-          end
-	end
-
-	desc 'Rate Profile'
-	params do
-		requires :token, type: String, regexp: UUID_REGEX
-		requires :rate_id
-		requires :rate_type
-	end
-	post :rate, jbuilder: 'ios_notification' do
-		@user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
-		error! @user_rate.errors.full_messages.join(', '),422 unless @user_rate.save     
-		##Device.notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
-	end
-
-	desc  "LIST Of NOTIFICATION"
-	params  do
-		requires :token, type: String, regexp: UUID_REGEX
-	end
-	post :list, jbuilder: "ios_notification"  do
-		@notifications = Rpush::Apns::Notification.where(device_token: current_device.id).order(created_at: "desc").pluck
-	end
-
+end
+desc 'Rate Profile'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :rate_id
+	requires :rate_type
+end
+post :rate, jbuilder: 'ios_notification' do
+	@user_rate = UserRate.new user_id: current_user.id, rate_id: params[:rate_id], rate_type: params[:rate_type]
+	error! @user_rate.errors.full_messages.join(', '),422 unless @user_rate.save     
+##Device.notify User.find(params[:rate_id]).active_devices, { msg: "#{current_user.username} rate your profile.", who_like_photo: current_user.file.url, name: current_user.username, time: Time.now, id: current_user.id }
+end
+desc  "LIST Of NOTIFICATION"
+params  do
+	requires :token, type: String, regexp: UUID_REGEX
+end
+post :list, jbuilder: "ios_notification"  do
+	@notifications = Rpush::Apns::Notification.where(device_token: current_device.id).order(created_at: "desc").pluck
+end
 end
 #--------------------------------notification end----------------------------------#
 #--------------------------------top user start----------------------------------#
 resources :top_user do
-
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Listing Top Users'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2053,14 +1890,11 @@ before { authenticate! }
 			@top_users = User.joins(:user_meter).where(:users=> { role: 4 }).order("user_meters.total_per DESC").limit(3)
 		end
 	end
-
 end
 #--------------------------------top user end----------------------------------#
 #--------------------------------whizquiz start----------------------------------#
 resources :whizquiz do
-
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Send random 10 question to Users'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2068,7 +1902,6 @@ before { authenticate! }
 	post :send_questions, jbuilder: 'ios_whiz_quiz' do
 		@questions = Whizquiz.where(status: true).order("RANDOM()").limit(2)
 	end
-
 	desc 'Answer'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2083,22 +1916,19 @@ before { authenticate! }
 		error! 'User not found',422 unless @user
 		params[:question_ids].count.times do |i|
 			@user_whizquiz = UserWhizquiz.new user_id: params[:user_id], whizquiz_id: params[:question_ids][i] , review_type: params[:review_types][i] , review: params[:reviews][i], status: false
-				if (params[:review_types][i] == 'text')
-					@user_whizquiz.text_field = params[:text_fields][i] if params[:text_fields][i]
-				else
-					@user_whizquiz.review = params[:reviews][i] if params[:reviews][i]
-				end
+			if (params[:review_types][i] == 'text')
+				@user_whizquiz.text_field = params[:text_fields][i] if params[:text_fields][i]
+			else
+				@user_whizquiz.review = params[:reviews][i] if params[:reviews][i]
+			end
 			error! @user_whizquiz.errors.full_messages.join(', '),422 unless @user_whizquiz.save
 		end
 	end
-
 end
 #--------------------------------whizquiz end----------------------------------#
 #--------------------------------search start----------------------------------#
 resources :search do
-
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Search Jobseeker'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2116,7 +1946,6 @@ before { authenticate! }
 		authenticate!
 		@searched_users =  User.includes("user_experiences").where("users.username ilike ?","%#{params[:q]}%").where("users.user_experiences.experience")
 	end
-
 	desc 'Search Company'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2129,14 +1958,11 @@ before { authenticate! }
 		authenticate!
 		@searched_company =  User.company_search(params)
 	end
-
 end
 #--------------------------------search end----------------------------------#
 #--------------------------------marketiq start----------------------------------#
 resources :marketiq do
-
-before { authenticate! }
-
+	before { authenticate! }
 	desc 'Send random 10 question to Users'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2151,13 +1977,11 @@ before { authenticate! }
 		elsif current_user.role == 'Faculty'        
 			@marketiq = Marketiq.where(role: 4).where(subject: current_user.faculty_affiliations.pluck('subject')).order("RANDOM()").first
 		end
-
 		if @marketiq
 			@user_marketiq = UserMarketiq.new user_id: current_user.id, marketiq_id: @marketiq.id
 			error! @user_marketiq.errors.full_messages.join(', '),422 unless @user_marketiq.save
 		end
 	end
-
 	desc 'Send Answer Of Marketiq Question'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2170,7 +1994,6 @@ before { authenticate! }
 		@answer_user_marketiq.status = true
 		error! @answer_user_marketiq.errors.full_messages.join(', '),422 unless @answer_user_marketiq.save
 	end
-
 	desc 'Users Market IQ List'
 	params do
 		requires :token, type: String, regexp: UUID_REGEX
@@ -2182,144 +2005,130 @@ before { authenticate! }
 		@user_marketiqs = @find_user.user_marketiqs
 		error! @user_marketiqs.errors.full_messages.join(', '),422 unless @user_marketiqs
 	end
-
 end
 #--------------------------------marketiq end----------------------------------#
-
 #--------------------------------folder start----------------------------------#
-  resources :folder do
-  before { authenticate! }
-
-      desc 'Create Folder'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :name
-      end
-      post :create, jbuilder: 'ios_folder' do
-          if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).count > 0
-            error! 'Folder name already exist! Please try another one!',422
-          else
-            @folder = Folder.new name: params[:name].downcase, default_status: false
-            error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-            @user_folder = UserFolder.new user_id: current_user.id
-          	@user_folder.folder_id = @folder.id
-          	error! @user_folder.errors.full_messages.join(', '),422 unless @user_folder.save
-          end         
-      end
-
-      desc 'List Folder'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :user_id
-      end
-      post :listing, jbuilder: 'ios_folder' do
-      	  @find_user = User.find params[:user_id]
-		  error! 'User not found',422 unless @find_user
-          @user_folders = @find_user.user_folders
-          error! @user_folders.errors.full_messages.join(', '),422 unless @user_folders
-      end
-
-      desc 'Edit folder'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :folder_id
-        optional :name
-      end
-      post :edit, jbuilder: 'ios_folder' do
-        @folder = Folder.find params[:folder_id]
-        error! 'Folder not found',422 unless @folder
-        @folder.attributes = clean_params(params).permit(:name)
-        error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-      end
-
-      desc 'Delete folder'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :folder_id
-      end
-      post :delete do
-        @user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).first
-        error! 'Folder not found',422 unless @user_folder
-        if @user_folder.folder.default_status == false
-          @user_folder.user_favourites.destroy_all
-          @user_folder.destroy
-        status 200
-        else
-          error! 'You cant delete default folder',422
-        end
-      end  
-
-      desc 'Delete folder user'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :user_id
-      end
-      post :delete_favourite_user do
-        @user_fav = UserFavourite.where(user_id: current_user.id).where(favourite_id: params[:user_id]).first
-        error! 'Favourite User not found',422 unless @user_fav
-        @user_fav.destroy
-        status 200
-      end
-
-      desc 'Move folder user'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :old_folder_id
-        requires :new_folder_id
-        requires :user_id
-      end
-      post :move_fav_user do
-        @user_fav = UserFavourite.where(favourite_id: params[:user_id]).where(folder_id: params[:old_folder_id]).first
-        error! 'Favourite User not found',422 unless @user_fav
-        @user_fav.folder_id = params[:new_folder_id]
-        error! @user_fav.errors.full_messages.join(', '),422 unless @user_fav.save
-        status 200
-      end
-
-      desc 'View folder'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :folder_id
-      end
-      post :view, jbuilder: 'ios_folder' do
-        @my_folder = UserFolder.find params[:folder_id]
-        error!({error: 'Folder not found', status: 'Fail'}, 200) unless @my_folder
-      end
-
-  end
-  #--------------------------------folder end----------------------------------#
-
-  #--------------------------------folder start----------------------------------#
-    resources :graph do
-    #before { authenticate! }
-
-      desc 'Search For Graph'
-      params do
-        requires :token, type: String, regexp: UUID_REGEX
-        requires :country_name
-        requires :category_name
-      end
-      post :search, jbuilder: 'ios_notification' do
-          @stock = CompanyStock.joins(:category,:stock_country).where('stock_countries.name = ?', params[:country_name]).where('categories.name = ?', params[:category_name]).first
-          error! 'No record found',422 unless @stock
-          if !params[:country_name].empty? && !params[:category_name].empty?
-                @host = 'https://www.google.com/finance/info'
-                @json_array = {
-                  "q" => @stock.sensex + ":" + @stock.company_code
-                } 
-                uri = URI.parse(@host)
-                uri.query = URI.encode_www_form(@json_array)
-                http = Net::HTTP.new(uri.host, uri.port)      
-                http.use_ssl = true          
-                request = Net::HTTP::Get.new(uri, 'Content-Language' => 'en-us')
-                response = http.request(request)
-                @parsed_response = JSON.parse(response.body.gsub('//',''))
-           else
-            error! 'Something went wrong',422
-          end
-      end
-
-    end
-  #--------------------------------folder end----------------------------------#
-
+resources :folder do
+	before { authenticate! }
+	desc 'Create Folder'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :name
+	end
+	post :create, jbuilder: 'ios_folder' do
+		if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).count > 0
+			error! 'Folder name already exist! Please try another one!',422
+		else
+			@folder = Folder.new name: params[:name].downcase, default_status: false
+			error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+			@user_folder = UserFolder.new user_id: current_user.id
+			@user_folder.folder_id = @folder.id
+			error! @user_folder.errors.full_messages.join(', '),422 unless @user_folder.save
+		end         
+	end
+	desc 'List Folder'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :user_id
+	end
+	post :listing, jbuilder: 'ios_folder' do
+		@find_user = User.find params[:user_id]
+		error! 'User not found',422 unless @find_user
+		@user_folders = @find_user.user_folders
+		error! @user_folders.errors.full_messages.join(', '),422 unless @user_folders
+	end
+	desc 'Edit folder'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :folder_id
+		optional :name
+	end
+	post :edit, jbuilder: 'ios_folder' do
+		@folder = Folder.find params[:folder_id]
+		error! 'Folder not found',422 unless @folder
+		@folder.attributes = clean_params(params).permit(:name)
+		error! @folder.errors.full_messages.join(', '),422 unless @folder.save
+	end
+	desc 'Delete folder'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :folder_id
+	end
+	post :delete do
+		@user_folder = UserFolder.where(user_id: current_user.id).where(folder_id: params[:folder_id]).first
+		error! 'Folder not found',422 unless @user_folder
+		if @user_folder.folder.default_status == false
+			@user_folder.user_favourites.destroy_all
+			@user_folder.destroy
+			status 200
+		else
+			error! 'You cant delete default folder',422
+		end
+	end  
+	desc 'Delete folder user'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :user_id
+	end
+	post :delete_favourite_user do
+		@user_fav = UserFavourite.where(user_id: current_user.id).where(favourite_id: params[:user_id]).first
+		error! 'Favourite User not found',422 unless @user_fav
+		@user_fav.destroy
+		status 200
+	end
+	desc 'Move folder user'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :old_folder_id
+		requires :new_folder_id
+		requires :user_id
+	end
+	post :move_fav_user do
+		@user_fav = UserFavourite.where(favourite_id: params[:user_id]).where(folder_id: params[:old_folder_id]).first
+		error! 'Favourite User not found',422 unless @user_fav
+		@user_fav.folder_id = params[:new_folder_id]
+		error! @user_fav.errors.full_messages.join(', '),422 unless @user_fav.save
+		status 200
+	end
+	desc 'View folder'
+	params do
+		requires :token, type: String, regexp: UUID_REGEX
+		requires :folder_id
+	end
+	post :view, jbuilder: 'ios_folder' do
+		@my_folder = UserFolder.find params[:folder_id]
+		error!({error: 'Folder not found', status: 'Fail'}, 200) unless @my_folder
+	end
+end
+#--------------------------------folder end----------------------------------#
+#--------------------------------folder start----------------------------------#
+resources :graph do
+#before { authenticate! }
+desc 'Search For Graph'
+params do
+	requires :token, type: String, regexp: UUID_REGEX
+	requires :country_name
+	requires :category_name
+end
+post :search, jbuilder: 'ios_notification' do
+	@stock = CompanyStock.joins(:category,:stock_country).where('stock_countries.name = ?', params[:country_name]).where('categories.name = ?', params[:category_name]).first
+	error! 'No record found',422 unless @stock
+	if !params[:country_name].empty? && !params[:category_name].empty?
+		@host = 'https://www.google.com/finance/info'
+		@json_array = {
+			"q" => @stock.sensex + ":" + @stock.company_code
+		} 
+		uri = URI.parse(@host)
+		uri.query = URI.encode_www_form(@json_array)
+		http = Net::HTTP.new(uri.host, uri.port)      
+		http.use_ssl = true          
+		request = Net::HTTP::Get.new(uri, 'Content-Language' => 'en-us')
+		response = http.request(request)
+		@parsed_response = JSON.parse(response.body.gsub('//',''))
+	else
+		error! 'Something went wrong',422
+	end
+end
+end
+#--------------------------------folder end----------------------------------#
 end

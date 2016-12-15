@@ -52,10 +52,10 @@ respond_to :json, :html
   end
 
   def flop
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     @user.file_status = !@user.file_status # flop the file status
     @user.save
-    redirect_to admin_user_path(@user.user_id)
+    redirect_to admin_user_path(@user.id)
   end
 
   def flop_marketiq
