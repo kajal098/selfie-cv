@@ -163,6 +163,8 @@ if @user_stuff
 		json.jobseeker_whizquizzes @user_stuff.user_whizquizzes do |whizquiz|
 			json.extract! whizquiz, :id, :user_id, :whizquiz_id, :review_type
 
+			json.question whizquiz.whizquiz.question
+
 			if whizquiz.review_type == ""
 				json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
 				json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
