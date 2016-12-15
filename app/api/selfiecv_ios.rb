@@ -1752,7 +1752,7 @@ before { authenticate! }
 		requires :group_id
 		requires :email_ids, type: Array, default: []
 	end
-	post :email_invite do
+	get :email_invite do
 		@group = Group.find params[:group_id]
 		error!({error: 'Group not found', status: 'Fail'}, 200) unless @group
 		params[:email_ids].each do |email|
