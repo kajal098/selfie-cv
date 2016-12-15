@@ -6,6 +6,8 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
 
@@ -216,6 +218,8 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+
 		json.logo @user_stuff.logo_thumb_url
 		json.logo_thumb @user_stuff.logo_thumb_url
 		json.logo @user_stuff.company_logo.url		
@@ -319,6 +323,8 @@ if @user_stuff
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
+
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
 
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
@@ -466,6 +472,8 @@ if @user_stuff
 		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
+
+		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
 
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url

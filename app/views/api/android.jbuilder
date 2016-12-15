@@ -19,6 +19,8 @@ if @user
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
+		json.date_format @user.company_stock ? @user.company_stock.date_format : "dd/mm/yyyy"
+
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
 
@@ -73,6 +75,8 @@ if @user
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
+		json.date_format @user.company_stock ? @user.company_stock.date_format : "dd/mm/yyyy"
+
 		json.logo_thumb @user.logo_thumb_url
 		json.logo @user.company_logo.url		
 		json.profile_thumb @user.company_profile_thumb_url
@@ -117,6 +121,8 @@ if @user
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
+		json.date_format @user.company_stock ? @user.company_stock.date_format : "dd/mm/yyyy"
+
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
 
@@ -151,6 +157,8 @@ if @user
 		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
+
+		json.date_format @user.company_stock ? @user.company_stock.date_format : "dd/mm/yyyy"
 		
 		json.profile_thumb @user.profile_thumb_url
 		json.profile @user.profile_pic.url
@@ -454,6 +462,8 @@ if @basic_info
 	json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :country_id
 
 	json.country_name @basic_info.stock_country ? @basic_info.stock_country.name : ""
+
+	json.date_format @basic_info.company_stock ? @basic_info.company_stock.date_format : "dd/mm/yyyy"
 	
 	if @basic_info.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"

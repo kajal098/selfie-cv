@@ -104,6 +104,27 @@ def self.company_search(params)
     return where( wheres )
 end
 
+# search configuration
+  include Elasticsearch::Model
+  # include Elasticsearch::Model::Callbacks
+
+  settings do
+    mappings do 
+      indexes :city, index: :not_analyzed
+    end
+  end
+
+  def as_indexed_json(options={})
+    as_json(
+      only: [:id, :first_name, :email],
+      include: [:user_awards]  
+    )
+  end
+
+def self.job_simple_search
+    
+end
+
 def top_joseekers
     User.joins(:user_meter).where(:users=> { role: 3 }).order("user_meters.total_per DESC").limit(3)
 end

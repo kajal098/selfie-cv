@@ -5,6 +5,8 @@ if @searched_company
 
 		json.country_name user.company_stock ? user.stock_country.name : ""
 
+		json.date_format user.company_stock ? user.company_stock.date_format : "dd/mm/yyyy"
+
 		json.logo_thumb user.logo_thumb_url
 		json.logo user.company_logo.url
 	end

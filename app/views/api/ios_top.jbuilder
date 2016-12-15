@@ -4,6 +4,8 @@ if @top_users
 			json.extract! user, :id, :username, :first_name, :last_name, :city, :country_id
 
 			json.country_name user.stock_country ? user.stock_country.name : ""
+
+			json.date_format user.company_stock ? user.company_stock.date_format : "dd/mm/yyyy"
 			
 			json.skills !user.user_educations.empty? ? user.user_educations.map(&:skill).join(",") : ""
 			json.total_per user.user_meter.total_per
@@ -13,6 +15,8 @@ if @top_users
 			json.extract! user, :id, :username, :company_name, :company_establish_from, :company_city, :country_id
 
 			json.country_name user.stock_country ? user.stock_country.name : ""
+
+			json.date_format user.company_stock ? user.company_stock.date_format : "dd/mm/yyyy"
 			
 			json.total_per user.user_meter.total_per
 			json.logo_thumb user.logo_thumb_url
