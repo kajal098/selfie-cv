@@ -158,6 +158,27 @@ if @user_stuff
 			json.ref_updated_at ref.updated_at.to_i
 		end
 
+		json.jobseeker_whizquizzes @user_stuff.user_whizquizzes do |whizquiz|
+			json.extract! whizquiz, :id, :user_id, :whizquiz_id, :review_type
+
+			if whizquiz.review_type == ""
+				json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+				json.file "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+			elsif whizquiz.review_type == "audio"
+				json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
+				json.file whizquiz.review.url
+			elsif whizquiz.review_type == "text"
+				json.file_thumb whizquiz.thumb_url
+				json.text_field whizquiz.text_field
+			else
+				json.file_thumb whizquiz.thumb_url
+				json.file whizquiz.review.url
+			end
+
+			json.created_at whizquiz.created_at.to_i
+			json.updated_at whizquiz.updated_at.to_i
+		end
+
 		json.likes @user_stuff.likes.count
 		json.views @user_stuff.views.count
 		json.shares @user_stuff.shares.count
