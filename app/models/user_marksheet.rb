@@ -27,6 +27,9 @@ class UserMarksheet < ActiveRecord::Base
         	   		if marksheet.file_type == "image"
 	                    student_marksheet_per = setting_per * 1
 	                    break
+                    elsif marksheet.file_type == "doc"
+                        student_marksheet_per = setting_per * 1
+                        break
 	                else
 	                    student_marksheet_per = setting_per * 0.5
 	                end
