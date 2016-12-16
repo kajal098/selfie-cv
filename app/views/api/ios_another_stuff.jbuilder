@@ -6,7 +6,7 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
-		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+		json.date_format @user_stuff.stock_country ? @user_stuff.stock_country.date_format : "dd/mm/yyyy"
 
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
@@ -218,7 +218,7 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
-		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+		json.date_format @user_stuff.stock_country ? @user_stuff.stock_country.date_format : "dd/mm/yyyy"
 
 		json.logo @user_stuff.logo_thumb_url
 		json.logo_thumb @user_stuff.logo_thumb_url
@@ -324,7 +324,7 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
-		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+		json.date_format @user_stuff.stock_country ? @user_stuff.stock_country.date_format : "dd/mm/yyyy"
 
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url
@@ -473,7 +473,7 @@ if @user_stuff
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
-		json.date_format @user_stuff.company_stock ? @user_stuff.company_stock.date_format : "dd/mm/yyyy"
+		json.date_format @user_stuff.stock_country ? @user_stuff.stock_country.date_format : "dd/mm/yyyy"
 
 		json.profile_thumb @user_stuff.profile_thumb_url
 		json.profile @user_stuff.profile_pic.url

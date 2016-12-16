@@ -12,6 +12,7 @@ class StockCountryReport
   column(:name, header: "Country Name") do |model|
     model.name.capitalize
   end
+  column(:date_format, header: "Date Format", :order => "stock_countries.date_format")
   column(:updated_at, html: true, header: "Updated At") { |stock_country| content_tag :span, time_ago_in_words(stock_country.updated_at), title: stock_country.updated_at.to_formatted_s(:long) if stock_country.updated_at }
   
   #column(:last_sign_in_at, html: true, header: "Laatste aanmelding") { |stock_country| content_tag :span, time_ago_in_words(stock_country.last_sign_in_at), title: stock_country.last_sign_in_at.to_formatted_s(:long) if stock_country.last_sign_in_at }
