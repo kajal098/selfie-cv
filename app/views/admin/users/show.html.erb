@@ -124,6 +124,10 @@
                             <td><%= @user.file.url %></td>
                         </tr>  
                         <tr>
+                            <td>Profile Picture Type</td>
+                            <td><%= @user.profile_pic_type %></td>
+                        </tr>
+                        <tr>
                             <td>Profile Picture Name</td>
                             <% if @user.profile_pic_type == "" %>
                             <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
@@ -135,6 +139,10 @@
                             <td>Profile</td>
                             <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
                         </tr>  
+                        <tr>
+                            <td>Back Profile Picture Type</td>
+                            <td><%= @user.back_profile_type %></td>
+                        </tr>
                         <tr>
                             <td>Back Profile Picture Name</td>
                             <% if @user.back_profile_type == "" %>
@@ -673,6 +681,10 @@
                             <td><%= @user.company ? @user.company.name : "" %></td>
                         </tr>
                         <tr>
+                            <td>Profile Picture Type</td>
+                            <td><%= @user.profile_pic_type %></td>
+                        </tr>
+                        <tr>
                             <td>Profile Picture Name</td>
                             <% if @user.profile_pic_type == "" %>
                             <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
@@ -683,6 +695,10 @@
                         <tr>
                             <td>Profile</td>
                             <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
+                        </tr>
+                        <tr>
+                            <td>Back Profile Picture Type</td>
+                            <td><%= @user.back_profile_type %></td>
                         </tr>
                         <tr>
                             <td>Back Profile Picture Name</td>
@@ -988,6 +1004,10 @@
                             <% end %>
                         </tr>
                         <tr>
+                            <td>Profile Picture Type</td>
+                            <td><%= @user.profile_pic_type %></td>
+                        </tr>
+                        <tr>
                             <td>Profile Picture Name</td>
                             <% if @user.profile_pic_type == "" %>
                             <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
@@ -998,6 +1018,10 @@
                         <tr>
                             <td>Profile</td>
                             <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
+                        </tr>
+                        <tr>
+                            <td>Back Profile Picture Type</td>
+                            <td><%= @user.back_profile_type %></td>
                         </tr>
                         <tr>
                             <td>Back Profile Picture Name</td>
@@ -1401,6 +1425,10 @@
                             <td><%= @user.file.url %></td>
                         </tr>
                         <tr>
+                            <td>Profile Picture Type</td>
+                            <td><%= @user.profile_pic_type %></td>
+                        </tr>
+                        <tr>
                             <td>Profile Picture Name</td>
                             <% if @user.profile_pic_type == "" %>
                             <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
@@ -1411,6 +1439,10 @@
                         <tr>
                             <td>Profile</td>
                             <td><%= image_tag @user.profile_pic, :size => "50x50" %></td>
+                        </tr>
+                        <tr>
+                            <td>Back Profile Picture Type</td>
+                            <td><%= @user.back_profile_type %></td>
                         </tr>
                         <tr>
                             <td>Back Profile Picture Name</td>
