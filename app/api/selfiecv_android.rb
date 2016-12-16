@@ -1075,11 +1075,14 @@ resources :data do
     requires :user_id
     optional :profile_pic
     optional :back_profile
+    optional :profile_pic_type
+    optional :back_profile_type
   end
   post :update_image, jbuilder: 'android' do
     authenticate!
     @update_image = User.find params[:user_id]
     error!({error: 'User not found', status: 'Fail'}, 200) unless @update_image
+    @update_image.attributes = clean_params(params).permit(:profile_pic_type, :back_profile_type)
     @update_image.profile_pic = params[:profile_pic] if params[:profile_pic]
     @update_image.back_profile = params[:back_profile] if params[:back_profile]
     error!({error: @update_image.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @update_image.save
