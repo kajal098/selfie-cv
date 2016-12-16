@@ -15,6 +15,7 @@ class UserMarksheet < ActiveRecord::Base
     def photo_url; file.url; end
 
     after_save :percent_of_marksheet
+    before_destroy :reduce_percentage
 
     def percent_of_marksheet()
     	user = self.user
@@ -36,6 +37,28 @@ class UserMarksheet < ActiveRecord::Base
         		       	
         	end
         end 
+        user.user_meter.update_column('student_marksheet_per' ,student_marksheet_per)
+        user.profile_meter_total
+        return true
+    end
+
+    def reduce_percentage
+        user = self.user
+        student_marksheet_per = 0
+        if user.user_marksheets.where.not(id: self.id).count > 0 
+            setting_per = UserPercentage.find_by_key('marksheet').value.to_i
+            user.user_marksheets.where.not(id: self.id).each do |marksheet|   
+                    if marksheet.file_type == "image"
+                        student_marksheet_per = setting_per.value.to_i * 1
+                        break
+                    elsif marksheet.file_type == "doc"
+                        student_marksheet_per = setting_per.value.to_i * 0.7
+                        break
+                    else
+                        student_marksheet_per = setting_per.value.to_i * 0.5
+                    end
+            end
+        end
         user.user_meter.update_column('student_marksheet_per' ,student_marksheet_per)
         user.profile_meter_total
         return true
