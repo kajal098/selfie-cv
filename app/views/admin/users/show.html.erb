@@ -1360,14 +1360,13 @@
                             <td><%= affiliation.file.url.split("/").last %></td>
                             <td>
                                 <% if affiliation.file_type == "" %>                    
-                                    <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %></td>
+                                    <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
                                 <% elsif affiliation.file_type == 'image' %>
                                     <%= image_tag affiliation.thumb_url, :size => "50x50" %>
                                 <% end %>
                             </td>
                             <% end %>
-                        </td>
-                    </tr>
+                        </tr>
                     <% end %>
                 </table>
                 <% else %>
@@ -1587,7 +1586,6 @@
                 <p><strong class="text_color" >No Records Found.</strong></p>
                 <% end %>
             </div>
-            <% end %>
         </div>
         <div class="form-group clearfix">
             <div >
