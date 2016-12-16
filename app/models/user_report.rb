@@ -7,6 +7,7 @@ class UserReport
   #filter(:role, :string, header: "Role") {|value| where("CAST(role AS text) ilike ?", "%#{value}%")}
   filter(:username, :string, header: "Username") {|value| where("username ilike ?", "%#{value}%")}
   filter(:role, :enum, header: "Role", select: ->{ User.roles})
+  filter(:email, :string, header: "Email") {|value| where("username ilike ?", "%#{value}")}
   
   column(:id, header: "Id",  :order => "users.id")
   column(:role, header: "Role",  :order => "users.role")
