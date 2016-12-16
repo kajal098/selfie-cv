@@ -10,6 +10,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :middle_name,              null: false, default: ""
       t.string :last_name,              null: false, default: ""
       t.string :profile_pic,              default: ''
+      t.string :profile_pic_type,              null: false, default: ""
       t.string :gender,              null: false, default: ""
       t.string :date_of_birth,              :default => Date.today 
       t.string :nationality,              null: false, default: ""
@@ -58,6 +59,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :user_total_per,        null:false, default: 0
       t.integer :update_cv_count,        null:false, default: 0
       t.string :back_profile,              default: ''
+      t.string :back_profile_type,              null: false, default: ""
       t.boolean :active,            default: true
       t.string :encrypted_password, null: false, default: ""
 

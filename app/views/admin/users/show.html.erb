@@ -93,7 +93,11 @@
                         </tr>
                         <tr>
                             <td>File Name</td>
+                            <% if @user.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.file.url.split("/").last %></td>
+                            <% end %>
                         </tr>
                         <tr>
                             <td>File</td>
@@ -121,7 +125,11 @@
                         </tr>  
                         <tr>
                             <td>Profile Picture Name</td>
+                            <% if @user.profile_pic_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.profile_pic.url.split("/").last %></td>
+                            <% end %>
                         </tr>
                         <tr>
                             <td>Profile</td>
@@ -129,7 +137,11 @@
                         </tr>  
                         <tr>
                             <td>Back Profile Picture Name</td>
+                            <% if @user.back_profile_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.back_profile.url.split("/").last %></td>
+                            <% end %>
                         </tr>          
                         <tr>
                             <td>Back Profile</td>
@@ -218,7 +230,11 @@
                             <td><%= exp.start_from %></td>
                             <td><%= exp.working_till %></td>
                             <td><%= exp.designation %></td>
+                            <% if exp.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= exp.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if exp.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -286,7 +302,11 @@
                             <td><%= award.name %></td>
                             <td><%= award.award_type %></td>
                             <td><%= award.description %></td>
+                            <% if award.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= award.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if award.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -322,7 +342,11 @@
                             <td><%= certi.name %></td>
                             <td><%= certi.certificate_type %></td>
                             <td><%= certi.year %></td>
+                            <% if certi.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= certi.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if certi.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -361,7 +385,11 @@
                             <td><%= whizquiz.whizquiz_id %></td>
                             <td><%= whizquiz.review_type %></td>
                             <td><%= whizquiz.text_field %></td>
+                            <% if whizquiz.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= whizquiz.review.url.split("/").last %></td>
+                            <% end %>
                             <td><%= whizquiz.review.url %></td>
                             <td><%= whizquiz.status %></td>
                             <td><%= link_to "", admin_user_flop_whizquiz_path(whizquiz), class: "margin_class btn btn-default btn-xs glyphicon glyphicon-off", title: "Flop whizquiz" %></td>
@@ -391,7 +419,11 @@
                             <td><%= curri.team_type %></td>
                             <td><%= curri.location %></td>
                             <td><%= curri.date %></td>
+                            <% if curri.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= curri.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if curri.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -429,7 +461,11 @@
                             <td><%= future.goal_type %></td>
                             <td><%= future.title %></td>
                             <td><%= future.term_type %></td>
+                            <% if future.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= future.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if future.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -464,7 +500,11 @@
                             <td><%= work_env.id %></td>
                             <td><%= work_env.env_type %></td>
                             <td><%= work_env.title %></td>
+                            <% if work_env.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= work_env.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if work_env.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -510,7 +550,11 @@
                             <td><%= ref.contact %></td>
                             <td><%= ref.date %></td>
                             <td><%= ref.location %></td>
+                            <% if ref.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= ref.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if ref.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -630,7 +674,11 @@
                         </tr>
                         <tr>
                             <td>Profile Picture Name</td>
+                            <% if @user.profile_pic_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.profile_pic.url.split("/").last %></td>
+                            <% end %>
                         </tr>
                         <tr>
                             <td>Profile</td>
@@ -638,7 +686,11 @@
                         </tr>
                         <tr>
                             <td>Back Profile Picture Name</td>
+                            <% if @user.back_profile_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.back_profile.url.split("/").last %></td>
+                            <% end %>
                         </tr> 
                         <tr>
                             <td>Back Profile</td>
@@ -767,7 +819,11 @@
                             <td><%= award.name %></td>
                             <td><%= award.award_type %></td>
                             <td><%= award.description %></td>
+                            <% if award.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= award.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if award.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -804,7 +860,11 @@
                             <td><%= certi.name %></td>
                             <td><%= certi.certificate_type %></td>
                             <td><%= certi.year %></td>
+                            <% if certi.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= certi.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if certi.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -853,7 +913,11 @@
                             <td><%= work_env.id %></td>
                             <td><%= work_env.env_type %></td>
                             <td><%= work_env.title %></td>
+                            <% if work_env.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= work_env.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if work_env.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -925,7 +989,11 @@
                         </tr>
                         <tr>
                             <td>Profile Picture Name</td>
+                            <% if @user.profile_pic_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.profile_pic.url.split("/").last %></td>
+                            <% end %>
                         </tr>
                         <tr>
                             <td>Profile</td>
@@ -933,7 +1001,11 @@
                         </tr>
                         <tr>
                             <td>Back Profile Picture Name</td>
+                            <% if @user.back_profile_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.back_profile.url.split("/").last %></td>
+                            <% end %>
                         </tr> 
                         <tr>
                             <td>Back Profile</td>
@@ -1004,7 +1076,11 @@
                             <td><%= marksheet.standard %></td>
                             <td><%= marksheet.grade %></td>
                             <td><%= marksheet.year %></td>
+                            <% if marksheet.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= marksheet.file.url.split("/").last %></td>
+                            <% end %>
                             <td><%= marksheet.file_type %></td>
                             <td>
                                 <% if marksheet.file_type == "" %>                   
@@ -1039,7 +1115,11 @@
                             <td><%= project.id %></td>
                             <td><%= project.title %></td>
                             <td><%= project.description %></td>
+                            <% if project.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= project.file.url.split("/").last %></td>
+                            <% end %>
                             <td><%= project.file_type %></td>
                             <td>
                                 <% if project.file_type == "" %>                   
@@ -1078,7 +1158,11 @@
                             <td><%= award.name %></td>
                             <td><%= award.award_type %></td>
                             <td><%= award.description %></td>
+                            <% if award.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= award.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if award.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1115,7 +1199,11 @@
                             <td><%= certi.name %></td>
                             <td><%= certi.certificate_type %></td>
                             <td><%= certi.year %></td>
+                            <% if certi.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= certi.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if certi.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1155,7 +1243,11 @@
                             <td><%= curri.team_type %></td>
                             <td><%= curri.location %></td>
                             <td><%= curri.date %></td>
+                            <% if curri.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= curri.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if curri.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1192,7 +1284,11 @@
                             <td><%= future.goal_type %></td>
                             <td><%= future.title %></td>
                             <td><%= future.term_type %></td>
+                            <% if future.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= future.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if future.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1282,7 +1378,11 @@
                         </tr>
                         <tr>
                             <td>File Name</td>
+                            <% if @user.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.file.url.split("/").last %></td>
+                            <% end %>
                         </tr>
                         <tr>
                             <td>File</td>
@@ -1302,7 +1402,11 @@
                         </tr>
                         <tr>
                             <td>Profile Picture Name</td>
+                            <% if @user.profile_pic_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.profile_pic.url.split("/").last %></td>
+                            <% end %>
                         </tr>
                         <tr>
                             <td>Profile</td>
@@ -1310,7 +1414,11 @@
                         </tr>
                         <tr>
                             <td>Back Profile Picture Name</td>
+                            <% if @user.back_profile_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= @user.back_profile.url.split("/").last %></td>
+                            <% end %>
                         </tr> 
                         <tr>
                             <td>Back Profile</td>
@@ -1357,7 +1465,11 @@
                             <td><%= affiliation.designation %></td>
                             <td><%= affiliation.join_from %></td>
                             <td><%= affiliation.join_till %></td>
+                            <% if affiliation.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= affiliation.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if affiliation.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1389,7 +1501,11 @@
                             <td><%= workshop.id %></td>
                             <td><%= workshop.title %></td>
                             <td><%= workshop.description %></td>
+                            <% if workshop.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= workshop.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if workshop.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1428,7 +1544,11 @@
                             <td><%= publication.id %></td>
                             <td><%= publication.title %></td>
                             <td><%= publication.description %></td>
+                            <% if publication.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= publication.file.url.split("/").last %></td>
+                            <% end %>
                             <td><%= publication.file_type %></td>
                             <td>
                                 <% if publication.file_type == "" %>                   
@@ -1461,7 +1581,11 @@
                             <td><%= research.id %></td>
                             <td><%= research.title %></td>
                             <td><%= research.description %></td>
+                            <% if research.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= research.file.url.split("/").last %></td>                    
+                            <% end %>
                             <td>
                                 <% if research.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1502,7 +1626,11 @@
                             <td><%= award.name %></td>
                             <td><%= award.award_type %></td>
                             <td><%= award.description %></td>
+                            <% if award.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= award.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if award.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
@@ -1539,7 +1667,11 @@
                             <td><%= certi.name %></td>
                             <td><%= certi.certificate_type %></td>
                             <td><%= certi.year %></td>
+                            <% if certi.file_type == "" %>
+                            <td>default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png</td>
+                            <% else %>
                             <td><%= certi.file.url.split("/").last %></td>
+                            <% end %>
                             <td>
                                 <% if certi.file_type == "" %>                   
                                 <%= image_tag "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png", :size => "50x50" %>
