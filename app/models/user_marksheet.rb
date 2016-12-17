@@ -49,13 +49,13 @@ class UserMarksheet < ActiveRecord::Base
             setting_per = UserPercentage.find_by_key('marksheet').value.to_i
             user.user_marksheets.where.not(id: self.id).each do |marksheet|   
                     if marksheet.file_type == "image"
-                        student_marksheet_per = setting_per.value.to_i * 1
+                        student_marksheet_per = setting_per * 1
                         break
                     elsif marksheet.file_type == "doc"
-                        student_marksheet_per = setting_per.value.to_i * 0.7
+                        student_marksheet_per = setting_per * 0.7
                         break
                     else
-                        student_marksheet_per = setting_per.value.to_i * 0.5
+                        student_marksheet_per = setting_per * 0.5
                     end
             end
         end
