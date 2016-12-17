@@ -1037,7 +1037,7 @@ resources :data do
 		@specializations = Specialization.all
 		@companies = Company.all
 		@industries = Industry.all
-		@stock_countries = StockCountry.all
+		@stock_countries = StockCountry.pluck(:name)
 	end
 	desc 'Update Image'
 	params do
