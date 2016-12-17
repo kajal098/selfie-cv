@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "sensex",           default: "",                           null: false
     t.string   "currency",         default: "",                           null: false
     t.string   "date_format",      default: "dd/mm/yyyy",                 null: false
-    t.string   "start_time",       default: "2016-12-17 05:23:06.422665"
+    t.string   "time_zone",        default: "2016-12-17 05:34:16.111776"
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
   end
@@ -338,8 +338,8 @@ ActiveRecord::Schema.define(version: 20161213072810) do
   create_table "stock_countries", force: :cascade do |t|
     t.string   "name",        default: "",                    null: false
     t.string   "date_format", default: "dd/mm/yyyy",          null: false
-    t.datetime "start_time",  default: '2016-12-17 05:23:06'
-    t.datetime "end_time",    default: '2016-12-17 05:23:06'
+    t.datetime "start_time",  default: '2016-12-17 05:34:15'
+    t.datetime "end_time",    default: '2016-12-17 05:34:15'
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end

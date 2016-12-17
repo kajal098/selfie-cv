@@ -20,6 +20,7 @@ class CompanyStockReport
   column(:sensex, header: "Sensex", :order => "company_stocks.sensex")
   column(:currency, header: "Currency", :order => "company_stocks.currency")
   column(:date_format, header: "Date Format", :order => "company_stocks.date_format")
+  column(:start_time, header: "Time Zone", :order => "company_stocks.start_time")
   column(:updated_at, html: true, header: "Updated At") { |company_stock| content_tag :span, time_ago_in_words(company_stock.updated_at), title: company_stock.updated_at.to_formatted_s(:long) if company_stock.updated_at }
   
   column(:actions, header: "Action", html: true  ) do |company_stock|
