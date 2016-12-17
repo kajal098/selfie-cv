@@ -4,6 +4,6 @@ class QuickMessage < ActiveRecord::Base
 	enum role: { student: false, faculty: true }
 	ROLES = {"student" => 0, "faculty" => 1}
 
-	paginates_per 10
+	paginates_per 7
 	
 end

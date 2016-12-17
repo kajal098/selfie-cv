@@ -11,5 +11,6 @@ class CompanyStock < ActiveRecord::Base
 	validates :company_code,  presence: { message: "Company code must be filled" }
 	validates :currency,  presence: { message: "Currency must be filled" }
 	validates :date_format,  presence: { message: "Date Format must be filled" }
+	validates :time_zone, presence: { message: "Timezone must be filled" }
 
 end

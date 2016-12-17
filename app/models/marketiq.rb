@@ -27,7 +27,7 @@ def check_faculty?
 	role == "Faculty"
 end
 
-	paginates_per 10
+	paginates_per 7
 
 	belongs_to :industry, class_name: "Industry", foreign_key: "industry_id"
 

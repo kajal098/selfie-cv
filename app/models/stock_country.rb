@@ -7,5 +7,8 @@ class StockCountry < ActiveRecord::Base
 
 	def downcase_fields
       self.name.downcase!
-   end
+   	end
+
+   	paginates_per 10
+   	
 end

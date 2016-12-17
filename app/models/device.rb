@@ -8,7 +8,7 @@ class Device < ActiveRecord::Base
 
   before_validation :renew_token, if: -> { token.blank? }
 
-  paginates_per 10
+  paginates_per 5
 
   def renew_token
     self.token = SecureRandom.uuid

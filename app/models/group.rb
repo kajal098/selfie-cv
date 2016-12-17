@@ -24,7 +24,7 @@ class Group < ActiveRecord::Base
     validates :slug, presence: true
     validates_uniqueness_of :slug, message: "Group Name is already exists"
 
-    paginates_per 10
+    paginates_per 5
     
     belongs_to :user
     has_many :chats

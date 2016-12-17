@@ -3,7 +3,7 @@ class GroupUser < ActiveRecord::Base
 	belongs_to :group
 	belongs_to :user, foreign_key: "user_id"
 
-	paginates_per 10
+	paginates_per 5
 	
 	scope :current, -> (user) {where(user_id: user.id).first}
 

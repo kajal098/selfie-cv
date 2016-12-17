@@ -103,7 +103,7 @@ resources :member do
 	end
 	post :reset_code do
 		if
-			@user = User.where(email: params[:email]).where(role: params[:role]).first
+			@user = User.where(email: params[:email]).where(role: User::ROLES[params[:role]]).first
 			error! 'User not found',422 unless @user
 			@user.update_column :reset_code, (SecureRandom.random_number*1000000).to_i
 			UserMailer.send_reset_code(@user).deliver_now
@@ -120,7 +120,7 @@ resources :member do
 	end
 	post :resend_reset_code do
 		if
-			@user = User.where(email: params[:email]).where(role: params[:role]).first
+			@user = User.where(email: params[:email]).where(role: User::ROLES[params[:role]]).first
 			error! 'User not found',422 unless @user
 			@code = @user.reset_code
 			UserMailer.send_reset_code(@user).deliver_now

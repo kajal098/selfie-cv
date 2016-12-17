@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
 extend Enumerize
 enum role: { Admin: 0, Student: 1, Faculty: 2, Jobseeker:3, Company:4 }
+ROLES = { "Student" => 1, "Faculty" => 2, "Jobseeker" => 3, "Company" => 4 }
 
 scope :for_roles, ->(values) do
     return all if values.blank?

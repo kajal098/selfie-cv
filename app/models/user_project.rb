@@ -1,7 +1,7 @@
 class UserProject < ActiveRecord::Base
     belongs_to :user
 
-	paginates_per 10	
+	paginates_per 5	
 
 	validates :title, :description, presence: true
 

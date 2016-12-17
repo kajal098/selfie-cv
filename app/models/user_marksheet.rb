@@ -1,7 +1,7 @@
 class UserMarksheet < ActiveRecord::Base
     belongs_to :user
 
-	paginates_per 10	
+	paginates_per 5	
 
 	validates :school_name, :standard, :grade, :year, presence: true
 	validates :year, :numericality => true, :allow_nil => true
