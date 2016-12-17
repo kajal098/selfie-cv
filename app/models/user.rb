@@ -122,6 +122,14 @@ end
     )
   end
 
+  # def as_indexed_json(options={})
+  # {
+  #   "id" => id,
+  #   "first_name" => first_name,
+  #   "award_name" => self.user_awards.name
+  # }
+  # end 
+
 def self.job_simple_search
     
 end
