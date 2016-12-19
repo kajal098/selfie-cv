@@ -1837,29 +1837,29 @@ post :share, jbuilder: 'ios_notification' do
 end
 desc 'Favourite Profile'
 params do
-	requires :token, type: String, regexp: UUID_REGEX
-	requires :favourite_id
-	requires :folder_name
-	requires :is_favourited
+  requires :token, type: String, regexp: UUID_REGEX
+  requires :favourite_id
+  requires :folder_name
+  requires :is_favourited
 end
 post :favourite, jbuilder: 'ios_notification' do
-	@a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase)
-    if @a.count > 0
-        @folder = Folder.find @a.folder_id
-		error! 'Folder not found',422 unless @folder
-	else
-		@folder = Folder.new name: params[:folder_name].downcase, default_status: false
-		error! @folder.errors.full_messages.join(', '),422 unless @folder.save
-		@user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
-		error! @user.errors.full_messages.join(', '),422 unless @user_folder.save
-	end            
-	if params[:is_favourited] == 'false'
-		@user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
-		@user_favourite.is_favourited = 'true'
-		error! @user_favourite.errors.full_messages.join(', '),422 unless @user_favourite.save     
-	else        
-		error! 'You already favourite this profile!',422
-	end
+  @a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).first
+  if @a
+    @folder = Folder.find @a.folder_id
+    error! 'Folder not found', 422 unless @folder
+  else
+    @folder = Folder.new name: params[:folder_name].downcase, default_status: false
+    error! @folder.errors.full_messages.join(', '), 422 unless @folder.save
+    @user_folder = UserFolder.new user_id: current_user.id, folder_id: @folder.id
+    error! @user.errors.full_messages.join(', '), 422 unless @user_folder.save
+  end
+  if params[:is_favourited] == 'false'
+    @user_favourite = UserFavourite.new user_id: current_user.id, favourite_id: params[:favourite_id], folder_id: @folder.id
+    @user_favourite.is_favourited = 'true'
+    error! @user_favourite.errors.full_messages.join(', '), 422 unless @user_favourite.save     
+  else        
+    error! 'You already favourite this profile!', 422
+  end
 end
 desc 'Rate Profile'
 params do
