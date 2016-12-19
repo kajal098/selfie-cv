@@ -321,6 +321,9 @@ if @user_certificates
 end
 
 if @curricular
+
+json.date_format @curricular.user.stock_country ? @curricular.user.stock_country.date_format : "dd/mm/yyyy"
+
 	json.extract! @curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 	if @curricular.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
@@ -334,6 +337,9 @@ if @curricular
 end
 if @user_curriculars
 	json.user_curriculars @user_curriculars.order('created_at DESC') do |curricular|
+
+	json.date_format curricular.user.stock_country ? curricular.user.stock_country.date_format : "dd/mm/yyyy"
+
 		json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 		if curricular.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
@@ -402,6 +408,9 @@ if @user_working_environments
 end
 
 if @reference
+
+json.date_format @reference.user.stock_country ? @reference.user.stock_country.date_format : "dd/mm/yyyy"
+
 	json.extract! @reference, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
 	if @reference.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
@@ -415,6 +424,9 @@ if @reference
 end
 if @user_references
 	json.user_references @user_references.order('created_at DESC') do |ref|
+
+	json.date_format ref.user.stock_country ? ref.user.stock_country.date_format : "dd/mm/yyyy"
+
 		json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :text_field, :file_type
 		if ref.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
@@ -559,6 +571,9 @@ if @student_projects
 end
 
 if @faculty_affiliation
+
+json.date_format @faculty_affiliation.user.stock_country ? @faculty_affiliation.user.stock_country.date_format : "dd/mm/yyyy"
+
 	json.extract! @faculty_affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
 	if @faculty_affiliation.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
@@ -573,6 +588,9 @@ end
 
 if @faculty_affiliations
 	json.faculty_affiliations @faculty_affiliations.order('created_at DESC') do |affiliation|
+
+	json.date_format affiliation.user.stock_country ? affiliation.user.stock_country.date_format : "dd/mm/yyyy"
+
 		json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
 		if affiliation.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"

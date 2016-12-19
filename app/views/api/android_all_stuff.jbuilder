@@ -40,6 +40,9 @@ if @user_stuff
 		end
 
 		json.jobseeker_experiences @user_stuff.user_experiences do |experience|
+
+		json.date_format experience.user.stock_country ? experience.user.stock_country.date_format : "dd/mm/yyyy"
+
 			json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
 
 			if experience.file_type == ""
@@ -91,6 +94,9 @@ if @user_stuff
 		end
 
 		json.jobseeker_curriculars @user_stuff.user_curriculars do |curricular|
+
+		json.date_format curricular.user.stock_country ? curricular.user.stock_country.date_format : "dd/mm/yyyy"
+
 			json.extract! curricular, :id, :user_id, :curricular_type, :title, :team_type, :location, :date, :file_type
 
 			if curricular.file_type == ""
@@ -144,6 +150,9 @@ if @user_stuff
 		end
 
 		json.jobseeker_references @user_stuff.user_references do |ref|
+
+		json.date_format ref.user.stock_country ? ref.user.stock_country.date_format : "dd/mm/yyyy"
+
 			json.extract! ref, :id, :user_id, :title, :ref_type, :from, :email, :contact, :date, :location, :file_type
 
 			if ref.file_type == ""
@@ -574,6 +583,9 @@ if @user_stuff
 		end
 
 		json.faculty_affiliations @user_stuff.faculty_affiliations do |affiliation|
+
+		json.date_format affiliation.user.stock_country ? affiliation.user.stock_country.date_format : "dd/mm/yyyy"
+		
 			json.extract! affiliation, :id, :user_id, :university,:collage_name,:subject,:designation,:join_from, :join_till, :file_type
 
 			if affiliation.file_type == ""
