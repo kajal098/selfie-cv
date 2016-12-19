@@ -1843,8 +1843,9 @@ params do
 	requires :is_favourited
 end
 post :favourite, jbuilder: 'ios_notification' do
-	if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).count > 0
-		@folder = Folder.find_by name: params[:folder_name].downcase
+	@a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).first
+    if @a.count > 0
+        @folder = Folder.find @a.folder_id
 		error! 'Folder not found',422 unless @folder
 	else
 		@folder = Folder.new name: params[:folder_name].downcase, default_status: false
@@ -2021,8 +2022,9 @@ resources :folder do
 		requires :name
 	end
 	post :create, jbuilder: 'ios_folder' do
-		if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).count > 0
-			error! 'Folder name already exist! Please try another one!',422
+		@a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).first
+	    if @a.count > 0
+	    	error! 'Folder name already exist! Please try another one!',422
 		else
 			@folder = Folder.new name: params[:name].downcase, default_status: false
 			error! @folder.errors.full_messages.join(', '),422 unless @folder.save

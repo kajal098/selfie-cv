@@ -475,7 +475,7 @@ resources :member do
   params do
     requires :token, type: String, regexp: UUID_REGEX
     requires :user_id
-    optional :name        
+    requires :name        
     optional :description        
     optional :file
     optional :file_type
@@ -536,7 +536,7 @@ resources :member do
   params do
     requires :token, type: String, regexp: UUID_REGEX
     requires :user_id
-    optional :name
+    requires :name
     optional :year
     optional :certificate_type        
     optional :file
@@ -665,7 +665,7 @@ resources :member do
     requires :token, type: String, regexp: UUID_REGEX
     requires :user_id
     requires :goal_type
-    optional :title
+    requires :title
     optional :term_type        
     optional :file
     optional :file_type
@@ -727,7 +727,7 @@ resources :member do
     requires :token, type: String, regexp: UUID_REGEX
     requires :user_id
     optional :env_type
-    optional :title
+    requires :title
     optional :file
     optional :text_field
     optional :file_type
@@ -1883,8 +1883,10 @@ params do
   requires :is_favourited
 end
 post :favourite, jbuilder: 'android_notification' do
-  if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).count > 0
-    @folder = Folder.find_by name: params[:folder_name].downcase
+  @a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).first
+  if @a.count > 0
+    @folder = Folder.find @a.folder_id
+    error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
   else
     @folder = Folder.new name: params[:folder_name].downcase, default_status: false
     error!({error: @folder.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @folder.save
@@ -2061,7 +2063,8 @@ resources :folder do
     requires :name
   end
   post :create, jbuilder: 'android_folder' do
-    if UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).count > 0
+    @a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).first
+    if @a.count > 0
       error!({error: 'Folder name already exist! Please try another one!', status: 'Fail'}, 200)
     else
       @folder = Folder.new name: params[:name].downcase, default_status: false
