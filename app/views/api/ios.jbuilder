@@ -213,6 +213,10 @@ if @user_educations
 end
 
 if @user_experience
+
+json.date_format @user_experience.user.stock_country ? @user_experience.user.stock_country.date_format : "dd/mm/yyyy"
+
+
 	json.extract! @user_experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
 	if @user_experience.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
@@ -226,6 +230,9 @@ if @user_experience
 end
 if @user_experiences
 	json.user_experiences @user_experiences.order('created_at DESC') do |experience|
+
+	json.date_format experience.user.stock_country ? experience.user.stock_country.date_format : "dd/mm/yyyy"
+	
 		json.extract! experience, :id, :user_id, :name,:exp_type, :start_from, :description, :working_till, :designation, :current_company, :file_type
 		if experience.file_type == ""
 			json.file_thumb "https://selfie-cv-development.herokuapp.com/assets/default-a2ea80482f7fa6ea448186807f670258d6530fd183154b16d49a78530adbce67.png"
