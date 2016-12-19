@@ -1467,7 +1467,7 @@ resources :faculty do
     error!({error: 'User not found', status: 'Fail'}, 200) unless @find_user
     if (params[:title] || params[:description] )
       @faculty_publication = FacultyPublication.new user_id: @find_user.id
-      @faculty_publication.attributes = clean_params(params).permit(:title, :description)
+      @faculty_publication.attributes = clean_params(params).permit(:title, :description, :file_type)
       @faculty_publication.file = params[:file] if params[:file]
       error!({error: @faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_publication.save
     end          
@@ -1484,7 +1484,7 @@ resources :faculty do
   post :update_faculty_publication, jbuilder: 'android' do
     @faculty_publication = FacultyPublication.find params[:publication_id]
     error!({error: 'Student publication not found', status: 'Fail'}, 200) unless @faculty_publication
-    @faculty_publication.attributes = clean_params(params).permit(:title, :description)
+    @faculty_publication.attributes = clean_params(params).permit(:title, :description, :file_type)
     @faculty_publication.file = params[:file] if params[:file]
     error!({error: @faculty_publication.errors.full_messages.join(', '), status: 'Fail'}, 200) unless @faculty_publication.save
   end

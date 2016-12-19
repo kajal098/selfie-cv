@@ -115,12 +115,12 @@ end
     end
   end
 
-  def as_indexed_json(options={})
-    as_json(
-      only: [:id, :first_name, :email],
-      include: [:user_awards]  
-    )
-  end
+  # def as_indexed_json(options={})
+  #   as_json(
+  #     only: [:id, :first_name, :email],
+  #     include: [:user_awards]  
+  #   )
+  # end
 
   # def as_indexed_json(options={})
   # {
@@ -129,6 +129,13 @@ end
   #   "award_name" => self.user_awards.name
   # }
   # end 
+
+  def as_indexed_json(options={})
+    as_json(
+      only: [:id, :first_name, :email],
+      include: {user_awards: {only: [:name, :award_type, :description]}}
+    )
+  end
 
 def self.job_simple_search
     

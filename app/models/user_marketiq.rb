@@ -12,9 +12,9 @@ class UserMarketiq < ActiveRecord::Base
         if @count > 0  
         	if @count >= 2 && @count <= 3
 	            market_iq_per = setting_per * 0.3
-	        elsif @count >= 4 &&  @count <= 5
+	        elsif @count >= 3 &&  @count <= 5
 	            market_iq_per = setting_per * 0.5
-	        elsif @count >= 6
+	        elsif @count >= 5
 	            market_iq_per = setting_per * 1
 	        end
         end 
