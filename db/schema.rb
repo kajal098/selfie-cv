@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "sensex",           default: "",                           null: false
     t.string   "currency",         default: "",                           null: false
     t.string   "date_format",      default: "dd/mm/yyyy",                 null: false
-    t.string   "time_zone",        default: "2016-12-17 05:34:16.111776"
+    t.string   "time_zone",        default: "2016-12-19 05:59:16.853638"
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
   end
@@ -106,8 +106,8 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "collage_name", default: "",           null: false
     t.string   "subject",      default: "",           null: false
     t.string   "designation",  default: "",           null: false
-    t.date     "join_from",    default: '2016-12-17'
-    t.date     "join_till",    default: '2016-12-17'
+    t.date     "join_from",    default: '2016-12-19'
+    t.date     "join_till",    default: '2016-12-19'
     t.string   "file",         default: ""
     t.string   "file_type",    default: "",           null: false
     t.string   "file_status",  default: "true",       null: false
@@ -338,8 +338,8 @@ ActiveRecord::Schema.define(version: 20161213072810) do
   create_table "stock_countries", force: :cascade do |t|
     t.string   "name",        default: "",                    null: false
     t.string   "date_format", default: "dd/mm/yyyy",          null: false
-    t.datetime "start_time",  default: '2016-12-17 05:34:15'
-    t.datetime "end_time",    default: '2016-12-17 05:34:15'
+    t.datetime "start_time",  default: '2016-12-19 05:59:16'
+    t.datetime "end_time",    default: '2016-12-19 05:59:16'
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
   end
@@ -391,7 +391,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "title",           default: "",           null: false
     t.string   "team_type",       default: "",           null: false
     t.string   "location",        default: "",           null: false
-    t.date     "date",            default: '2016-12-17'
+    t.date     "date",            default: '2016-12-19'
     t.string   "file",            default: ""
     t.string   "file_type",       default: "",           null: false
     t.string   "file_status",     default: "true",       null: false
@@ -437,8 +437,8 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.integer  "user_id"
     t.string   "name",            default: "",           null: false
     t.string   "exp_type",        default: "",           null: false
-    t.date     "start_from",      default: '2016-12-17'
-    t.date     "working_till",    default: '2016-12-17'
+    t.date     "start_from",      default: '2016-12-19'
+    t.date     "working_till",    default: '2016-12-19'
     t.string   "designation",     default: "",           null: false
     t.string   "description",     default: "",           null: false
     t.string   "file",            default: ""
@@ -631,7 +631,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "from",        default: "",           null: false
     t.string   "email",       default: "",           null: false
     t.string   "contact",     default: "",           null: false
-    t.date     "date",        default: '2016-12-17'
+    t.date     "date",        default: '2016-12-19'
     t.string   "location",    default: "",           null: false
     t.string   "file",        default: ""
     t.string   "text_field",  default: "",           null: false
@@ -689,7 +689,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "profile_pic",                                   default: ""
     t.string   "profile_pic_type",                              default: "",           null: false
     t.string   "gender",                                        default: "",           null: false
-    t.string   "date_of_birth",                                 default: "2016-12-17"
+    t.string   "date_of_birth",                                 default: "2016-12-19"
     t.string   "nationality",                                   default: "",           null: false
     t.string   "address",                                       default: "",           null: false
     t.string   "city",                                          default: "",           null: false
@@ -703,7 +703,7 @@ ActiveRecord::Schema.define(version: 20161213072810) do
     t.string   "faculty_uni_name",                              default: "",           null: false
     t.string   "faculty_subject",                               default: "",           null: false
     t.string   "faculty_designation",                           default: "",           null: false
-    t.string   "faculty_join_from",                             default: "2016-12-17"
+    t.string   "faculty_join_from",                             default: "2016-12-19"
     t.string   "company_name",                                  default: "",           null: false
     t.string   "company_establish_from",                        default: "",           null: false
     t.integer  "industry_id"
