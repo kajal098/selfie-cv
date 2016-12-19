@@ -1843,7 +1843,7 @@ params do
 	requires :is_favourited
 end
 post :favourite, jbuilder: 'ios_notification' do
-	@a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).first
+	@a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase)
     if @a.count > 0
         @folder = Folder.find @a.folder_id
 		error! 'Folder not found',422 unless @folder
@@ -2022,7 +2022,7 @@ resources :folder do
 		requires :name
 	end
 	post :create, jbuilder: 'ios_folder' do
-		@a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).first
+		@a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase)
 	    if @a.count > 0
 	    	error! 'Folder name already exist! Please try another one!',422
 		else

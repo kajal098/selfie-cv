@@ -1883,7 +1883,7 @@ params do
   requires :is_favourited
 end
 post :favourite, jbuilder: 'android_notification' do
-  @a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase).first
+  @a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:folder_name].downcase)
   if @a.count > 0
     @folder = Folder.find @a.folder_id
     error!({error: 'Folder not found', status: 'Fail'}, 200) unless @folder
@@ -2063,7 +2063,7 @@ resources :folder do
     requires :name
   end
   post :create, jbuilder: 'android_folder' do
-    @a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase).first
+    @a = UserFolder.joins(:folder).where("user_folders.user_id = ?", current_user.id).where('folders.name = ?', params[:name].downcase)
     if @a.count > 0
       error!({error: 'Folder name already exist! Please try another one!', status: 'Fail'}, 200)
     else
