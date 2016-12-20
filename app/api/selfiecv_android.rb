@@ -36,35 +36,35 @@ helpers do
           }
         },
       post_filter: { bool: { must: [] } },
-      aggs: {
-        category:{
-          filter: aggregation_filters(:category),
-          aggs: {
-            category: { terms: { field: :category } } 
-            }
-          },
-        diet: {
-          filter: aggregation_filters(:diet),
-          aggs: {
-            diet: { terms: { field: :diet } }
-          }
-        },
-        age:{
-          filter: aggregation_filters(:price),
-          aggs: { 
-              price: { range: { 
-                  field: :price,
-                  keyed: true,
-                  ranges: [
-                    { key: '0-25', to: 25 },
-                    { key: '25-50', from: 25, to: 50 },
-                    { key: '50-75', from: 50, to: 75 },
-                    { key: '75-all', from: 75 }
-                    ] 
-                  } }
-            }
-          }
-        }
+      # aggs: {
+      #   category:{
+      #     filter: aggregation_filters(:category),
+      #     aggs: {
+      #       category: { terms: { field: :category } } 
+      #       }
+      #     },
+      #   diet: {
+      #     filter: aggregation_filters(:diet),
+      #     aggs: {
+      #       diet: { terms: { field: :diet } }
+      #     }
+      #   },
+      #   age:{
+      #     filter: aggregation_filters(:age),
+      #     aggs: { 
+      #         price: { range: { 
+      #             field: :price,
+      #             keyed: true,
+      #             ranges: [
+      #               { key: '0-25', to: 25 },
+      #               { key: '25-50', from: 25, to: 50 },
+      #               { key: '50-75', from: 50, to: 75 },
+      #               { key: '75-all', from: 75 }
+      #               ] 
+      #             } }
+      #       }
+      #     }
+      #   }
       }
 
     ret[:query][:filtered][:filter][:bool][:must] << { term: { role: params[:role] } }
@@ -86,6 +86,41 @@ helpers do
       ret[:query][:filtered][:filter][:bool][:must]  << { term: { gender: params[:gender] } }
     end
 
+    ret[:post_filter][:bool][:must] = aggregation_filters(:all)
+
+    ret
+  end
+
+  def aggregation_filters term
+    ret = {bool: { must: [] }}
+
+    # unless params[:neighborhood].blank?
+    #   ret[:bool][:must] << { terms: { localities: Array(params[:neighborhood]) } }
+    # end
+
+    # unless params[:category].blank?
+    #   ret[:bool][:must] << { terms: { category: Array(params[:category]) } }
+    # end
+
+    # unless params[:diet].blank?
+    #   ret[:bool][:must] << { terms: { diet: Array(params[:diet]) } }
+    # end
+
+    # unless params[:price].blank?
+    #   should = []
+    #   Array(params[:price]).each do |price|
+    #     gte, lte = price.split('-')
+    #     if lte and gte
+    #       if lte == 'all'
+    #         should << { range: { price: { gte: gte } } }
+    #       else
+    #         should << { range: { price: { gte: gte, lte: lte } } }
+    #       end
+    #     end
+
+    #   end
+    #   ret[:bool][:must] << { bool: { should: should } }
+    # end
     unless params[:age].blank?
       should = []
       Array(params[:age]).each do |age|
@@ -98,44 +133,36 @@ helpers do
           end
         end
       end
-    ret[:post_filter][:bool][:must] << { bool: { should: should } }
+    ret[:bool][:must] << { bool: { should: should } }
     end
-    #ret[:post_filter][:bool][:must] = aggregation_filters(:all)
-
-    ret
-  end
-
-  def aggregation_filters term
-    ret = {bool: { must: [] }}
-
-    unless params[:neighborhood].blank?
-      ret[:bool][:must] << { terms: { localities: Array(params[:neighborhood]) } }
-    end
-
-    unless params[:category].blank?
-      ret[:bool][:must] << { terms: { category: Array(params[:category]) } }
-    end
-
-    unless params[:diet].blank?
-      ret[:bool][:must] << { terms: { diet: Array(params[:diet]) } }
-    end
-
-    unless params[:price].blank?
+    unless params[:salary].blank?
       should = []
-      Array(params[:price]).each do |price|
-        gte, lte = price.split('-')
+      Array(params[:salary]).each do |salary|
+        gte, lte = salary.split('-')
         if lte and gte
           if lte == 'all'
-            should << { range: { price: { gte: gte } } }
+            should << { range: { salary: { gte: gte } } }
           else
-            should << { range: { price: { gte: gte, lte: lte } } }
+            should << { range: { salary: { gte: gte, lte: lte } } }
           end
         end
-
       end
-      ret[:bool][:must] << { bool: { should: should } }
+    ret[:bool][:must] << { bool: { should: should } }
     end
-
+    unless params[:views].blank?
+      should = []
+      Array(params[:views]).each do |view|
+        gte, lte = view.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { views: { gte: gte } } }
+          else
+            should << { range: { views: { gte: gte, lte: lte } } }
+          end
+        end
+      end
+    ret[:bool][:must] << { bool: { should: should } }
+    end
     ret
   end
 end
@@ -2307,10 +2334,13 @@ resources :esearch do
   optional :country_id
   optional :age
   optional :gender
+  optional :salary
+  optional :view
+  optional :rating
+  optional :job_type
 
   end
   get :jobseeker do
-
     @search = User.search build_query
     @records = @search.records
   end
