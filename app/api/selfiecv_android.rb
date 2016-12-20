@@ -24,6 +24,120 @@ helpers do
     error!({error: 'Unauthorized', status: 'Fail'}, 200) unless params[:token] =~ UUID_REGEX
     error!({error: 'Unauthorized', status: 'Fail'}, 200) unless current_user
   end
+
+  def build_query
+    ret = { 
+      query: {
+        filtered: { 
+          query: {
+            bool: { must: [] }
+            },  
+          filter: { bool: { must: [] } },
+          }
+        },
+      post_filter: { bool: { must: [] } },
+      aggs: {
+        category:{
+          filter: aggregation_filters(:category),
+          aggs: {
+            category: { terms: { field: :category } } 
+            }
+          },
+        diet: {
+          filter: aggregation_filters(:diet),
+          aggs: {
+            diet: { terms: { field: :diet } }
+          }
+        },
+        age:{
+          filter: aggregation_filters(:price),
+          aggs: { 
+              price: { range: { 
+                  field: :price,
+                  keyed: true,
+                  ranges: [
+                    { key: '0-25', to: 25 },
+                    { key: '25-50', from: 25, to: 50 },
+                    { key: '50-75', from: 50, to: 75 },
+                    { key: '75-all', from: 75 }
+                    ] 
+                  } }
+            }
+          }
+        }
+      }
+
+    ret[:query][:filtered][:filter][:bool][:must] << { term: { role: params[:role] } }
+
+    unless params[:q].blank?
+      ret[:query][:filtered][:query][:bool][:must] << { multi_match: {
+        query: params[:q],
+        fields: [:specializations],
+        type: :phrase_prefix
+        } 
+      }
+    end
+
+    unless params[:country_id].blank?
+      ret[:query][:filtered][:filter][:bool][:must]  << { term: { country_id: params[:country_id] } }
+    end
+
+    unless params[:gender].blank?
+      ret[:query][:filtered][:filter][:bool][:must]  << { term: { gender: params[:gender] } }
+    end
+
+    unless params[:age].blank?
+      should = []
+      Array(params[:age]).each do |age|
+        gte, lte = age.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { age: { gte: gte } } }
+          else
+            should << { range: { age: { gte: gte, lte: lte } } }
+          end
+        end
+      end
+    ret[:post_filter][:bool][:must] << { bool: { should: should } }
+    end
+    #ret[:post_filter][:bool][:must] = aggregation_filters(:all)
+
+    ret
+  end
+
+  def aggregation_filters term
+    ret = {bool: { must: [] }}
+
+    unless params[:neighborhood].blank?
+      ret[:bool][:must] << { terms: { localities: Array(params[:neighborhood]) } }
+    end
+
+    unless params[:category].blank?
+      ret[:bool][:must] << { terms: { category: Array(params[:category]) } }
+    end
+
+    unless params[:diet].blank?
+      ret[:bool][:must] << { terms: { diet: Array(params[:diet]) } }
+    end
+
+    unless params[:price].blank?
+      should = []
+      Array(params[:price]).each do |price|
+        gte, lte = price.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { price: { gte: gte } } }
+          else
+            should << { range: { price: { gte: gte, lte: lte } } }
+          end
+        end
+
+      end
+      ret[:bool][:must] << { bool: { should: should } }
+    end
+
+    ret
+  end
 end
 #--------------------------------devices start----------------------------------#
 resources :devices do
@@ -2179,4 +2293,28 @@ post :search, jbuilder: 'android_notification' do
 end
 end
 #--------------------------------folder end----------------------------------#
+
+
+#--------------------------------Search & Filter start----------------------------------#
+
+resources :esearch do
+
+  desc 'Search data'
+  params do
+  requires :token, type: String, regexp: UUID_REGEX
+  requires :q
+  requires :role
+  optional :country_id
+  optional :age
+  optional :gender
+
+  end
+  get :jobseeker do
+
+    @search = User.search build_query
+    @records = @search.records
+  end
+end
+#--------------------------------Search & Filter end----------------------------------#
+
 end

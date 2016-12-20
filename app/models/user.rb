@@ -1,4 +1,4 @@
-#require 'elasticsearch/model'
+require 'elasticsearch/model'
 
 class User < ActiveRecord::Base
 
@@ -110,8 +110,14 @@ end
   # include Elasticsearch::Model::Callbacks
 
   settings do
-    mappings do 
+    mappings do
+      indexes :name, analyzer: :english, boost: 10
+      indexes :specializations, analyzer: :english, boost: 5
+      indexes :role, index: :not_analyzed
       indexes :city, index: :not_analyzed
+      indexes :country_id, index: :not_analyzed
+      indexes :age, index: :not_analyzed
+      indexes :gender, index: :not_analyzed
     end
   end
 
@@ -130,12 +136,39 @@ end
   # }
   # end 
 
-  def as_indexed_json(options={})
-    as_json(
-      only: [:id, :first_name, :email],
-      include: {user_awards: {only: [:name, :award_type, :description]}}
+  def as_indexed_json opts = {}
+    # as_json(
+    #   only: [:id, :first_name, :email],
+    #   include: {user_awards: {only: [:name, :award_type, :description]}}
+
+    # )
+    opts[:only] = [:id, :role, :first_name, :email, :country_id, :gender]
+    ret = as_json(opts)
+
+    suggest = 
+    ret.merge!(
+      suggest: { 
+        input: first_name + middle_name + last_name,
+        output: first_name, 
+        payload: {  } 
+      },
+      age: age(date_of_birth),
+      # price: prices.minimum(:price),
+      # menu_path: menu_path(restaurant.slug, menu.id, menu.name.parameterize),
+      # restaurant_path: restaurant_path(restaurant.slug),
+      specializations: user_educations.map{|e| e.specialization ? e.specialization.name : ""},
+      # city: restaurant.localities.map(&:city_id)
     )
+    # ret[:boost] = ret[:rating] * 3
+    ret
   end
+
+
+def age(dob)
+  dob = dob.to_time
+  now = Time.now.utc.to_date
+  now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+end
 
 def self.job_simple_search
     
