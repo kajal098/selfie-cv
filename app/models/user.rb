@@ -120,6 +120,8 @@ end
       indexes :gender, index: :not_analyzed
       indexes :salary, index: :not_analyzed
       indexes :views, index: :not_analyzed
+      indexes :rating, index: :not_analyzed
+      indexes :job_type, index: :not_analyzed
     end
   end
 
@@ -157,13 +159,15 @@ end
       age: age(date_of_birth),
       salary: user_preferred_works.minimum(:expected_salary),
       views: views.count,
+      rating: rates.count,
+      job_type: user_preferred_works.map(&:time_type),
       # price: prices.minimum(:price),
       # menu_path: menu_path(restaurant.slug, menu.id, menu.name.parameterize),
       # restaurant_path: restaurant_path(restaurant.slug),
       specializations: user_educations.map{|e| e.specialization ? e.specialization.name : ""},
       # city: restaurant.localities.map(&:city_id)
     )
-    # ret[:boost] = ret[:rating] * 3
+    #ret[:boost] = ret[:rates] * 3
     ret
   end
 

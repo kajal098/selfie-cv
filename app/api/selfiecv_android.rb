@@ -94,9 +94,9 @@ helpers do
   def aggregation_filters term
     ret = {bool: { must: [] }}
 
-    # unless params[:neighborhood].blank?
-    #   ret[:bool][:must] << { terms: { localities: Array(params[:neighborhood]) } }
-    # end
+    unless params[:job_type].blank?
+      ret[:bool][:must] << { terms: { job_type: Array(params[:job_type]) } }
+    end
 
     # unless params[:category].blank?
     #   ret[:bool][:must] << { terms: { category: Array(params[:category]) } }
@@ -121,6 +121,7 @@ helpers do
     #   end
     #   ret[:bool][:must] << { bool: { should: should } }
     # end
+
     unless params[:age].blank?
       should = []
       Array(params[:age]).each do |age|
@@ -135,6 +136,7 @@ helpers do
       end
     ret[:bool][:must] << { bool: { should: should } }
     end
+
     unless params[:salary].blank?
       should = []
       Array(params[:salary]).each do |salary|
@@ -149,6 +151,7 @@ helpers do
       end
     ret[:bool][:must] << { bool: { should: should } }
     end
+
     unless params[:views].blank?
       should = []
       Array(params[:views]).each do |view|
@@ -163,6 +166,22 @@ helpers do
       end
     ret[:bool][:must] << { bool: { should: should } }
     end
+
+    unless params[:rating].blank?
+      should = []
+      Array(params[:rating]).each do |rate|
+        gte, lte = rate.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { rating: { gte: gte } } }
+          else
+            should << { range: { rating: { gte: gte, lte: lte } } }
+          end
+        end
+      end
+    ret[:bool][:must] << { bool: { should: should } }
+    end
+    
     ret
   end
 end
