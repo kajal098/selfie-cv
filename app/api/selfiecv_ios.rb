@@ -2109,16 +2109,16 @@ resources :search do
   before { authenticate! }
   desc 'Search Jobseeker'
   params do
-    requires :token, type: String, regexp: UUID_REGEX
-  requires :q
-  requires :role
-  optional :country_id
-  optional :age
-  optional :gender
-  optional :salary
-  optional :view
-  optional :rating
-  optional :job_type
+	  requires :token, type: String, regexp: UUID_REGEX
+	  requires :q
+	  requires :role
+	  optional :country_id
+	  optional :age
+	  optional :gender
+	  optional :salary
+	  optional :view
+	  optional :rating
+	  optional :job_type
   end
   post :user do
     @search = User.search build_query
