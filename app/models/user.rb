@@ -13,11 +13,6 @@ devise :database_authenticatable, :registerable, :recoverable, :rememberable, :t
 
 validates :username,presence: true, uniqueness: { case_sensitive: false }
 validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
-# validates :zipcode, :numericality => true, :allow_nil => true
-# validates :contact_number, :numericality => true, :allow_nil => true
-# validates :company_zipcode, :numericality => true, :allow_nil => true
-# validates :company_contact, :numericality => true, :allow_nil => true
-#validates_format_of :join_from, :with => /\d{2}\/\d{2}\/\d{4}/
 
 paginates_per 10
 
@@ -69,40 +64,6 @@ has_many    :bronze_rates, -> {where(rate_type: 0) }, class_name: 'UserRate',for
 has_many    :silver_rates, -> {where(rate_type: 1)}, class_name: 'UserRate',foreign_key: "rate_id"
 has_many    :gold_rates, -> {where(rate_type: 2) }, class_name: 'UserRate',foreign_key: "rate_id"
 
-def self.company_search(params)
-    conditions = String.new
-    wheres = Array.new
-      conditions << "role = ?"
-      wheres << 4
-    if params.has_key?(:company_name)
-      conditions << " AND " unless conditions.length == 0
-      conditions << "company_name ilike ?"
-      wheres << "%#{params[:company_name]}%"
-    end
-
-    if params.has_key?(:location)
-      conditions << " AND " unless conditions.length == 0
-      conditions << " company_city ilike ? OR"
-      wheres << "%#{params[:location]}%"
-      conditions << " country ilike ?"
-      wheres << "%#{params[:location]}%"
-    end
-
-    if params.has_key?(:industry_id)
-      conditions << " AND " unless conditions.length == 0
-      conditions << " industry_id = ?"
-      wheres << params[:industry_id].to_i
-    end
-    
-    if params.has_key?(:functional_area)
-      conditions << " AND " unless conditions.length == 0
-      conditions << " company_functional_area ilike ?"
-      wheres << "%#{params[:functional_area]}%"
-    end
-    wheres.insert(0, conditions)
-    return where( wheres )
-end
-
 # search configuration
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
@@ -123,27 +84,7 @@ end
     end
   end
 
-  # def as_indexed_json(options={})
-  #   as_json(
-  #     only: [:id, :first_name, :email],
-  #     include: [:user_awards]  
-  #   )
-  # end
-
-  # def as_indexed_json(options={})
-  # {
-  #   "id" => id,
-  #   "first_name" => first_name,
-  #   "award_name" => self.user_awards.name
-  # }
-  # end 
-
   def as_indexed_json opts = {}
-    # as_json(
-    #   only: [:id, :first_name, :email],
-    #   include: {user_awards: {only: [:name, :award_type, :description]}}
-
-    # )
     opts[:only] = [:id, :role, :first_name, :email, :country_id, :gender]
     ret = as_json(opts)
 

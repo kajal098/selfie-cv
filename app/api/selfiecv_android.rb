@@ -2133,40 +2133,6 @@ resources :whizquiz do
   end
 end
 #--------------------------------whizquiz end----------------------------------#
-#--------------------------------search start----------------------------------#
-resources :search do
-  before { authenticate! }
-  desc 'Search Jobseeker'
-  params do
-    requires :token, type: String, regexp: UUID_REGEX
-    requires :q
-    optional :min_experience
-    optional :max_experience
-    optional :min_salary
-    optional :max_salary
-    optional :functional_area_id
-    optional :location
-    optional :preferred_location
-    optional :qualification
-  end
-  post :jobseeker, jbuilder: 'android_search'  do
-    authenticate!
-    @searched_users =  User.includes("user_experiences").where("users.username ilike ?","%#{params[:q]}%").where("users.user_experiences.experience")
-  end
-  desc 'Search Company'
-  params do
-    requires :token, type: String, regexp: UUID_REGEX
-    optional :location
-    optional :functional_area
-    optional :industry_id
-    optional :company_name
-  end
-  post :company, jbuilder: 'android_search'  do
-    authenticate!
-    @searched_company =  User.company_search(params)
-  end
-end
-#--------------------------------search end----------------------------------#
 #--------------------------------marketiq start----------------------------------#
 resources :marketiq do
   before { authenticate! }
@@ -2341,13 +2307,12 @@ end
 #--------------------------------folder end----------------------------------#
 
 
-#--------------------------------Search & Filter start----------------------------------#
-
-resources :esearch do
-
-  desc 'Search data'
+#--------------------------------search start----------------------------------#
+resources :search do
+  before { authenticate! }
+  desc 'Search Jobseeker'
   params do
-  requires :token, type: String, regexp: UUID_REGEX
+    requires :token, type: String, regexp: UUID_REGEX
   requires :q
   requires :role
   optional :country_id
@@ -2358,11 +2323,11 @@ resources :esearch do
   optional :rating
   optional :job_type
   end
-  get :jobseeker do
+  post :user, jbuilder: 'android_search'  do
     @search = User.search build_query
     @records = @search.records
   end
 end
-#--------------------------------Search & Filter end----------------------------------#
+#--------------------------------search end----------------------------------#
 
 end
