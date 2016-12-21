@@ -13,7 +13,9 @@ end
 if @user
 	if @user.role == 'Jobseeker'
 
-		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+		json.User @user, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+
+		json.birth_date @user.date_of_birth.to_s
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
@@ -116,7 +118,9 @@ if @user
 
 	elsif @user.role == 'Student'
 
-		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+		json.User @user, :id, :username, :email, :role, :first_name, :last_name, :gender, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+
+		json.birth_date @user.date_of_birth.to_s
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
@@ -153,7 +157,9 @@ if @user
 
 	elsif @user.role == 'Faculty'
 
-		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
+		json.User @user, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
+
+		json.birth_date @user.date_of_birth.to_s
 
 		json.country_name @user.stock_country ? @user.stock_country.name : ""
 
@@ -476,7 +482,9 @@ if @stock_countries
 end
 
 if @basic_info
-	json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :contact_number, :country_id
+	json.BasicInfoOfStudent @basic_info, :id, :username, :email, :role, :first_name, :last_name, :gender, :nationality, :address, :city, :zipcode, :contact_number, :country_id
+
+	json.birth_date @basic_info.date_of_birth.to_s
 
 	json.country_name @basic_info.stock_country ? @basic_info.stock_country.name : ""
 
