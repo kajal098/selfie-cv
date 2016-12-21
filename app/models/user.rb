@@ -72,6 +72,7 @@ has_many    :gold_rates, -> {where(rate_type: 2) }, class_name: 'UserRate',forei
     mappings do
       indexes :name, analyzer: :english, boost: 10
       indexes :specializations, analyzer: :english, boost: 5
+      indexes :courses, analyzer: :english, boost: 4
       indexes :role, index: :not_analyzed
       indexes :city, index: :not_analyzed
       indexes :country_id, index: :not_analyzed
@@ -104,6 +105,7 @@ has_many    :gold_rates, -> {where(rate_type: 2) }, class_name: 'UserRate',forei
       # menu_path: menu_path(restaurant.slug, menu.id, menu.name.parameterize),
       # restaurant_path: restaurant_path(restaurant.slug),
       specializations: user_educations.map{|e| e.specialization ? e.specialization.name : ""},
+      courses: user_educations.map{|e| e.course ? e.course.name : ""},
       # city: restaurant.localities.map(&:city_id)
     )
     #ret[:boost] = ret[:rates] * 3

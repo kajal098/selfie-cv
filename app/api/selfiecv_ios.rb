@@ -71,6 +71,15 @@ class SelfiecvIos < Grape::API
       }
     end
 
+    unless params[:course].blank?
+      ret[:query][:filtered][:query][:bool][:must] << { multi_match: {
+        query: params[:course],
+        fields: [:courses],
+        type: :phrase_prefix
+        } 
+      }
+    end
+
     unless params[:country_id].blank?
       ret[:query][:filtered][:filter][:bool][:must]  << { term: { country_id: params[:country_id] } }
     end
@@ -2270,6 +2279,7 @@ resources :search do
   params do
 	  requires :token, type: String, regexp: UUID_REGEX
 	  requires :q
+	  requires :course
 	  requires :role
 	  optional :country_id
 	  optional :age

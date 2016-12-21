@@ -78,6 +78,15 @@ helpers do
       }
     end
 
+    unless params[:course].blank?
+      ret[:query][:filtered][:query][:bool][:must] << { multi_match: {
+        query: params[:course],
+        fields: [:courses],
+        type: :phrase_prefix
+        } 
+      }
+    end
+
     unless params[:country_id].blank?
       ret[:query][:filtered][:filter][:bool][:must]  << { term: { country_id: params[:country_id] } }
     end
@@ -2311,15 +2320,16 @@ resources :search do
   desc 'Search Jobseeker'
   params do
     requires :token, type: String, regexp: UUID_REGEX
-  requires :q
-  requires :role
-  optional :country_id
-  optional :age
-  optional :gender
-  optional :salary
-  optional :view
-  optional :rating
-  optional :job_type
+    requires :q
+    requires :course
+    requires :role
+    optional :country_id
+    optional :age
+    optional :gender
+    optional :salary
+    optional :view
+    optional :rating
+    optional :job_type
   end
   post :user, jbuilder: 'android_search' do
     @search = User.search build_query
