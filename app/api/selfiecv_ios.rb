@@ -18,6 +18,165 @@ class SelfiecvIos < Grape::API
 			error! 'Unauthorized', 401 unless params[:token] =~ UUID_REGEX
 			error! 'Unauthorized', 401 unless current_user
 		end
+		def build_query
+    ret = { 
+      query: {
+        filtered: { 
+          query: {
+            bool: { must: [] }
+            },  
+          filter: { bool: { must: [] } },
+          }
+        },
+      post_filter: { bool: { must: [] } },
+      # aggs: {
+      #   category:{
+      #     filter: aggregation_filters(:category),
+      #     aggs: {
+      #       category: { terms: { field: :category } } 
+      #       }
+      #     },
+      #   diet: {
+      #     filter: aggregation_filters(:diet),
+      #     aggs: {
+      #       diet: { terms: { field: :diet } }
+      #     }
+      #   },
+      #   age:{
+      #     filter: aggregation_filters(:age),
+      #     aggs: { 
+      #         price: { range: { 
+      #             field: :price,
+      #             keyed: true,
+      #             ranges: [
+      #               { key: '0-25', to: 25 },
+      #               { key: '25-50', from: 25, to: 50 },
+      #               { key: '50-75', from: 50, to: 75 },
+      #               { key: '75-all', from: 75 }
+      #               ] 
+      #             } }
+      #       }
+      #     }
+      #   }
+      }
+
+    ret[:query][:filtered][:filter][:bool][:must] << { term: { role: params[:role] } }
+
+    unless params[:q].blank?
+      ret[:query][:filtered][:query][:bool][:must] << { multi_match: {
+        query: params[:q],
+        fields: [:specializations],
+        type: :phrase_prefix
+        } 
+      }
+    end
+
+    unless params[:country_id].blank?
+      ret[:query][:filtered][:filter][:bool][:must]  << { term: { country_id: params[:country_id] } }
+    end
+
+    unless params[:gender].blank?
+      ret[:query][:filtered][:filter][:bool][:must]  << { term: { gender: params[:gender] } }
+    end
+
+    ret[:post_filter][:bool][:must] = aggregation_filters(:all)
+
+    ret
+  end
+
+  def aggregation_filters term
+    ret = {bool: { must: [] }}
+
+    unless params[:job_type].blank?
+      ret[:bool][:must] << { terms: { job_type: Array(params[:job_type]) } }
+    end
+
+    # unless params[:category].blank?
+    #   ret[:bool][:must] << { terms: { category: Array(params[:category]) } }
+    # end
+
+    # unless params[:diet].blank?
+    #   ret[:bool][:must] << { terms: { diet: Array(params[:diet]) } }
+    # end
+
+    # unless params[:price].blank?
+    #   should = []
+    #   Array(params[:price]).each do |price|
+    #     gte, lte = price.split('-')
+    #     if lte and gte
+    #       if lte == 'all'
+    #         should << { range: { price: { gte: gte } } }
+    #       else
+    #         should << { range: { price: { gte: gte, lte: lte } } }
+    #       end
+    #     end
+
+    #   end
+    #   ret[:bool][:must] << { bool: { should: should } }
+    # end
+
+    unless params[:age].blank?
+      should = []
+      Array(params[:age]).each do |age|
+        gte, lte = age.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { age: { gte: gte } } }
+          else
+            should << { range: { age: { gte: gte, lte: lte } } }
+          end
+        end
+      end
+    ret[:bool][:must] << { bool: { should: should } }
+    end
+
+    unless params[:salary].blank?
+      should = []
+      Array(params[:salary]).each do |salary|
+        gte, lte = salary.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { salary: { gte: gte } } }
+          else
+            should << { range: { salary: { gte: gte, lte: lte } } }
+          end
+        end
+      end
+    ret[:bool][:must] << { bool: { should: should } }
+    end
+
+    unless params[:views].blank?
+      should = []
+      Array(params[:views]).each do |view|
+        gte, lte = view.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { views: { gte: gte } } }
+          else
+            should << { range: { views: { gte: gte, lte: lte } } }
+          end
+        end
+      end
+    ret[:bool][:must] << { bool: { should: should } }
+    end
+
+    unless params[:rating].blank?
+      should = []
+      Array(params[:rating]).each do |rate|
+        gte, lte = rate.split('-')
+        if lte and gte
+          if lte == 'all'
+            should << { range: { rating: { gte: gte } } }
+          else
+            should << { range: { rating: { gte: gte, lte: lte } } }
+          end
+        end
+      end
+    ret[:bool][:must] << { bool: { should: should } }
+    end
+    
+    ret
+  end
 	end
 #--------------------------------devices start----------------------------------#
 resources :devices do
