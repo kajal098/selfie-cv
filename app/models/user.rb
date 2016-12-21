@@ -1,5 +1,3 @@
-require 'elasticsearch/model'
-
 class User < ActiveRecord::Base
 
 extend Enumerize
@@ -107,7 +105,7 @@ end
 
 # search configuration
   include Elasticsearch::Model
-  # include Elasticsearch::Model::Callbacks
+  include Elasticsearch::Model::Callbacks
 
   settings do
     mappings do
@@ -173,9 +171,11 @@ end
 
 
 def age(dob)
-  dob = dob.to_time
-  now = Time.now.utc.to_date
-  now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  if dob
+    dob = dob.to_time
+    now = Time.now.utc.to_date
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
 end
 
 def self.job_simple_search
