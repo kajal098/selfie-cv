@@ -2275,7 +2275,7 @@ resources :folder do
   end
 end
 #--------------------------------folder end----------------------------------#
-#--------------------------------folder start----------------------------------#
+#--------------------------------graph start----------------------------------#
 resources :graph do
 #before { authenticate! }
 desc 'Search For Graph'
@@ -2304,9 +2304,7 @@ post :search, jbuilder: 'android_notification' do
   end
 end
 end
-#--------------------------------folder end----------------------------------#
-
-
+#--------------------------------graph end----------------------------------#
 #--------------------------------search start----------------------------------#
 resources :search do
   before { authenticate! }
