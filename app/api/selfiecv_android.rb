@@ -2357,7 +2357,6 @@ resources :esearch do
   optional :view
   optional :rating
   optional :job_type
-
   end
   get :jobseeker do
     @search = User.search build_query
