@@ -12,7 +12,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :profile_pic,              default: ''
       t.string :profile_pic_type,              null: false, default: ""
       t.string :gender,              null: false, default: ""
-      t.string :date_of_birth,              :default => Date.today 
+      t.date :date_of_birth,              null: true
       t.string :nationality,              null: false, default: ""
       t.string :address,              null: false, default: ""
       t.string :city,              null: false, default: ""
