@@ -45,8 +45,9 @@ gem 'bootstrap-datepicker-rails'
 gem 'kaminari'
 
 #for elastic search
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+# gem 'elasticsearch-model'
+# gem 'elasticsearch-rails'
+gem 'bonsai-elasticsearch-rails'
 
 # for font
 gem "font-awesome-rails"
