@@ -2,7 +2,9 @@ if @user_stuff
 
 	if @user_stuff.role == 'Jobseeker'
 
-		json.User @user_stuff, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+		json.User @user_stuff, :id, :username, :email, :role, :title, :first_name, :middle_name, :last_name, :gender, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+
+		json.birth_date @user_stuff.date_of_birth.to_s
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
@@ -329,7 +331,9 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Student'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :last_name, :middle_name, :gender, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :file_type, :active
+
+		json.birth_date @user_stuff.date_of_birth.to_s
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
@@ -478,7 +482,9 @@ if @user_stuff
 
 	elsif @user_stuff.role == 'Faculty'
 
-		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :date_of_birth, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
+		json.User @user_stuff, :id, :username, :email, :role, :first_name, :middle_name, :last_name, :gender, :nationality, :address, :city, :zipcode, :country_id, :contact_number, :faculty_work_with_type, :faculty_uni_name, :faculty_subject, :faculty_designation, :faculty_join_from, :file_type, :active
+
+		json.birth_date @user_stuff.date_of_birth.to_s
 
 		json.country_name @user_stuff.stock_country ? @user_stuff.stock_country.name : ""
 
