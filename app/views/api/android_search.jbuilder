@@ -1,13 +1,28 @@
 json.status "Success"
-if @searched_company
-	json.searched_company @searched_company do |user|
-		json.extract! user, :id, :username, :company_name, :user_total_per, :company_establish_from, :company_city, :country_id
 
-		json.country_name user.company_stock ? user.stock_country.name : ""
+if @records
+	json.records @records do |user|
+		if user.role == "Jobseeker"
+			json.extract! user, :id, :username, :first_name, :last_name, :city, :country_id
 
-		json.date_format user.company_stock ? user.company_stock.date_format : "dd/mm/yyyy"
+			json.country_name user.stock_country ? user.stock_country.name : ""
 
-		json.logo_thumb user.logo_thumb_url
-		json.logo user.company_logo.url
+			json.date_format user.company_stock ? user.company_stock.date_format : "dd/mm/yyyy"
+			
+			json.skills !user.user_educations.empty? ? user.user_educations.map(&:skill).join(",") : ""
+			json.total_per user.user_meter.total_per
+			json.profile_thumb user.profile_thumb_url
+			json.profile user.profile_pic.url
+		elsif user.role == "Company"
+			json.extract! user, :id, :username, :company_name, :company_establish_from, :company_city, :country_id
+
+			json.country_name user.stock_country ? user.stock_country.name : ""
+
+			json.date_format user.company_stock ? user.company_stock.date_format : "dd/mm/yyyy"
+			
+			json.total_per user.user_meter.total_per
+			json.logo_thumb user.logo_thumb_url
+			json.logo user.company_logo.url
+		end
 	end
 end

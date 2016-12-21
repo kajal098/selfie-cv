@@ -2321,7 +2321,7 @@ resources :search do
   optional :rating
   optional :job_type
   end
-  post :user do
+  post :user, jbuilder: 'android_search' do
     @search = User.search build_query
     @records = @search.records
   end

@@ -2279,7 +2279,7 @@ resources :search do
 	  optional :rating
 	  optional :job_type
   end
-  post :user do
+  post :user, jbuilder: 'ios_search' do
     @search = User.search build_query
     @records = @search.records
   end
